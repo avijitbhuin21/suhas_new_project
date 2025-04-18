@@ -7,24 +7,19 @@ items = ['Item 1', 'Item 2', 'Item 3']
 
 @app.route('/')
 def index():
-    return '''
-    <h1>Flask Demo App</h1>
-    <p>Welcome to this simple Flask application!</p>
-    <a href="/items">View Items</a>
-    <a href="/api/items">API - Get Items</a>
-    '''
+    return render_template('homepage.html')
 
-@app.route('/items')
-def show_items():
-    items_html = '<h2>Items</h2><ul>'
-    for item in items:
-        items_html += f'<li>{item}</li>'
-    items_html += '</ul><a href="/">Back to home</a>'
-    return items_html
+@app.route('/news_waiting_page')
+def news_waiting_page():
+    return render_template('news_waiting_page.html')
 
-@app.route('/api/items')
-def api_items():
-    return jsonify(items=items)
+@app.route('/news_page')
+def news_page():
+    return render_template('news_page.html')
+
+@app.route('/magazine_page')
+def magazine_page():
+    return render_template('magazine_page.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
