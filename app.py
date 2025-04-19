@@ -2,8 +2,6 @@ from flask import Flask, render_template, request, jsonify
 
 app = Flask(__name__)
 
-# Sample data
-items = ['Item 1', 'Item 2', 'Item 3']
 
 @app.route('/')
 def index():
@@ -20,6 +18,14 @@ def news_page():
 @app.route('/magazine_page')
 def magazine_page():
     return render_template('magazine_page.html')
+
+@app.route('/magazine_page_read_only')
+def magazine_page_read_only():
+    return render_template('magazine_page_read_only.html')
+
+@app.route('/category_homepage')
+def category_homepage():
+    return render_template('category_homepage.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
