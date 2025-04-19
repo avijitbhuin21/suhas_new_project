@@ -27,5 +27,6 @@ def magazine_page_read_only():
 def category_homepage():
     return render_template('category_homepage.html')
 
-if __name__ == '__main__':
-    app.run(debug=True)
+# The following block is removed or commented out for Gunicorn deployment
+# if __name__ == '__main__':
+#     app.run()
