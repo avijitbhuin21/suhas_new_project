@@ -355,15 +355,10 @@
         </section>
         
         <!-- 9 Out of 10 Banner -->
-        <section class="w-full h-auto md:h-[564px] relative flex items-center justify-center bg-cover bg-center bg-[url(static/images/9_out_of_10.png)] py-14 md:py-0">
-            <div class="relative z-10 flex justify-center items-center w-full h-full px-4 text-center">
-                <a href="#" class="inline-block relative scale-[.4] -left-[9rem] top-12 md:hidden">
-                    <img src="static/images/checkot_button.png" alt="Checkout Podcast Button - Mobile" class="h-auto w-full max-w-[160px] sm:max-w-[200px] hover:opacity-90 transition-opacity">
-                </a>
-                <a href="#" class="hidden md:inline-block" style="transform: scale(0.5); left: -32rem; position: relative; top: 11rem;">
-                    <img src="static/images/checkot_button.png" alt="Checkout Podcast Button - Desktop" class="block w-full h-auto hover:opacity-90 transition-opacity">
-                </a>
-            </div>
+        <section class="w-full aspect-[120/47] relative bg-contain bg-no-repeat bg-center bg-[url(static/images/9_out_of_10.png)]">
+            <a href="#" class="absolute bottom-[15%] left-[9%] w-[15%] max-w-[250px] hover:opacity-90 transition-opacity"> 
+                <img src="static/images/checkot_button.png" alt="Checkout Podcast Button" class="block w-full h-auto"> 
+            </a>
         </section>
         
         <!-- Advertisement Banner -->
@@ -372,74 +367,72 @@
         </div>
         
         <!-- Order 12: WhatsApp Newsletter Section -->
-    <section class="flex flex-col md:flex-row justify-center items-stretch px-4 md:px-[30px] py-9 gap-[15px] w-full h-auto my-5">
-        <!-- Left Side (Form) -->
-         <div class="w-full md:w-[625px] min-h-[625px] bg-gradient-to-r from-[#3533CD] to-[#0A0A24] rounded-[15px] relative p-8 md:p-[43px_57px] flex flex-col text-white">
-             <h2 class="w-full md:w-[475px] font-jakarta font-bold text-3xl md:text-[40px] leading-[1.4] mb-[16px]">Get Weekly WhatsApp Newsletters</h2>
-             <p class="w-full md:w-[504px] font-jakarta font-semibold text-lg md:text-[20px] leading-[1.6] mb-[21px]">on Latest Funding, Tech News and Business News?</p>
-             <form class="relative w-full flex flex-col gap-[18px]">
-                 <div class="flex flex-col md:flex-row gap-[15px]">
-                     <input type="text" placeholder="First Name" required class="flex-grow h-[36px] rounded-[4px] border-none bg-white px-[15px] py-[5px] font-jakarta text-base text-gray-900 placeholder:text-gray-400 placeholder:font-normal focus:ring-2 focus:ring-bol-purple">
-                     <input type="text" placeholder="Last Name" required class="flex-grow h-[36px] rounded-[4px] border-none bg-white px-[15px] py-[5px] font-jakarta text-base text-gray-900 placeholder:text-gray-400 placeholder:font-normal focus:ring-2 focus:ring-bol-purple">
-                 </div>
-                 <div>
-                     <input type="text" placeholder="Company Name" required class="w-full h-[36px] rounded-[4px] border-none bg-white px-[15px] py-[5px] font-jakarta text-base text-gray-900 placeholder:text-gray-400 placeholder:font-normal focus:ring-2 focus:ring-bol-purple">
-                 </div>
-                 <div class="flex flex-col md:flex-row gap-[15px]">
-                     <input type="text" placeholder="Your Designation" required class="flex-grow h-[36px] rounded-[4px] border-none bg-white px-[15px] py-[5px] font-jakarta text-base text-gray-900 placeholder:text-gray-400 placeholder:font-normal focus:ring-2 focus:ring-bol-purple">
-                     <div class="flex-grow relative location-input-wrapper">
-                         <input type="text" placeholder="Location" id="location" required class="w-full h-[36px] rounded-[4px] border-none bg-white px-[15px] py-[5px] font-jakarta text-base text-gray-900 placeholder:text-gray-400 placeholder:font-normal focus:ring-2 focus:ring-bol-purple appearance-none"> 
-                         <!-- Arrow added via CSS -->
-                     </div>
-                 </div>
-                 <div class="flex flex-col gap-[11px]">
-                     <div class="font-jakarta font-normal text-base">Choose Categories</div>
-                     <div class="flex flex-wrap gap-x-5 gap-y-3 items-center">
-                         <div class="flex items-center gap-[7px]">
-                             <input type="checkbox" id="cat-ai" class="appearance-none w-[18px] h-[18px] bg-white border border-[#B1B1B3] rounded-[2px] cursor-pointer relative checked:bg-bol-purple checked:border-bol-purple focus:ring-bol-purple">
-                             <label for="cat-ai" class="font-jakarta font-bold text-base cursor-pointer select-none">AI</label>
+        <section class="w-full max-w-7xl mx-auto px-4 md:px-8 py-9 my-5">
+            <div class="flex flex-col md:flex-row items-stretch gap-8">
+                <!-- Left Side (Form) -->
+                 <div class="w-full md:w-1/2 bg-gradient-to-r from-[#3533CD] to-[#0A0A24] rounded-[15px] p-8 flex flex-col text-white">
+                     <h2 class="font-jakarta font-bold text-3xl md:text-4xl leading-tight mb-4">Get Weekly WhatsApp Newsletters</h2>
+                     <p class="font-jakarta font-semibold text-lg md:text-xl leading-relaxed mb-6">on Latest Funding, Tech News and Business News?</p>
+                     <form class="flex flex-col gap-5"> 
+                         <div class="flex flex-col sm:flex-row gap-4">
+                             <input type="text" placeholder="First Name" required class="w-full sm:w-1/2 h-10 rounded-md border-none bg-white px-4 py-2 font-jakarta text-base text-gray-900 placeholder:text-gray-400 placeholder:font-normal focus:ring-2 focus:ring-bol-purple">
+                             <input type="text" placeholder="Last Name" required class="w-full sm:w-1/2 h-10 rounded-md border-none bg-white px-4 py-2 font-jakarta text-base text-gray-900 placeholder:text-gray-400 placeholder:font-normal focus:ring-2 focus:ring-bol-purple">
                          </div>
-                         <div class="flex items-center gap-[7px]">
-                             <input type="checkbox" id="cat-business" class="appearance-none w-[18px] h-[18px] bg-white border border-[#B1B1B3] rounded-[2px] cursor-pointer relative checked:bg-bol-purple checked:border-bol-purple focus:ring-bol-purple">
-                             <label for="cat-business" class="font-jakarta font-bold text-base cursor-pointer select-none">Business</label>
+                         <div>
+                             <input type="text" placeholder="Company Name" required class="w-full h-10 rounded-md border-none bg-white px-4 py-2 font-jakarta text-base text-gray-900 placeholder:text-gray-400 placeholder:font-normal focus:ring-2 focus:ring-bol-purple">
                          </div>
-                          <div class="flex items-center gap-[7px]">
-                             <input type="checkbox" id="cat-startups" class="appearance-none w-[18px] h-[18px] bg-white border border-[#B1B1B3] rounded-[2px] cursor-pointer relative checked:bg-bol-purple checked:border-bol-purple focus:ring-bol-purple">
-                             <label for="cat-startups" class="font-jakarta font-bold text-base cursor-pointer select-none">Startups</label>
+                         <div class="flex flex-col sm:flex-row gap-4">
+                             <input type="text" placeholder="Your Designation" required class="flex-grow h-10 rounded-md border-none bg-white px-4 py-2 font-jakarta text-base text-gray-900 placeholder:text-gray-400 placeholder:font-normal focus:ring-2 focus:ring-bol-purple">
+                             <div class="flex-grow relative location-input-wrapper">
+                                 <input type="text" placeholder="Location" id="location" required class="w-full h-10 rounded-md border-none bg-white px-4 py-2 font-jakarta text-base text-gray-900 placeholder:text-gray-400 placeholder:font-normal focus:ring-2 focus:ring-bol-purple appearance-none">
+                                 <!-- Arrow added via CSS -->
+                             </div>
                          </div>
-                         <div class="flex items-center gap-[7px]">
-                             <input type="checkbox" id="cat-entrep" class="appearance-none w-[18px] h-[18px] bg-white border border-[#B1B1B3] rounded-[2px] cursor-pointer relative checked:bg-bol-purple checked:border-bol-purple focus:ring-bol-purple">
-                             <label for="cat-entrep" class="font-jakarta font-bold text-base cursor-pointer select-none">Entrepreneurship</label>
+                         <div class="flex flex-col gap-3">
+                             <div class="font-jakarta font-normal text-base">Choose Categories</div>
+                             <div class="flex flex-wrap gap-x-5 gap-y-3 items-center">
+                                 <div class="flex items-center gap-2">
+                                     <input type="checkbox" id="cat-ai" class="appearance-none w-5 h-5 bg-white border border-[#B1B1B3] rounded-sm cursor-pointer relative checked:bg-bol-purple checked:border-bol-purple focus:ring-bol-purple">
+                                     <label for="cat-ai" class="font-jakarta font-bold text-base cursor-pointer select-none">AI</label>
+                                 </div>
+                                 <div class="flex items-center gap-2">
+                                     <input type="checkbox" id="cat-business" class="appearance-none w-5 h-5 bg-white border border-[#B1B1B3] rounded-sm cursor-pointer relative checked:bg-bol-purple checked:border-bol-purple focus:ring-bol-purple">
+                                     <label for="cat-business" class="font-jakarta font-bold text-base cursor-pointer select-none">Business</label>
+                                 </div>
+                                  <div class="flex items-center gap-2">
+                                     <input type="checkbox" id="cat-startups" class="appearance-none w-5 h-5 bg-white border border-[#B1B1B3] rounded-sm cursor-pointer relative checked:bg-bol-purple checked:border-bol-purple focus:ring-bol-purple">
+                                     <label for="cat-startups" class="font-jakarta font-bold text-base cursor-pointer select-none">Startups</label>
+                                 </div>
+                                 <div class="flex items-center gap-2">
+                                     <input type="checkbox" id="cat-entrep" class="appearance-none w-5 h-5 bg-white border border-[#B1B1B3] rounded-sm cursor-pointer relative checked:bg-bol-purple checked:border-bol-purple focus:ring-bol-purple">
+                                     <label for="cat-entrep" class="font-jakarta font-bold text-base cursor-pointer select-none">Entrepreneurship</label>
+                                 </div>
+                             </div>
                          </div>
-                     </div>
-                 </div>
-                 <div class="relative flex items-center w-full md:w-[224px]">
-                     <span class="absolute left-[10px] top-1/2 -translate-y-1/2 w-[26px] h-[26px] flex items-center justify-center pointer-events-none">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" fill="#25D366" width="20" height="20">
-                            <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
-                        </svg>
-                     </span></svg>
-                     <input type="tel" placeholder="Whatsapp No." required class="w-full h-[36px] rounded-[4px] border-none bg-white pl-[45px] pr-[15px] py-[5px] font-jakarta text-base text-gray-900 placeholder:text-gray-400 placeholder:font-normal focus:ring-2 focus:ring-bol-purple">
-                 </div>
-                 <div class="mt-[17px]">
-                     <button type="submit" class="w-[132px] h-[39px] bg-gradient-to-r from-black to-[#3533CD] rounded-full border-none font-jakarta font-semibold text-base text-center text-white cursor-pointer hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-black focus:ring-white transition duration-150 ease-in-out">Subscribe</button>
-                 </div>
-             </form>
-        </div>
-        <!-- Right Side (Image) -->
-        <div class="w-full md:w-[716px] h-[300px] md:h-[625px] bg-cover bg-center rounded-[15px] mt-4 md:mt-0 bg-[url(https://picsum.photos/seed/whatsappvisual/716/625)] flex-shrink-0"></div>
-    </section>
+                         <div class="relative flex items-center w-full"> 
+                             <span class="absolute left-3 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center pointer-events-none">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" fill="#25D366" width="20" height="20">
+                                    <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
+                                </svg>
+                             </span>
+                             <input type="tel" placeholder="Whatsapp No." required class="w-full h-10 rounded-md border-none bg-white pl-12 pr-4 py-2 font-jakarta text-base text-gray-900 placeholder:text-gray-400 placeholder:font-normal focus:ring-2 focus:ring-bol-purple">
+                         </div>
+                         <div class="mt-4"> 
+                             <button type="submit" class="px-6 py-2 bg-gradient-to-r from-black to-[#3533CD] rounded-full border-none font-jakarta font-semibold text-base text-center text-white cursor-pointer hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-black focus:ring-white transition duration-150 ease-in-out w-auto">Subscribe</button> 
+                         </div>
+                     </form>
+                </div>
+                <!-- Right Side (Image) -->
+                <div class="w-full md:w-1/2 h-80 md:h-auto bg-cover bg-center rounded-[15px] mt-4 md:mt-0 bg-[url(https://picsum.photos/seed/whatsappvisual/716/625)]"></div> 
+            </div>
+        </section>
         
         <!-- Fuel Ambition Banner -->
-        <section class="w-full h-[200px] md:h-[564px] relative flex items-center justify-center bg-cover bg-center bg-[url(static/images/fuel_ambition.png)] py-14 md:py-0">
-            <div class="relative z-10 flex justify-center items-center w-full h-full px-4 text-center">
-                <a href="#" class="inline-block relative md:hidden">
-                    <img src="static/images/checkout_magazine_button.png" alt="Checkout Podcast Button - Mobile" class="h-auto w-full max-w-[160px] sm:max-w-[200px] hover:opacity-90 transition-opacity" style="scale: 0.7; top: 3.6rem; position: relative;">
-                </a>
-                <a href="#" class="hidden md:inline-block" style="transform: scale(0.5); position: relative; top: 10rem;">
-                    <img src="static/images/checkout_magazine_button.png" alt="Checkout Podcast Button - Desktop" class="block w-full h-auto hover:opacity-90 transition-opacity">
-                </a>
-            </div>
+        <section class="w-full aspect-[120/47] relative bg-contain bg-no-repeat bg-center bg-[url(static/images/fuel_ambition.png)]" style="margin-bottom: -1%;">
+            <!-- Single button positioned absolutely -->
+            <a href="#" class="absolute bottom-[18%] left-[50%] -translate-x-1/2 w-[20%] max-w-[300px] hover:opacity-90 transition-opacity">
+                <img src="static/images/checkout_magazine_button.png" alt="Checkout Magazine Button" class="block w-full h-auto">
+            </a>
         </section>
         
         <!-- Order 15: Footer Section 2 -->

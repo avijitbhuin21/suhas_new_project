@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Brands Out Loud</title>
     <!-- Include Tailwind CSS (Use CDN for development, replace with build process for production) -->
-    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=typography,line-clamp"></script>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -225,104 +225,110 @@
     </script>
 
     <!-- Order 2: News Section -->
-    <section class="w-full h-auto md:h-[609px] relative py-5 md:py-0 px-4 md:px-0">
-        <!-- Desktop-only Lines absolutely positioned relative to this section -->
-        <div class="absolute w-[279px] h-0 left-[358px] top-[244px] border-t border-[#B8C2CE] hidden md:block"></div>
-        <div class="absolute w-[279px] h-0 left-[358px] top-[413px] border-t border-[#B8C2CE] hidden md:block"></div>
+    <section class="w-full py-6 px-4 md:px-8">
         <!-- Container for posts -->
-        <!-- Using Grid for mobile, explicit positioning for desktop -->
-        <div class="grid grid-cols-1 md:grid-cols-[minmax(0,_782px)_1fr] gap-4 md:gap-[15px] w-full md:w-[1365px] md:h-[533px] md:relative md:left-[38px] md:top-[19px]">
-            <!-- Post 1 (Large) -->
-            <article class="relative w-full md:h-[529px]">
-                <!-- Image with Gradient Overlay -->
-                <div class="w-full h-[300px] md:h-[394px] bg-cover bg-center relative">
-                     <div class="absolute inset-0 bg-[linear-gradient(0deg,rgba(0,0,0,0.6),rgba(0,0,0,0.6))]"></div>
+        <div class="flex flex-col md:flex-row gap-6 md:gap-8 max-w-7xl mx-auto">
+            <!-- Post 1 (Large) - Takes up more space on desktop -->
+            <article class="flex flex-col w-full md:w-3/5">
+                <!-- Image Container -->
+                <div class="w-full aspect-video bg-cover bg-center relative  overflow-hidden">
+                     <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                      <div class="w-full h-full bg-cover bg-center bg-[url(https://picsum.photos/seed/post1large/782/394)]"></div>
                  </div>
-                 <div class="p-4 md:p-0 md:absolute md:w-[168px] md:h-[12px] md:left-[29.17px] md:top-[421px] mt-2 md:mt-0 font-jakarta font-normal text-[12px] leading-[1.1] text-[#171717]">Craig Bator - 27 Dec 2020</div>
-                <h2 class="p-4 md:p-0 md:absolute md:w-[570px] md:h-auto md:left-[29px] md:top-[439px] font-jakarta font-medium text-2xl md:text-[36px] leading-tight md:leading-[45px] capitalize text-[#171717]">After all is said and done, more is done</h2>
+                 <!-- Text Content -->
+                 <div class="mt-3">
+                    <div class="font-jakarta font-normal text-xs text-gray-600 mb-1">Craig Bator - 27 Dec 2020</div>
+                    <h2 class="font-jakarta font-medium text-2xl md:text-[36px] leading-tight capitalize text-gray-900">After all is said and done, more is done</h2>
+                </div>
             </article>
 
-            <!-- Right side posts container -->
-             <div class="grid grid-cols-2 md:grid-cols-2 gap-4 md:gap-y-[24px] md:gap-x-[15px] md:h-full">
+            <!-- Right side posts container - Takes less space on desktop -->
+             <div class="grid grid-cols-2 gap-4 md:gap-x-4 md:gap-y-6 w-full md:w-2/5 mt-6 md:mt-0">
                  <!-- Post 2 (Small Top Left on desktop grid) -->
-                 <article class="relative w-full md:h-[247px]">
-                     <div class="w-full h-[175px] bg-cover bg-center relative">
-                          <div class="absolute inset-0 bg-[linear-gradient(0deg,rgba(0,0,0,0.4),rgba(0,0,0,0.4))]"></div>
+                 <article class="flex flex-col">
+                     <div class="w-full aspect-video bg-cover bg-center relative  overflow-hidden">
+                          <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
                           <div class="w-full h-full bg-cover bg-center bg-[url(https://picsum.photos/seed/post2small/274/175)]"></div>
                       </div>
-                     <div class="p-2 md:p-0 md:absolute md:w-[140px] md:h-[10px] md:left-[29.33px] md:top-[195px] mt-1 md:mt-0 font-jakarta font-normal text-[10px] leading-[1] text-[#313131]">Craig Bator - 27 Dec 2020</div>
-                     <h3 class="p-2 md:p-0 md:absolute md:w-[215px] md:h-auto md:left-[29px] md:top-[211px] font-jakarta font-medium text-sm md:text-[14px] leading-[18px] capitalize text-[#313131]">They’re back! Kennedy Darling named to return to</h3>
+                     <div class="mt-2">
+                        <div class="font-jakarta font-normal text-[10px] text-gray-500 mb-0.5">Craig Bator - 27 Dec 2020</div>
+                        <h3 class="font-jakarta font-medium text-sm leading-snug capitalize text-gray-800">They’re back! Kennedy Darling named to return to</h3>
+                    </div>
                  </article>
                  <!-- Post 3 (Small Top Right on desktop grid) -->
-                 <article class="relative w-full md:h-[247px]">
-                      <div class="w-full h-[175px] bg-cover bg-center relative">
-                           <div class="absolute inset-0 bg-[linear-gradient(0deg,rgba(0,0,0,0.4),rgba(0,0,0,0.4))]"></div>
+                 <article class="flex flex-col">
+                      <div class="w-full aspect-video bg-cover bg-center relative  overflow-hidden">
+                           <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
                            <div class="w-full h-full bg-cover bg-center bg-[url(https://picsum.photos/seed/post3small/274/175)]"></div>
                        </div>
-                      <div class="p-2 md:p-0 md:absolute md:w-[140px] md:h-[10px] md:left-[29px] md:top-[195px] mt-1 md:mt-0 font-jakarta font-normal text-[10px] leading-[1] text-[#000000]">Craig Bator - 27 Dec 2020</div>
-                      <h3 class="p-2 md:p-0 md:absolute md:w-[192px] md:h-auto md:left-[29px] md:top-[211px] font-jakarta font-medium text-sm md:text-[14px] leading-[18px] capitalize text-[#000000]">Swiss authorities say Uber drivers should</h3>
+                      <div class="mt-2">
+                        <div class="font-jakarta font-normal text-[10px] text-gray-500 mb-0.5">Craig Bator - 27 Dec 2020</div>
+                        <h3 class="font-jakarta font-medium text-sm leading-snug capitalize text-gray-800">Swiss authorities say Uber drivers should</h3>
+                    </div>
                  </article>
-                 <!-- Post 4 (Medium Bottom Right on desktop grid) - Spans 2 cols on mobile & desktop -->
-                 <article class="relative w-full md:h-[262px] col-span-2">
-                      <div class="w-full h-[161px] bg-cover bg-center relative">
-                           <div class="absolute inset-0 bg-[linear-gradient(0deg,rgba(0,0,0,0.4),rgba(0,0,0,0.4))]"></div>
+                 <!-- Post 4 (Medium Bottom Right on desktop grid) - Spans 2 cols -->
+                 <article class="flex flex-col col-span-2 mt-2 md:mt-0">
+                      <div class="w-full h-40 bg-cover bg-center relative overflow-hidden"> <!-- Reduced height from aspect-video -->
+                           <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
                            <div class="w-full h-full bg-cover bg-center bg-[url(https://picsum.photos/seed/post4medium/566/161)]"></div>
                        </div>
-                     <div class="p-2 md:p-0 md:absolute md:w-[168px] md:h-[12px] md:left-[29.33px] md:top-[184px] mt-1 md:mt-0 font-jakarta font-normal text-[12px] leading-[1.1] text-[#000000]">Craig Bator - 27 Dec 2020</div>
-                     <h2 class="p-2 md:p-0 md:absolute md:w-[363px] md:h-auto md:left-[29px] md:top-[202px] font-jakarta font-medium text-lg md:text-[24px] leading-[30px] capitalize text-[#000000]">Tourism in Dubai is booming by international tourist</h2>
+                     <div class="mt-2">
+                        <div class="font-jakarta font-normal text-xs text-gray-600 mb-1">Craig Bator - 27 Dec 2020</div>
+                        <h2 class="font-jakarta font-medium text-xl md:text-[24px] leading-tight capitalize text-gray-900">Tourism in Dubai is booming by international tourist</h2>
+                    </div>
                  </article>
              </div>
         </div>
     </section>
 
     <!-- Order 3: Trending News Section -->
-    <section class="w-full h-auto md:h-[609px] relative overflow-hidden my-5 md:my-0">
-        <div class="absolute inset-0 w-full h-full bg-gradient-to-br from-[#3533CD] via-black to-black md:bg-[linear-gradient(125.25deg,_#3533CD_0.4%,_#000000_47.94%)] rounded-none md:rounded-[6px]"></div>
-        <div class="relative w-full h-full z-10 p-4 md:p-0 md:pl-[44.49px] md:pt-[29px] grid grid-cols-1 md:grid-cols-2 gap-6">
-             <!-- Left Column: Title + 3 Small Posts -->
-             <!-- Added divide-y for separator lines -->
-             <div class="flex flex-col gap-4">
-                 <h2 class="w-auto md:w-[232.35px] h-auto md:h-[38px] font-jakarta font-bold text-2xl md:text-[28px] leading-[38px] text-white pb-4">Trending News</h2>
-                 <!-- Post 1 -->
-                 <article class="flex flex-col md:flex-row gap-4 md:w-[616.71px] border-b border-white/30 pb-3.5">
-                     <div class="w-full md:w-[289.2px] h-[150px] bg-cover bg-center rounded-[6px] bg-[url(https://picsum.photos/seed/racehorse/289/150)] flex-shrink-0"></div>
-                     <div class="flex flex-col justify-center">
-                          <div class="w-auto md:w-[137.18px] h-[10px] font-jakarta font-medium text-[10px] leading-[1] text-white/60 mb-2">Race98 - 03 June 2023</div>
-                          <h3 class="w-auto md:w-[302.79px] h-auto font-jakarta font-normal text-lg leading-[136.9%] text-white mb-2">6-Year-Old Horse Dies at Belmont Park After Race Injury</h3>
-                          <p class="w-auto md:w-[295.38px] h-auto font-jakarta font-normal text-xs leading-[123.9%] text-white ">NEW YORK—A 6-year-old horse died after being injured in a race at Belmont Park ahead of next week’s</p>
-                     </div>
-                 </article>
-                 <!-- Post 2 -->
-                <article class="flex flex-col md:flex-row gap-4 md:w-[616.71px] border-b border-white/30 pb-3.5">
-                     <div class="w-full md:w-[289.2px] h-[150px] bg-cover bg-center rounded-[6px] bg-[url(https://picsum.photos/seed/cyclist/289/150)] flex-shrink-0"></div>
-                     <div class="flex flex-col justify-center">
-                         <div class="w-auto md:w-[135.95px] h-[10px] font-jakarta font-medium text-[10px] leading-[1] text-white/60 mb-2">Jony.Ls - 03 June 2023</div>
-                         <h3 class="w-auto md:w-[302.79px] h-auto font-jakarta font-normal text-lg leading-[136.9%] text-white capitalize mb-2">Savilia Blunk Embraces Longer Season with World Cup</h3>
-                         <p class="w-auto md:w-[295.38px] h-auto font-jakarta font-normal text-xs leading-[123.9%] text-white ">Last year, Savilia Blunk took a more conservative approach to her first season as an Elite Class athlete, skipping some</p>
-                     </div>
-                 </article>
+    <section class="w-full py-6 px-4 md:px-8 my-5 bg-gradient-to-br from-[#3533CD] via-black to-black md:rounded-lg">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-7xl mx-auto h-full">
+            <!-- Left Column: Title + 3 Small Posts -->
+            <div class="flex flex-col gap-3 h-full">
+                <h2 class="font-jakarta font-bold text-2xl md:text-3xl text-white">Trending News</h2>
+                <!-- Post 1 -->
+                <article class="flex flex-col sm:flex-row gap-4 border-b border-white/30 pb-3">
+                    <div class="w-full sm:w-1/3 aspect-video md:h-28 bg-cover bg-center rounded-md flex-shrink-0 bg-[url(https://picsum.photos/seed/racehorse/289/150)]"></div>
+                    <div class="flex flex-col justify-center sm:w-2/3">
+                        <div class="font-jakarta font-medium text-[10px] text-white/60 mb-1">Race98 - 03 June 2023</div>
+                        <h3 class="font-jakarta font-normal text-base md:text-lg leading-snug text-white mb-1">6-Year-Old Horse Dies at Belmont Park After Race Injury</h3>
+                        <p class="font-jakarta font-normal text-xs leading-relaxed text-white/80 hidden sm:block">NEW YORK—A 6-year-old horse died after being injured in a race at Belmont Park ahead of next week’s</p>
+                    </div>
+                </article>
+                <!-- Post 2 -->
+                <article class="flex flex-col sm:flex-row gap-4 border-b border-white/30 pb-3">
+                    <div class="w-full sm:w-1/3 aspect-video md:h-28 bg-cover bg-center rounded-md flex-shrink-0 bg-[url(https://picsum.photos/seed/cyclist/289/150)]"></div>
+                    <div class="flex flex-col justify-center sm:w-2/3">
+                        <div class="font-jakarta font-medium text-[10px] text-white/60 mb-1">Jony.Ls - 03 June 2023</div>
+                        <h3 class="font-jakarta font-normal text-base md:text-lg leading-snug text-white capitalize mb-1">Savilia Blunk Embraces Longer Season with World Cup</h3>
+                        <p class="font-jakarta font-normal text-xs leading-relaxed text-white/80 hidden sm:block">Last year, Savilia Blunk took a more conservative approach to her first season as an Elite Class athlete, skipping some</p>
+                    </div>
+                </article>
                 <!-- Post 3 -->
-                <article class="flex flex-col md:flex-row gap-4 md:w-[616.71px] border-b border-white/30 pb-3.5">
-                     <div class="w-full md:w-[289.2px] h-[150px] bg-cover bg-center rounded-[6px] bg-[url(https://picsum.photos/seed/boxing/289/150)] flex-shrink-0"></div>
-                     <div class="flex flex-col justify-center">
-                         <div class="w-auto md:w-[127.3px] h-[10px] font-jakarta font-medium text-[10px] leading-[1] text-white/60 mb-2">King.F - 03 June 2023</div>
-                         <h3 class="w-auto md:w-[302.79px] h-auto font-jakarta font-normal text-lg leading-[136.9%] text-white mb-2">Ryan Garcia is fighting again, this time on social media</h3>
-                         <p class="w-auto md:w-[295.38px] h-auto font-jakarta font-normal text-xs leading-[123.9%] text-white ">Boxing star Ryan Garcia and his promoter, Hall of Fame fighter Oscar De La Hoya, reignited their war of words via Twitter on</p>
-                     </div>
-                 </article>
-             </div>
+                <article class="flex flex-col sm:flex-row gap-4 border-b border-white/30 pb-3">
+                    <div class="w-full sm:w-1/3 aspect-video md:h-28 bg-cover bg-center rounded-md flex-shrink-0 bg-[url(https://picsum.photos/seed/boxing/289/150)]"></div>
+                    <div class="flex flex-col justify-center sm:w-2/3">
+                        <div class="font-jakarta font-medium text-[10px] text-white/60 mb-1">King.F - 03 June 2023</div>
+                        <h3 class="font-jakarta font-normal text-base md:text-lg leading-snug text-white mb-1">Ryan Garcia is fighting again, this time on social media</h3>
+                        <p class="font-jakarta font-normal text-xs leading-relaxed text-white/80 hidden sm:block">Boxing star Ryan Garcia and his promoter, Hall of Fame fighter Oscar De La Hoya, reignited their war of words via Twitter on</p>
+                    </div>
+                </article>
+            </div>
 
             <!-- Right Column: Large Post -->
-            <div class="relative w-full h-auto md:w-[640.07px] md:h-[531.62px] md:absolute md:left-[742px] md:top-[41px]">
-                <div class="relative w-full h-[250px] md:absolute md:inset-0 md:w-[640px] md:h-[395px] bg-cover bg-center rounded-[6px] bg-[url(https://picsum.photos/seed/trendinglarge/640/395)]"></div>
-                 <div class="absolute left-[18px] top-[25px] border border-[#EBEEF3] rounded-[3px] bg-black/30 px-3 py-1 inline-block z-10">
-                     <span class="font-dm font-medium text-[14px] md:text-[20px] leading-[26px] capitalize text-[#EBEEF3]">Business</span>
+            <div class="flex flex-col pt-12">
+                 <div class="relative w-full aspect-video bg-cover bg-center rounded-lg overflow-hidden">
+                     <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                     <div class="w-full h-full bg-cover bg-center bg-[url(https://picsum.photos/seed/trendinglarge/640/395)]"></div>
+                     <div class="absolute left-4 top-4 border border-white/80 rounded-sm bg-black/40 px-2 py-0.5 inline-block z-10">
+                         <span class="font-dm font-medium text-xs md:text-sm capitalize text-white">Business</span>
+                     </div>
                  </div>
-                 <div class="relative mt-4 px-4 font-dm font-normal text-sm leading-[1.1] text-white md:absolute md:w-[336.67px] md:h-auto md:left-[11px] md:top-[421px] md:text-[18px] md:z-10 md:mt-0 md:px-0">Debits - 03 June 2023</div> <!-- Matched meta styling/position -->
-                 <h2 class="relative mt-1 px-4 pb-4 font-jakarta font-bold text-xl leading-tight capitalize text-white md:absolute md:w-[629.07px] md:h-auto md:left-[11px] md:top-[451.5px] md:text-[32px] md:leading-[40px] md:text-white md:z-10 md:mt-0 md:px-0 md:pb-0">DISCOVER THE MEMBER BENEFITS OF BOL BUSINESS</h2>
-                 
-                 
+                 <div class="mt-3">
+                     <div class="font-dm font-normal text-sm text-white/80 mb-1">Debits - 03 June 2023</div>
+                     <h2 class="font-jakarta font-bold text-xl md:text-2xl leading-tight capitalize text-white">DISCOVER THE MEMBER BENEFITS OF BOL BUSINESS</h2>
+                 </div>
             </div>
         </div>
     </section>
@@ -342,27 +348,27 @@
     </section>
 
     <!-- Order 5: Top Stories Section -->
-     <section class="w-full md:max-w-[1434px] h-auto md:h-[535px] relative px-4 md:px-0 my-5">
+     <section class="w-full py-6 px-4 md:px-8 my-5"> 
          <!-- Grid layout for better responsiveness -->
-         <div class="grid grid-cols-1 md:grid-cols-[minmax(0,_656px)_1fr] gap-8 md:gap-[42.5px] md:absolute md:left-[36.5px] md:top-[41px] w-full">
+         <div class="grid grid-cols-1 md:grid-cols-[minmax(0,_1.5fr)_1fr] gap-8 md:gap-10 max-w-7xl mx-auto">
              <!-- Left Side: Main Story -->
              <div class="relative w-full">
-                 <div class="w-full h-[250px] md:h-[371px] bg-cover bg-center bg-[url(https://picsum.photos/seed/topstorymain/656/371)] relative">
-                      <!-- Tag positioning -->
-                      <div class="absolute left-[17px] bottom-[-16px] md:left-[16.5px] md:top-[301px] z-20">
-                           <div class="absolute w-[96px] h-[32px] bg-[#3533CD] z-20"></div>
-                           <div class="absolute left-[9px] top-[10px] w-auto h-[14px] font-roboto font-medium text-[12px] leading-[14px] flex items-end text-white z-30 whitespace-nowrap">TOP STORIES</div>
+                 <div class="w-full aspect-video bg-cover bg-center relative bg-[url(https://picsum.photos/seed/topstorymain/656/371)] rounded-lg overflow-hidden">
+                      <div class="absolute left-4 bottom-4 z-10">
+                           <div class="bg-[#3533CD] px-3 py-1 inline-block">
+                               <span class="font-roboto font-medium text-[12px] leading-[14px] text-white whitespace-nowrap">TOP STORIES</span>
+                           </div>
                       </div>
                  </div>
-                 <!-- Text content below image - adjusted for dynamic height -->
-                 <div class="relative bg-white p-4 mt-8 md:mt-0 md:p-4 md:absolute md:left-[16px] md:top-[317px] md:w-[566px] md:h-auto z-10">
-                      <h2 class="font-jakarta font-semibold text-lg md:text-[20px] leading-[25px] text-[#222222] mb-2">What One Photo Tells Us About North Korea’s Nuclear Program</h2>
-                      <p class="font-jakarta font-normal text-[12px] leading-[15px] text-[#222222]">Clues from a propaganda photo reveal details about North Korea’s expanding weapons programs and internal politics.</p>
+                 <!-- Text content below image - Removed absolute positioning, added margin -->
+                 <div class="mt-3"> 
+                      <h2 class="font-jakarta font-semibold text-lg md:text-xl leading-snug text-[#222222] mb-1">What One Photo Tells Us About North Korea’s Nuclear Program</h2>
+                      <p class="font-jakarta font-normal text-sm leading-relaxed text-[#555555]">Clues from a propaganda photo reveal details about North Korea’s expanding weapons programs and internal politics.</p>
                  </div>
              </div>
 
             <!-- Right Side: Spotlight Boxes -->
-             <div class="w-full flex flex-col gap-5 max-w-[44rem]">
+             <div class="w-full flex flex-col gap-5">
                  <!-- Leadership Spotlight -->
                  <div class="relative w-full h-[196px] rounded-t-[20px] overflow-hidden">
                      <div class="absolute inset-0 bg-cover bg-center bg-[url(https://picsum.photos/seed/leadership/643/196)] rounded-t-[20px]"></div>
@@ -379,9 +385,9 @@
                      <div class="absolute inset-0 bg-[linear-gradient(354.1deg,_#3533CD_-75.73%,_#000000_95.32%)] rounded-b-[20px]"></div>
 
                      <div class="absolute right-[-10px] w-[243px] h-[216px] bg-contain bg-no-repeat bg-[url(static/images/stay_updated.png)] z-10 opacity-80"></div>
-                     <div class="relative z-20 p-6 md:p-[33px_0_0_33px] flex flex-col justify-between h-[10rem]">
-                         <h3 class="w-auto md:w-[201px] h-auto font-helvetica font-bold text-2xl md:text-[30px] leading-[105%] text-white mb-5 md:mb-0 pt-4">Stay Updated</h3>
-                         <a href="#" class="inline-flex flex-row justify-start items-center p-[12px_16px_12px_12px] gap-[12px] bg-white w-[341px] max-w-full h-[56px] no-underline border-none cursor-pointer rounded-md text-[#3533CD] hover:bg-gray-200">
+                     <div class="relative z-20 p-6 flex flex-col justify-between h-full">
+                         <h3 class="w-auto md:w-[201px] h-auto font-helvetica font-bold text-2xl md:text-[30px] leading-[105%] text-white mb-4 md:mb-0">Stay Updated</h3>
+                         <a href="#" class="inline-flex flex-row justify-start items-center p-[12px_16px_12px_12px] gap-[12px] bg-white w-full sm:w-[341px] max-w-full h-[56px] no-underline border-none cursor-pointer rounded-md text-[#3533CD] hover:bg-gray-200">
                              <span class="w-[32px] h-[32px] bg-[#3533CD] relative button-icon-plus-shape text-white flex-shrink-0"></span>
                              <span class="font-ibm-plex font-semibold text-[14px] leading-[90%] tracking-[1.2px] uppercase">Checkout the latest magazine</span>
                          </a>
@@ -393,161 +399,150 @@
      </section>
 
     <!-- Order 6: Ad Banner -->
-    <section class="w-full md:w-[1372px] h-[225px] bg-[#FF9D9D] flex justify-center items-center text-white text-2xl font-bold mx-auto ">
+    <section class="w-full py-16 md:py-20 bg-[#FF9D9D] flex justify-center items-center text-white text-2xl font-bold" style="margin-bottom: 1.25rem;">
         AD BANNER PLACEHOLDER
     </section>
 
     <!-- Order 7: Funding News Section -->
-    <section class="w-full h-auto md:h-[609px] relative overflow-hidden my-5 md:my-0"> <!-- Adjusted height -->
-        <div class="absolute inset-0 w-full h-full bg-gradient-to-br from-[#3533CD] via-black to-black md:bg-[linear-gradient(125.25deg,_#3533CD_0.4%,_#000000_47.94%)] rounded-none md:rounded-[6px]"></div> <!-- Matched gradient -->
-         <div class="relative w-full h-full z-10 p-4 md:p-0 md:pl-[44.49px] md:pt-[29px] grid grid-cols-1 md:grid-cols-2 gap-6"> <!-- Matched padding/grid -->
+    <section class="w-full py-6 px-4 md:px-8 my-5 bg-gradient-to-br from-[#3533CD] via-black to-black md:rounded-lg">
+        <div class="relative max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
             <!-- Left Column: Title + 3 Small Posts -->
-            <!-- Added divide-y for separator lines -->
-            <div class="flex flex-col gap-4"> <!-- Matched gap -->
-                <h2 class="w-auto md:w-[232.35px] h-auto md:h-[38px] font-jakarta font-bold text-2xl md:text-[28px] leading-[38px] text-white pb-4">FUNDING</h2> <!-- Matched title height -->
+            <div class="flex flex-col gap-5"> 
+                <h2 class="font-jakarta font-bold text-2xl md:text-3xl text-white pb-1">FUNDING</h2> 
                 <!-- Post 1 -->
-                 <article class="flex flex-col md:flex-row gap-4 md:w-[616.71px] border-b border-white/30 pb-3.5"> <!-- Added border/padding -->
-                     <div class="w-full md:w-[289.2px] h-[150px] bg-cover bg-center rounded-[6px] bg-[url(https://picsum.photos/seed/fundinghorse/289/150)] flex-shrink-0"></div> <!-- Matched image height -->
-                     <div class="flex flex-col justify-center">
-                          <div class="w-auto md:w-[137.18px] h-[10px] font-jakarta font-medium text-[10px] leading-[1] text-white/60 mb-2">Race98 - 03 June 2023</div> <!-- Matched meta height -->
-                          <h3 class="w-auto md:w-[302.79px] h-auto font-jakarta font-normal text-lg leading-[136.9%] text-white mb-2">6-Year-Old Horse Dies at Belmont Park After Race Injury</h3> <!-- Matched margin -->
-                          <p class="w-auto md:w-[295.38px] h-auto font-jakarta font-normal text-xs leading-[123.9%] text-white ">NEW YORK—A 6-year-old horse died after being injured in a race at Belmont Park ahead of next week’s</p>
-                     </div>
-                 </article>
+                <article class="flex flex-col sm:flex-row gap-4 border-b border-white/30 pb-3">
+                    <div class="w-full sm:w-1/3 aspect-video md:h-28 bg-cover bg-center rounded-md flex-shrink-0 bg-[url(https://picsum.photos/seed/fundinghorse/289/150)]"></div>
+                    <div class="flex flex-col justify-center sm:w-2/3">
+                        <div class="font-jakarta font-medium text-[10px] text-white/60 mb-1">Race98 - 03 June 2023</div>
+                        <h3 class="font-jakarta font-normal text-base md:text-lg leading-snug text-white mb-1">6-Year-Old Horse Dies at Belmont Park After Race Injury</h3>
+                        <p class="font-jakarta font-normal text-xs leading-relaxed text-white/80 hidden sm:block">NEW YORK—A 6-year-old horse died after being injured in a race at Belmont Park ahead of next week’s</p>
+                    </div>
+                </article>
                 <!-- Post 2 -->
-                <article class="flex flex-col md:flex-row gap-4 md:w-[616.71px] border-b border-white/30 pb-3.5"> <!-- Added border/padding -->
-                     <div class="w-full md:w-[289.2px] h-[150px] bg-cover bg-center rounded-[6px] bg-[url(https://picsum.photos/seed/fundingcyclist/289/150)] flex-shrink-0"></div> <!-- Matched image height -->
-                     <div class="flex flex-col justify-center">
-                         <div class="w-auto md:w-[135.95px] h-[10px] font-jakarta font-medium text-[10px] leading-[1] text-white/60 mb-2">Jony.Ls - 03 June 2023</div> <!-- Matched meta height -->
-                         <h3 class="w-auto md:w-[302.79px] h-auto font-jakarta font-normal text-lg leading-[136.9%] text-white capitalize mb-2">Savilia Blunk Embraces Longer Season with World Cup</h3> <!-- Matched margin -->
-                         <p class="w-auto md:w-[295.38px] h-auto font-jakarta font-normal text-xs leading-[123.9%] text-white ">Last year, Savilia Blunk took a more conservative approach to her first season as an Elite Class athlete, skipping some</p>
-                     </div>
-                 </article>
+                <article class="flex flex-col sm:flex-row gap-4 border-b border-white/30 pb-3">
+                    <div class="w-full sm:w-1/3 aspect-video md:h-28 bg-cover bg-center rounded-md flex-shrink-0 bg-[url(https://picsum.photos/seed/fundingcyclist/289/150)]"></div>
+                    <div class="flex flex-col justify-center sm:w-2/3">
+                        <div class="font-jakarta font-medium text-[10px] text-white/60 mb-1">Jony.Ls - 03 June 2023</div>
+                        <h3 class="font-jakarta font-normal text-base md:text-lg leading-snug text-white capitalize mb-1">Savilia Blunk Embraces Longer Season with World Cup</h3>
+                        <p class="font-jakarta font-normal text-xs leading-relaxed text-white/80 hidden sm:block">Last year, Savilia Blunk took a more conservative approach to her first season as an Elite Class athlete, skipping some</p>
+                    </div>
+                </article>
                  <!-- Post 3 -->
-                <article class="flex flex-col md:flex-row gap-4 md:w-[616.71px] border-b border-white/30 pb-3.5"> <!-- Added border/padding -->
-                     <div class="w-full md:w-[289.2px] h-[150px] bg-cover bg-center rounded-[6px] bg-[url(https://picsum.photos/seed/fundingboxing/289/150)] flex-shrink-0"></div> <!-- Matched image height -->
-                     <div class="flex flex-col justify-center">
-                         <div class="w-auto md:w-[127.3px] h-[10px] font-jakarta font-medium text-[10px] leading-[1] text-white/60 mb-2">King.F - 03 June 2023</div> <!-- Matched meta height -->
-                         <h3 class="w-auto md:w-[302.79px] h-auto font-jakarta font-normal text-lg leading-[136.9%] text-white mb-2">Ryan Garcia is fighting again, this time on social media</h3> <!-- Matched margin -->
-                         <p class="w-auto md:w-[295.38px] h-auto font-jakarta font-normal text-xs leading-[123.9%] text-white ">Boxing star Ryan Garcia and his promoter, Hall of Fame fighter Oscar De La Hoya, reignited their war of words via Twitter on</p>
-                     </div>
-                 </article>
+                <article class="flex flex-col sm:flex-row gap-4 border-b border-white/30 pb-3">
+                    <div class="w-full sm:w-1/3 aspect-video md:h-28 bg-cover bg-center rounded-md flex-shrink-0 bg-[url(https://picsum.photos/seed/fundingboxing/289/150)]"></div>
+                    <div class="flex flex-col justify-center sm:w-2/3">
+                        <div class="font-jakarta font-medium text-[10px] text-white/60 mb-1">King.F - 03 June 2023</div>
+                        <h3 class="font-jakarta font-normal text-base md:text-lg leading-snug text-white mb-1">Ryan Garcia is fighting again, this time on social media</h3>
+                        <p class="font-jakarta font-normal text-xs leading-relaxed text-white/80 hidden sm:block">Boxing star Ryan Garcia and his promoter, Hall of Fame fighter Oscar De La Hoya, reignited their war of words via Twitter on</p>
+                    </div>
+                </article>
             </div>
 
              <!-- Right Column: Large Post -->
-             <div class="relative w-full h-auto md:w-[640.07px] md:h-[531.62px] md:absolute md:left-[742px] md:top-[41px]"> <!-- Matched dimensions/position -->
-                 <div class="relative w-full h-[250px] md:absolute md:inset-0 md:w-[640px] md:h-[395px] bg-cover bg-center rounded-[6px] bg-[url(https://picsum.photos/seed/fundinglarge/640/395)]"></div> <!-- Matched image dimensions -->
-                 <!-- Removed overlay div -->
-                 <div class="absolute left-[18px] top-[25px] border border-[#EBEEF3] rounded-[3px] bg-black/30 px-3 py-1 inline-block z-10"> <!-- Matched tag styling/position -->
-                     <span class="font-dm font-medium text-[14px] md:text-[20px] leading-[26px] capitalize text-[#EBEEF3]">Business</span>
+             <div class="flex flex-col md:pt-16" >
+                 <div class="relative w-full aspect-video bg-cover bg-center rounded-lg overflow-hidden">
+                     <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div> 
+                     <div class="w-full h-full bg-cover bg-center bg-[url(https://picsum.photos/seed/fundinglarge/640/395)]"></div>
+                     <div class="absolute left-4 top-4 border border-white/80 rounded-sm bg-black/40 px-2 py-0.5 inline-block z-10">
+                         <span class="font-dm font-medium text-xs md:text-sm capitalize text-white">Business</span>
+                     </div>
                  </div>
-                 <div class="relative mt-4 px-4 font-dm font-normal text-sm leading-[1.1] text-white md:absolute md:w-[336.67px] md:h-auto md:left-[11px] md:top-[421px] md:text-[18px] md:z-10 md:mt-0 md:px-0">Debits - 03 June 2023</div> <!-- Matched meta styling/position -->
-                 <h2 class="relative mt-1 px-4 pb-4 font-jakarta font-bold text-xl leading-tight capitalize text-white md:absolute md:w-[629.07px] md:h-auto md:left-[11px] md:top-[451.5px] md:text-[32px] md:leading-[40px] md:text-white md:z-10 md:mt-0 md:px-0 md:pb-0">DISCOVER THE MEMBER BENEFITS OF BOL BUSINESS</h2> <!-- Matched title styling/position -->
+                 <div class="mt-3">
+                     <div class="font-dm font-normal text-sm text-white/80 mb-1">Debits - 03 June 2023</div>
+                     <h2 class="font-jakarta font-bold text-xl md:text-2xl leading-tight capitalize text-white">DISCOVER THE MEMBER BENEFITS OF BOL BUSINESS</h2>
+                 </div>
              </div>
         </div>
     </section>
 
     <!-- Order 8: Podcast Section -->
-    <section class=" w-full h-auto md:h-[564px] relative flex items-center justify-center bg-cover bg-center bg-[url(static/images/9_out_of_10.png)] py-14 md:py-0 ">
-            <div class="relative z-10 flex justify-center items-center w-full h-full px-4 text-center">
-                <a href="#" class=" inline-block relative scale-[.4] -left-[9rem] top-12 md:hidden ">
-                    <img src="static/images/checkot_button.png" alt="Checkout Podcast Button - Mobile" class=" h-auto w-full max-w-[160px] sm:max-w-[200px] hover:opacity-90 transition-opacity">
-                </a>
-                <a href="#" class="hidden md:inline-block" style="transform: scale(0.5); left: -32rem; position: relative; top: 11rem;">
-                    <img src="static/images/checkot_button.png" alt="Checkout Podcast Button - Desktop" class=" block w-full h-auto hover:opacity-90 transition-opacity">
-                </a>
-            </div>
-        </section>
-        <!-- End Order 8 -->
+    <section class="w-full aspect-[120/47] relative bg-contain bg-no-repeat bg-center bg-[url(static/images/9_out_of_10.png)] my-5">
+        <a href="#" class="absolute bottom-[15%] left-[9%] w-[15%] max-w-[250px] hover:opacity-90 transition-opacity"> 
+            <img src="static/images/checkot_button.png" alt="Checkout Podcast Button" class="block w-full h-auto"> 
+        </a>
+    </section>
+    <!-- End Order 8 -->
 
     <!-- Order 9: Dual Column Section (Sustainability/Semiconductors) -->
-    <section class="w-full grid grid-cols-1 md:grid-cols-2 justify-center items-start gap-5 px-4 md:px-0 my-5">
+    <section class="w-full grid grid-cols-1 md:grid-cols-2 justify-center items-start gap-8 max-w-7xl mx-auto px-4 md:px-8 my-5">
         <!-- Left Column (Sustainability) -->
-        <div class="w-full h-auto relative overflow-hidden rounded-[6px] bg-gradient-to-tl from-[#3533CD] via-black to-black md:bg-[linear-gradient(93.25deg,_#3533CD_0.4%,_#000000_47.94%)] p-4 md:p-[32px_20px_32px_43px]">
-             <h2 class="w-auto md:w-[359.22px] h-auto font-jakarta font-bold text-2xl md:text-[28px] leading-[38px] text-white mb-6">Sustainability</h2>
-             <!-- Added divide-y -->
-             <div class="flex flex-col gap-2">
-                 
-                 <article class="flex flex-col md:flex-row gap-4 md:w-[616.71px] border-b border-white/30 pb-3.5">
-                     <div class="w-full md:w-[289.2px] h-[150px] bg-cover bg-center rounded-[6px] bg-[url(https://picsum.photos/seed/sushorse/293/184)] flex-shrink-0"></div>
-                     <div class="flex flex-col justify-center">
-                         <div class="w-auto h-[10px] font-jakarta font-medium text-[10px] leading-[1] text-white/60 mb-2">Race98 - 03 June 2023</div>
-                         <h3 class="w-auto h-auto font-jakarta font-normal text-lg leading-[136.9%] text-white mb-2">6-Year-Old Horse Dies at Belmont Park After Race Injury</h3>
-                         <p class="w-auto h-auto font-jakarta font-normal text-xs leading-[123.9%] text-white ">NEW YORK—A 6-year-old horse died after being injured in a race at Belmont Park ahead of next week’s</p>
+        <div class="w-full h-auto relative overflow-hidden rounded-lg bg-gradient-to-tl from-[#3533CD] via-black to-black p-6">
+             <h2 class="font-jakarta font-bold text-2xl md:text-3xl text-white mb-6">Sustainability</h2>
+             <div class="flex flex-col gap-5">
+                 <article class="flex flex-col sm:flex-row gap-4 border-b border-white/30 pb-3">
+                     <div class="w-full sm:w-1/3 aspect-video md:h-28 bg-cover bg-center rounded-md flex-shrink-0 bg-[url(https://picsum.photos/seed/sushorse/293/184)]"></div>
+                     <div class="flex flex-col justify-center sm:w-2/3">
+                         <div class="font-jakarta font-medium text-[10px] text-white/60 mb-1">Race98 - 03 June 2023</div>
+                         <h3 class="font-jakarta font-normal text-base md:text-lg leading-snug text-white mb-1">6-Year-Old Horse Dies at Belmont Park After Race Injury</h3>
+                         <p class="font-jakarta font-normal text-xs leading-relaxed text-white/80 hidden sm:block">NEW YORK—A 6-year-old horse died after being injured in a race at Belmont Park ahead of next week’s</p>
                      </div>
                  </article>
-                 <!-- Post 2 -->
-                 <article class="flex flex-col md:flex-row gap-4 md:w-[616.71px] border-b border-white/30 pb-3.5">
-                     <div class="w-full md:w-[289.2px] h-[150px] bg-cover bg-center rounded-[6px] bg-[url(https://picsum.photos/seed/suscyclist/293/184)] flex-shrink-0"></div>
-                     <div class="flex flex-col justify-center">
-                         <div class="w-auto h-[10px] font-jakarta font-medium text-[10px] leading-[1] text-white/60 mb-2">Jony.Ls - 03 June 2023</div>
-                         <h3 class="w-auto h-auto font-jakarta font-normal text-lg leading-[136.9%] text-white capitalize mb-2">Savilia Blunk Embraces Longer Season with World Cup</h3>
-                         <p class="w-auto h-auto font-jakarta font-normal text-xs leading-[123.9%] text-white ">Last year, Savilia Blunk took a more conservative approach to her first season as an Elite Class athlete, skipping some</p>
+                 <!-- Article 2 -->
+                 <article class="flex flex-col sm:flex-row gap-4 border-b border-white/30 pb-3">
+                     <div class="w-full sm:w-1/3 aspect-video md:h-28 bg-cover bg-center rounded-md flex-shrink-0 bg-[url(https://picsum.photos/seed/suscyclist/293/184)]"></div>
+                     <div class="flex flex-col justify-center sm:w-2/3">
+                         <div class="font-jakarta font-medium text-[10px] text-white/60 mb-1">Jony.Ls - 03 June 2023</div>
+                         <h3 class="font-jakarta font-normal text-base md:text-lg leading-snug text-white capitalize mb-1">Savilia Blunk Embraces Longer Season with World Cup</h3>
+                         <p class="font-jakarta font-normal text-xs leading-relaxed text-white/80 hidden sm:block">Last year, Savilia Blunk took a more conservative approach to her first season as an Elite Class athlete, skipping some</p>
                      </div>
                  </article>
-                 <!-- Post 3 -->
-                <article class="flex flex-col md:flex-row gap-4 md:w-[616.71px] border-b border-white/30 pb-3.5">
-                     <div class="w-full md:w-[289.2px] h-[150px] bg-cover bg-center rounded-[6px] bg-[url(https://picsum.photos/seed/susboxing/293/184)] flex-shrink-0"></div>
-                     <div class="flex flex-col justify-center">
-                         <div class="w-auto h-[10px] font-jakarta font-medium text-[10px] leading-[1] text-white/60 mb-2">King.F - 03 June 2023</div>
-                         <h3 class="w-auto h-auto font-jakarta font-normal text-lg leading-[136.9%] text-white mb-2">Ryan Garcia is fighting again, this time on social media</h3>
-                         <p class="w-auto h-auto font-jakarta font-normal text-xs leading-[123.9%] text-white ">Boxing star Ryan Garcia and his promoter, Hall of Fame fighter Oscar De La Hoya, reignited their war of words via Twitter on</p>
+                 <!-- Article 3 -->
+                <article class="flex flex-col sm:flex-row gap-4 border-b border-white/30 pb-3">
+                     <div class="w-full sm:w-1/3 aspect-video md:h-28 bg-cover bg-center rounded-md flex-shrink-0 bg-[url(https://picsum.photos/seed/susboxing/293/184)]"></div>
+                     <div class="flex flex-col justify-center sm:w-2/3">
+                         <div class="font-jakarta font-medium text-[10px] text-white/60 mb-1">King.F - 03 June 2023</div>
+                         <h3 class="font-jakarta font-normal text-base md:text-lg leading-snug text-white mb-1">Ryan Garcia is fighting again, this time on social media</h3>
+                         <p class="font-jakarta font-normal text-xs leading-relaxed text-white/80 hidden sm:block">Boxing star Ryan Garcia and his promoter, Hall of Fame fighter Oscar De La Hoya, reignited their war of words via Twitter on</p>
                      </div>
                  </article>
              </div>
         </div>
         <!-- Right Column (Semiconductors) -->
-         <div class="w-full h-auto relative overflow-hidden rounded-[6px] bg-gradient-to-tl from-black via-[#3533CD] to-[#3533CD] md:bg-[linear-gradient(93.25deg,_#000000_0.4%,_#3533CD_47.94%)] p-4 md:p-[36px_20px_36px_46px]">
-             <h2 class="w-auto md:w-[238px] h-auto font-jakarta font-bold text-2xl md:text-[28px] leading-[38px] text-white mb-6">Semiconductors</h2>
-             <!-- Added divide-y -->
-             <div class="flex flex-col gap-2">
-                 
-                <article class="flex flex-col md:flex-row gap-4 md:w-[616.71px] border-b border-white/30 pb-3.5">
-                    <div class="w-full md:w-[289.2px] h-[150px] bg-cover bg-center rounded-[6px] bg-[url(https://picsum.photos/seed/sushorse/293/184)] flex-shrink-0"></div>
-                    <div class="flex flex-col justify-center">
-                        <div class="w-auto h-[10px] font-jakarta font-medium text-[10px] leading-[1] text-white/60 mb-2">Race98 - 03 June 2023</div>
-                        <h3 class="w-auto h-auto font-jakarta font-normal text-lg leading-[136.9%] text-white mb-2">6-Year-Old Horse Dies at Belmont Park After Race Injury</h3>
-                        <p class="w-auto h-auto font-jakarta font-normal text-xs leading-[123.9%] text-white ">NEW YORK—A 6-year-old horse died after being injured in a race at Belmont Park ahead of next week’s</p>
+         <div class="w-full h-auto relative overflow-hidden rounded-lg bg-gradient-to-tl from-black via-[#3533CD] to-[#3533CD] p-6">
+             <h2 class="font-jakarta font-bold text-2xl md:text-3xl text-white mb-6">Semiconductors</h2>
+             <div class="flex flex-col gap-5">
+                <article class="flex flex-col sm:flex-row gap-4 border-b border-white/30 pb-3">
+                    <div class="w-full sm:w-1/3 aspect-video md:h-28 bg-cover bg-center rounded-md flex-shrink-0 bg-[url(https://picsum.photos/seed/semiconductorhorse/293/184)]"></div> 
+                    <div class="flex flex-col justify-center sm:w-2/3">
+                        <div class="font-jakarta font-medium text-[10px] text-white/60 mb-1">ChipMaker - 03 June 2023</div> 
+                        <h3 class="font-jakarta font-normal text-base md:text-lg leading-snug text-white mb-1">New Breakthrough in Chip Miniaturization Announced</h3> 
+                        <p class="font-jakarta font-normal text-xs leading-relaxed text-white/80 hidden sm:block">SILICON VALLEY—A major player unveiled technology promising smaller, faster processors for future devices.</p> 
                     </div>
                 </article>
-                <!-- Post 2 -->
-                <article class="flex flex-col md:flex-row gap-4 md:w-[616.71px] border-b border-white/30 pb-3.5">
-                    <div class="w-full md:w-[289.2px] h-[150px] bg-cover bg-center rounded-[6px] bg-[url(https://picsum.photos/seed/suscyclist/293/184)] flex-shrink-0"></div>
-                    <div class="flex flex-col justify-center">
-                        <div class="w-auto h-[10px] font-jakarta font-medium text-[10px] leading-[1] text-white/60 mb-2">Jony.Ls - 03 June 2023</div>
-                        <h3 class="w-auto h-auto font-jakarta font-normal text-lg leading-[136.9%] text-white capitalize mb-2">Savilia Blunk Embraces Longer Season with World Cup</h3>
-                        <p class="w-auto h-auto font-jakarta font-normal text-xs leading-[123.9%] text-white ">Last year, Savilia Blunk took a more conservative approach to her first season as an Elite Class athlete, skipping some</p>
+                <!-- Article 2 -->
+                <article class="flex flex-col sm:flex-row gap-4 border-b border-white/30 pb-3">
+                    <div class="w-full sm:w-1/3 aspect-video md:h-28 bg-cover bg-center rounded-md flex-shrink-0 bg-[url(https://picsum.photos/seed/semiconductorcyclist/293/184)]"></div> 
+                    <div class="flex flex-col justify-center sm:w-2/3">
+                        <div class="font-jakarta font-medium text-[10px] text-white/60 mb-1">FabNews - 02 June 2023</div> 
+                        <h3 class="font-jakarta font-normal text-base md:text-lg leading-snug text-white capitalize mb-1">Global Chip Shortage Eases Slightly, Experts Say</h3> 
+                        <p class="font-jakarta font-normal text-xs leading-relaxed text-white/80 hidden sm:block">While challenges remain, increased production capacity is beginning to alleviate the long-standing ...</p> 
                     </div>
                 </article>
-                <!-- Post 3 -->
-               <article class="flex flex-col md:flex-row gap-4 md:w-[616.71px] border-b border-white/30 pb-3.5">
-                    <div class="w-full md:w-[289.2px] h-[150px] bg-cover bg-center rounded-[6px] bg-[url(https://picsum.photos/seed/susboxing/293/184)] flex-shrink-0"></div>
-                    <div class="flex flex-col justify-center">
-                        <div class="w-auto h-[10px] font-jakarta font-medium text-[10px] leading-[1] text-white/60 mb-2">King.F - 03 June 2023</div>
-                        <h3 class="w-auto h-auto font-jakarta font-normal text-lg leading-[136.9%] text-white mb-2">Ryan Garcia is fighting again, this time on social media</h3>
-                        <p class="w-auto h-auto font-jakarta font-normal text-xs leading-[123.9%] text-white ">Boxing star Ryan Garcia and his promoter, Hall of Fame fighter Oscar De La Hoya, reignited their war of words via Twitter on</p>
+                <!-- Article 3 -->
+               <article class="flex flex-col sm:flex-row gap-4 border-b border-white/30 pb-3">
+                    <div class="w-full sm:w-1/3 aspect-video md:h-28 bg-cover bg-center rounded-md flex-shrink-0 bg-[url(https://picsum.photos/seed/semiconductorboxing/293/184)]"></div> 
+                    <div class="flex flex-col justify-center sm:w-2/3">
+                        <div class="font-jakarta font-medium text-[10px] text-white/60 mb-1">QuantumBits - 01 June 2023</div> 
+                        <h3 class="font-jakarta font-normal text-base md:text-lg leading-snug text-white mb-1">Investment Pours into Next-Generation Semiconductor Research</h3>
+                        <p class="font-jakarta font-normal text-xs leading-relaxed text-white/80 hidden sm:block line-clamp-2">Governments and private firms are heavily funding R&D for quantum computing and AI-specific chips.</p>
                     </div>
                 </article>
             </div>
         </div>
     </section>
 
-    <!-- Order 10: Hero Section Bottom -->
-    <section class="w-full h-[200px] md:h-[564px] relative flex items-center justify-center bg-cover bg-center bg-[url(static/images/fuel_ambition.png)] py-14 md:py-0">
-        <div class="relative z-10 flex justify-center items-center w-full h-full px-4 text-center">
-            <a href="#" class="inline-block relative md:hidden">
-                <img src="static/images/checkout_magazine_button.png" alt="Checkout Podcast Button - Mobile" class="h-auto w-full max-w-[160px] sm:max-w-[200px] hover:opacity-90 transition-opacity" style="scale: 0.7; top: 3.6rem; position: relative;">
-            </a>
-            <a href="#" class="hidden md:inline-block" style="transform: scale(0.5); position: relative; top: 10rem;">
-                <img src="static/images/checkout_magazine_button.png" alt="Checkout Podcast Button - Desktop" class="block w-full h-auto hover:opacity-90 transition-opacity">
-            </a>
-        </div>
+    <!-- Order 10: Hero Section Bottom (Refactored) -->
+    <section class="w-full aspect-[120/47] relative bg-contain bg-no-repeat bg-center bg-[url(static/images/fuel_ambition.png)] my-5">
+        <!-- Single button positioned absolutely -->
+        <a href="#" class="absolute bottom-[18%] left-[50%] -translate-x-1/2 w-[20%] max-w-[300px] hover:opacity-90 transition-opacity">
+            <img src="static/images/checkout_magazine_button.png" alt="Checkout Magazine Button" class="block w-full h-auto">
+        </a>
     </section>
 
 
 
     <!-- Order 11: AI / Lifestyle Section -->
-    <section class="w-full h-auto relative px-4 md:px-[34px] py-9 my-5">
+    <section class="w-full h-auto relative px-4 md:px-[34px] my-5">
          <div class="relative w-full h-auto flex flex-col">
              <!-- Section Header -->
              <div class="relative w-full h-[42px] mb-[25px]">
@@ -607,67 +602,69 @@
          </div>
      </section>
 
-    <!-- Order 12: WhatsApp Newsletter Section -->
-    <section class="flex flex-col md:flex-row justify-center items-stretch px-4 md:px-[30px] py-9 gap-[15px] w-full h-auto my-5">
-        <!-- Left Side (Form) -->
-         <div class="w-full md:w-[625px] min-h-[625px] bg-gradient-to-r from-[#3533CD] to-[#0A0A24] rounded-[15px] relative p-8 md:p-[43px_57px] flex flex-col text-white">
-             <h2 class="w-full md:w-[475px] font-jakarta font-bold text-3xl md:text-[40px] leading-[1.4] mb-[16px]">Get Weekly WhatsApp Newsletters</h2>
-             <p class="w-full md:w-[504px] font-jakarta font-semibold text-lg md:text-[20px] leading-[1.6] mb-[21px]">on Latest Funding, Tech News and Business News?</p>
-             <form class="relative w-full flex flex-col gap-[18px]">
-                 <div class="flex flex-col md:flex-row gap-[15px]">
-                     <input type="text" placeholder="First Name" required class="flex-grow h-[36px] rounded-[4px] border-none bg-white px-[15px] py-[5px] font-jakarta text-base text-gray-900 placeholder:text-gray-400 placeholder:font-normal focus:ring-2 focus:ring-bol-purple">
-                     <input type="text" placeholder="Last Name" required class="flex-grow h-[36px] rounded-[4px] border-none bg-white px-[15px] py-[5px] font-jakarta text-base text-gray-900 placeholder:text-gray-400 placeholder:font-normal focus:ring-2 focus:ring-bol-purple">
-                 </div>
-                 <div>
-                     <input type="text" placeholder="Company Name" required class="w-full h-[36px] rounded-[4px] border-none bg-white px-[15px] py-[5px] font-jakarta text-base text-gray-900 placeholder:text-gray-400 placeholder:font-normal focus:ring-2 focus:ring-bol-purple">
-                 </div>
-                 <div class="flex flex-col md:flex-row gap-[15px]">
-                     <input type="text" placeholder="Your Designation" required class="flex-grow h-[36px] rounded-[4px] border-none bg-white px-[15px] py-[5px] font-jakarta text-base text-gray-900 placeholder:text-gray-400 placeholder:font-normal focus:ring-2 focus:ring-bol-purple">
-                     <div class="flex-grow relative location-input-wrapper">
-                         <input type="text" placeholder="Location" id="location" required class="w-full h-[36px] rounded-[4px] border-none bg-white px-[15px] py-[5px] font-jakarta text-base text-gray-900 placeholder:text-gray-400 placeholder:font-normal focus:ring-2 focus:ring-bol-purple appearance-none"> 
-                         <!-- Arrow added via CSS -->
+    <!-- Order 12: WhatsApp Newsletter Section (Refactored) -->
+    <section class="w-full max-w-7xl mx-auto px-4 md:px-8 py-9 my-5">
+        <div class="flex flex-col md:flex-row items-stretch gap-8">
+            <!-- Left Side (Form) -->
+             <div class="w-full md:w-1/2 bg-gradient-to-r from-[#3533CD] to-[#0A0A24] rounded-[15px] p-8 flex flex-col text-white">
+                 <h2 class="font-jakarta font-bold text-3xl md:text-4xl leading-tight mb-4">Get Weekly WhatsApp Newsletters</h2>
+                 <p class="font-jakarta font-semibold text-lg md:text-xl leading-relaxed mb-6">on Latest Funding, Tech News and Business News?</p>
+                 <form class="flex flex-col gap-5"> 
+                     <div class="flex flex-col sm:flex-row gap-4">
+                         <input type="text" placeholder="First Name" required class="w-full sm:w-1/2 h-10 rounded-md border-none bg-white px-4 py-2 font-jakarta text-base text-gray-900 placeholder:text-gray-400 placeholder:font-normal focus:ring-2 focus:ring-bol-purple">
+                         <input type="text" placeholder="Last Name" required class="w-full sm:w-1/2 h-10 rounded-md border-none bg-white px-4 py-2 font-jakarta text-base text-gray-900 placeholder:text-gray-400 placeholder:font-normal focus:ring-2 focus:ring-bol-purple">
                      </div>
-                 </div>
-                 <div class="flex flex-col gap-[11px]">
-                     <div class="font-jakarta font-normal text-base">Choose Categories</div>
-                     <div class="flex flex-wrap gap-x-5 gap-y-3 items-center">
-                         <div class="flex items-center gap-[7px]">
-                             <input type="checkbox" id="cat-ai" class="appearance-none w-[18px] h-[18px] bg-white border border-[#B1B1B3] rounded-[2px] cursor-pointer relative checked:bg-bol-purple checked:border-bol-purple focus:ring-bol-purple">
-                             <label for="cat-ai" class="font-jakarta font-bold text-base cursor-pointer select-none">AI</label>
-                         </div>
-                         <div class="flex items-center gap-[7px]">
-                             <input type="checkbox" id="cat-business" class="appearance-none w-[18px] h-[18px] bg-white border border-[#B1B1B3] rounded-[2px] cursor-pointer relative checked:bg-bol-purple checked:border-bol-purple focus:ring-bol-purple">
-                             <label for="cat-business" class="font-jakarta font-bold text-base cursor-pointer select-none">Business</label>
-                         </div>
-                          <div class="flex items-center gap-[7px]">
-                             <input type="checkbox" id="cat-startups" class="appearance-none w-[18px] h-[18px] bg-white border border-[#B1B1B3] rounded-[2px] cursor-pointer relative checked:bg-bol-purple checked:border-bol-purple focus:ring-bol-purple">
-                             <label for="cat-startups" class="font-jakarta font-bold text-base cursor-pointer select-none">Startups</label>
-                         </div>
-                         <div class="flex items-center gap-[7px]">
-                             <input type="checkbox" id="cat-entrep" class="appearance-none w-[18px] h-[18px] bg-white border border-[#B1B1B3] rounded-[2px] cursor-pointer relative checked:bg-bol-purple checked:border-bol-purple focus:ring-bol-purple">
-                             <label for="cat-entrep" class="font-jakarta font-bold text-base cursor-pointer select-none">Entrepreneurship</label>
+                     <div>
+                         <input type="text" placeholder="Company Name" required class="w-full h-10 rounded-md border-none bg-white px-4 py-2 font-jakarta text-base text-gray-900 placeholder:text-gray-400 placeholder:font-normal focus:ring-2 focus:ring-bol-purple">
+                     </div>
+                     <div class="flex flex-col sm:flex-row gap-4">
+                         <input type="text" placeholder="Your Designation" required class="flex-grow h-10 rounded-md border-none bg-white px-4 py-2 font-jakarta text-base text-gray-900 placeholder:text-gray-400 placeholder:font-normal focus:ring-2 focus:ring-bol-purple">
+                         <div class="flex-grow relative location-input-wrapper">
+                             <input type="text" placeholder="Location" id="location" required class="w-full h-10 rounded-md border-none bg-white px-4 py-2 font-jakarta text-base text-gray-900 placeholder:text-gray-400 placeholder:font-normal focus:ring-2 focus:ring-bol-purple appearance-none">
+                             <!-- Arrow added via CSS -->
                          </div>
                      </div>
-                 </div>
-                 <div class="relative flex items-center w-full md:w-[224px]">
-                     <span class="absolute left-[10px] top-1/2 -translate-y-1/2 w-[26px] h-[26px] flex items-center justify-center pointer-events-none">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" fill="#25D366" width="20" height="20">
-                            <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
-                        </svg>
-                     </span></svg>
-                     <input type="tel" placeholder="Whatsapp No." required class="w-full h-[36px] rounded-[4px] border-none bg-white pl-[45px] pr-[15px] py-[5px] font-jakarta text-base text-gray-900 placeholder:text-gray-400 placeholder:font-normal focus:ring-2 focus:ring-bol-purple">
-                 </div>
-                 <div class="mt-[17px]">
-                     <button type="submit" class="w-[132px] h-[39px] bg-gradient-to-r from-black to-[#3533CD] rounded-full border-none font-jakarta font-semibold text-base text-center text-white cursor-pointer hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-black focus:ring-white transition duration-150 ease-in-out">Subscribe</button>
-                 </div>
-             </form>
+                     <div class="flex flex-col gap-3">
+                         <div class="font-jakarta font-normal text-base">Choose Categories</div>
+                         <div class="flex flex-wrap gap-x-5 gap-y-3 items-center">
+                             <div class="flex items-center gap-2">
+                                 <input type="checkbox" id="cat-ai" class="appearance-none w-5 h-5 bg-white border border-[#B1B1B3] rounded-sm cursor-pointer relative checked:bg-bol-purple checked:border-bol-purple focus:ring-bol-purple">
+                                 <label for="cat-ai" class="font-jakarta font-bold text-base cursor-pointer select-none">AI</label>
+                             </div>
+                             <div class="flex items-center gap-2">
+                                 <input type="checkbox" id="cat-business" class="appearance-none w-5 h-5 bg-white border border-[#B1B1B3] rounded-sm cursor-pointer relative checked:bg-bol-purple checked:border-bol-purple focus:ring-bol-purple">
+                                 <label for="cat-business" class="font-jakarta font-bold text-base cursor-pointer select-none">Business</label>
+                             </div>
+                              <div class="flex items-center gap-2">
+                                 <input type="checkbox" id="cat-startups" class="appearance-none w-5 h-5 bg-white border border-[#B1B1B3] rounded-sm cursor-pointer relative checked:bg-bol-purple checked:border-bol-purple focus:ring-bol-purple">
+                                 <label for="cat-startups" class="font-jakarta font-bold text-base cursor-pointer select-none">Startups</label>
+                             </div>
+                             <div class="flex items-center gap-2">
+                                 <input type="checkbox" id="cat-entrep" class="appearance-none w-5 h-5 bg-white border border-[#B1B1B3] rounded-sm cursor-pointer relative checked:bg-bol-purple checked:border-bol-purple focus:ring-bol-purple">
+                                 <label for="cat-entrep" class="font-jakarta font-bold text-base cursor-pointer select-none">Entrepreneurship</label>
+                             </div>
+                         </div>
+                     </div>
+                     <div class="relative flex items-center w-full"> 
+                         <span class="absolute left-3 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center pointer-events-none">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" fill="#25D366" width="20" height="20">
+                                <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
+                            </svg>
+                         </span>
+                         <input type="tel" placeholder="Whatsapp No." required class="w-full h-10 rounded-md border-none bg-white pl-12 pr-4 py-2 font-jakarta text-base text-gray-900 placeholder:text-gray-400 placeholder:font-normal focus:ring-2 focus:ring-bol-purple">
+                     </div>
+                     <div class="mt-4"> 
+                         <button type="submit" class="px-6 py-2 bg-gradient-to-r from-black to-[#3533CD] rounded-full border-none font-jakarta font-semibold text-base text-center text-white cursor-pointer hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-black focus:ring-white transition duration-150 ease-in-out w-auto">Subscribe</button> 
+                     </div>
+                 </form>
+            </div>
+            <!-- Right Side (Image) -->
+            <div class="w-full md:w-1/2 h-80 md:h-auto bg-cover bg-center rounded-[15px] mt-4 md:mt-0 bg-[url(https://picsum.photos/seed/whatsappvisual/716/625)]"></div> 
         </div>
-        <!-- Right Side (Image) -->
-        <div class="w-full md:w-[716px] h-[300px] md:h-[625px] bg-cover bg-center rounded-[15px] mt-4 md:mt-0 bg-[url(https://picsum.photos/seed/whatsappvisual/716/625)] flex-shrink-0"></div>
     </section>
 
     <!-- Order 13: AI / Lifestyle Section 2 (Duplicate Structure) -->
-    <section class="w-full h-auto relative px-4 md:px-[34px] py-9 my-5">
+    <section class="w-full h-auto relative px-4 md:px-[34px]" style="padding-bottom: 2.25rem;">
          <div class="relative w-full h-auto flex flex-col">
              <!-- Section Header -->
              <div class="relative w-full h-[42px] mb-[25px]">
@@ -728,18 +725,12 @@
          </div>
     </section>
 
-    <!-- Order 14: Footer Section 1 -->
-    <footer class=" w-full h-auto md:h-[750px] relative flex items-center justify-center bg-cover bg-center bg-[url(static/images/footer1.png)] py-24 md:py-0 ">
-        <div class="relative z-10 flex justify-center items-center w-full h-full px-4 text-center">
-        <!-- Mobile Button -->
-        <a href="#" class=" inline-block relative scale-[.6] top-[3.3rem] left-[-8rem] md:hidden ">
-            <img src="static/images/checkout_magazine_button.png" alt="Footer Action Button - Mobile" class=" h-auto max-h-[250px] w-full max-w-[160px] sm:max-w-[200px] hover:opacity-90 transition-opacity">
+    <!-- Order 14: Footer Section 1 (Refactored) -->
+    <footer class="w-full aspect-[120/60] relative bg-cover bg-no-repeat bg-center bg-[url(static/images/footer1.png)]">
+        <!-- Single button positioned absolutely -->
+        <a href="#" class="absolute bottom-[22%] left-[10%] w-[20%] max-w-[280px] hover:opacity-90 transition-opacity">
+            <img src="static/images/checkout_magazine_button.png" alt="Footer Action Button" class="block w-full h-auto">
         </a>
-        <!-- Desktop Button -->
-        <a href="#" class="hidden md:inline-block" style="transform: scale(0.5); position: relative; top: 11rem; left: -26.7rem;">
-            <img src="static/images/checkout_magazine_button.png" alt="Footer Action Button - Desktop" class=" block w-full h-auto hover:opacity-90 transition-opacity">
-        </a>
-        </div>
     </footer>
 
     <!-- Order 15: Footer Section 2 -->
@@ -890,4 +881,5 @@
 
 </script>
 </body>
+</html>
 </html>

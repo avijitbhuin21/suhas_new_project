@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page Recreation (Tailwind)</title>
+    <title>Brands Out Loud</title>
     <!-- Include Tailwind CSS (Use CDN for development, replace with build process for production) -->
     <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
     <!-- Google Fonts -->
@@ -11,6 +11,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <!-- Consider reducing font weights/families if not all are used for optimization -->
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=IBM+Plex+Sans:wght@600&family=Inter:wght@500&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&family=Roboto:wght@500&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="static/icon/website_icon.png">
      <!-- Load Helvetica Now Display font if available (add font-face or ensure user has it) -->
      <!-- For demonstration, we rely on the fallback defined in Tailwind config -->
 <!-- Minimal Custom CSS for things Tailwind doesn't handle easily -->
@@ -224,52 +225,57 @@
     </script>
 
     <!-- Order 2: News Section -->
-    <section class="w-full h-auto md:h-[609px] relative py-5 md:py-0 px-4 md:px-0">
-        <!-- Desktop-only Lines absolutely positioned relative to this section -->
-        <div class="absolute w-[279px] h-0 left-[358px] top-[244px] border-t border-[#B8C2CE] hidden md:block"></div>
-        <div class="absolute w-[279px] h-0 left-[358px] top-[413px] border-t border-[#B8C2CE] hidden md:block"></div>
+    <section class="w-full py-6 px-4 md:px-8">
         <!-- Container for posts -->
-        <!-- Using Grid for mobile, explicit positioning for desktop -->
-        <div class="grid grid-cols-1 md:grid-cols-[minmax(0,_782px)_1fr] gap-4 md:gap-[15px] w-full md:w-[1365px] md:h-[533px] md:relative md:left-[38px] md:top-[19px]">
-            <!-- Post 1 (Large) -->
-            <article class="relative w-full md:h-[529px]">
-                <!-- Image with Gradient Overlay -->
-                <div class="w-full h-[300px] md:h-[394px] bg-cover bg-center relative">
-                     <div class="absolute inset-0 bg-[linear-gradient(0deg,rgba(0,0,0,0.6),rgba(0,0,0,0.6))]"></div>
+        <div class="flex flex-col md:flex-row gap-6 md:gap-8 max-w-7xl mx-auto">
+            <!-- Post 1 (Large) - Takes up more space on desktop -->
+            <article class="flex flex-col w-full md:w-3/5">
+                <!-- Image Container -->
+                <div class="w-full aspect-video bg-cover bg-center relative  overflow-hidden">
+                     <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                      <div class="w-full h-full bg-cover bg-center bg-[url(https://picsum.photos/seed/post1large/782/394)]"></div>
                  </div>
-                 <div class="p-4 md:p-0 md:absolute md:w-[168px] md:h-[12px] md:left-[29.17px] md:top-[421px] mt-2 md:mt-0 font-jakarta font-normal text-[12px] leading-[1.1] text-[#171717]">Craig Bator - 27 Dec 2020</div>
-                <h2 class="p-4 md:p-0 md:absolute md:w-[570px] md:h-auto md:left-[29px] md:top-[439px] font-jakarta font-medium text-2xl md:text-[36px] leading-tight md:leading-[45px] capitalize text-[#171717]">After all is said and done, more is done</h2>
+                 <!-- Text Content -->
+                 <div class="mt-3">
+                    <div class="font-jakarta font-normal text-xs text-gray-600 mb-1">Craig Bator - 27 Dec 2020</div>
+                    <h2 class="font-jakarta font-medium text-2xl md:text-[36px] leading-tight capitalize text-gray-900">After all is said and done, more is done</h2>
+                </div>
             </article>
 
-            <!-- Right side posts container -->
-             <div class="grid grid-cols-2 md:grid-cols-2 gap-4 md:gap-y-[24px] md:gap-x-[15px] md:h-full">
+            <!-- Right side posts container - Takes less space on desktop -->
+             <div class="grid grid-cols-2 gap-4 md:gap-x-4 md:gap-y-6 w-full md:w-2/5 mt-6 md:mt-0">
                  <!-- Post 2 (Small Top Left on desktop grid) -->
-                 <article class="relative w-full md:h-[247px]">
-                     <div class="w-full h-[175px] bg-cover bg-center relative">
-                          <div class="absolute inset-0 bg-[linear-gradient(0deg,rgba(0,0,0,0.4),rgba(0,0,0,0.4))]"></div>
+                 <article class="flex flex-col">
+                     <div class="w-full aspect-video bg-cover bg-center relative  overflow-hidden">
+                          <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
                           <div class="w-full h-full bg-cover bg-center bg-[url(https://picsum.photos/seed/post2small/274/175)]"></div>
                       </div>
-                     <div class="p-2 md:p-0 md:absolute md:w-[140px] md:h-[10px] md:left-[29.33px] md:top-[195px] mt-1 md:mt-0 font-jakarta font-normal text-[10px] leading-[1] text-[#313131]">Craig Bator - 27 Dec 2020</div>
-                     <h3 class="p-2 md:p-0 md:absolute md:w-[215px] md:h-auto md:left-[29px] md:top-[211px] font-jakarta font-medium text-sm md:text-[14px] leading-[18px] capitalize text-[#313131]">They’re back! Kennedy Darling named to return to</h3>
+                     <div class="mt-2">
+                        <div class="font-jakarta font-normal text-[10px] text-gray-500 mb-0.5">Craig Bator - 27 Dec 2020</div>
+                        <h3 class="font-jakarta font-medium text-sm leading-snug capitalize text-gray-800">They’re back! Kennedy Darling named to return to</h3>
+                    </div>
                  </article>
                  <!-- Post 3 (Small Top Right on desktop grid) -->
-                 <article class="relative w-full md:h-[247px]">
-                      <div class="w-full h-[175px] bg-cover bg-center relative">
-                           <div class="absolute inset-0 bg-[linear-gradient(0deg,rgba(0,0,0,0.4),rgba(0,0,0,0.4))]"></div>
+                 <article class="flex flex-col">
+                      <div class="w-full aspect-video bg-cover bg-center relative  overflow-hidden">
+                           <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
                            <div class="w-full h-full bg-cover bg-center bg-[url(https://picsum.photos/seed/post3small/274/175)]"></div>
                        </div>
-                      <div class="p-2 md:p-0 md:absolute md:w-[140px] md:h-[10px] md:left-[29px] md:top-[195px] mt-1 md:mt-0 font-jakarta font-normal text-[10px] leading-[1] text-[#000000]">Craig Bator - 27 Dec 2020</div>
-                      <h3 class="p-2 md:p-0 md:absolute md:w-[192px] md:h-auto md:left-[29px] md:top-[211px] font-jakarta font-medium text-sm md:text-[14px] leading-[18px] capitalize text-[#000000]">Swiss authorities say Uber drivers should</h3>
+                      <div class="mt-2">
+                        <div class="font-jakarta font-normal text-[10px] text-gray-500 mb-0.5">Craig Bator - 27 Dec 2020</div>
+                        <h3 class="font-jakarta font-medium text-sm leading-snug capitalize text-gray-800">Swiss authorities say Uber drivers should</h3>
+                    </div>
                  </article>
-                 <!-- Post 4 (Medium Bottom Right on desktop grid) - Spans 2 cols on mobile & desktop -->
-                 <article class="relative w-full md:h-[262px] col-span-2">
-                      <div class="w-full h-[161px] bg-cover bg-center relative">
-                           <div class="absolute inset-0 bg-[linear-gradient(0deg,rgba(0,0,0,0.4),rgba(0,0,0,0.4))]"></div>
+                 <!-- Post 4 (Medium Bottom Right on desktop grid) - Spans 2 cols -->
+                 <article class="flex flex-col col-span-2 mt-2 md:mt-0">
+                      <div class="w-full h-40 bg-cover bg-center relative overflow-hidden"> <!-- Reduced height from aspect-video -->
+                           <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
                            <div class="w-full h-full bg-cover bg-center bg-[url(https://picsum.photos/seed/post4medium/566/161)]"></div>
                        </div>
-                     <div class="p-2 md:p-0 md:absolute md:w-[168px] md:h-[12px] md:left-[29.33px] md:top-[184px] mt-1 md:mt-0 font-jakarta font-normal text-[12px] leading-[1.1] text-[#000000]">Craig Bator - 27 Dec 2020</div>
-                     <h2 class="p-2 md:p-0 md:absolute md:w-[363px] md:h-auto md:left-[29px] md:top-[202px] font-jakarta font-medium text-lg md:text-[24px] leading-[30px] capitalize text-[#000000]">Tourism in Dubai is booming by international tourist</h2>
+                     <div class="mt-2">
+                        <div class="font-jakarta font-normal text-xs text-gray-600 mb-1">Craig Bator - 27 Dec 2020</div>
+                        <h2 class="font-jakarta font-medium text-xl md:text-[24px] leading-tight capitalize text-gray-900">Tourism in Dubai is booming by international tourist</h2>
+                    </div>
                  </article>
              </div>
         </div>
