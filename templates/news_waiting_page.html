@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>News Page-Loading...</title>
-    <!-- Tailwind CSS CDN -->
+    
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Font: Plus Jakarta Sans -->
+    <script src="https://unpkg.com/@phosphor-icons/web@2.0.3"></script>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700&display=swap" rel="stylesheet">
@@ -34,130 +35,267 @@
             text-align: center;
             border: 1px dashed #ccc;
         }
-    </style>
-</head>
-<body class="flex flex-col items-center bg-white"> <!-- Removed justify-center, fixed w/h, mx-auto -->
+        ::-webkit-scrollbar {
+            display: none;
+        }
 
-    <!-- Outer Header (Banner Ad) -->
+        body {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        :root {
+            --clr-dark-black: #121212;
+            --clr-bdr-gray: #2a2a2a;
+            --clr-white: #fff;
+            --clr-primary: #9747FF;
+            --clr-primary-light: #CDA7FF;
+            --clr-gray-800: #1e1e1e;
+        }
+        .mobile-menu-item {
+            padding: 0.875rem 1rem;
+            background: var(--clr-dark-black);
+            border-bottom: solid 1px var(--clr-bdr-gray);
+            color: var(--clr-white); /* This should now work */
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: background-color 0.2s ease;
+        }
+        
+        .mobile-menu-item:hover {
+            background-color: #1a1a1a;
+        }
+        
+        .mobile-menu-item:active {
+            background-color: #252525;
+        }
+
+        .item-title {
+            flex-grow: 1;
+            margin-left: 0.75rem;
+            font-weight: 500;
+        }
+
+        .hamburger-line {
+            transition: all 0.3s ease;
+        }
+
+        .hamburger-active .hamburger-line:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+
+        .hamburger-active .hamburger-line:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger-active .hamburger-line:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+
+        @keyframes shine {
+            from {
+                transform: translateX(-100%);
+            }
+            to {
+                transform: translateX(100%);
+            }
+        }
+
+        .search-input {
+            transition: all 0.2s ease;
+        }
+        
+        .search-input:focus {
+            box-shadow: 0 0 0 2px rgba(151, 71, 255, 0.5);
+        }
+
+        .login-btn {
+            transition: all 0.2s ease;
+        }
+        
+        .login-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(205, 167, 255, 0.4);
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+                mobileMenuButton.classList.toggle('hamburger-active');
+                
+                if (!mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('slide-down');
+                } else {
+                    mobileMenu.classList.remove('slide-down');
+                }
+            });
+        });
+    </script>
+</head>
+<body class="flex flex-col items-center bg-white"> 
+
+    
     <!-- <header class="flex flex-col items-center justify-center px-[200px] py-2.5 gap-[13px] w-[1440px] h-[157px] bg-cover bg-center flex-none order-0 self-stretch grow-0" style="background-image: url('digital-marketing-agency-website-banner-ad-template-lzytv.png');">
     </header> -->
 
-    <!-- Inner Header (Navigation Bar) -->
+    
     <header class="w-full bg-black relative">
         <!-- Desktop Header -->
         <div class="hidden lg:flex flex-row justify-center items-center px-20 py-[10px] gap-[70px] h-[113px]">
-        <!-- Logo -->
-        <img src="static/images/header_logo.png" alt="Brands Out Loud Logo" class="w-20 h-20 flex-shrink-0">
-
-        <!-- Navigation Area -->
-        <nav class="flex flex-col items-stretch w-[700px] h-[93px] py-[14px] px-[18px] gap-[10px]">
-        <!-- Top Nav Row -->
-        <div class="flex flex-row justify-end items-center w-full gap-[60px] px-[30px]">
-        <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0">Careers</a>
-        <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0">Editorial</a>
-        <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0">Register</a>
-        <a href="#" class="bg-[#CDA7FF] rounded-[2px] px-2.5 py-0.5 text-[#0D0D0D] font-bold text-[10px] text-center flex-shrink-0">Login</a>
-        </div>
-        <!-- Separator Line -->
-        <div class="w-full h-[1px] bg-gradient-to-r from-black to-[#9747FF]"></div>
-        <!-- Bottom Nav Row -->
-        <div class="flex flex-row justify-end items-center w-full gap-[60px] px-2">
-        <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0">Newsletters</a>
-        <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0">Magazine</a>
-        <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0">Entrepreneurship</a>
-        <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0">Startups</a>
-        <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0">Business</a>
-        </div>
-        </nav>
+            <img src="static/images/header_logo.png" alt="Brands Out Loud Logo" class="w-20 h-20 flex-shrink-0">
+            <nav class="flex flex-col items-stretch w-[700px] h-[93px] py-[14px] px-[18px] gap-[10px]">
+                <div class="flex flex-row justify-end items-center w-full gap-[60px] px-[30px]">
+                    <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Careers </a>
+                    <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Editorial </a>
+                    <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Register </a>
+                    <a href="#" class="bg-[#CDA7FF] rounded-[2px] px-2.5 py-0.5 text-[#0D0D0D] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Login/Signup </a>
+                </div>
+                <div class="w-full h-[1px] bg-gradient-to-r from-black to-[#9747FF]"></div>
+                <div class="flex flex-row justify-end items-center w-full gap-[60px] px-2">
+                    <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Newsletters </a>
+                    <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Magazine </a>
+                    <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Entrepreneurship </a>
+                    <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Startups </a>
+                    <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Business </a>
+                </div>
+            </nav>
         </div>
 
         <!-- Mobile Header -->
-        <div class="flex lg:hidden justify-between items-center h-full h-[60px]">
-        <!-- Logo Section -->
-        <div class="flex items-center w-full"> <!-- Added w-full to allow span to take full width -->
-        <span class="flex-grow h-[60px] text-white text-[2rem] font-bold whitespace-nowrap text-center bg-gradient-to-r from-black to-[#3533CD] flex items-center justify-center">Brands Out Loud</span> <!-- Used arbitrary value for the correct color -->
-
+        <div class="flex lg:hidden items-center h-[68px] w-full bg-[#0D0D0D]">
+            <button id="mobile-menu-button" aria-label="Toggle Menu" class="h-full px-4 flex flex-col justify-center items-center space-y-[5px] bg-transparent focus:outline-none transition-colors duration-200 ease-in-out">
+                <span class="hamburger-line block w-6 h-[2px] bg-white rounded-full"></span>
+                <span class="hamburger-line block w-6 h-[2px] bg-white rounded-full"></span>
+                <span class="hamburger-line block w-6 h-[2px] bg-white rounded-full"></span>
+            </button>
+            
+            <div class="h-full flex items-center px-3 flex-shrink-0">
+                <img src="static/icon/website_icon.png" alt="Brands Out Loud Logo" class="h-10 w-auto">
+            </div>
+            
+            <div class="flex-grow px-3">
+                <div class="relative">
+                    <input type="text" placeholder="Search..." class="search-input w-full bg-[#1e1e1e] text-white text-sm rounded-full pl-10 pr-4 py-2.5 border border-[#2a2a2a] focus:outline-none focus:border-[#9747FF] transition-all">
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
+                        <i class="ph ph-magnifying-glass text-gray-400 text-lg"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Login button removed from here -->
         </div>
 
-        <!-- Hamburger Button -->
-        <button id="mobile-menu-button" aria-label="Toggle Menu" class="h-full px-4 flex flex-col justify-center items-center space-y-[6px] bg-black hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 flex-shrink-0"> <!-- Added flex-shrink-0 -->
-        <span class="block w-8 h-[3px] bg-white rounded-sm"></span>
-        <span class="block w-8 h-[3px] bg-white rounded-sm"></span>
-        <span class="block w-8 h-[3px] bg-white rounded-sm"></span>
-        </button>
-        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden lg:hidden absolute top-[68px] left-0 w-full bg-[#121212] z-50 shadow-lg border-t border-[#2a2a2a] overflow-hidden">
+            <div class="">
+                <!-- Login/Signup button -->
+                <div class="px-4 py-3">
+                    <a href="#" class="login-btn block w-full text-center bg-gradient-to-r from-[#9747FF] to-[#CDA7FF] rounded-full px-4 py-2.5 text-white font-medium text-sm shadow-lg hover:-translate-y-0.5 transition-all duration-300 relative overflow-hidden">
+                        <span class="relative z-10 flex items-center justify-center gap-2">
+                            <i class="ph ph-sign-in text-lg"></i>
+                            <span>Login/Signup</span>
+                        </span>
+                        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full animate-[shine_2s_infinite]"></div>
+                    </a>
+                </div>
 
-        <!-- Mobile Menu (Hidden by default) -->
-        <div id="mobile-menu" class="hidden lg:hidden absolute top-[58px] left-0 w-full bg-black z-50 py-4 shadow-lg">
-        <div class="grid grid-cols-2 gap-x-4 gap-y-2 px-6">
-        <!-- First Column -->
-        <div class="flex flex-col">
-        <h3 class="text-white font-bold text-sm mb-2 border-b border-gray-700 pb-1">Main Menu</h3>
-        <a href="#" class="text-white font-bold text-sm py-2">Careers</a>
-        <a href="#" class="text-white font-bold text-sm py-2">Editorial</a>
-        <a href="#" class="text-white font-bold text-sm py-2">Register</a>
-        <a href="#" class="bg-[#CDA7FF] rounded-[2px] px-2.5 py-2 text-[#0D0D0D] font-bold text-sm mb-4 inline-block w-max">Login</a>
-        </div>
+                <div class="mobile-menu-item">
+                    <i class="ph ph-book-open text-white text-lg"></i>
+                    <span class="item-title">Magazine</span>
+                    <i class="ph ph-caret-right"></i>
+                </div>
 
-        <!-- Second Column -->
-        <div class="flex flex-col">
-        <h3 class="text-white font-bold text-sm mb-2 border-b border-gray-700 pb-1">Categories</h3>
-        <a href="#" class="text-[#C4C3FF] font-bold text-sm py-2">Newsletters</a>
-        <a href="#" class="text-[#C4C3FF] font-bold text-sm py-2">Magazine</a>
-        <a href="#" class="text-[#C4C3FF] font-bold text-sm py-2">Entrepreneurship</a>
-        <a href="#" class="text-[#C4C3FF] font-bold text-sm py-2">Startups</a>
-        <a href="#" class="text-[#C4C3FF] font-bold text-sm py-2">Business</a>
-        </div>
-        </div>
+                <div class="mobile-menu-item">
+                    <i class="ph ph-lightning text-white text-lg"></i>
+                    <span class="item-title">Startups</span>
+                    <i class="ph ph-caret-right"></i>
+                </div>
+
+                <div class="mobile-menu-item">
+                    <i class="ph ph-rocket text-white text-lg"></i>
+                    <span class="item-title">Entrepreneurship</span>
+                    <i class="ph ph-caret-right"></i>
+                </div>
+
+                <div class="mobile-menu-item">
+                    <i class="ph ph-envelope-open text-white text-lg"></i>
+                    <span class="item-title">Newsletters</span>
+                    <i class="ph ph-caret-right"></i>
+                </div>
+
+                <div class="mobile-menu-item">
+                    <i class="ph ph-newspaper text-white text-lg"></i>
+                    <span class="item-title">Editorial</span>
+                    <i class="ph ph-caret-right"></i>
+                </div>
+
+                <div class="mobile-menu-item">
+                    <i class="ph ph-buildings text-white text-lg"></i>
+                    <span class="item-title">Business</span>
+                    <i class="ph ph-caret-right"></i>
+                </div>
+
+                <div class="mobile-menu-item">
+                    <i class="ph ph-briefcase text-white text-lg"></i>
+                    <span class="item-title">Careers</span>
+                    <i class="ph ph-caret-right"></i>
+                </div>
+                
+            </div>
+                
         </div>
     </header>
 
-    <!-- Frame 8 - Main Content Area -->
-    <!-- Frame 8 - Main Content Area - Adjusted for flex layout -->
-    <main class="relative w-full flex-grow flex items-center justify-center flex-none order-1 self-stretch grow"> <!-- Changed order, added flex-grow -->
+    
+    
+    <main class="relative w-full flex-grow flex items-center justify-center flex-none order-1 self-stretch grow"> 
 
-        <!-- Line 72 -->
+        
         <div class="absolute w-[279px] h-px left-[358px] top-[244px] border-t border-[#B8C2CE]"></div>
 
-        <!-- Line 73 -->
+        
         <div class="absolute w-[279px] h-px left-[358px] top-[413px] border-t border-[#B8C2CE]"></div>
 
-        <!-- Removed absolute positioning, let flexbox handle centering -->
+        
         <div class="relative w-[1231px] h-[647px]">
-            <!-- Post-1 container (optional, could merge with News container) -->
-            <div class="relative w-full h-full"> <!-- Changed Post-1 to relative for its children -->
+            
+            <div class="relative w-full h-full"> 
 
-                <!-- Image Container -->
-                <div class="absolute w-full h-[570px] left-0 top-0"> <!-- Positioned relative to Post-1 -->
-                    <!-- Background Image -->
-                    <div class="absolute inset-0 bg-cover bg-center bg-placeholder" style="background-image: url('https://picsum.photos/1920/1080');"> <!-- Image path needed -->
-                       <!-- Placeholder Text: Image Area -->
+                
+                <div class="absolute w-full h-[570px] left-0 top-0"> 
+                    
+                    <div class="absolute inset-0 bg-cover bg-center bg-placeholder" style="background-image: url('https://picsum.photos/1920/1080');"> 
+                       
                     </div>
                 </div>
 
-                <!-- Content Overlays -->
-                <!-- Craig Bator - 27 Dec 2020 -->
+                
+                
                 <p class="absolute w-[265px] h-[12px] left-[45.93px] top-[446px] font-normal text-xs leading-[100.9%] text-white">
-                    <!-- Original CSS had left: 149.93px relative to Post-1 which was left: 104px, so effective left from parent News container is ~46px -->
+                    
                     Craig Bator - 27 Dec 2020
                 </p>
 
-                <!-- MIDDLE AD Text -->
+                
                 <p class="absolute w-[898px] h-[45px] left-[45.67px] top-[464px] font-medium text-4xl leading-[45px] capitalize text-white">
-                    <!-- Original CSS had left: 149.67px relative to Post-1 which was left: 104px, so effective left is ~46px -->
+                    
                     MIDDLE AD
                 </p>
 
-                <!-- Click Here To Proceed... Text -->
-                <!-- This text was positioned relative to the viewport center in CSS, not the image -->
-                <!-- Replicating absolute positioning within the News container -->
+                
+                
+                
                 <p class="absolute w-11/12 sm:w-[560px] h-auto sm:h-[25px] left-1/2 -translate-x-1/2 top-[617px] font-medium text-base sm:text-xl leading-snug sm:leading-[25px] text-center capitalize text-black">
                    Click Here To Proceed To <a href="https://brandsoutloud.com" target="_blank" rel="noopener noreferrer" class="underline text-blue-600 hover:text-blue-800">brandsoutloud.com</a>
                </p>
 
-                <!-- WAIT FOR 9 Seconds Text -->
-                <!-- Also positioned relative to viewport center in CSS -->
-                 <p id="countdown" class="absolute w-auto sm:w-[277px] h-[20px] left-1/2 -translate-x-1/2 top-[652px] font-medium text-sm sm:text-base leading-tight sm:leading-5 text-center capitalize text-red-500"> <!-- text-[#FF0000] -->
+                
+                
+                 <p id="countdown" class="absolute w-auto sm:w-[277px] h-[20px] left-1/2 -translate-x-1/2 top-[652px] font-medium text-sm sm:text-base leading-tight sm:leading-5 text-center capitalize text-red-500"> 
                     WAIT FOR 9 Seconds
                 </p>
 
@@ -167,15 +305,6 @@
 
     <script>
         // Hamburger Menu Toggle
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-
-        if (mobileMenuButton && mobileMenu) {
-            mobileMenuButton.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-            });
-        }
-
         // Countdown Timer
         let countdownElement = document.getElementById('countdown');
         let seconds = 9;

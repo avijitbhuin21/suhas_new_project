@@ -4,23 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Category</title>
-    <!-- Include Tailwind CSS (Use CDN for development, replace with build process for production) -->
+    
     <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
-    <!-- Google Fonts -->
+    <script src="https://unpkg.com/@phosphor-icons/web@2.0.3"></script>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Consider reducing font weights/families if not all are used for optimization -->
+    
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=IBM+Plex+Sans:wght@600&family=Inter:wght@500&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&family=Roboto:wght@500&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="static/icon/website_icon.png">
-     <!-- Load Helvetica Now Display font if available (add font-face or ensure user has it) -->
-     <!-- For demonstration, we rely on the fallback defined in Tailwind config -->
-<!-- Minimal Custom CSS for things Tailwind doesn't handle easily -->
+     
+     
+
 <style>
     @media screen and (min-width: 1024px) {
         body {
-            transform: scale(1.3248);
+            transform: scale(1.33);
             transform-origin: 0 0;
-            width: 75.5%;
+            width: 75.3%;
         }
     }
 
@@ -29,7 +30,7 @@
         -webkit-text-fill-color: transparent;
         background-clip: text;
         text-fill-color: transparent;
-        display: inline-block; 
+        display: inline-block;
     }
 
     .strip-startups { background-image: linear-gradient(93.43deg, #000000 6.93%, #3533CD 94.41%); }
@@ -47,7 +48,7 @@
     .button-icon-plus-shape::after {
         content: '';
         position: absolute;
-        background-color: currentColor; 
+        background-color: currentColor;
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
@@ -56,7 +57,7 @@
     .button-icon-plus-shape::after { width: 2px; height: 12px; }
 
     .button-icon-union-shape {
-         background: currentColor; 
+         background: currentColor;
 
     }
 
@@ -66,11 +67,11 @@
         width: 0; height: 0;
         border-left: 5px solid transparent;
         border-right: 5px solid transparent;
-        border-top: 6px solid #414141; 
-        right: 15px; 
+        border-top: 6px solid #414141;
+        right: 15px;
         top: 50%;
         transform: translateY(-50%);
-        pointer-events: none; 
+        pointer-events: none;
     }
 
     input[type="checkbox"]:checked {
@@ -81,6 +82,98 @@
         background-position: center;
         background-repeat: no-repeat;
     }
+    ::-webkit-scrollbar {
+        display: none;
+    }
+
+    body {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+        @keyframes slideDown {
+            from { transform: translateY(-10px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .slide-down {
+            animation: slideDown 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        :root {
+            --clr-dark-black: #121212;
+            --clr-bdr-gray: #2a2a2a;
+            --clr-white: #fff;
+            --clr-primary: #9747FF;
+            --clr-primary-light: #CDA7FF;
+            --clr-gray-800: #1e1e1e;
+        }
+
+        .mobile-menu-item {
+            padding: 0.875rem 1rem;
+            background: var(--clr-dark-black);
+            border-bottom: solid 1px var(--clr-bdr-gray);
+            color: var(--clr-white);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: background-color 0.2s ease;
+        }
+        
+        .mobile-menu-item:hover {
+            background-color: #1a1a1a;
+        }
+        
+        .mobile-menu-item:active {
+            background-color: #252525;
+        }
+
+        .item-title {
+            flex-grow: 1;
+            margin-left: 0.75rem;
+            font-weight: 500;
+        }
+
+        .hamburger-line {
+            transition: all 0.3s ease;
+        }
+
+        .hamburger-active .hamburger-line:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+
+        .hamburger-active .hamburger-line:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger-active .hamburger-line:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+
+        .search-input {
+            transition: all 0.2s ease;
+        }
+        
+        .search-input:focus {
+            box-shadow: 0 0 0 2px rgba(151, 71, 255, 0.5);
+        }
+
+        @keyframes shine {
+            from {
+                transform: translateX(-100%);
+            }
+            to {
+                transform: translateX(100%);
+            }
+        }
+
+        .login-btn {
+            transition: all 0.2s ease;
+        }
+        
+        .login-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(205, 167, 255, 0.4);
+        }
 </style>
 
 <script>
@@ -127,185 +220,221 @@
     }
   }
 </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+                mobileMenuButton.classList.toggle('hamburger-active');
+                
+                if (!mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('slide-down');
+                } else {
+                    mobileMenu.classList.remove('slide-down');
+                }
+            });
+        });
+    </script>
 </head>
-<body class="font-jakarta bg-white text-bol-black"> <!-- Set default font and text color -->
+<body class="font-jakarta bg-white text-bol-black"> 
 <div class="flex flex-col items-center w-full max-w-[1440px] mx-auto bg-white overflow-x-hidden relative">
 
-    <!-- Order 0: Header Banner -->
+    
     <!-- <section class="flex flex-col justify-center items-center px-[30px] sm:px-[100px] lg:px-[200px] py-[10px] gap-[13px] w-full h-[157px] bg-cover bg-center bg-[url(static/images/header.png)]">
     </section> -->
 
-    <!-- Order 1: Main Header (Combined Desktop/Mobile) -->
+    
     <header class="w-full bg-black relative">
         <!-- Desktop Header -->
         <div class="hidden lg:flex flex-row justify-center items-center px-20 py-[10px] gap-[70px] h-[113px]">
-        <!-- Logo -->
-        <img src="static/images/header_logo.png" alt="Brands Out Loud Logo" class="w-20 h-20 flex-shrink-0">
-
-        <!-- Navigation Area -->
-        <nav class="flex flex-col items-stretch w-[700px] h-[93px] py-[14px] px-[18px] gap-[10px]">
-        <!-- Top Nav Row -->
-        <div class="flex flex-row justify-end items-center w-full gap-[60px] px-[30px]">
-        <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0">Careers</a>
-        <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0">Editorial</a>
-        <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0">Register</a>
-        <a href="#" class="bg-[#CDA7FF] rounded-[2px] px-2.5 py-0.5 text-[#0D0D0D] font-bold text-[10px] text-center flex-shrink-0">Login</a>
-        </div>
-        <!-- Separator Line -->
-        <div class="w-full h-[1px] bg-gradient-to-r from-black to-[#9747FF]"></div>
-        <!-- Bottom Nav Row -->
-        <div class="flex flex-row justify-end items-center w-full gap-[60px] px-2">
-        <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0">Newsletters</a>
-        <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0">Magazine</a>
-        <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0">Entrepreneurship</a>
-        <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0">Startups</a>
-        <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0">Business</a>
-        </div>
-        </nav>
+            <img src="static/images/header_logo.png" alt="Brands Out Loud Logo" class="w-20 h-20 flex-shrink-0">
+            <nav class="flex flex-col items-stretch w-[700px] h-[93px] py-[14px] px-[18px] gap-[10px]">
+                <div class="flex flex-row justify-end items-center w-full gap-[60px] px-[30px]">
+                    <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Careers </a>
+                    <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Editorial </a>
+                    <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Register </a>
+                    <a href="#" class="bg-[#CDA7FF] rounded-[2px] px-2.5 py-0.5 text-[#0D0D0D] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Login/Signup </a>
+                </div>
+                <div class="w-full h-[1px] bg-gradient-to-r from-black to-[#9747FF]"></div>
+                <div class="flex flex-row justify-end items-center w-full gap-[60px] px-2">
+                    <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Newsletters </a>
+                    <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Magazine </a>
+                    <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Entrepreneurship </a>
+                    <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Startups </a>
+                    <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Business </a>
+                </div>
+            </nav>
         </div>
 
         <!-- Mobile Header -->
-        <div class="flex lg:hidden justify-between items-center h-full h-[60px]">
-        <!-- Logo Section -->
-        <div class="flex items-center w-full"> <!-- Added w-full to allow span to take full width -->
-        <span class="flex-grow h-[60px] text-white text-[2rem] font-bold whitespace-nowrap text-center bg-gradient-to-r from-black to-bol-purple flex items-center justify-center">Brands Out Loud</span>
-
+        <div class="flex lg:hidden items-center h-[68px] w-full bg-[#0D0D0D]">
+            <button id="mobile-menu-button" aria-label="Toggle Menu" class="h-full px-4 flex flex-col justify-center items-center space-y-[5px] bg-transparent focus:outline-none transition-colors duration-200 ease-in-out">
+                <span class="hamburger-line block w-6 h-[2px] bg-white rounded-full"></span>
+                <span class="hamburger-line block w-6 h-[2px] bg-white rounded-full"></span>
+                <span class="hamburger-line block w-6 h-[2px] bg-white rounded-full"></span>
+            </button>
+            
+            <div class="h-full flex items-center px-3 flex-shrink-0">
+                <img src="static/icon/website_icon.png" alt="Brands Out Loud Logo" class="h-10 w-auto">
+            </div>
+            
+            <div class="flex-grow px-3">
+                <div class="relative">
+                    <input type="text" placeholder="Search..." class="search-input w-full bg-[#1e1e1e] text-white text-sm rounded-full pl-10 pr-4 py-2.5 border border-[#2a2a2a] focus:outline-none focus:border-[#9747FF] transition-all">
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
+                        <i class="ph ph-magnifying-glass text-gray-400 text-lg"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Login button removed from here -->
         </div>
 
-        <!-- Hamburger Button -->
-        <button id="mobile-menu-button" aria-label="Toggle Menu" class="h-full px-4 flex flex-col justify-center items-center space-y-[6px] bg-black hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 flex-shrink-0"> <!-- Added flex-shrink-0 -->
-        <span class="block w-8 h-[3px] bg-white rounded-sm"></span>
-        <span class="block w-8 h-[3px] bg-white rounded-sm"></span>
-        <span class="block w-8 h-[3px] bg-white rounded-sm"></span>
-        </button>
-        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden lg:hidden absolute top-[68px] left-0 w-full bg-[#121212] z-50 shadow-lg border-t border-[#2a2a2a] overflow-hidden">
+            <div class="">
+                <!-- Login/Signup button -->
+                <div class="px-4 py-3">
+                    <a href="#" class="login-btn block w-full text-center bg-gradient-to-r from-[#9747FF] to-[#CDA7FF] rounded-full px-4 py-2.5 text-white font-medium text-sm shadow-lg hover:-translate-y-0.5 transition-all duration-300 relative overflow-hidden">
+                        <span class="relative z-10 flex items-center justify-center gap-2">
+                            <i class="ph ph-sign-in text-lg"></i>
+                            <span>Login/Signup</span>
+                        </span>
+                        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full animate-[shine_2s_infinite]"></div>
+                    </a>
+                </div>
 
-        <!-- Mobile Menu (Hidden by default) -->
-        <div id="mobile-menu" class="hidden lg:hidden absolute top-[58px] left-0 w-full bg-black z-50 py-4 shadow-lg">
-        <div class="grid grid-cols-2 gap-x-4 gap-y-2 px-6">
-        <!-- First Column -->
-        <div class="flex flex-col">
-        <h3 class="text-white font-bold text-sm mb-2 border-b border-gray-700 pb-1">Main Menu</h3>
-        <a href="#" class="text-white font-bold text-sm py-2">Careers</a>
-        <a href="#" class="text-white font-bold text-sm py-2">Editorial</a>
-        <a href="#" class="text-white font-bold text-sm py-2">Register</a>
-        <a href="#" class="bg-[#CDA7FF] rounded-[2px] px-2.5 py-2 text-[#0D0D0D] font-bold text-sm mb-4 inline-block w-max">Login</a>
-        </div>
+                <div class="mobile-menu-item">
+                    <i class="ph ph-book-open text-white text-lg"></i>
+                    <span class="item-title">Magazine</span>
+                    <i class="ph ph-caret-right"></i>
+                </div>
 
-        <!-- Second Column -->
-        <div class="flex flex-col">
-        <h3 class="text-white font-bold text-sm mb-2 border-b border-gray-700 pb-1">Categories</h3>
-        <a href="#" class="text-[#C4C3FF] font-bold text-sm py-2">Newsletters</a>
-        <a href="#" class="text-[#C4C3FF] font-bold text-sm py-2">Magazine</a>
-        <a href="#" class="text-[#C4C3FF] font-bold text-sm py-2">Entrepreneurship</a>
-        <a href="#" class="text-[#C4C3FF] font-bold text-sm py-2">Startups</a>
-        <a href="#" class="text-[#C4C3FF] font-bold text-sm py-2">Business</a>
-        </div>
-        </div>
+                <div class="mobile-menu-item">
+                    <i class="ph ph-lightning text-white text-lg"></i>
+                    <span class="item-title">Startups</span>
+                    <i class="ph ph-caret-right"></i>
+                </div>
+
+                <div class="mobile-menu-item">
+                    <i class="ph ph-rocket text-white text-lg"></i>
+                    <span class="item-title">Entrepreneurship</span>
+                    <i class="ph ph-caret-right"></i>
+                </div>
+
+                <div class="mobile-menu-item">
+                    <i class="ph ph-envelope-open text-white text-lg"></i>
+                    <span class="item-title">Newsletters</span>
+                    <i class="ph ph-caret-right"></i>
+                </div>
+
+                <div class="mobile-menu-item">
+                    <i class="ph ph-newspaper text-white text-lg"></i>
+                    <span class="item-title">Editorial</span>
+                    <i class="ph ph-caret-right"></i>
+                </div>
+
+                <div class="mobile-menu-item">
+                    <i class="ph ph-buildings text-white text-lg"></i>
+                    <span class="item-title">Business</span>
+                    <i class="ph ph-caret-right"></i>
+                </div>
+
+                <div class="mobile-menu-item">
+                    <i class="ph ph-briefcase text-white text-lg"></i>
+                    <span class="item-title">Careers</span>
+                    <i class="ph ph-caret-right"></i>
+                </div>
+                
+            </div>
+                
         </div>
     </header>
+    
+    <img src="static/images/Business_heading.png" alt="Business Heading" class="w-full my-4"> 
 
-    <!-- Added Business Heading Image -->
-    <img src="static/images/Business_heading.png" alt="Business Heading" class="w-full my-4"> <!-- Adjust classes as needed -->
-
-    <!-- Script for mobile menu toggle functionality -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        
-        mobileMenuButton.addEventListener('click', function() {
-            // Toggle the mobile menu visibility
-            if (mobileMenu.classList.contains('hidden')) {
-            mobileMenu.classList.remove('hidden');
-            mobileMenu.classList.add('block');
-            } else {
-            mobileMenu.classList.add('hidden');
-            mobileMenu.classList.remove('block');
-            }
-        });
-        });
-    </script>
-
-    <!-- Order 3: Trending News Section -->
-    <section class="w-full h-auto relative overflow-hidden my-5 md:my-0"> <!-- Removed min-height -->
+    
+    
+    <section class="w-full h-auto relative overflow-hidden my-5 md:my-0"> 
         <div class="absolute inset-0 w-full h-full bg-gradient-to-br from-[#3533CD] via-black to-black md:bg-[linear-gradient(125.25deg,_#3533CD_0.4%,_#000000_47.94%)] rounded-none md:rounded-[6px]"></div>
-        <div class="relative w-full h-full z-10 p-4 md:p-0 grid grid-cols-1 md:grid-cols-2 md:gap-0"> <!-- Removed md padding and gap -->
-            <!-- Left Column: Large Post -->
-            <div class="relative w-full h-auto md:h-full"> <!-- Removed absolute positioning, fixed width/height. Added md:h-full -->
-                <div class="relative w-full h-[470px] md:absolute md:inset-0 bg-cover bg-center rounded-none bg-[url(https://picsum.photos/seed/trendinglarge/640/395)]"> <!-- Removed fixed md width/height, removed rounded-[6px] -->
-                    <!-- Overlay for text -->
-                    <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/80 via-black/50 to-transparent rounded-b-none"></div> <!-- Removed rounded-b-[6px] -->
-                    <!-- Text Content Over Image -->
-                    <div class="absolute bottom-4 left-4 right-4 md:bottom-6 md:left-6 md:right-6 z-10"> <!-- Adjusted padding for desktop -->
+        <div class="relative w-full h-full z-10 p-4 md:p-0 grid grid-cols-1 md:grid-cols-2 md:gap-0"> 
+            
+            <div class="relative w-full h-auto md:h-full"> 
+                <div class="relative w-full h-[470px] md:absolute md:inset-0 bg-cover bg-center rounded-none bg-[url(https://picsum.photos/seed/trendinglarge/640/395)]"> 
+                    
+                    <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/80 via-black/50 to-transparent rounded-b-none"></div> 
+                    
+                    <div class="absolute bottom-4 left-4 right-4 md:bottom-6 md:left-6 md:right-6 z-10"> 
                         <div class="font-dm font-normal text-sm leading-[1.1] text-white md:text-[18px] mb-1">Debits - 03 June 2023</div>
                         <h2 class="font-jakarta font-bold text-xl leading-tight capitalize text-white md:text-[32px] md:leading-[40px]">DISCOVER THE MEMBER BENEFITS OF BOL BUSINESS</h2>
                     </div>
                 </div>
-                <!-- Replaced Tag with BREAKING heading -->
+                
                 <h2 class="absolute left-4 top-4 font-jakarta font-bold text-xl md:text-2xl leading-tight text-white z-20 px-3 py-1 rounded-[3px]">BREAKING</h2>
-                <!-- Removed text elements from below the image -->
+                
             </div>
 
-            <!-- Right Column: Title + 2 Small Posts -->
-            <div class="flex flex-col gap-4 md:p-8"> <!-- Removed absolute positioning, Added padding for desktop -->
+            
+            <div class="flex flex-col gap-4 md:p-8"> 
                 <h2 class="w-auto md:w-[232.35px] h-auto md:h-[38px] font-jakarta font-bold text-2xl md:text-[28px] leading-[38px] text-white pb-4">Trending News</h2>
-                <!-- Post 1 -->
-                <article class="flex flex-col md:flex-row gap-4 md:w-full border-b border-white/30 pb-3.5"> <!-- Adjusted width to full -->
+                
+                <article class="flex flex-col md:flex-row gap-4 md:w-full border-b border-white/30 pb-3.5"> 
                     <div class="w-full md:w-[289.2px] h-[150px] bg-cover bg-center rounded-[6px] bg-[url(https://picsum.photos/seed/racehorse/289/150)] flex-shrink-0"></div>
                     <div class="flex flex-col justify-center">
                          <div class="w-auto md:w-[137.18px] h-[10px] font-jakarta font-medium text-[10px] leading-[1] text-white/60 mb-2">Race98 - 03 June 2023</div>
-                         <h3 class="w-auto md:w-auto h-auto font-jakarta font-normal text-lg leading-[136.9%] text-white mb-2">6-Year-Old Horse Dies at Belmont Park After Race Injury</h3> <!-- Adjusted width -->
-                         <p class="w-auto md:w-auto h-auto font-jakarta font-normal text-xs leading-[123.9%] text-white ">NEW YORK—A 6-year-old horse died after being injured in a race at Belmont Park ahead of next week’s</p> <!-- Adjusted width -->
+                         <h3 class="w-auto md:w-auto h-auto font-jakarta font-normal text-lg leading-[136.9%] text-white mb-2">6-Year-Old Horse Dies at Belmont Park After Race Injury</h3> 
+                         <p class="w-auto md:w-auto h-auto font-jakarta font-normal text-xs leading-[123.9%] text-white ">NEW YORK—A 6-year-old horse died after being injured in a race at Belmont Park ahead of next week’s</p> 
                     </div>
                 </article>
-                <!-- Post 2 -->
-               <article class="flex flex-col md:flex-row gap-4 md:w-full border-b border-white/30 pb-3.5"> <!-- Adjusted width to full -->
+                
+               <article class="flex flex-col md:flex-row gap-4 md:w-full border-b border-white/30 pb-3.5"> 
                     <div class="w-full md:w-[289.2px] h-[150px] bg-cover bg-center rounded-[6px] bg-[url(https://picsum.photos/seed/cyclist/289/150)] flex-shrink-0"></div>
                     <div class="flex flex-col justify-center">
                         <div class="w-auto md:w-[135.95px] h-[10px] font-jakarta font-medium text-[10px] leading-[1] text-white/60 mb-2">Jony.Ls - 03 June 2023</div>
-                        <h3 class="w-auto md:w-auto h-auto font-jakarta font-normal text-lg leading-[136.9%] text-white capitalize mb-2">Savilia Blunk Embraces Longer Season with World Cup</h3> <!-- Adjusted width -->
-                        <p class="w-auto md:w-auto h-auto font-jakarta font-normal text-xs leading-[123.9%] text-white ">Last year, Savilia Blunk took a more conservative approach to her first season as an Elite Class athlete, skipping some</p> <!-- Adjusted width -->
+                        <h3 class="w-auto md:w-auto h-auto font-jakarta font-normal text-lg leading-[136.9%] text-white capitalize mb-2">Savilia Blunk Embraces Longer Season with World Cup</h3> 
+                        <p class="w-auto md:w-auto h-auto font-jakarta font-normal text-xs leading-[123.9%] text-white ">Last year, Savilia Blunk took a more conservative approach to her first season as an Elite Class athlete, skipping some</p> 
                     </div>
                 </article>
-                <!-- Removed Post 3 -->
+                
             </div>
         </div>
     </section>
 
-    <!-- Ad banner -->
+    
     <section class="w-full py-16 md:py-20 bg-[#FF9D9D] flex justify-center items-center text-white text-2xl font-bold my-5">
         AD BANNER PLACEHOLDER
     </section>
 
 
-    <!-- Order 5: Editor Picks Section -->
-    <section class="w-full py-8 bg-black text-white" style="margin-bottom: 2rem;"> <!-- Removed max-w, mx-auto, px-4 -->
-        <div class="max-w-7xl mx-auto px-4"> <!-- Added inner container for content constraint -->
-            <!-- Header Section -->
+    
+    <section class="w-full py-8 bg-black text-white" style="margin-bottom: 2rem;"> 
+        <div class="max-w-7xl mx-auto px-4"> 
+            
             <div class="mb-6">
-                <h1 class="text-3xl font-extrabold text-white">Editor Picks</h1> <!-- Changed text color -->
+                <h1 class="text-3xl font-extrabold text-white">Editor Picks</h1> 
                 <div class="mt-4 relative">
                     <hr class="border-t border-gray-500 w-full" />
-                    <hr class="border-t-2 border-white w-48 absolute top-0 left-0" /> <!-- Changed border color -->
+                    <hr class="border-t-2 border-white w-48 absolute top-0 left-0" /> 
                 </div>
             </div>
 
-            <!-- Articles Grid -->
+            
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <!-- Article 1 -->
+            
             <div class="flex flex-col md:flex-row gap-4">
-                <div class="w-full md:w-1/2 h-[200px] md:h-auto"> <!-- Added fixed height for mobile consistency -->
+                <div class="w-full md:w-1/2 h-[200px] md:h-auto"> 
                     <img src="https://picsum.photos/seed/editor1/500/300" alt="Editor Pick 1" class="rounded-md w-full h-full object-cover">
                 </div>
                 <div class="w-full md:w-1/2">
-                    <span class="text-xs text-opacity-60 text-white font-medium">Race98 - 03 June 2023</span> <!-- Changed text color -->
-                    <h2 class="text-lg font-normal leading-tight mt-2 text-white">6-Year-Old Horse Dies at Belmont Park After Race Injury</h2> <!-- Changed text color -->
-                    <p class="text-xs leading-snug mt-4 text-white/70">NEW YORK—A 6-year-old horse died after being injured in a race at Belmont Park ahead of next week's</p> <!-- Changed text color -->
+                    <span class="text-xs text-opacity-60 text-white font-medium">Race98 - 03 June 2023</span> 
+                    <h2 class="text-lg font-normal leading-tight mt-2 text-white">6-Year-Old Horse Dies at Belmont Park After Race Injury</h2> 
+                    <p class="text-xs leading-snug mt-4 text-white/70">NEW YORK—A 6-year-old horse died after being injured in a race at Belmont Park ahead of next week's</p> 
                 </div>
             </div>
 
-            <!-- Article 2 -->
+            
             <div class="flex flex-col md:flex-row gap-4">
                 <div class="w-full md:w-1/2 h-[200px] md:h-auto">
                     <img src="https://picsum.photos/seed/editor2/500/300" alt="Editor Pick 2" class="rounded-md w-full h-full object-cover">
@@ -317,7 +446,7 @@
                 </div>
             </div>
 
-            <!-- Article 3 -->
+            
             <div class="flex flex-col md:flex-row gap-4">
                 <div class="w-full md:w-1/2 h-[200px] md:h-auto">
                     <img src="https://picsum.photos/seed/editor3/500/300" alt="Editor Pick 3" class="rounded-md w-full h-full object-cover">
@@ -329,7 +458,7 @@
                 </div>
             </div>
 
-            <!-- Article 4 -->
+            
             <div class="flex flex-col md:flex-row gap-4">
                 <div class="w-full md:w-1/2 h-[200px] md:h-auto">
                     <img src="https://picsum.photos/seed/editor4/500/300" alt="Editor Pick 4" class="rounded-md w-full h-full object-cover">
@@ -341,7 +470,7 @@
                 </div>
             </div>
 
-            <!-- Article 5 -->
+            
             <div class="flex flex-col md:flex-row gap-4">
                 <div class="w-full md:w-1/2 h-[200px] md:h-auto">
                     <img src="https://picsum.photos/seed/editor5/500/300" alt="Editor Pick 5" class="rounded-md w-full h-full object-cover">
@@ -353,7 +482,7 @@
                 </div>
             </div>
 
-            <!-- Article 6 -->
+            
             <div class="flex flex-col md:flex-row gap-4">
                 <div class="w-full md:w-1/2 h-[200px] md:h-auto">
                     <img src="https://picsum.photos/seed/editor6/500/300" alt="Editor Pick 6" class="rounded-md w-full h-full object-cover">
@@ -368,18 +497,18 @@
     </section>
 
 
-    <!-- Order 7: Top Stories Cards Section -->
+    
         <div class="relative w-full h-auto flex flex-col" style="max-width: 95%;"> 
-            <!-- Section Header -->
+            
             <div class="relative w-full h-[42px] mb-[25px]">
                 <h2 class="absolute left-0 top-0 font-jakarta font-extrabold text-2xl leading-[30px] text-bol-purple">Top Stories</h2>
                 <div class="absolute left-0 top-[42px] w-full border-t border-[#393939]"></div>
                 <div class="absolute left-0 top-[42px] w-[100px] border-t-2 border-bol-purple z-10"></div>
             </div>
 
-            <!-- Posts Grid -->
+            
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-[30px] gap-y-[35px] w-full mt-8">
-                <!-- Card 1 -->
+                
                 <article class="flex flex-col">
                     <div class="w-full h-[250px] bg-cover bg-center mb-[15px] rounded-md" style="background-image: url('https://picsum.photos/seed/topstorycard1/365/243')"></div>
                     <div class="font-jakarta text-[10px] leading-[1.1] text-bol-black/60 mb-[6px]">Race98 - 03 June 2023</div>
@@ -387,7 +516,7 @@
                     <p class="font-jakarta text-xs leading-[123.9%] text-bol-black/70">NEW YORK—A 6-year-old horse died after being injured in a race at Belmont Park ahead of next week's</p>
                 </article>
 
-                <!-- Card 2 -->
+                
                 <article class="flex flex-col">
                     <div class="w-full h-[250px] bg-cover bg-center mb-[15px] rounded-md" style="background-image: url('https://picsum.photos/seed/topstorycard2/365/243')"></div>
                     <div class="font-jakarta text-[10px] leading-[1.1] text-bol-black/60 mb-[6px]">Jony.Ls - 03 June 2023</div>
@@ -395,7 +524,7 @@
                     <p class="font-jakarta text-xs leading-[123.9%] text-bol-black/70">Last year, Savilia Blunk took a more conservative approach to her first season as an Elite Class athlete...</p>
                 </article>
 
-                <!-- Card 3 -->
+                
                 <article class="flex flex-col">
                     <div class="w-full h-[250px] bg-cover bg-center mb-[15px] rounded-md" style="background-image: url('https://picsum.photos/seed/topstorycard3/365/243')"></div>
                     <div class="font-jakarta text-[10px] leading-[1.1] text-bol-black/60 mb-[6px]">King.F - 03 June 2023</div>
@@ -406,31 +535,31 @@
         </div>
     </section>
 
-    <!-- Order 11: AI / Lifestyle Section -->
+    
     <section class="w-full h-auto relative px-4 md:px-[34px] py-9 my-5">
         <div class="relative w-full h-auto flex flex-col">
-            <!-- Section Header -->
+            
             <div class="relative w-full h-[42px] mb-[25px]">
                 <h2 class="absolute left-0 top-0 font-jakarta font-extrabold text-2xl leading-[30px] text-[#3533CD]">AI</h2>
                 <div class="absolute left-0 top-[42px] w-full border-t border-[#393939]"></div>
             </div>
-            <!-- Posts Grid -->
+            
             <div class="grid grid-cols-1 md:grid-cols-2 gap-x-[47px] gap-y-[35px] w-full mt-8">
-                <!-- Large Post 1 -->
+                
                 <article class="flex flex-col">
                     <div class="w-full h-[250px] bg-cover bg-center mb-[15px] bg-[url(https://picsum.photos/seed/ailarge1/662/250)]"></div>
                     <div class="font-jakarta text-[12px] leading-[1.1] text-[#393939] mb-[6px]">Craig Bator - 27 Dec 2020</div>
                     <h3 class="font-jakarta font-medium text-2xl leading-[30px] capitalize text-[#393939] mb-[10px] h-auto">‘Institutional delivery vital for reducing maternal and neonatal deaths’</h3>
                     <p class="font-jakarta text-sm leading-[1.3] text-[#393939]/60 h-auto overflow-hidden">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Faucibus lobortis augue condimentum maecenas. Metus at in fames vitae posuere ut vel vulputate ...</p>
                 </article>
-                 <!-- Large Post 2 -->
+                 
                 <article class="flex flex-col">
                      <div class="w-full h-[250px] bg-cover bg-center mb-[15px] bg-[url(https://picsum.photos/seed/ailarge2/662/250)]"></div>
                      <div class="font-jakarta text-[12px] leading-[1.1] text-[#393939] mb-[6px]">Craig Bator - 27 Dec 2020</div>
                      <h3 class="font-jakarta font-medium text-2xl leading-[30px] capitalize text-[#393939] mb-[10px] h-auto">Being self-controlled child may lead to healthier middle-age</h3>
                      <p class="font-jakarta text-sm leading-[1.3] text-[#393939]/60 h-auto overflow-hidden">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Faucibus lobortis augue condimentum maecenas. Metus at in fames vitae posuere ut vel vulputate...</p>
                 </article>
-                 <!-- Small Post 3 -->
+                 
                  <article class="flex flex-row gap-[19px] items-start h-auto mt-4 md:mt-0">
                      <div class="w-[100px] md:w-[189.24px] h-[90px] bg-cover bg-center flex-shrink-0 bg-[url(https://picsum.photos/seed/aismall3/189/90)]"></div>
                      <div class="flex flex-col flex-grow pt-1">
@@ -438,7 +567,7 @@
                          <h4 class="font-jakarta font-normal text-lg md:text-xl leading-[1.2] text-[#393939]">Best things you can do on a solo mountain climb</h4>
                      </div>
                  </article>
-                 <!-- Small Post 4 -->
+                 
                   <article class="flex flex-row gap-[19px] items-start h-auto mt-4 md:mt-0">
                      <div class="w-[100px] md:w-[189.24px] h-[90px] bg-cover bg-center flex-shrink-0 bg-[url(https://picsum.photos/seed/aismall4/189/90)]"></div>
                      <div class="flex flex-col flex-grow pt-1">
@@ -446,7 +575,7 @@
                          <h4 class="font-jakarta font-normal text-lg md:text-xl leading-[1.2] text-[#393939]">How to use basic design principles your home</h4>
                      </div>
                  </article>
-                <!-- Small Post 5 -->
+                
                 <article class="flex flex-row gap-[19px] items-start h-auto mt-4 md:mt-0">
                      <div class="w-[100px] md:w-[189.24px] h-[90px] bg-cover bg-center flex-shrink-0 bg-[url(https://picsum.photos/seed/aismall5/189/90)]"></div>
                      <div class="flex flex-col flex-grow pt-1">
@@ -454,7 +583,7 @@
                          <h4 class="font-jakarta font-normal text-lg md:text-xl leading-[1.2] text-[#393939]">Creative decorating with houseplants</h4>
                      </div>
                  </article>
-                 <!-- Small Post 6 -->
+                 
                  <article class="flex flex-row gap-[19px] items-start h-auto mt-4 md:mt-0">
                      <div class="w-[100px] md:w-[189.24px] h-[90px] bg-cover bg-center flex-shrink-0 bg-[url(https://picsum.photos/seed/aismall6/189/90)]"></div>
                      <div class="flex flex-col flex-grow pt-1">
@@ -472,15 +601,15 @@
         </a>
     </section>
     
-    <!-- Advertisement Banner -->
+    
     <div class="w-full px-4 my-2">
         <img src="https://picsum.photos/1200/236" alt="Advertisement" class="w-full h-auto object-cover">
     </div>
     
-    <!-- Order 12: WhatsApp Newsletter Section -->
+    
     <section class="w-full max-w-7xl mx-auto px-4 md:px-8 my-5">
         <div class="flex flex-col md:flex-row items-stretch gap-8">
-            <!-- Left Side (Form) -->
+            
              <div class="w-full md:w-1/2 bg-gradient-to-r from-[#3533CD] to-[#0A0A24] rounded-[15px] p-8 flex flex-col text-white">
                  <h2 class="font-jakarta font-bold text-3xl md:text-4xl leading-tight mb-4">Get Weekly WhatsApp Newsletters</h2>
                  <p class="font-jakarta font-semibold text-lg md:text-xl leading-relaxed mb-6">on Latest Funding, Tech News and Business News?</p>
@@ -496,7 +625,7 @@
                          <input type="text" placeholder="Your Designation" required class="flex-grow h-10 rounded-md border-none bg-white px-4 py-2 font-jakarta text-base text-gray-900 placeholder:text-gray-400 placeholder:font-normal focus:ring-2 focus:ring-bol-purple">
                          <div class="flex-grow relative location-input-wrapper">
                              <input type="text" placeholder="Location" id="location" required class="w-full h-10 rounded-md border-none bg-white px-4 py-2 font-jakarta text-base text-gray-900 placeholder:text-gray-400 placeholder:font-normal focus:ring-2 focus:ring-bol-purple appearance-none">
-                             <!-- Arrow added via CSS -->
+                             
                          </div>
                      </div>
                      <div class="flex flex-col gap-3">
@@ -533,31 +662,31 @@
                      </div>
                  </form>
             </div>
-            <!-- Right Side (Image) -->
+            
             <div class="w-full md:w-1/2 h-80 md:h-auto bg-cover bg-center rounded-[15px] mt-4 md:mt-0 bg-[url(https://picsum.photos/seed/whatsappvisual/716/625)]"></div> 
         </div>
     </section>
     
-    <!-- Fuel Ambition Banner -->
+    
     <section class="w-full aspect-[120/47] relative bg-contain bg-no-repeat bg-center bg-[url(static/images/fuel_ambition.png)]" style="margin-bottom: -1%;">
-        <!-- Single button positioned absolutely -->
+        
         <a href="#" class="absolute bottom-[18%] left-[50%] -translate-x-1/2 w-[20%] max-w-[300px] hover:opacity-90 transition-opacity">
             <img src="static/images/checkout_magazine_button.png" alt="Checkout Magazine Button" class="block w-full h-auto">
         </a>
     </section>
     
-    <!-- Order 15: Footer Section 2 -->
+    
 <footer class="w-full bg-black px-4 sm:px-6 md:px-[111px] pt-[40px] md:pt-[70px] pb-[20px] md:pb-[30px] relative text-white">
             
-    <!-- Footer Links Container - Restructured for mobile -->
+    
     <div class="flex flex-row flex-wrap justify-around items-start gap-6 md:gap-16 mb-8 md:mb-[100px] pt-6 md:pt-0 text-center sm:text-left">
 
-        <!-- Logo Area: Adjusted for row layout on mobile -->
+        
         <div class="w-auto flex flex-col items-center sm:items-start order-1 mb-6 sm:mb-0 flex-shrink-0">
             <div class="w-[80px] h-[80px] sm:w-[100px] sm:h-[100px] md:w-[161px] md:h-[161px] bg-contain bg-no-repeat bg-center sm:bg-left bg-[url(static/images/header_logo.png)] mb-2 flex-shrink-0" loading="lazy"></div>
         </div>
 
-        <!-- Quick Links -->
+        
         <div class="w-auto order-2 flex-shrink-0">
             <div class="font-helvetica font-bold text-sm md:text-base leading-[90%] text-[#8B8B8B] mb-3 md:mb-[19px] uppercase">Quick Links</div>
             <ul class="list-none p-0 m-0 space-y-2 md:space-y-[17px]">
@@ -569,7 +698,7 @@
             </ul>
         </div>
 
-        <!-- News Links -->
+        
         <div class="w-auto order-3 flex-shrink-0">
             <div class="font-helvetica font-bold text-sm md:text-base leading-[90%] text-[#8B8B8B] mb-3 md:mb-[20px] uppercase">News</div>
             <ul class="list-none p-0 m-0 space-y-2 md:space-y-[17px]">
@@ -584,10 +713,10 @@
 
     <div class="border-t border-white/30 w-full my-[30px] md:my-[40px]"></div>
 
-    <!-- Social links and Subscribe section - Made responsive -->
+    
     <div class="flex flex-col md:flex-row justify-between items-center">
        
-        <!-- Social Links -->
+        
         <div class="block mb-6 md:mb-4 w-full md:w-auto text-center md:text-left">
             <div class="font-helvetica font-bold text-sm md:text-base leading-[90%] text-[#8B8B8B] mb-[12px] md:mb-[15px] uppercase">Social Links</div>
             <div class="flex justify-center md:justify-start space-x-4">
@@ -619,20 +748,20 @@
             </div>
         </div>
 
-        <!-- Advertise With Us - Made responsive -->
+        
         <div class="flex flex-col md:flex-row justify-between items-center gap-4 md:gap-[20px] flex-wrap mb-6 md:mb-[40px]">
             <a href="#" class="font-jakarta font-bold text-sm md:text-base leading-[20px] text-white no-underline hover:text-[#C4C3FF] uppercase">Advertise With Us</a>
         </div>
 
-        <!-- Newsletter Subscription - Made responsive -->
+        
         <div class="text-center md:text-left col-span-1 lg:col-span-1 flex flex-col items-center md:items-start">
             <div class="font-helvetica font-bold text-base leading-[90%] text-[#8B8B8B] mb-[20px] uppercase">Subscribe to Newsletter</div>
-            <!-- Mobile form (hidden on sm and up) -->
+            
             <form class="flex flex-row items-stretch gap-2 w-full max-w-md sm:hidden">
                  <input type="email" placeholder="Enter your email" required class="flex-grow h-[40px] bg-white border-none rounded-[4px] px-[15px] text-black placeholder:text-gray-500 focus:ring-2 focus:ring-bol-purple" style="left: 1rem; position: relative;">
                  <input type="image" src="static/images/subscribe_button.png" alt="Subscribe" class="h-[40px] w-auto cursor-pointer hover:opacity-90 transition duration-150 ease-in-out shrink-0" style="left: -1rem; position: relative;">
              </form>
-             <!-- Desktop form (hidden below sm) -->
+             
              <form class="hidden sm:flex sm:flex-row items-stretch gap-2 w-full max-w-md">
                  <input type="email" placeholder="Enter your email" required class="flex-grow h-[40px] bg-white border-none rounded-[4px] px-[15px] text-black placeholder:text-gray-500 focus:ring-2 focus:ring-bol-purple">
                  <input type="image" src="static/images/subscribe_button.png" alt="Subscribe" class="h-[40px] w-auto cursor-pointer hover:opacity-90 transition duration-150 ease-in-out shrink-0" style="left: -2rem; position: relative;">
@@ -640,7 +769,7 @@
         </div>
     </div>
 
-    <!-- Copyright section -->
+    
     <div class="block">
         <div class="border-t border-white/30 w-full my-[30px] md:my-[40px]"></div>
         <div class="w-full text-center font-helvetica font-bold text-xs md:text-base leading-[90%] text-white/70 mt-[20px]">

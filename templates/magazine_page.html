@@ -4,35 +4,132 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Magazine</title>
-    <!-- Include Tailwind CSS -->
+    
     <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
-    <!-- Google Fonts -->
+    <script src="https://unpkg.com/@phosphor-icons/web@2.0.3"></script>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=IBM+Plex+Sans:wght@600&family=Inter:wght@500&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&family=Roboto:wght@500&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="static/icon/website_icon.png">
     
-    <!-- Custom CSS -->
+    
     <style>
+        /* Added from trial.html */
+        @keyframes slideDown {
+            from { transform: translateY(-10px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .slide-down {
+            animation: slideDown 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        :root {
+            --clr-dark-black: #121212;
+            --clr-bdr-gray: #2a2a2a;
+            --clr-white: #fff;
+            --clr-primary: #9747FF;
+            --clr-primary-light: #CDA7FF;
+            --clr-gray-800: #1e1e1e;
+        }
+
+        .mobile-menu-item {
+            padding: 0.875rem 1rem;
+            background: var(--clr-dark-black);
+            border-bottom: solid 1px var(--clr-bdr-gray);
+            color: var(--clr-white);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: background-color 0.2s ease;
+        }
+
+        .mobile-menu-item:hover {
+            background-color: #1a1a1a;
+        }
+
+        .mobile-menu-item:active {
+            background-color: #252525;
+        }
+
+        .item-title {
+            flex-grow: 1;
+            margin-left: 0.75rem;
+            font-weight: 500;
+        }
+
+        .hamburger-line {
+            transition: all 0.3s ease;
+        }
+
+        .hamburger-active .hamburger-line:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+
+        .hamburger-active .hamburger-line:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger-active .hamburger-line:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+
+        .search-input {
+            transition: all 0.2s ease;
+        }
+
+        .search-input:focus {
+            box-shadow: 0 0 0 2px rgba(151, 71, 255, 0.5);
+        }
+
+        @keyframes shine {
+            from {
+                transform: translateX(-100%);
+            }
+            to {
+                transform: translateX(100%);
+            }
+        }
+
+        .login-btn {
+            transition: all 0.2s ease;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(205, 167, 255, 0.4);
+        }
+        /* End Added from trial.html */
+
+        /* Original from magazine_page.html */
         @media screen and (min-width: 1024px) {
         body {
-            transform: scale(1.3248);
+            transform: scale(1.33);
             transform-origin: 0 0;
-            width: 75.5%;
+            width: 75.3%;
         }
     }
-        
+        ::-webkit-scrollbar {
+            display: none;
+        }
+
+        body {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
         .gradient-bg {
             background: linear-gradient(146.84deg, #3533CD 0%, #1B1A67 95.28%);
         }
-        
+
         .gradient-text {
             background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-fill-color: transparent;
         }
-        
+
         .strip-startups { background-image: linear-gradient(93.43deg, #000000 6.93%, #3533CD 94.41%); }
         .strip-ai { background-image: linear-gradient(211.98deg, #000000 19.22%, #3533CD 94.53%); }
         .strip-business { background-image: linear-gradient(105.57deg, #000000 2.6%, #3533CD 60.9%); }
@@ -43,7 +140,7 @@
         .podcast-title-gradient { background: linear-gradient(269.15deg, #000000 47.22%, #3533CD 97.69%); }
         .hero-title-gradient { background: linear-gradient(90deg, #FFFFFF 0%, #3533CD 100%); }
         .footer-italic-gradient { background: linear-gradient(90deg, #C4C3FF 0%, #10E2FF 100%); }
-        
+
         input[type="checkbox"]:checked {
             background-color: #3533CD;
             border-color: #3533CD;
@@ -52,7 +149,7 @@
             background-position: center;
             background-repeat: no-repeat;
         }
-        
+
         .location-input-wrapper::after {
             content: '';
             position: absolute;
@@ -65,7 +162,7 @@
             transform: translateY(-50%);
             pointer-events: none;
         }
-        
+
         @media (min-width: 768px) {
             .animate-marquee {
                 animation: marquee 30s linear infinite;
@@ -75,6 +172,7 @@
                 100% { transform: translateX(-50%); }
             }
         }
+        /* End Original from magazine_page.html */
     </style>
     
     <script>
@@ -100,101 +198,156 @@
         }
       }
     </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+                mobileMenuButton.classList.toggle('hamburger-active');
+
+                if (!mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('slide-down');
+                } else {
+                    mobileMenu.classList.remove('slide-down');
+                }
+            });
+        });
+    </script>
 </head>
 <body class="font-jakarta bg-white text-bol-black">
     <div class="flex flex-col w-full mx-auto bg-white overflow-x-hidden">
-        <!-- Header -->
-        <header class="w-full bg-black relative">
-            <!-- Desktop Header -->
-            <div class="hidden lg:flex flex-row justify-center items-center px-20 py-[10px] gap-[70px] h-[113px]">
-            <!-- Logo -->
-            <img src="static/images/header_logo.png" alt="Brands Out Loud Logo" class="w-20 h-20 flex-shrink-0">
-    
-            <!-- Navigation Area -->
-            <nav class="flex flex-col items-stretch w-[700px] h-[93px] py-[14px] px-[18px] gap-[10px]">
-            <!-- Top Nav Row -->
-            <div class="flex flex-row justify-end items-center w-full gap-[60px] px-[30px]">
-            <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0">Careers</a>
-            <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0">Editorial</a>
-            <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0">Register</a>
-            <a href="#" class="bg-[#CDA7FF] rounded-[2px] px-2.5 py-0.5 text-[#0D0D0D] font-bold text-[10px] text-center flex-shrink-0">Login</a>
-            </div>
-            <!-- Separator Line -->
-            <div class="w-full h-[1px] bg-gradient-to-r from-black to-[#9747FF]"></div>
-            <!-- Bottom Nav Row -->
-            <div class="flex flex-row justify-end items-center w-full gap-[60px] px-2">
-            <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0">Newsletters</a>
-            <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0">Magazine</a>
-            <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0">Entrepreneurship</a>
-            <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0">Startups</a>
-            <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0">Business</a>
-            </div>
-            </nav>
-            </div>
-    
-            <!-- Mobile Header -->
-            <div class="flex lg:hidden justify-between items-center h-full h-[60px]">
-            <!-- Logo Section -->
-            <div class="flex items-center w-full"> <!-- Added w-full to allow span to take full width -->
-            <span class="flex-grow h-[60px] text-white text-[2rem] font-bold whitespace-nowrap text-center bg-gradient-to-r from-black to-bol-purple flex items-center justify-center">Brands Out Loud</span>
-    
-            </div>
-    
-            <!-- Hamburger Button -->
-            <button id="mobile-menu-button" aria-label="Toggle Menu" class="h-full px-4 flex flex-col justify-center items-center space-y-[6px] bg-black hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 flex-shrink-0"> <!-- Added flex-shrink-0 -->
-            <span class="block w-8 h-[3px] bg-white rounded-sm"></span>
-            <span class="block w-8 h-[3px] bg-white rounded-sm"></span>
-            <span class="block w-8 h-[3px] bg-white rounded-sm"></span>
-            </button>
-            </div>
-    
-            <!-- Mobile Menu (Hidden by default) -->
-            <div id="mobile-menu" class="hidden lg:hidden absolute top-[58px] left-0 w-full bg-black z-50 py-4 shadow-lg">
-            <div class="grid grid-cols-2 gap-x-4 gap-y-2 px-6">
-            <!-- First Column -->
-            <div class="flex flex-col">
-            <h3 class="text-white font-bold text-sm mb-2 border-b border-gray-700 pb-1">Main Menu</h3>
-            <a href="#" class="text-white font-bold text-sm py-2">Careers</a>
-            <a href="#" class="text-white font-bold text-sm py-2">Editorial</a>
-            <a href="#" class="text-white font-bold text-sm py-2">Register</a>
-            <a href="#" class="bg-[#CDA7FF] rounded-[2px] px-2.5 py-2 text-[#0D0D0D] font-bold text-sm mb-4 inline-block w-max">Login</a>
-            </div>
-    
-            <!-- Second Column -->
-            <div class="flex flex-col">
-            <h3 class="text-white font-bold text-sm mb-2 border-b border-gray-700 pb-1">Categories</h3>
-            <a href="#" class="text-[#C4C3FF] font-bold text-sm py-2">Newsletters</a>
-            <a href="#" class="text-[#C4C3FF] font-bold text-sm py-2">Magazine</a>
-            <a href="#" class="text-[#C4C3FF] font-bold text-sm py-2">Entrepreneurship</a>
-            <a href="#" class="text-[#C4C3FF] font-bold text-sm py-2">Startups</a>
-            <a href="#" class="text-[#C4C3FF] font-bold text-sm py-2">Business</a>
-            </div>
-            </div>
-            </div>
-        </header>
 
-        <!-- News Section -->
+    <header class="w-full bg-black relative">
+        <!-- Desktop Header -->
+        <div class="hidden lg:flex flex-row justify-center items-center px-20 py-[10px] gap-[70px] h-[113px]">
+            <img src="static/images/header_logo.png" alt="Brands Out Loud Logo" class="w-20 h-20 flex-shrink-0">
+            <nav class="flex flex-col items-stretch w-[700px] h-[93px] py-[14px] px-[18px] gap-[10px]">
+                <div class="flex flex-row justify-end items-center w-full gap-[60px] px-[30px]">
+                    <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Careers </a>
+                    <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Editorial </a>
+                    <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Register </a>
+                    <a href="#" class="bg-[#CDA7FF] rounded-[2px] px-2.5 py-0.5 text-[#0D0D0D] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Login/Signup </a>
+                </div>
+                <div class="w-full h-[1px] bg-gradient-to-r from-black to-[#9747FF]"></div>
+                <div class="flex flex-row justify-end items-center w-full gap-[60px] px-2">
+                    <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Newsletters </a>
+                    <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Magazine </a>
+                    <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Entrepreneurship </a>
+                    <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Startups </a>
+                    <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Business </a>
+                </div>
+            </nav>
+        </div>
+
+        <!-- Mobile Header -->
+        <div class="flex lg:hidden items-center h-[68px] w-full bg-[#0D0D0D]">
+            <button id="mobile-menu-button" aria-label="Toggle Menu" class="h-full px-4 flex flex-col justify-center items-center space-y-[5px] bg-transparent focus:outline-none transition-colors duration-200 ease-in-out">
+                <span class="hamburger-line block w-6 h-[2px] bg-white rounded-full"></span>
+                <span class="hamburger-line block w-6 h-[2px] bg-white rounded-full"></span>
+                <span class="hamburger-line block w-6 h-[2px] bg-white rounded-full"></span>
+            </button>
+            
+            <div class="h-full flex items-center px-3 flex-shrink-0">
+                <img src="static/icon/website_icon.png" alt="Brands Out Loud Logo" class="h-10 w-auto">
+            </div>
+            
+            <div class="flex-grow px-3">
+                <div class="relative">
+                    <input type="text" placeholder="Search..." class="search-input w-full bg-[#1e1e1e] text-white text-sm rounded-full pl-10 pr-4 py-2.5 border border-[#2a2a2a] focus:outline-none focus:border-[#9747FF] transition-all">
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
+                        <i class="ph ph-magnifying-glass text-gray-400 text-lg"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Login button removed from here -->
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden lg:hidden absolute top-[68px] left-0 w-full bg-[#121212] z-50 shadow-lg border-t border-[#2a2a2a] overflow-hidden">
+            <div class="">
+                <!-- Login/Signup button -->
+                <div class="px-4 py-3">
+                    <a href="#" class="login-btn block w-full text-center bg-gradient-to-r from-[#9747FF] to-[#CDA7FF] rounded-full px-4 py-2.5 text-white font-medium text-sm shadow-lg hover:-translate-y-0.5 transition-all duration-300 relative overflow-hidden">
+                        <span class="relative z-10 flex items-center justify-center gap-2">
+                            <i class="ph ph-sign-in text-lg"></i>
+                            <span>Login/Signup</span>
+                        </span>
+                        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full animate-[shine_2s_infinite]"></div>
+                    </a>
+                </div>
+
+                <div class="mobile-menu-item">
+                    <i class="ph ph-book-open text-white text-lg"></i>
+                    <span class="item-title">Magazine</span>
+                    <i class="ph ph-caret-right"></i>
+                </div>
+
+                <div class="mobile-menu-item">
+                    <i class="ph ph-lightning text-white text-lg"></i>
+                    <span class="item-title">Startups</span>
+                    <i class="ph ph-caret-right"></i>
+                </div>
+
+                <div class="mobile-menu-item">
+                    <i class="ph ph-rocket text-white text-lg"></i>
+                    <span class="item-title">Entrepreneurship</span>
+                    <i class="ph ph-caret-right"></i>
+                </div>
+
+                <div class="mobile-menu-item">
+                    <i class="ph ph-envelope-open text-white text-lg"></i>
+                    <span class="item-title">Newsletters</span>
+                    <i class="ph ph-caret-right"></i>
+                </div>
+
+                <div class="mobile-menu-item">
+                    <i class="ph ph-newspaper text-white text-lg"></i>
+                    <span class="item-title">Editorial</span>
+                    <i class="ph ph-caret-right"></i>
+                </div>
+
+                <div class="mobile-menu-item">
+                    <i class="ph ph-buildings text-white text-lg"></i>
+                    <span class="item-title">Business</span>
+                    <i class="ph ph-caret-right"></i>
+                </div>
+
+                <div class="mobile-menu-item">
+                    <i class="ph ph-briefcase text-white text-lg"></i>
+                    <span class="item-title">Careers</span>
+                    <i class="ph ph-caret-right"></i>
+                </div>
+                
+            </div>
+                
+        </div>
+    </header>
+
+        
         <section class="w-full py-6 px-4 md:px-8">
             <div class="flex flex-col md:flex-row justify-center items-center gap-6 md:gap-10 w-full max-w-6xl mx-auto">
-                <!-- Left Panel - Podcast Cover (Full width on mobile, proportional width on desktop) -->
+                
                 <div class="gradient-bg flex flex-col items-center p-4 md:p-[33px] gap-4 md:gap-[27px] w-full md:w-2/5 rounded-[10px] relative">
-                    <!-- Podcast cover image -->
+                    
                     <div class="w-full aspect-[3/4] rounded-lg bg-cover bg-center" style="background-image: url('https://picsum.photos/seed/podcastcover/600/800')"></div>
                     
-                    <!-- Read full story button -->
+                    
                     <a href="#" class="w-full max-w-[175px]">
                         <img src="static/images/read_full_story_button.png" alt="Read full story" class="w-full h-auto object-contain">
                     </a>
                 </div>
                 
-                <!-- Right Panel - Leadership Spotlight -->
+                
                 <div class="w-full md:w-3/5 mt-6 md:mt-0">
-                    <!-- Heading -->
+                    
                     <h2 class="font-bold text-2xl md:text-[34px] leading-tight text-black mb-6 text-center md:text-left">Leadership Spotlight</h2>
                     
-                    <!-- Profiles Grid -->
+                    
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                        <!-- First Profile -->
+                        
                         <div class="flex flex-col items-center md:items-start">
                             <div class="w-full max-w-[214px] aspect-[3/4] rounded-lg overflow-hidden">
                                 <img src="https://picsum.photos/seed/profile1/214/283" alt="Suhas Medam" class="w-full h-full object-cover">
@@ -205,7 +358,7 @@
                             </p>
                         </div>
                         
-                        <!-- Second Profile -->
+                        
                         <div class="flex flex-col items-center md:items-start">
                             <div class="w-full max-w-[214px] aspect-[3/4] rounded-lg overflow-hidden">
                                 <img src="https://picsum.photos/seed/profile2/214/282" alt="Harsh Kumar" class="w-full h-full object-cover">
@@ -216,7 +369,7 @@
                             </p>
                         </div>
                         
-                        <!-- Third Profile (Hidden on small screens when in a 2-column layout) -->
+                        
                         <div class="flex flex-col items-center md:items-start sm:col-span-2 lg:col-span-1">
                             <div class="w-full max-w-[214px] aspect-[3/4] rounded-lg overflow-hidden">
                                 <img src="https://picsum.photos/seed/profile3/214/282" alt="Vivek Bindra" class="w-full h-full object-cover">
@@ -231,22 +384,22 @@
             </div>
         </section>
         
-        <!-- Advertisement Banner -->
+        
         <div class="w-full px-4 my-8">
             <img src="https://picsum.photos/1200/236" alt="Advertisement" class="w-full h-auto object-cover">
         </div>
         
-        <!-- Explore New Ideas Banner -->
+        
         <div class="w-full px-4">
             <img src="static/images/explore_new_ideas.png" alt="Explore New Ideas" class="w-full h-auto">
         </div>
         
-        <!-- Magazine Issues Section -->
+        
         <section class="w-full py-6 px-4">
             <div class="max-w-6xl mx-auto">
-                <!-- First Row -->
+                
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-                    <!-- September 2024 Card -->
+                    
                     <div class="flex flex-col items-center p-4 gap-4">
                         <div class="w-full aspect-[3/4] relative overflow-hidden rounded-lg">
                             <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-100"></div>
@@ -257,7 +410,7 @@
                         </div>
                     </div>
                     
-                    <!-- August 2024 Card -->
+                    
                     <div class="flex flex-col items-center p-4 gap-4">
                         <div class="w-full aspect-[3/4] relative overflow-hidden rounded-lg">
                             <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-100"></div>
@@ -268,7 +421,7 @@
                         </div>
                     </div>
                     
-                    <!-- July 2024 Card -->
+                    
                     <div class="flex flex-col items-center p-4 gap-4">
                         <div class="w-full aspect-[3/4] relative overflow-hidden rounded-lg">
                             <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-100"></div>
@@ -280,9 +433,9 @@
                     </div>
                 </div>
                 
-                <!-- Second Row -->
+                
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-                    <!-- June 2024 Card -->
+                    
                     <div class="flex flex-col items-center p-4 gap-4">
                         <div class="w-full aspect-[3/4] relative overflow-hidden rounded-lg">
                             <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-100"></div>
@@ -293,7 +446,7 @@
                         </div>
                     </div>
                     
-                    <!-- May 2024 Card -->
+                    
                     <div class="flex flex-col items-center p-4 gap-4">
                         <div class="w-full aspect-[3/4] relative overflow-hidden rounded-lg">
                             <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-100"></div>
@@ -304,7 +457,7 @@
                         </div>
                     </div>
                     
-                    <!-- April 2024 Card -->
+                    
                     <div class="flex flex-col items-center p-4 gap-4">
                         <div class="w-full aspect-[3/4] relative overflow-hidden rounded-lg">
                             <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-100"></div>
@@ -316,9 +469,9 @@
                     </div>
                 </div>
                 
-                <!-- Third Row -->
+                
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- March 2024 Card -->
+                    
                     <div class="flex flex-col items-center p-4 gap-4">
                         <div class="w-full aspect-[3/4] relative overflow-hidden rounded-lg">
                             <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-100"></div>
@@ -329,7 +482,7 @@
                         </div>
                     </div>
                     
-                    <!-- February 2024 Card -->
+                    
                     <div class="flex flex-col items-center p-4 gap-4">
                         <div class="w-full aspect-[3/4] relative overflow-hidden rounded-lg">
                             <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-100"></div>
@@ -340,7 +493,7 @@
                         </div>
                     </div>
                     
-                    <!-- January 2024 Card -->
+                    
                     <div class="flex flex-col items-center p-4 gap-4">
                         <div class="w-full aspect-[3/4] relative overflow-hidden rounded-lg">
                             <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-100"></div>
@@ -354,22 +507,22 @@
             </div>
         </section>
         
-        <!-- 9 Out of 10 Banner -->
+        
         <section class="w-full aspect-[120/47] relative bg-contain bg-no-repeat bg-center bg-[url(static/images/9_out_of_10.png)]">
             <a href="#" class="absolute bottom-[15%] left-[9%] w-[15%] max-w-[250px] hover:opacity-90 transition-opacity"> 
                 <img src="static/images/checkot_button.png" alt="Checkout Podcast Button" class="block w-full h-auto"> 
             </a>
         </section>
         
-        <!-- Advertisement Banner -->
+        
         <div class="w-full px-4 my-8">
             <img src="https://picsum.photos/1200/236" alt="Advertisement" class="w-full h-auto object-cover">
         </div>
         
-        <!-- Order 12: WhatsApp Newsletter Section -->
+        
         <section class="w-full max-w-7xl mx-auto px-4 md:px-8 py-9 my-5">
             <div class="flex flex-col md:flex-row items-stretch gap-8">
-                <!-- Left Side (Form) -->
+                
                  <div class="w-full md:w-1/2 bg-gradient-to-r from-[#3533CD] to-[#0A0A24] rounded-[15px] p-8 flex flex-col text-white">
                      <h2 class="font-jakarta font-bold text-3xl md:text-4xl leading-tight mb-4">Get Weekly WhatsApp Newsletters</h2>
                      <p class="font-jakarta font-semibold text-lg md:text-xl leading-relaxed mb-6">on Latest Funding, Tech News and Business News?</p>
@@ -385,7 +538,7 @@
                              <input type="text" placeholder="Your Designation" required class="flex-grow h-10 rounded-md border-none bg-white px-4 py-2 font-jakarta text-base text-gray-900 placeholder:text-gray-400 placeholder:font-normal focus:ring-2 focus:ring-bol-purple">
                              <div class="flex-grow relative location-input-wrapper">
                                  <input type="text" placeholder="Location" id="location" required class="w-full h-10 rounded-md border-none bg-white px-4 py-2 font-jakarta text-base text-gray-900 placeholder:text-gray-400 placeholder:font-normal focus:ring-2 focus:ring-bol-purple appearance-none">
-                                 <!-- Arrow added via CSS -->
+                                 
                              </div>
                          </div>
                          <div class="flex flex-col gap-3">
@@ -422,31 +575,31 @@
                          </div>
                      </form>
                 </div>
-                <!-- Right Side (Image) -->
+                
                 <div class="w-full md:w-1/2 h-80 md:h-auto bg-cover bg-center rounded-[15px] mt-4 md:mt-0 bg-[url(https://picsum.photos/seed/whatsappvisual/716/625)]"></div> 
             </div>
         </section>
         
-        <!-- Fuel Ambition Banner -->
+        
         <section class="w-full aspect-[120/47] relative bg-contain bg-no-repeat bg-center bg-[url(static/images/fuel_ambition.png)]" style="margin-bottom: -1%;">
-            <!-- Single button positioned absolutely -->
+            
             <a href="#" class="absolute bottom-[18%] left-[50%] -translate-x-1/2 w-[20%] max-w-[300px] hover:opacity-90 transition-opacity">
                 <img src="static/images/checkout_magazine_button.png" alt="Checkout Magazine Button" class="block w-full h-auto">
             </a>
         </section>
         
-        <!-- Order 15: Footer Section 2 -->
+        
     <footer class="w-full bg-black px-4 sm:px-6 md:px-[111px] pt-[40px] md:pt-[70px] pb-[20px] md:pb-[30px] relative text-white">
                 
-        <!-- Footer Links Container - Restructured for mobile -->
+        
         <div class="flex flex-row flex-wrap justify-around items-start gap-6 md:gap-16 mb-8 md:mb-[100px] pt-6 md:pt-0 text-center sm:text-left">
 
-            <!-- Logo Area: Adjusted for row layout on mobile -->
+            
             <div class="w-auto flex flex-col items-center sm:items-start order-1 mb-6 sm:mb-0 flex-shrink-0">
                 <div class="w-[80px] h-[80px] sm:w-[100px] sm:h-[100px] md:w-[161px] md:h-[161px] bg-contain bg-no-repeat bg-center sm:bg-left bg-[url(static/images/header_logo.png)] mb-2 flex-shrink-0" loading="lazy"></div>
             </div>
 
-            <!-- Quick Links -->
+            
             <div class="w-auto order-2 flex-shrink-0">
                 <div class="font-helvetica font-bold text-sm md:text-base leading-[90%] text-[#8B8B8B] mb-3 md:mb-[19px] uppercase">Quick Links</div>
                 <ul class="list-none p-0 m-0 space-y-2 md:space-y-[17px]">
@@ -458,7 +611,7 @@
                 </ul>
             </div>
 
-            <!-- News Links -->
+            
             <div class="w-auto order-3 flex-shrink-0">
                 <div class="font-helvetica font-bold text-sm md:text-base leading-[90%] text-[#8B8B8B] mb-3 md:mb-[20px] uppercase">News</div>
                 <ul class="list-none p-0 m-0 space-y-2 md:space-y-[17px]">
@@ -473,10 +626,10 @@
 
         <div class="border-t border-white/30 w-full my-[30px] md:my-[40px]"></div>
 
-        <!-- Social links and Subscribe section - Made responsive -->
+        
         <div class="flex flex-col md:flex-row justify-between items-center">
            
-            <!-- Social Links -->
+            
             <div class="block mb-6 md:mb-4 w-full md:w-auto text-center md:text-left">
                 <div class="font-helvetica font-bold text-sm md:text-base leading-[90%] text-[#8B8B8B] mb-[12px] md:mb-[15px] uppercase">Social Links</div>
                 <div class="flex justify-center md:justify-start space-x-4">
@@ -508,20 +661,20 @@
                 </div>
             </div>
 
-            <!-- Advertise With Us - Made responsive -->
+            
             <div class="flex flex-col md:flex-row justify-between items-center gap-4 md:gap-[20px] flex-wrap mb-6 md:mb-[40px]">
                 <a href="#" class="font-jakarta font-bold text-sm md:text-base leading-[20px] text-white no-underline hover:text-[#C4C3FF] uppercase">Advertise With Us</a>
             </div>
 
-            <!-- Newsletter Subscription - Made responsive -->
+            
             <div class="text-center md:text-left col-span-1 lg:col-span-1 flex flex-col items-center md:items-start">
                 <div class="font-helvetica font-bold text-base leading-[90%] text-[#8B8B8B] mb-[20px] uppercase">Subscribe to Newsletter</div>
-                <!-- Mobile form (hidden on sm and up) -->
+                
                 <form class="flex flex-row items-stretch gap-2 w-full max-w-md sm:hidden">
                      <input type="email" placeholder="Enter your email" required class="flex-grow h-[40px] bg-white border-none rounded-[4px] px-[15px] text-black placeholder:text-gray-500 focus:ring-2 focus:ring-bol-purple" style="left: 1rem; position: relative;">
                      <input type="image" src="static/images/subscribe_button.png" alt="Subscribe" class="h-[40px] w-auto cursor-pointer hover:opacity-90 transition duration-150 ease-in-out shrink-0" style="left: -1rem; position: relative;">
                  </form>
-                 <!-- Desktop form (hidden below sm) -->
+                 
                  <form class="hidden sm:flex sm:flex-row items-stretch gap-2 w-full max-w-md">
                      <input type="email" placeholder="Enter your email" required class="flex-grow h-[40px] bg-white border-none rounded-[4px] px-[15px] text-black placeholder:text-gray-500 focus:ring-2 focus:ring-bol-purple">
                      <input type="image" src="static/images/subscribe_button.png" alt="Subscribe" class="h-[40px] w-auto cursor-pointer hover:opacity-90 transition duration-150 ease-in-out shrink-0" style="left: -2rem; position: relative;">
@@ -529,7 +682,7 @@
             </div>
         </div>
 
-        <!-- Copyright section -->
+        
         <div class="block">
             <div class="border-t border-white/30 w-full my-[30px] md:my-[40px]"></div>
             <div class="w-full text-center font-helvetica font-bold text-xs md:text-base leading-[90%] text-white/70 mt-[20px]">
@@ -541,20 +694,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            
-            mobileMenuButton.addEventListener('click', function() {
-                // Toggle the mobile menu visibility
-                if (mobileMenu.classList.contains('hidden')) {
-                    mobileMenu.classList.remove('hidden');
-                    mobileMenu.classList.add('block');
-                } else {
-                    mobileMenu.classList.add('hidden');
-                    mobileMenu.classList.remove('block');
-                }
-            });
-            
             // Handle high-five functionality if needed
             const highFiveEmojis = document.querySelectorAll('.high-five-emoji');
             const countNumbers = document.querySelectorAll('.count-number');

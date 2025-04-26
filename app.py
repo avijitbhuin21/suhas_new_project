@@ -27,5 +27,30 @@ def magazine_page_read_only():
 def category_homepage():
     return render_template('category_homepage.html')
 
+@app.route('/advertise_with_us')
+def advertise_with_us():
+    return render_template('advertise_with_us.html')
+
+@app.route('/career_page')
+def career_page():
+    return render_template('career_page.html')
+
+@app.route('/JD')
+def JD():
+    return render_template('JD.html')
+
+
+
+
+
+
+
+
+
+
+@app.route('/trial')
+def trial():
+    return render_template('trial.html')
+
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

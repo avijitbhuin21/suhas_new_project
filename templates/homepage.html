@@ -4,23 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Brands Out Loud</title>
-    <!-- Include Tailwind CSS (Use CDN for development, replace with build process for production) -->
+    
     <script src="https://cdn.tailwindcss.com?plugins=typography,line-clamp"></script>
-    <!-- Google Fonts -->
+    <script src="https://unpkg.com/@phosphor-icons/web@2.0.3"></script>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Consider reducing font weights/families if not all are used for optimization -->
+    
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=IBM+Plex+Sans:wght@600&family=Inter:wght@500&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&family=Roboto:wght@500&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="static/icon/website_icon.png">
-     <!-- Load Helvetica Now Display font if available (add font-face or ensure user has it) -->
-     <!-- For demonstration, we rely on the fallback defined in Tailwind config -->
-<!-- Minimal Custom CSS for things Tailwind doesn't handle easily -->
+     
+     
+
 <style>
     @media screen and (min-width: 1024px) {
         body {
-            transform: scale(1.3248);
+            transform: scale(1.33);
             transform-origin: 0 0;
-            width: 75.5%;
+            width: 75.3%;
         }
     }
 
@@ -81,6 +82,99 @@
         background-position: center;
         background-repeat: no-repeat;
     }
+
+    ::-webkit-scrollbar {
+        display: none;
+    }
+
+    body {
+        -ms-overflow-style: none;  
+        scrollbar-width: none;  
+    }
+        @keyframes slideDown {
+            from { transform: translateY(-10px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .slide-down {
+            animation: slideDown 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        :root {
+            --clr-dark-black: #121212;
+            --clr-bdr-gray: #2a2a2a;
+            --clr-white: #fff;
+            --clr-primary: #9747FF;
+            --clr-primary-light: #CDA7FF;
+            --clr-gray-800: #1e1e1e;
+        }
+
+        .mobile-menu-item {
+            padding: 0.875rem 1rem;
+            background: var(--clr-dark-black);
+            border-bottom: solid 1px var(--clr-bdr-gray);
+            color: var(--clr-white);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: background-color 0.2s ease;
+        }
+        
+        .mobile-menu-item:hover {
+            background-color: #1a1a1a;
+        }
+        
+        .mobile-menu-item:active {
+            background-color: #252525;
+        }
+
+        .item-title {
+            flex-grow: 1;
+            margin-left: 0.75rem;
+            font-weight: 500;
+        }
+
+        .hamburger-line {
+            transition: all 0.3s ease;
+        }
+
+        .hamburger-active .hamburger-line:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+
+        .hamburger-active .hamburger-line:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger-active .hamburger-line:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+
+        .search-input {
+            transition: all 0.2s ease;
+        }
+        
+        .search-input:focus {
+            box-shadow: 0 0 0 2px rgba(151, 71, 255, 0.5);
+        }
+
+        @keyframes shine {
+            from {
+                transform: translateX(-100%);
+            }
+            to {
+                transform: translateX(100%);
+            }
+        }
+
+        .login-btn {
+            transition: all 0.2s ease;
+        }
+        
+        .login-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(205, 167, 255, 0.4);
+        }
 </style>
 
 <script>
@@ -127,124 +221,161 @@
     }
   }
 </script>
+<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+                mobileMenuButton.classList.toggle('hamburger-active');
+                
+                if (!mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('slide-down');
+                } else {
+                    mobileMenu.classList.remove('slide-down');
+                }
+            });
+        });
+    </script>
 </head>
-<body class="font-jakarta bg-white text-bol-black"> <!-- Set default font and text color -->
+<body class="font-jakarta bg-white text-bol-black">
 <div class="flex flex-col items-center w-full max-w-[1440px] mx-auto bg-white overflow-x-hidden relative">
 
-    <!-- Order 0: Header Banner -->
+    
     <!-- <section class="flex flex-col justify-center items-center px-[30px] sm:px-[100px] lg:px-[200px] py-[10px] gap-[13px] w-full h-[157px] bg-cover bg-center bg-[url(static/images/header.png)]">
     </section> -->
 
-    <!-- Order 1: Main Header (Combined Desktop/Mobile) -->
+    
     <header class="w-full bg-black relative">
         <!-- Desktop Header -->
         <div class="hidden lg:flex flex-row justify-center items-center px-20 py-[10px] gap-[70px] h-[113px]">
-        <!-- Logo -->
-        <img src="static/images/header_logo.png" alt="Brands Out Loud Logo" class="w-20 h-20 flex-shrink-0">
-
-        <!-- Navigation Area -->
-        <nav class="flex flex-col items-stretch w-[700px] h-[93px] py-[14px] px-[18px] gap-[10px]">
-        <!-- Top Nav Row -->
-        <div class="flex flex-row justify-end items-center w-full gap-[60px] px-[30px]">
-        <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0">Careers</a>
-        <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0">Editorial</a>
-        <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0">Register</a>
-        <a href="#" class="bg-[#CDA7FF] rounded-[2px] px-2.5 py-0.5 text-[#0D0D0D] font-bold text-[10px] text-center flex-shrink-0">Login</a>
-        </div>
-        <!-- Separator Line -->
-        <div class="w-full h-[1px] bg-gradient-to-r from-black to-[#9747FF]"></div>
-        <!-- Bottom Nav Row -->
-        <div class="flex flex-row justify-end items-center w-full gap-[60px] px-2">
-        <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0">Newsletters</a>
-        <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0">Magazine</a>
-        <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0">Entrepreneurship</a>
-        <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0">Startups</a>
-        <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0">Business</a>
-        </div>
-        </nav>
+            <img src="static/images/header_logo.png" alt="Brands Out Loud Logo" class="w-20 h-20 flex-shrink-0">
+            <nav class="flex flex-col items-stretch w-[700px] h-[93px] py-[14px] px-[18px] gap-[10px]">
+                <div class="flex flex-row justify-end items-center w-full gap-[60px] px-[30px]">
+                    <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Careers </a>
+                    <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Editorial </a>
+                    <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Register </a>
+                    <a href="#" class="bg-[#CDA7FF] rounded-[2px] px-2.5 py-0.5 text-[#0D0D0D] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Login/Signup </a>
+                </div>
+                <div class="w-full h-[1px] bg-gradient-to-r from-black to-[#9747FF]"></div>
+                <div class="flex flex-row justify-end items-center w-full gap-[60px] px-2">
+                    <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Newsletters </a>
+                    <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Magazine </a>
+                    <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Entrepreneurship </a>
+                    <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Startups </a>
+                    <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Business </a>
+                </div>
+            </nav>
         </div>
 
         <!-- Mobile Header -->
-        <div class="flex lg:hidden justify-between items-center h-full h-[60px]">
-        <!-- Logo Section -->
-        <div class="flex items-center w-full"> <!-- Added w-full to allow span to take full width -->
-        <span class="flex-grow h-[60px] text-white text-[2rem] font-bold whitespace-nowrap text-center bg-gradient-to-r from-black to-bol-purple flex items-center justify-center">Brands Out Loud</span>
-
+        <div class="flex lg:hidden items-center h-[68px] w-full bg-[#0D0D0D]">
+            <button id="mobile-menu-button" aria-label="Toggle Menu" class="h-full px-4 flex flex-col justify-center items-center space-y-[5px] bg-transparent focus:outline-none transition-colors duration-200 ease-in-out">
+                <span class="hamburger-line block w-6 h-[2px] bg-white rounded-full"></span>
+                <span class="hamburger-line block w-6 h-[2px] bg-white rounded-full"></span>
+                <span class="hamburger-line block w-6 h-[2px] bg-white rounded-full"></span>
+            </button>
+            
+            <div class="h-full flex items-center px-3 flex-shrink-0">
+                <img src="static/icon/website_icon.png" alt="Brands Out Loud Logo" class="h-10 w-auto">
+            </div>
+            
+            <div class="flex-grow px-3">
+                <div class="relative">
+                    <input type="text" placeholder="Search..." class="search-input w-full bg-[#1e1e1e] text-white text-sm rounded-full pl-10 pr-4 py-2.5 border border-[#2a2a2a] focus:outline-none focus:border-[#9747FF] transition-all">
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
+                        <i class="ph ph-magnifying-glass text-gray-400 text-lg"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Login button removed from here -->
         </div>
 
-        <!-- Hamburger Button -->
-        <button id="mobile-menu-button" aria-label="Toggle Menu" class="h-full px-4 flex flex-col justify-center items-center space-y-[6px] bg-black hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 flex-shrink-0"> <!-- Added flex-shrink-0 -->
-        <span class="block w-8 h-[3px] bg-white rounded-sm"></span>
-        <span class="block w-8 h-[3px] bg-white rounded-sm"></span>
-        <span class="block w-8 h-[3px] bg-white rounded-sm"></span>
-        </button>
-        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden lg:hidden absolute top-[68px] left-0 w-full bg-[#121212] z-50 shadow-lg border-t border-[#2a2a2a] overflow-hidden">
+            <div class="">
+                <!-- Login/Signup button -->
+                <div class="px-4 py-3">
+                    <a href="#" class="login-btn block w-full text-center bg-gradient-to-r from-[#9747FF] to-[#CDA7FF] rounded-full px-4 py-2.5 text-white font-medium text-sm shadow-lg hover:-translate-y-0.5 transition-all duration-300 relative overflow-hidden">
+                        <span class="relative z-10 flex items-center justify-center gap-2">
+                            <i class="ph ph-sign-in text-lg"></i>
+                            <span>Login/Signup</span>
+                        </span>
+                        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full animate-[shine_2s_infinite]"></div>
+                    </a>
+                </div>
 
-        <!-- Mobile Menu (Hidden by default) -->
-        <div id="mobile-menu" class="hidden lg:hidden absolute top-[58px] left-0 w-full bg-black z-50 py-4 shadow-lg">
-        <div class="grid grid-cols-2 gap-x-4 gap-y-2 px-6">
-        <!-- First Column -->
-        <div class="flex flex-col">
-        <h3 class="text-white font-bold text-sm mb-2 border-b border-gray-700 pb-1">Main Menu</h3>
-        <a href="#" class="text-white font-bold text-sm py-2">Careers</a>
-        <a href="#" class="text-white font-bold text-sm py-2">Editorial</a>
-        <a href="#" class="text-white font-bold text-sm py-2">Register</a>
-        <a href="#" class="bg-[#CDA7FF] rounded-[2px] px-2.5 py-2 text-[#0D0D0D] font-bold text-sm mb-4 inline-block w-max">Login</a>
-        </div>
+                <div class="mobile-menu-item">
+                    <i class="ph ph-book-open text-white text-lg"></i>
+                    <span class="item-title">Magazine</span>
+                    <i class="ph ph-caret-right"></i>
+                </div>
 
-        <!-- Second Column -->
-        <div class="flex flex-col">
-        <h3 class="text-white font-bold text-sm mb-2 border-b border-gray-700 pb-1">Categories</h3>
-        <a href="#" class="text-[#C4C3FF] font-bold text-sm py-2">Newsletters</a>
-        <a href="#" class="text-[#C4C3FF] font-bold text-sm py-2">Magazine</a>
-        <a href="#" class="text-[#C4C3FF] font-bold text-sm py-2">Entrepreneurship</a>
-        <a href="#" class="text-[#C4C3FF] font-bold text-sm py-2">Startups</a>
-        <a href="#" class="text-[#C4C3FF] font-bold text-sm py-2">Business</a>
-        </div>
-        </div>
+                <div class="mobile-menu-item">
+                    <i class="ph ph-lightning text-white text-lg"></i>
+                    <span class="item-title">Startups</span>
+                    <i class="ph ph-caret-right"></i>
+                </div>
+
+                <div class="mobile-menu-item">
+                    <i class="ph ph-rocket text-white text-lg"></i>
+                    <span class="item-title">Entrepreneurship</span>
+                    <i class="ph ph-caret-right"></i>
+                </div>
+
+                <div class="mobile-menu-item">
+                    <i class="ph ph-envelope-open text-white text-lg"></i>
+                    <span class="item-title">Newsletters</span>
+                    <i class="ph ph-caret-right"></i>
+                </div>
+
+                <div class="mobile-menu-item">
+                    <i class="ph ph-newspaper text-white text-lg"></i>
+                    <span class="item-title">Editorial</span>
+                    <i class="ph ph-caret-right"></i>
+                </div>
+
+                <div class="mobile-menu-item">
+                    <i class="ph ph-buildings text-white text-lg"></i>
+                    <span class="item-title">Business</span>
+                    <i class="ph ph-caret-right"></i>
+                </div>
+
+                <div class="mobile-menu-item">
+                    <i class="ph ph-briefcase text-white text-lg"></i>
+                    <span class="item-title">Careers</span>
+                    <i class="ph ph-caret-right"></i>
+                </div>
+                
+            </div>
+                
         </div>
     </header>
 
-    <!-- Script for mobile menu toggle functionality -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        
-        mobileMenuButton.addEventListener('click', function() {
-            // Toggle the mobile menu visibility
-            if (mobileMenu.classList.contains('hidden')) {
-            mobileMenu.classList.remove('hidden');
-            mobileMenu.classList.add('block');
-            } else {
-            mobileMenu.classList.add('hidden');
-            mobileMenu.classList.remove('block');
-            }
-        });
-        });
-    </script>
-
-    <!-- Order 2: News Section -->
+    
+    
     <section class="w-full py-6 px-4 md:px-8">
-        <!-- Container for posts -->
+        
         <div class="flex flex-col md:flex-row gap-6 md:gap-8 max-w-7xl mx-auto">
-            <!-- Post 1 (Large) - Takes up more space on desktop -->
+            
             <article class="flex flex-col w-full md:w-3/5">
-                <!-- Image Container -->
+                
                 <div class="w-full aspect-video bg-cover bg-center relative  overflow-hidden">
                      <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                      <div class="w-full h-full bg-cover bg-center bg-[url(https://picsum.photos/seed/post1large/782/394)]"></div>
                  </div>
-                 <!-- Text Content -->
+                 
                  <div class="mt-3">
                     <div class="font-jakarta font-normal text-xs text-gray-600 mb-1">Craig Bator - 27 Dec 2020</div>
                     <h2 class="font-jakarta font-medium text-2xl md:text-[36px] leading-tight capitalize text-gray-900">After all is said and done, more is done</h2>
                 </div>
             </article>
 
-            <!-- Right side posts container - Takes less space on desktop -->
+            
              <div class="grid grid-cols-2 gap-4 md:gap-x-4 md:gap-y-6 w-full md:w-2/5 mt-6 md:mt-0">
-                 <!-- Post 2 (Small Top Left on desktop grid) -->
+                 
                  <article class="flex flex-col">
                      <div class="w-full aspect-video bg-cover bg-center relative  overflow-hidden">
                           <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
@@ -255,7 +386,7 @@
                         <h3 class="font-jakarta font-medium text-sm leading-snug capitalize text-gray-800">They’re back! Kennedy Darling named to return to</h3>
                     </div>
                  </article>
-                 <!-- Post 3 (Small Top Right on desktop grid) -->
+                 
                  <article class="flex flex-col">
                       <div class="w-full aspect-video bg-cover bg-center relative  overflow-hidden">
                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
@@ -266,9 +397,9 @@
                         <h3 class="font-jakarta font-medium text-sm leading-snug capitalize text-gray-800">Swiss authorities say Uber drivers should</h3>
                     </div>
                  </article>
-                 <!-- Post 4 (Medium Bottom Right on desktop grid) - Spans 2 cols -->
+                 
                  <article class="flex flex-col col-span-2 mt-2 md:mt-0">
-                      <div class="w-full h-40 bg-cover bg-center relative overflow-hidden"> <!-- Reduced height from aspect-video -->
+                      <div class="w-full h-40 bg-cover bg-center relative overflow-hidden"> 
                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
                            <div class="w-full h-full bg-cover bg-center bg-[url(https://picsum.photos/seed/post4medium/566/161)]"></div>
                        </div>
@@ -281,13 +412,13 @@
         </div>
     </section>
 
-    <!-- Order 3: Trending News Section -->
+    
     <section class="w-full py-6 px-4 md:px-8 my-5 bg-gradient-to-br from-[#3533CD] via-black to-black md:rounded-lg">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-7xl mx-auto h-full">
-            <!-- Left Column: Title + 3 Small Posts -->
+            
             <div class="flex flex-col gap-3 h-full">
                 <h2 class="font-jakarta font-bold text-2xl md:text-3xl text-white">Trending News</h2>
-                <!-- Post 1 -->
+                
                 <article class="flex flex-col sm:flex-row gap-4 border-b border-white/30 pb-3">
                     <div class="w-full sm:w-1/3 aspect-video md:h-28 bg-cover bg-center rounded-md flex-shrink-0 bg-[url(https://picsum.photos/seed/racehorse/289/150)]"></div>
                     <div class="flex flex-col justify-center sm:w-2/3">
@@ -296,7 +427,7 @@
                         <p class="font-jakarta font-normal text-xs leading-relaxed text-white/80 hidden sm:block">NEW YORK—A 6-year-old horse died after being injured in a race at Belmont Park ahead of next week’s</p>
                     </div>
                 </article>
-                <!-- Post 2 -->
+                
                 <article class="flex flex-col sm:flex-row gap-4 border-b border-white/30 pb-3">
                     <div class="w-full sm:w-1/3 aspect-video md:h-28 bg-cover bg-center rounded-md flex-shrink-0 bg-[url(https://picsum.photos/seed/cyclist/289/150)]"></div>
                     <div class="flex flex-col justify-center sm:w-2/3">
@@ -305,7 +436,7 @@
                         <p class="font-jakarta font-normal text-xs leading-relaxed text-white/80 hidden sm:block">Last year, Savilia Blunk took a more conservative approach to her first season as an Elite Class athlete, skipping some</p>
                     </div>
                 </article>
-                <!-- Post 3 -->
+                
                 <article class="flex flex-col sm:flex-row gap-4 border-b border-white/30 pb-3">
                     <div class="w-full sm:w-1/3 aspect-video md:h-28 bg-cover bg-center rounded-md flex-shrink-0 bg-[url(https://picsum.photos/seed/boxing/289/150)]"></div>
                     <div class="flex flex-col justify-center sm:w-2/3">
@@ -316,7 +447,7 @@
                 </article>
             </div>
 
-            <!-- Right Column: Large Post -->
+            
             <div class="flex flex-col pt-12">
                  <div class="relative w-full aspect-video bg-cover bg-center rounded-lg overflow-hidden">
                      <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
@@ -333,7 +464,7 @@
         </div>
     </section>
 
-    <!-- Order 4: Strip Section -->
+    
     <section class="box-border w-full h-[90px] border-y border-black flex items-center overflow-hidden relative my-5 strip-section">
         <div class="flex gap-[100px] md:gap-[180px] items-center h-[45px] whitespace-nowrap absolute animate-marquee">
             
@@ -347,11 +478,11 @@
         </div>
     </section>
 
-    <!-- Order 5: Top Stories Section -->
+    
      <section class="w-full py-6 px-4 md:px-8 my-5"> 
-         <!-- Grid layout for better responsiveness -->
+         
          <div class="grid grid-cols-1 md:grid-cols-[minmax(0,_1.5fr)_1fr] gap-8 md:gap-10 max-w-7xl mx-auto">
-             <!-- Left Side: Main Story -->
+             
              <div class="relative w-full">
                  <div class="w-full aspect-video bg-cover bg-center relative bg-[url(https://picsum.photos/seed/topstorymain/656/371)] rounded-lg overflow-hidden">
                       <div class="absolute left-4 bottom-4 z-10">
@@ -360,16 +491,16 @@
                            </div>
                       </div>
                  </div>
-                 <!-- Text content below image - Removed absolute positioning, added margin -->
+                 
                  <div class="mt-3"> 
                       <h2 class="font-jakarta font-semibold text-lg md:text-xl leading-snug text-[#222222] mb-1">What One Photo Tells Us About North Korea’s Nuclear Program</h2>
                       <p class="font-jakarta font-normal text-sm leading-relaxed text-[#555555]">Clues from a propaganda photo reveal details about North Korea’s expanding weapons programs and internal politics.</p>
                  </div>
              </div>
 
-            <!-- Right Side: Spotlight Boxes -->
+            
              <div class="w-full flex flex-col gap-5">
-                 <!-- Leadership Spotlight -->
+                 
                  <div class="relative w-full h-[196px] rounded-t-[20px] overflow-hidden">
                      <div class="absolute inset-0 bg-cover bg-center bg-[url(https://picsum.photos/seed/leadership/643/196)] rounded-t-[20px]"></div>
                      <div class="absolute inset-0 bg-[linear-gradient(354.1deg,_#3533CD_-75.73%,_#000000_95.32%)] opacity-50 rounded-t-[20px]"></div>
@@ -380,7 +511,7 @@
                      </div>
                  </div>
 
-                 <!-- Stay Updated -->
+                 
                  <div class="relative w-full h-[196px] rounded-b-[20px] overflow-hidden">
                      <div class="absolute inset-0 bg-[linear-gradient(354.1deg,_#3533CD_-75.73%,_#000000_95.32%)] rounded-b-[20px]"></div>
 
@@ -398,18 +529,18 @@
 
      </section>
 
-    <!-- Order 6: Ad Banner -->
+    
     <section class="w-full py-16 md:py-20 bg-[#FF9D9D] flex justify-center items-center text-white text-2xl font-bold" style="margin-bottom: 1.25rem;">
         AD BANNER PLACEHOLDER
     </section>
 
-    <!-- Order 7: Funding News Section -->
+    
     <section class="w-full py-6 px-4 md:px-8 my-5 bg-gradient-to-br from-[#3533CD] via-black to-black md:rounded-lg">
         <div class="relative max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
-            <!-- Left Column: Title + 3 Small Posts -->
+            
             <div class="flex flex-col gap-5"> 
                 <h2 class="font-jakarta font-bold text-2xl md:text-3xl text-white pb-1">FUNDING</h2> 
-                <!-- Post 1 -->
+                
                 <article class="flex flex-col sm:flex-row gap-4 border-b border-white/30 pb-3">
                     <div class="w-full sm:w-1/3 aspect-video md:h-28 bg-cover bg-center rounded-md flex-shrink-0 bg-[url(https://picsum.photos/seed/fundinghorse/289/150)]"></div>
                     <div class="flex flex-col justify-center sm:w-2/3">
@@ -418,7 +549,7 @@
                         <p class="font-jakarta font-normal text-xs leading-relaxed text-white/80 hidden sm:block">NEW YORK—A 6-year-old horse died after being injured in a race at Belmont Park ahead of next week’s</p>
                     </div>
                 </article>
-                <!-- Post 2 -->
+                
                 <article class="flex flex-col sm:flex-row gap-4 border-b border-white/30 pb-3">
                     <div class="w-full sm:w-1/3 aspect-video md:h-28 bg-cover bg-center rounded-md flex-shrink-0 bg-[url(https://picsum.photos/seed/fundingcyclist/289/150)]"></div>
                     <div class="flex flex-col justify-center sm:w-2/3">
@@ -427,7 +558,7 @@
                         <p class="font-jakarta font-normal text-xs leading-relaxed text-white/80 hidden sm:block">Last year, Savilia Blunk took a more conservative approach to her first season as an Elite Class athlete, skipping some</p>
                     </div>
                 </article>
-                 <!-- Post 3 -->
+                 
                 <article class="flex flex-col sm:flex-row gap-4 border-b border-white/30 pb-3">
                     <div class="w-full sm:w-1/3 aspect-video md:h-28 bg-cover bg-center rounded-md flex-shrink-0 bg-[url(https://picsum.photos/seed/fundingboxing/289/150)]"></div>
                     <div class="flex flex-col justify-center sm:w-2/3">
@@ -438,7 +569,7 @@
                 </article>
             </div>
 
-             <!-- Right Column: Large Post -->
+             
              <div class="flex flex-col md:pt-16" >
                  <div class="relative w-full aspect-video bg-cover bg-center rounded-lg overflow-hidden">
                      <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div> 
@@ -455,17 +586,17 @@
         </div>
     </section>
 
-    <!-- Order 8: Podcast Section -->
+    
     <section class="w-full aspect-[120/47] relative bg-contain bg-no-repeat bg-center bg-[url(static/images/9_out_of_10.png)] my-5">
         <a href="#" class="absolute bottom-[15%] left-[9%] w-[15%] max-w-[250px] hover:opacity-90 transition-opacity"> 
             <img src="static/images/checkot_button.png" alt="Checkout Podcast Button" class="block w-full h-auto"> 
         </a>
     </section>
-    <!-- End Order 8 -->
+    
 
-    <!-- Order 9: Dual Column Section (Sustainability/Semiconductors) -->
+    
     <section class="w-full grid grid-cols-1 md:grid-cols-2 justify-center items-start gap-8 max-w-7xl mx-auto px-4 md:px-8 my-5">
-        <!-- Left Column (Sustainability) -->
+        
         <div class="w-full h-auto relative overflow-hidden rounded-lg bg-gradient-to-tl from-[#3533CD] via-black to-black p-6">
              <h2 class="font-jakarta font-bold text-2xl md:text-3xl text-white mb-6">Sustainability</h2>
              <div class="flex flex-col gap-5">
@@ -477,7 +608,7 @@
                          <p class="font-jakarta font-normal text-xs leading-relaxed text-white/80 hidden sm:block">NEW YORK—A 6-year-old horse died after being injured in a race at Belmont Park ahead of next week’s</p>
                      </div>
                  </article>
-                 <!-- Article 2 -->
+                 
                  <article class="flex flex-col sm:flex-row gap-4 border-b border-white/30 pb-3">
                      <div class="w-full sm:w-1/3 aspect-video md:h-28 bg-cover bg-center rounded-md flex-shrink-0 bg-[url(https://picsum.photos/seed/suscyclist/293/184)]"></div>
                      <div class="flex flex-col justify-center sm:w-2/3">
@@ -486,7 +617,7 @@
                          <p class="font-jakarta font-normal text-xs leading-relaxed text-white/80 hidden sm:block">Last year, Savilia Blunk took a more conservative approach to her first season as an Elite Class athlete, skipping some</p>
                      </div>
                  </article>
-                 <!-- Article 3 -->
+                 
                 <article class="flex flex-col sm:flex-row gap-4 border-b border-white/30 pb-3">
                      <div class="w-full sm:w-1/3 aspect-video md:h-28 bg-cover bg-center rounded-md flex-shrink-0 bg-[url(https://picsum.photos/seed/susboxing/293/184)]"></div>
                      <div class="flex flex-col justify-center sm:w-2/3">
@@ -497,7 +628,7 @@
                  </article>
              </div>
         </div>
-        <!-- Right Column (Semiconductors) -->
+        
          <div class="w-full h-auto relative overflow-hidden rounded-lg bg-gradient-to-tl from-black via-[#3533CD] to-[#3533CD] p-6">
              <h2 class="font-jakarta font-bold text-2xl md:text-3xl text-white mb-6">Semiconductors</h2>
              <div class="flex flex-col gap-5">
@@ -509,7 +640,7 @@
                         <p class="font-jakarta font-normal text-xs leading-relaxed text-white/80 hidden sm:block">SILICON VALLEY—A major player unveiled technology promising smaller, faster processors for future devices.</p> 
                     </div>
                 </article>
-                <!-- Article 2 -->
+                
                 <article class="flex flex-col sm:flex-row gap-4 border-b border-white/30 pb-3">
                     <div class="w-full sm:w-1/3 aspect-video md:h-28 bg-cover bg-center rounded-md flex-shrink-0 bg-[url(https://picsum.photos/seed/semiconductorcyclist/293/184)]"></div> 
                     <div class="flex flex-col justify-center sm:w-2/3">
@@ -518,7 +649,7 @@
                         <p class="font-jakarta font-normal text-xs leading-relaxed text-white/80 hidden sm:block">While challenges remain, increased production capacity is beginning to alleviate the long-standing ...</p> 
                     </div>
                 </article>
-                <!-- Article 3 -->
+                
                <article class="flex flex-col sm:flex-row gap-4 border-b border-white/30 pb-3">
                     <div class="w-full sm:w-1/3 aspect-video md:h-28 bg-cover bg-center rounded-md flex-shrink-0 bg-[url(https://picsum.photos/seed/semiconductorboxing/293/184)]"></div> 
                     <div class="flex flex-col justify-center sm:w-2/3">
@@ -531,9 +662,9 @@
         </div>
     </section>
 
-    <!-- Order 10: Hero Section Bottom (Refactored) -->
+    
     <section class="w-full aspect-[120/47] relative bg-contain bg-no-repeat bg-center bg-[url(static/images/fuel_ambition.png)] my-5">
-        <!-- Single button positioned absolutely -->
+        
         <a href="#" class="absolute bottom-[18%] left-[50%] -translate-x-1/2 w-[20%] max-w-[300px] hover:opacity-90 transition-opacity">
             <img src="static/images/checkout_magazine_button.png" alt="Checkout Magazine Button" class="block w-full h-auto">
         </a>
@@ -541,32 +672,32 @@
 
 
 
-    <!-- Order 11: AI / Lifestyle Section -->
+    
     <section class="w-full h-auto relative px-4 md:px-[34px] my-5">
          <div class="relative w-full h-auto flex flex-col">
-             <!-- Section Header -->
+             
              <div class="relative w-full h-[42px] mb-[25px]">
                  <h2 class="absolute left-0 top-0 font-jakarta font-extrabold text-2xl leading-[30px] text-[#3533CD]">AI</h2>
                  <div class="absolute left-0 top-[42px] w-full border-t border-[#393939]"></div>
                  <div class="absolute left-0 top-[42px] w-[60px] border-t-2 border-[#3533CD] z-10"></div> 
              </div>
-             <!-- Posts Grid -->
+             
              <div class="grid grid-cols-1 md:grid-cols-2 gap-x-[47px] gap-y-[35px] w-full mt-8">
-                 <!-- Large Post 1 -->
+                 
                  <article class="flex flex-col">
                      <div class="w-full h-[250px] bg-cover bg-center mb-[15px] bg-[url(https://picsum.photos/seed/ailarge1/662/250)]"></div>
                      <div class="font-jakarta text-[12px] leading-[1.1] text-[#393939] mb-[6px]">Craig Bator - 27 Dec 2020</div>
                      <h3 class="font-jakarta font-medium text-2xl leading-[30px] capitalize text-[#393939] mb-[10px] h-auto">‘Institutional delivery vital for reducing maternal and neonatal deaths’</h3>
                      <p class="font-jakarta text-sm leading-[1.3] text-[#393939]/60 h-auto overflow-hidden">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Faucibus lobortis augue condimentum maecenas. Metus at in fames vitae posuere ut vel vulputate ...</p>
                  </article>
-                  <!-- Large Post 2 -->
+                  
                  <article class="flex flex-col">
                       <div class="w-full h-[250px] bg-cover bg-center mb-[15px] bg-[url(https://picsum.photos/seed/ailarge2/662/250)]"></div>
                       <div class="font-jakarta text-[12px] leading-[1.1] text-[#393939] mb-[6px]">Craig Bator - 27 Dec 2020</div>
                       <h3 class="font-jakarta font-medium text-2xl leading-[30px] capitalize text-[#393939] mb-[10px] h-auto">Being self-controlled child may lead to healthier middle-age</h3>
                       <p class="font-jakarta text-sm leading-[1.3] text-[#393939]/60 h-auto overflow-hidden">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Faucibus lobortis augue condimentum maecenas. Metus at in fames vitae posuere ut vel vulputate...</p>
                  </article>
-                  <!-- Small Post 3 -->
+                  
                   <article class="flex flex-row gap-[19px] items-start h-auto mt-4 md:mt-0">
                       <div class="w-[100px] md:w-[189.24px] h-[90px] bg-cover bg-center flex-shrink-0 bg-[url(https://picsum.photos/seed/aismall3/189/90)]"></div>
                       <div class="flex flex-col flex-grow pt-1">
@@ -574,7 +705,7 @@
                           <h4 class="font-jakarta font-normal text-lg md:text-xl leading-[1.2] text-[#393939]">Best things you can do on a solo mountain climb</h4>
                       </div>
                   </article>
-                  <!-- Small Post 4 -->
+                  
                    <article class="flex flex-row gap-[19px] items-start h-auto mt-4 md:mt-0">
                       <div class="w-[100px] md:w-[189.24px] h-[90px] bg-cover bg-center flex-shrink-0 bg-[url(https://picsum.photos/seed/aismall4/189/90)]"></div>
                       <div class="flex flex-col flex-grow pt-1">
@@ -582,7 +713,7 @@
                           <h4 class="font-jakarta font-normal text-lg md:text-xl leading-[1.2] text-[#393939]">How to use basic design principles your home</h4>
                       </div>
                   </article>
-                 <!-- Small Post 5 -->
+                 
                  <article class="flex flex-row gap-[19px] items-start h-auto mt-4 md:mt-0">
                       <div class="w-[100px] md:w-[189.24px] h-[90px] bg-cover bg-center flex-shrink-0 bg-[url(https://picsum.photos/seed/aismall5/189/90)]"></div>
                       <div class="flex flex-col flex-grow pt-1">
@@ -590,7 +721,7 @@
                           <h4 class="font-jakarta font-normal text-lg md:text-xl leading-[1.2] text-[#393939]">Creative decorating with houseplants</h4>
                       </div>
                   </article>
-                  <!-- Small Post 6 -->
+                  
                   <article class="flex flex-row gap-[19px] items-start h-auto mt-4 md:mt-0">
                       <div class="w-[100px] md:w-[189.24px] h-[90px] bg-cover bg-center flex-shrink-0 bg-[url(https://picsum.photos/seed/aismall6/189/90)]"></div>
                       <div class="flex flex-col flex-grow pt-1">
@@ -602,10 +733,10 @@
          </div>
      </section>
 
-    <!-- Order 12: WhatsApp Newsletter Section (Refactored) -->
+    
     <section class="w-full max-w-7xl mx-auto px-4 md:px-8 py-9 my-5">
         <div class="flex flex-col md:flex-row items-stretch gap-8">
-            <!-- Left Side (Form) -->
+            
              <div class="w-full md:w-1/2 bg-gradient-to-r from-[#3533CD] to-[#0A0A24] rounded-[15px] p-8 flex flex-col text-white">
                  <h2 class="font-jakarta font-bold text-3xl md:text-4xl leading-tight mb-4">Get Weekly WhatsApp Newsletters</h2>
                  <p class="font-jakarta font-semibold text-lg md:text-xl leading-relaxed mb-6">on Latest Funding, Tech News and Business News?</p>
@@ -621,7 +752,7 @@
                          <input type="text" placeholder="Your Designation" required class="flex-grow h-10 rounded-md border-none bg-white px-4 py-2 font-jakarta text-base text-gray-900 placeholder:text-gray-400 placeholder:font-normal focus:ring-2 focus:ring-bol-purple">
                          <div class="flex-grow relative location-input-wrapper">
                              <input type="text" placeholder="Location" id="location" required class="w-full h-10 rounded-md border-none bg-white px-4 py-2 font-jakarta text-base text-gray-900 placeholder:text-gray-400 placeholder:font-normal focus:ring-2 focus:ring-bol-purple appearance-none">
-                             <!-- Arrow added via CSS -->
+                             
                          </div>
                      </div>
                      <div class="flex flex-col gap-3">
@@ -658,38 +789,38 @@
                      </div>
                  </form>
             </div>
-            <!-- Right Side (Image) -->
+            
             <div class="w-full md:w-1/2 h-80 md:h-auto bg-cover bg-center rounded-[15px] mt-4 md:mt-0 bg-[url(https://picsum.photos/seed/whatsappvisual/716/625)]"></div> 
         </div>
     </section>
 
-    <!-- Order 13: AI / Lifestyle Section 2 (Duplicate Structure) -->
+    
     <section class="w-full h-auto relative px-4 md:px-[34px]" style="padding-bottom: 2.25rem;">
          <div class="relative w-full h-auto flex flex-col">
-             <!-- Section Header -->
+             
              <div class="relative w-full h-[42px] mb-[25px]">
                  <h2 class="absolute left-0 top-0 font-jakarta font-extrabold text-2xl leading-[30px] text-[#3533CD]">Lifestyle</h2>
                  <div class="absolute left-0 top-[42px] w-full border-t border-[#393939]"></div>
                  <div class="absolute left-0 top-[42px] w-[150px] border-t-2 border-[#3533CD] z-10"></div> 
              </div>
-              <!-- Posts Grid -->
+              
              <div class="grid grid-cols-1 md:grid-cols-2 gap-x-[47px] gap-y-[35px] w-full mt-8">
                  
-                 <!-- Large Post 1 -->
+                 
                  <article class="flex flex-col">
                      <div class="w-full h-[250px] bg-cover bg-center mb-[15px] bg-[url(https://picsum.photos/seed/ailifestyle1/662/250)]"></div>
                      <div class="font-jakarta text-[12px] leading-[1.1] text-[#393939] mb-[6px]">Craig Bator - 27 Dec 2020</div>
                      <h3 class="font-jakarta font-medium text-2xl leading-[30px] capitalize text-[#393939] mb-[10px] h-auto">‘Institutional delivery vital for reducing maternal and neonatal deaths’</h3>
                      <p class="font-jakarta text-sm leading-[1.3] text-[#393939]/60 h-auto overflow-hidden">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Faucibus lobortis augue condimentum maecenas. Metus at in fames vitae posuere ut vel vulputate ...</p>
                  </article>
-                  <!-- Large Post 2 -->
+                  
                  <article class="flex flex-col">
                       <div class="w-full h-[250px] bg-cover bg-center mb-[15px] bg-[url(https://picsum.photos/seed/ailifestyle2/662/250)]"></div>
                       <div class="font-jakarta text-[12px] leading-[1.1] text-[#393939] mb-[6px]">Craig Bator - 27 Dec 2020</div>
                       <h3 class="font-jakarta font-medium text-2xl leading-[30px] capitalize text-[#393939] mb-[10px] h-auto">Being self-controlled child may lead to healthier middle-age</h3>
                       <p class="font-jakarta text-sm leading-[1.3] text-[#393939]/60 h-auto overflow-hidden">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Faucibus lobortis augue condimentum maecenas. Metus at in fames vitae posuere ut vel vulputate...</p>
                  </article>
-                  <!-- Small Post 3 -->
+                  
                   <article class="flex flex-row gap-[19px] items-start h-auto mt-4 md:mt-0">
                       <div class="w-[100px] md:w-[189.24px] h-[90px] bg-cover bg-center flex-shrink-0 bg-[url(https://picsum.photos/seed/ailifestyle3/189/90)]"></div>
                       <div class="flex flex-col flex-grow pt-1">
@@ -697,7 +828,7 @@
                           <h4 class="font-jakarta font-normal text-lg md:text-xl leading-[1.2] text-[#393939]">Best things you can do on a solo mountain climb</h4>
                       </div>
                   </article>
-                  <!-- Small Post 4 -->
+                  
                    <article class="flex flex-row gap-[19px] items-start h-auto mt-4 md:mt-0">
                       <div class="w-[100px] md:w-[189.24px] h-[90px] bg-cover bg-center flex-shrink-0 bg-[url(https://picsum.photos/seed/ailifestyle4/189/90)]"></div>
                       <div class="flex flex-col flex-grow pt-1">
@@ -705,7 +836,7 @@
                           <h4 class="font-jakarta font-normal text-lg md:text-xl leading-[1.2] text-[#393939]">How to use basic design principles your home</h4>
                       </div>
                   </article>
-                 <!-- Small Post 5 -->
+                 
                  <article class="flex flex-row gap-[19px] items-start h-auto mt-4 md:mt-0">
                       <div class="w-[100px] md:w-[189.24px] h-[90px] bg-cover bg-center flex-shrink-0 bg-[url(https://picsum.photos/seed/ailifestyle5/189/90)]"></div>
                       <div class="flex flex-col flex-grow pt-1">
@@ -713,7 +844,7 @@
                           <h4 class="font-jakarta font-normal text-lg md:text-xl leading-[1.2] text-[#393939]">Creative decorating with houseplants</h4>
                       </div>
                   </article>
-                  <!-- Small Post 6 -->
+                  
                   <article class="flex flex-row gap-[19px] items-start h-auto mt-4 md:mt-0">
                       <div class="w-[100px] md:w-[189.24px] h-[90px] bg-cover bg-center flex-shrink-0 bg-[url(https://picsum.photos/seed/ailifestyle6/189/90)]"></div>
                       <div class="flex flex-col flex-grow pt-1">
@@ -725,26 +856,26 @@
          </div>
     </section>
 
-    <!-- Order 14: Footer Section 1 (Refactored) -->
+    
     <footer class="w-full aspect-[120/60] relative bg-cover bg-no-repeat bg-center bg-[url(static/images/footer1.png)]">
-        <!-- Single button positioned absolutely -->
+        
         <a href="#" class="absolute bottom-[22%] left-[10%] w-[20%] max-w-[280px] hover:opacity-90 transition-opacity">
             <img src="static/images/checkout_magazine_button.png" alt="Footer Action Button" class="block w-full h-auto">
         </a>
     </footer>
 
-    <!-- Order 15: Footer Section 2 -->
+    
     <footer class="w-full bg-black px-4 sm:px-6 md:px-[111px] pt-[40px] md:pt-[70px] pb-[20px] md:pb-[30px] relative text-white">
                 
-        <!-- Footer Links Container - Restructured for mobile -->
+        
         <div class="flex flex-row flex-wrap justify-around items-start gap-6 md:gap-16 mb-8 md:mb-[100px] pt-6 md:pt-0 text-center sm:text-left">
 
-            <!-- Logo Area: Adjusted for row layout on mobile -->
+            
             <div class="w-auto flex flex-col items-center sm:items-start order-1 mb-6 sm:mb-0 flex-shrink-0">
                 <div class="w-[80px] h-[80px] sm:w-[100px] sm:h-[100px] md:w-[161px] md:h-[161px] bg-contain bg-no-repeat bg-center sm:bg-left bg-[url(static/images/header_logo.png)] mb-2 flex-shrink-0" loading="lazy"></div>
             </div>
 
-            <!-- Quick Links -->
+            
             <div class="w-auto order-2 flex-shrink-0">
                 <div class="font-helvetica font-bold text-sm md:text-base leading-[90%] text-[#8B8B8B] mb-3 md:mb-[19px] uppercase">Quick Links</div>
                 <ul class="list-none p-0 m-0 space-y-2 md:space-y-[17px]">
@@ -756,7 +887,7 @@
                 </ul>
             </div>
 
-            <!-- News Links -->
+            
             <div class="w-auto order-3 flex-shrink-0">
                 <div class="font-helvetica font-bold text-sm md:text-base leading-[90%] text-[#8B8B8B] mb-3 md:mb-[20px] uppercase">News</div>
                 <ul class="list-none p-0 m-0 space-y-2 md:space-y-[17px]">
@@ -771,10 +902,10 @@
 
         <div class="border-t border-white/30 w-full my-[30px] md:my-[40px]"></div>
 
-        <!-- Social links and Subscribe section - Made responsive -->
+        
         <div class="flex flex-col md:flex-row justify-between items-center">
            
-            <!-- Social Links -->
+            
             <div class="block mb-6 md:mb-4 w-full md:w-auto text-center md:text-left">
                 <div class="font-helvetica font-bold text-sm md:text-base leading-[90%] text-[#8B8B8B] mb-[12px] md:mb-[15px] uppercase">Social Links</div>
                 <div class="flex justify-center md:justify-start space-x-4">
@@ -806,20 +937,20 @@
                 </div>
             </div>
 
-            <!-- Advertise With Us - Made responsive -->
+            
             <div class="flex flex-col md:flex-row justify-between items-center gap-4 md:gap-[20px] flex-wrap mb-6 md:mb-[40px]">
                 <a href="#" class="font-jakarta font-bold text-sm md:text-base leading-[20px] text-white no-underline hover:text-[#C4C3FF] uppercase">Advertise With Us</a>
             </div>
 
-            <!-- Newsletter Subscription - Made responsive -->
+            
             <div class="text-center md:text-left col-span-1 lg:col-span-1 flex flex-col items-center md:items-start">
                 <div class="font-helvetica font-bold text-base leading-[90%] text-[#8B8B8B] mb-[20px] uppercase">Subscribe to Newsletter</div>
-                <!-- Mobile form (hidden on sm and up) -->
+                
                 <form class="flex flex-row items-stretch gap-2 w-full max-w-md sm:hidden">
                      <input type="email" placeholder="Enter your email" required class="flex-grow h-[40px] bg-white border-none rounded-[4px] px-[15px] text-black placeholder:text-gray-500 focus:ring-2 focus:ring-bol-purple" style="left: 1rem; position: relative;">
                      <input type="image" src="static/images/subscribe_button.png" alt="Subscribe" class="h-[40px] w-auto cursor-pointer hover:opacity-90 transition duration-150 ease-in-out shrink-0" style="left: -1rem; position: relative;">
                  </form>
-                 <!-- Desktop form (hidden below sm) -->
+                 
                  <form class="hidden sm:flex sm:flex-row items-stretch gap-2 w-full max-w-md">
                      <input type="email" placeholder="Enter your email" required class="flex-grow h-[40px] bg-white border-none rounded-[4px] px-[15px] text-black placeholder:text-gray-500 focus:ring-2 focus:ring-bol-purple">
                      <input type="image" src="static/images/subscribe_button.png" alt="Subscribe" class="h-[40px] w-auto cursor-pointer hover:opacity-90 transition duration-150 ease-in-out shrink-0" style="left: -2rem; position: relative;">
@@ -827,7 +958,7 @@
             </div>
         </div>
 
-        <!-- Copyright section -->
+        
         <div class="block">
             <div class="border-t border-white/30 w-full my-[30px] md:my-[40px]"></div>
             <div class="w-full text-center font-helvetica font-bold text-xs md:text-base leading-[90%] text-white/70 mt-[20px]">
