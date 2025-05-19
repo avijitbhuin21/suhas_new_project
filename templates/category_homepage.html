@@ -19,9 +19,7 @@
 <style>
     @media screen and (min-width: 1024px) {
         body {
-            transform: scale(1.33);
-            transform-origin: 0 0;
-            width: 75.3%;
+            zoom: 1.2;
         }
     }
 
@@ -255,7 +253,7 @@
                     <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Careers </a>
                     <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Editorial </a>
                     <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Register </a>
-                    <a href="#" class="bg-[#CDA7FF] rounded-[2px] px-2.5 py-0.5 text-[#0D0D0D] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Login/Signup </a>
+                    <a href="#" class="bg-[#CDA7FF] rounded-[2px] px-2.5 py-0.5 text-[#0D0D0D] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Login </a>
                 </div>
                 <div class="w-full h-[1px] bg-gradient-to-r from-black to-[#9747FF]"></div>
                 <div class="flex flex-row justify-end items-center w-full gap-[60px] px-2">
@@ -295,12 +293,12 @@
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden lg:hidden absolute top-[68px] left-0 w-full bg-[#121212] z-50 shadow-lg border-t border-[#2a2a2a] overflow-hidden">
             <div class="">
-                <!-- Login/Signup button -->
+                <!-- Login button -->
                 <div class="px-4 py-3">
                     <a href="#" class="login-btn block w-full text-center bg-gradient-to-r from-[#9747FF] to-[#CDA7FF] rounded-full px-4 py-2.5 text-white font-medium text-sm shadow-lg hover:-translate-y-0.5 transition-all duration-300 relative overflow-hidden">
                         <span class="relative z-10 flex items-center justify-center gap-2">
                             <i class="ph ph-sign-in text-lg"></i>
-                            <span>Login/Signup</span>
+                            <span>Login</span>
                         </span>
                         <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full animate-[shine_2s_infinite]"></div>
                     </a>
@@ -353,32 +351,27 @@
         </div>
     </header>
     
-    <img src="static/images/Business_heading.png" alt="Business Heading" class="w-full my-4"> 
-
-    
+    <img src="static/images/Business_heading.png" alt="Business Heading" class="w-full"> </img>
     
     <section class="w-full h-auto relative overflow-hidden my-5 md:my-0"> 
         <div class="absolute inset-0 w-full h-full bg-gradient-to-br from-[#3533CD] via-black to-black md:bg-[linear-gradient(125.25deg,_#3533CD_0.4%,_#000000_47.94%)] rounded-none md:rounded-[6px]"></div>
         <div class="relative w-full h-full z-10 p-4 md:p-0 grid grid-cols-1 md:grid-cols-2 md:gap-0"> 
             
             <div class="relative w-full h-auto md:h-full"> 
-                <div class="relative w-full h-[470px] md:absolute md:inset-0 bg-cover bg-center rounded-none bg-[url(https://picsum.photos/seed/trendinglarge/640/395)]"> 
+                <div class="relative w-[26rem] md:w-full h-[30rem] mt-[-1rem] md:mt-[0px] md:h-[40.5rem] -mx-4 md:mx-0 md:absolute md:inset-0 bg-cover bg-center rounded-none bg-[url(https://picsum.photos/seed/trendinglarge/640/395)]"> 
                     
                     <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/80 via-black/50 to-transparent rounded-b-none"></div> 
                     
-                    <div class="absolute bottom-4 left-4 right-4 md:bottom-6 md:left-6 md:right-6 z-10"> 
+                    <div class="absolute bottom-4 left-4 right-4 md:bottom-16 md:left-6 md:right-6 z-10"> 
                         <div class="font-dm font-normal text-sm leading-[1.1] text-white md:text-[18px] mb-1">Debits - 03 June 2023</div>
                         <h2 class="font-jakarta font-bold text-xl leading-tight capitalize text-white md:text-[32px] md:leading-[40px]">DISCOVER THE MEMBER BENEFITS OF BOL BUSINESS</h2>
                     </div>
                 </div>
-                
-                <h2 class="absolute left-4 top-4 font-jakarta font-bold text-xl md:text-2xl leading-tight text-white z-20 px-3 py-1 rounded-[3px]">BREAKING</h2>
-                
             </div>
 
             
             <div class="flex flex-col gap-4 md:p-8"> 
-                <h2 class="w-auto md:w-[232.35px] h-auto md:h-[38px] font-jakarta font-bold text-2xl md:text-[28px] leading-[38px] text-white pb-4">Trending News</h2>
+                <!-- <h2 class="w-auto md:w-[232.35px] h-auto md:h-[38px] font-jakarta font-bold text-2xl md:text-[28px] leading-[38px] text-white pb-4">BUSINESS</h2> -->
                 
                 <article class="flex flex-col md:flex-row gap-4 md:w-full border-b border-white/30 pb-3.5"> 
                     <div class="w-full md:w-[289.2px] h-[150px] bg-cover bg-center rounded-[6px] bg-[url(https://picsum.photos/seed/racehorse/289/150)] flex-shrink-0"></div>
@@ -389,7 +382,17 @@
                     </div>
                 </article>
                 
+                
                <article class="flex flex-col md:flex-row gap-4 md:w-full border-b border-white/30 pb-3.5"> 
+                    <div class="w-full md:w-[289.2px] h-[150px] bg-cover bg-center rounded-[6px] bg-[url(https://picsum.photos/seed/cyclist/289/150)] flex-shrink-0"></div>
+                    <div class="flex flex-col justify-center">
+                        <div class="w-auto md:w-[135.95px] h-[10px] font-jakarta font-medium text-[10px] leading-[1] text-white/60 mb-2">Jony.Ls - 03 June 2023</div>
+                        <h3 class="w-auto md:w-auto h-auto font-jakarta font-normal text-lg leading-[136.9%] text-white capitalize mb-2">Savilia Blunk Embraces Longer Season with World Cup</h3> 
+                        <p class="w-auto md:w-auto h-auto font-jakarta font-normal text-xs leading-[123.9%] text-white ">Last year, Savilia Blunk took a more conservative approach to her first season as an Elite Class athlete, skipping some</p> 
+                    </div>
+                </article>
+
+                <article class="flex flex-col md:flex-row gap-4 md:w-full border-b border-white/30 pb-3.5"> 
                     <div class="w-full md:w-[289.2px] h-[150px] bg-cover bg-center rounded-[6px] bg-[url(https://picsum.photos/seed/cyclist/289/150)] flex-shrink-0"></div>
                     <div class="flex flex-col justify-center">
                         <div class="w-auto md:w-[135.95px] h-[10px] font-jakarta font-medium text-[10px] leading-[1] text-white/60 mb-2">Jony.Ls - 03 June 2023</div>
@@ -536,64 +539,169 @@
     </section>
 
     
-    <section class="w-full h-auto relative px-4 md:px-[34px] py-9 my-5">
-        <div class="relative w-full h-auto flex flex-col">
-            
-            <div class="relative w-full h-[42px] mb-[25px]">
-                <h2 class="absolute left-0 top-0 font-jakarta font-extrabold text-2xl leading-[30px] text-[#3533CD]">AI</h2>
-                <div class="absolute left-0 top-[42px] w-full border-t border-[#393939]"></div>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-[47px] gap-y-[35px] w-full mt-8">
-                
-                <article class="flex flex-col">
-                    <div class="w-full h-[250px] bg-cover bg-center mb-[15px] bg-[url(https://picsum.photos/seed/ailarge1/662/250)]"></div>
-                    <div class="font-jakarta text-[12px] leading-[1.1] text-[#393939] mb-[6px]">Craig Bator - 27 Dec 2020</div>
-                    <h3 class="font-jakarta font-medium text-2xl leading-[30px] capitalize text-[#393939] mb-[10px] h-auto">‘Institutional delivery vital for reducing maternal and neonatal deaths’</h3>
-                    <p class="font-jakarta text-sm leading-[1.3] text-[#393939]/60 h-auto overflow-hidden">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Faucibus lobortis augue condimentum maecenas. Metus at in fames vitae posuere ut vel vulputate ...</p>
-                </article>
-                 
-                <article class="flex flex-col">
-                     <div class="w-full h-[250px] bg-cover bg-center mb-[15px] bg-[url(https://picsum.photos/seed/ailarge2/662/250)]"></div>
-                     <div class="font-jakarta text-[12px] leading-[1.1] text-[#393939] mb-[6px]">Craig Bator - 27 Dec 2020</div>
-                     <h3 class="font-jakarta font-medium text-2xl leading-[30px] capitalize text-[#393939] mb-[10px] h-auto">Being self-controlled child may lead to healthier middle-age</h3>
-                     <p class="font-jakarta text-sm leading-[1.3] text-[#393939]/60 h-auto overflow-hidden">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Faucibus lobortis augue condimentum maecenas. Metus at in fames vitae posuere ut vel vulputate...</p>
-                </article>
-                 
-                 <article class="flex flex-row gap-[19px] items-start h-auto mt-4 md:mt-0">
-                     <div class="w-[100px] md:w-[189.24px] h-[90px] bg-cover bg-center flex-shrink-0 bg-[url(https://picsum.photos/seed/aismall3/189/90)]"></div>
-                     <div class="flex flex-col flex-grow pt-1">
-                         <div class="font-jakarta text-[10px] leading-[1] text-[#393939] mb-[6px]">Craig Bator - 27 Dec 2020</div>
-                         <h4 class="font-jakarta font-normal text-lg md:text-xl leading-[1.2] text-[#393939]">Best things you can do on a solo mountain climb</h4>
-                     </div>
-                 </article>
-                 
-                  <article class="flex flex-row gap-[19px] items-start h-auto mt-4 md:mt-0">
-                     <div class="w-[100px] md:w-[189.24px] h-[90px] bg-cover bg-center flex-shrink-0 bg-[url(https://picsum.photos/seed/aismall4/189/90)]"></div>
-                     <div class="flex flex-col flex-grow pt-1">
-                         <div class="font-jakarta text-[10px] leading-[1] text-[#393939] mb-[6px]">Craig Bator - 27 Dec 2020</div>
-                         <h4 class="font-jakarta font-normal text-lg md:text-xl leading-[1.2] text-[#393939]">How to use basic design principles your home</h4>
-                     </div>
-                 </article>
-                
-                <article class="flex flex-row gap-[19px] items-start h-auto mt-4 md:mt-0">
-                     <div class="w-[100px] md:w-[189.24px] h-[90px] bg-cover bg-center flex-shrink-0 bg-[url(https://picsum.photos/seed/aismall5/189/90)]"></div>
-                     <div class="flex flex-col flex-grow pt-1">
-                         <div class="font-jakarta text-[10px] leading-[1] text-[#393939] mb-[6px]">Craig Bator - 27 Dec 2020</div>
-                         <h4 class="font-jakarta font-normal text-lg md:text-xl leading-[1.2] text-[#393939]">Creative decorating with houseplants</h4>
-                     </div>
-                 </article>
-                 
-                 <article class="flex flex-row gap-[19px] items-start h-auto mt-4 md:mt-0">
-                     <div class="w-[100px] md:w-[189.24px] h-[90px] bg-cover bg-center flex-shrink-0 bg-[url(https://picsum.photos/seed/aismall6/189/90)]"></div>
-                     <div class="flex flex-col flex-grow pt-1">
-                         <div class="font-jakarta text-[10px] leading-[1] text-[#393939] mb-[6px]">Craig Bator - 27 Dec 2020</div>
-                         <h4 class="font-jakarta font-normal text-lg md:text-xl leading-[1.2] text-[#393939]">How to burn calories with pleasant activities</h4>
-                     </div>
-                 </article>
-            </div>
+        <section class="w-full px-6 md:px-8 bg-white" style="padding-top: 2rem; padding-bottom: 2rem;">
+      <div class="max-w-7xl mx-auto">
+        <!-- Section Header with simple styling -->
+        <div class="flex justify-between items-center mb-8">
+          <div class="relative">
+            <h2 class="font-jakarta font-bold text-3xl text-[#0D0D0D]">AI</h2>
+            <div class="absolute h-1 w-16 bg-[#3533CD] bottom-0 left-0"></div>
+          </div>
+          <a href="#" class="font-jakarta text-sm text-[#3533CD] hover:underline flex items-center">
+            View All Articles
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </a>
         </div>
-    </section>
+        
+        <!-- Main Content Layout with equal heights -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+          <!-- Main Feature Article - Set to same height as sidebar -->
+          <div class="lg:col-span-2 h-[500px]">
+            <article class="group relative h-full">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10"></div>
+              <img 
+                src="https://picsum.photos/seed/ailifestyle1/800/450" 
+                alt="Institutional delivery article" 
+                class="w-full h-full object-cover"
+              >
+              <div class="absolute left-0 top-6 z-20 flex items-center">
+                <span class="inline-block px-3 py-1 ml-6 text-xs font-medium bg-[#3533CD] text-white">Health</span>
+                <span class="ml-2 text-white/80 text-xs">Craig Bator • May 12</span>
+              </div>
+              <div class="absolute inset-x-0 bottom-0 p-6 z-20">
+                <h3 class="font-jakarta font-bold text-2xl text-white mb-2 truncate">
+                  'Institutional delivery vital for reducing maternal and neonatal deaths'
+                </h3>
+                <div class="flex items-center text-white/80 text-sm">
+                  <span>5 min read</span>
+                </div>
+              </div>
+            </article>
+          </div>
+          
+          <!-- Sidebar Articles - Set height to match main article -->
+          <div class="lg:col-span-1 flex flex-col gap-6 h-[500px]">
+            <!-- Psychology Article -->
+            <article class="bg-gray-50 flex-1">
+              <div class="mb-2 flex items-center">
+                <span class="inline-block px-2 py-0.5 text-xs font-medium bg-[#3533CD] text-white">Psychology</span>
+                <span class="ml-2 text-gray-500 text-xs flex items-center">
+                  <span>Craig Bator</span>
+                  <span class="mx-1">•</span>
+                  <span>May 10, 2025</span>
+                </span>
+              </div>
+              <h3 class="font-jakarta font-semibold text-lg text-gray-900 mb-2 truncate">
+                Being self-controlled child may lead to healthier middle-age
+              </h3>
+              <img 
+                src="https://picsum.photos/seed/ailifestyle2/800/380" 
+                alt="Self-controlled child article" 
+                class="w-full h-[10.5rem] object-cover"
+              >
+            </article>
+            
+            <!-- Adventure Article -->
+            <article class="bg-gray-50 flex-1">
+              <div class="mb-2 flex items-center">
+                <span class="inline-block px-2 py-0.5 text-xs font-medium bg-[#3533CD] text-white">Adventure</span>
+                <span class="ml-2 text-gray-500 text-xs flex items-center">
+                  <span>Craig Bator</span>
+                  <span class="mx-1">•</span>
+                  <span>May 8, 2025</span>
+                </span>
+              </div>
+              <h3 class="font-jakarta font-semibold text-lg text-gray-900 mb-2 truncate">
+                Best things you can do on a solo mountain climb
+              </h3>
+              <img 
+                src="https://picsum.photos/seed/ailifestyle3/400/240" 
+                alt="Solo mountain climb" 
+                class="w-full h-[10.5rem] object-cover"
+              >
+            </article>
+          </div>
+        </div>
+        
+        <!-- Bottom Row Articles with 5 posts -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- Interior Article -->
+          <article class="flex gap-4 items-start">
+            <img
+              src="https://picsum.photos/seed/ailifestyle4/400/240"
+              alt="Home design principles"
+              class="w-16 h-16 object-cover flex-shrink-0"
+            >
+            <div>
+              <div class="flex items-center">
+                <span class="text-xs font-medium text-[#3533CD]">Interior</span>
+                <span class="ml-2 text-gray-500 text-xs">Craig Bator • May 5</span>
+              </div>
+              <h4 class="font-jakarta font-semibold text-base mt-1 mb-1 text-gray-900 overflow-hidden" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
+                How to use basic design principles in your home
+              </h4>
+            </div>
+          </article>
+          
+          <!-- Home Article -->
+          <article class="flex gap-4 items-start">
+            <img
+              src="https://picsum.photos/seed/ailifestyle5/400/240"
+              alt="Decorating with houseplants"
+              class="w-16 h-16 object-cover flex-shrink-0"
+            >
+            <div>
+              <div class="flex items-center">
+                <span class="text-xs font-medium text-[#3533CD]">Home</span>
+                <span class="ml-2 text-gray-500 text-xs">Craig Bator • May 3</span>
+              </div>
+              <h4 class="font-jakarta font-semibold text-base mt-1 mb-1 text-gray-900 overflow-hidden" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
+                Creative decorating with houseplants, from floor to ceiling
+              </h4>
+            </div>
+          </article>
+          
+          <!-- Fitness Article -->
+          <article class="flex gap-4 items-start">
+            <img
+              src="https://picsum.photos/seed/ailifestyle6/400/240"
+              alt="Burning calories"
+              class="w-16 h-16 object-cover flex-shrink-0"
+            >
+            <div>
+              <div class="flex items-center">
+                <span class="text-xs font-medium text-[#3533CD]">Fitness</span>
+                <span class="ml-2 text-gray-500 text-xs">Craig Bator • Apr 28</span>
+              </div>
+              <h4 class="font-jakarta font-semibold text-base mt-1 mb-1 text-gray-900 overflow-hidden" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
+                How to burn calories with pleasant activities in your daily routine
+              </h4>
+            </div>
+          </article>
+
+          <!-- Food Article (New) -->
+          <article class="flex gap-4 items-start">
+            <img
+              src="https://picsum.photos/seed/ailifestyle7/400/240"
+              alt="Healthy cooking tips"
+              class="w-16 h-16 object-cover flex-shrink-0"
+            >
+            <div>
+              <div class="flex items-center">
+                <span class="text-xs font-medium text-[#3533CD]">Food</span>
+                <span class="ml-2 text-gray-500 text-xs">Craig Bator • Apr 25</span>
+              </div>
+              <h4 class="font-jakarta font-semibold text-base mt-1 mb-1 text-gray-900 overflow-hidden" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
+                Healthy cooking tips that will transform your kitchen experience
+              </h4>
+            </div>
+          </article>
+          
+        </div>
+      </div>
+</section>
 
     <section class="w-full aspect-[120/47] relative bg-contain bg-no-repeat bg-center bg-[url(static/images/9_out_of_10.png)]">
         <a href="#" class="absolute bottom-[15%] left-[9%] w-[15%] max-w-[250px] hover:opacity-90 transition-opacity"> 

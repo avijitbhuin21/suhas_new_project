@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sidebar Component</title>
+  <title>Admin Panel</title>
   <script src="https://unpkg.com/lucide@latest"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   
@@ -44,7 +44,8 @@
     
     
     .grid-pattern-card {
-        min-height: 200px;
+        min-height: 180px; /* Reduced from 200px */
+        min-width: 300px;
         border-radius: 25px;
         box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
         transition: transform 0.3s ease;
@@ -69,6 +70,8 @@
         box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
         width: 100%;
         border-radius: 25px;
+        /* Maintain similar aspect ratio as the card */
+        max-height: 200px;
     }
     
     
@@ -178,10 +181,10 @@
     
     
     .card-container {
-        width: 250px; 
-        flex-shrink: 0; 
-        flex-grow: 0; 
-        margin-bottom: 2rem;
+        width: 100%; /* Take full width of grid cell instead of fixed width */
+        flex-shrink: 0;
+        flex-grow: 0;
+        margin-bottom: 1.5rem; /* Slightly reduced margin */
         border-radius: 12px;
     }
     .login-page {
@@ -252,7 +255,7 @@
       flex-direction: column;
       padding: 16px;
       height: 100%;
-      width: 300px;
+      /* width: 300px; */
       flex-shrink: 0;
       transition: width 0.3s ease;
       justify-content: space-between;
@@ -593,14 +596,14 @@
       position: fixed;
       left: 50%;
       top: 50%;
-      z-index: 50;
+      z-index: 51; /* Higher than overlay */
       display: grid;
       width: 100%;
-      max-width: 32rem; 
-      gap: 1rem; 
+      max-width: 60rem; /* Increased from 32rem to make modal more spacious */
+      /* gap: 1rem;  */
       border: 1px solid var(--color-border-default); 
       background-color: var(--color-background);
-      padding: 1.5rem; 
+      padding: 0.5rem; 
       box-shadow: var(--shadow-lg); 
       border-radius: var(--radius-lg); 
       opacity: 0;
@@ -723,6 +726,199 @@
       background-color: var(--color-outline-btn-bg-hover);
       border-color: var(--color-outline-btn-border-hover);
       color: var(--color-outline-btn-text-hover);
+    }
+    /* Modern Modal Styling */
+    #editModal {
+      border-radius: 16px;
+      background: var(--color-background);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--color-border-default);
+      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.1);
+      transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      overflow: hidden; /* Keep this to prevent content from spilling out */
+      display: flex !important; /* Ensure flex display is used for proper layout */
+      flex-direction: column;
+    }
+
+    #editModal.open {
+      transform: translate(-50%, -50%) scale(1);
+      height: auto; /* Let the modal height adjust to content */
+    }
+
+    /* Modal Header */
+    #editModal .dialog-header {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    #editModal .dialog-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--color-foreground);
+      letter-spacing: -0.01em;
+    }
+
+    #editModal .dialog-description {
+      font-size: 0.95rem;
+      margin-top: 0.5rem;
+      opacity: 0.75;
+    }
+
+    /* Form Styling with Hidden Scrollbar */
+    #editModal .dialog-form {
+      flex: 1;
+      overflow-y: auto !important; /* Enable vertical scrolling */
+      max-height: 81vh; /* Increased from 50vh to allow more content to be visible */
+      padding: 0px;
+      scrollbar-width: none; /* Firefox */
+      -ms-overflow-style: none; /* IE and Edge */
+    }
+
+    #editModal .dialog-form::-webkit-scrollbar {
+      display: none; /* Chrome, Safari, Opera */
+    }
+
+    #editModal .form-group {
+      margin-bottom: 0.5rem; /* Increased spacing between form groups */
+    }
+
+    #editModal .label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      font-size: 0.9rem;
+      color: var(--color-foreground);
+    }
+
+    #editModal .input {
+      width: 100%;
+      padding: 0.875rem 1rem;
+      border-radius: 10px;
+      border: 1px solid var(--color-border-default);
+      background-color: var(--color-input-background);
+      font-size: 0.95rem;
+      transition: all 0.2s ease;
+    }
+
+    #editModal .input:focus {
+      outline: none;
+      border-color: var(--color-focus-ring);
+      box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.07);
+    }
+
+    /* Image Preview Enhancement */
+    #editModal .form-group img {
+      border-radius: 10px;
+      object-fit: cover;
+      transition: transform 0.2s ease;
+    }
+
+    #editModal .form-group img:hover {
+      transform: scale(1.02);
+    }
+
+    /* Modal Footer */
+    #editModal .dialog-footer {
+      padding-top: 1rem;
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.75rem;
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    #editModal .button {
+      padding: 1rem 1.5rem; /* Increased padding for buttons */
+      border-radius: 10px;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    #editModal .button:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 2px var(--color-focus-ring), 0 0 0 4px rgba(0, 0, 0, 0.1);
+    }
+
+    #editModal .button-outline {
+      background: transparent;
+      border: 1px solid var(--color-border-default);
+      color: var(--color-foreground);
+    }
+
+    #editModal .button-outline:hover {
+      background: var(--color-outline-btn-bg-hover);
+      border-color: var(--color-outline-btn-border-hover);
+    }
+
+    #editModal .button-default {
+      background: var(--color-primary-btn-bg);
+      color: var(--color-primary-btn-text);
+      border: none;
+    }
+
+    #editModal .button-default:hover {
+      background: var(--color-primary-btn-bg-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Modal Overlay with Improved Backdrop */
+    #editModalOverlay {
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
+      transition: opacity 0.3s ease;
+    }
+
+    /* Nested Objects Styling */
+    #editModal .form-group .border {
+      border-radius: 12px;
+      background: var(--color-input-background);
+      border: 1px solid var(--color-border-default);
+    }
+
+    #editModal .form-group h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      color: var(--color-foreground);
+    }
+
+    /* Image Preview Improvements */
+    #editModal .mb-4.p-2.border.rounded {
+      border-radius: 12px;
+      background: var(--color-input-background);
+      border: 1px solid var(--color-border-default);
+    }
+
+    #editModal .mb-4.p-2.border.rounded img {
+      border-radius: 10px;
+      width: 100%;
+      height: auto;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    }
+
+    /* Dark Mode Specific Adjustments */
+    .dark-mode #editModal {
+      background: rgba(13, 13, 13, 0.95);
+      backdrop-filter: blur(20px);
+    }
+
+    .dark-mode #editModal .dialog-header,
+    .dark-mode #editModal .dialog-footer {
+      border-color: rgba(255, 255, 255, 0.08);
+    }
+
+    .dark-mode #editModalOverlay {
+      background: rgba(0, 0, 0, 0.7);
+    }
+
+    .dark-mode #editModal .form-group .border,
+    .dark-mode #editModal .mb-4.p-2.border.rounded {
+      background: rgba(10, 10, 10, 0.5);
+    }
+
+    .dark-mode #editModal .input:focus {
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
     }
   </style>
 </head>
@@ -859,41 +1055,267 @@
         <div id="cardsContainer" class="cards-grid">
           <!-- Cards will be added here dynamically -->
         </div>
+        
+        <!-- Edit Modal -->
+        <div id="editModal" class="dialog-content" style="display: none; max-width: 50rem; max-height: 150vh; height:96vh; visibility: hidden; z-index: -1;" role="dialog" aria-modal="true" aria-labelledby="editModalTitle">
+            <div class="dialog-header">
+                <h2 id="editModalTitle" class="dialog-title">Edit Section</h2>
+                <!-- Description removed as requested -->
+            </div>
+            <form id="editForm" class="dialog-form">
+                <input type="hidden" id="sectionKey" name="sectionKey">
+                <div id="editFields">
+                    <!-- Fields will be dynamically generated here -->
+                </div>
+            </form>
+            <div class="dialog-footer">
+                <button type="button" class="button button-outline" id="closeEditModal">Cancel</button>
+                <button type="submit" form="editForm" class="button button-default">Save Changes</button>
+            </div>
+        </div>
+        <div id="editModalOverlay" class="dialog-overlay" style="display: none;"></div>
       </div>
     </div>
   </div>
   <script>
-    // Card template function to create a grid pattern card
-    function createCardTemplate(index, title = null) {
+    // Card template function to create a card for each section
+    function createSectionCard(sectionKey, sectionData) {
+      // Use the title from sectionData if available, otherwise capitalize the section key
+      const title = sectionData.title || sectionKey.charAt(0).toUpperCase() + sectionKey.slice(1);
+      // Make sure image path is absolute
+      let templateImage = sectionData.template_image || `https://picsum.photos/seed/${sectionKey}/289/150`;
+      if (templateImage && templateImage.startsWith('static/')) {
+          templateImage = '/' + templateImage;
+      }
+      
       return `
-        <div class="w-full max-w-[23rem] max-h-[10rem] card-container rounded-[25px]">
+        <div class="w-full card-container rounded-[25px] cursor-pointer" data-section="${sectionKey}">
             <!-- Image Popup that shows on hover -->
-            <div class="image-popup ">
+            <div class="image-popup">
                 <div class="p-2 bg-white dark:bg-zinc-950 rounded-lg">
-                    <img src="https://picsum.photos/seed/pattern${index}/289/150" alt="Preview image"
-                         class="rounded-[25px] w-full h-auto object-cover">
+                    <img src="${templateImage}" alt="Section template"
+                         class="rounded-[25px] w-full h-auto object-cover" style="aspect-ratio: 16/7.5;">
                 </div>
             </div>
             
             <!-- Card Component -->
-            <div class="grid-pattern-card card-animation border w-full overflow-hidden bg-white dark:bg-zinc-950 border-zinc-200 dark:border-zinc-900">
+            <div class="grid-pattern-card card-animation border w-full h-[9rem] overflow-hidden bg-white dark:bg-zinc-950 border-zinc-200 dark:border-zinc-900 relative">
                 <div class="size-full bg-repeat bg-[length:50px_50px] bg-square-pattern-light dark:bg-square-pattern">
                     <div class="size-full bg-gradient-to-tr from-white via-white/[0.85] to-white dark:from-zinc-950 dark:via-zinc-950/[.85] dark:to-zinc-950">
                         <div class="text-left p-4 md:p-6">
-                            <h3 class="text-lg font-bold mb-1 text-zinc-900 dark:text-white pb-[1rem]">
-                                ${title || `Square Grid Pattern ${index}`}
+                            <h3 class="text-lg font-bold mb-1 text-zinc-900 dark:text-white">
+                                ${title}
                             </h3>
                             <p class="text-wrap text-sm text-zinc-700 dark:text-zinc-300">
-                                A clean and structured pattern featuring a grid of squares. 
-                                The minimal design creates a subtle texture that adds depth 
-                                without overwhelming the content.
+                                ${sectionData.description || "Click to edit the content for this section"}
                             </p>
+                        </div>
+                        <!-- New edit button at bottom right -->
+                        <div class="absolute bottom-2 right-3">
+                            <button class="px-3 py-1 text-white text-[1.05rem] rounded transition-colors flex items-center" style="padding-bottom: 0.75rem; padding-left: 1.75rem;">
+                                edit content <span class="ml-1">→</span>
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
       `;
+    }
+    
+    // Helper function to handle images in forms
+    function isImageURL(str) {
+        return typeof str === 'string' &&
+            (str.startsWith('http') || str.startsWith('/static/') || str.startsWith('./static/')) &&
+            (str.endsWith('.png') || str.endsWith('.jpg') || str.endsWith('.jpeg') || str.endsWith('.gif') || str.endsWith('.webp'));
+    }
+    
+    // Function to create form fields based on the section data structure
+    function createFormFields(data, parentKey = '') {
+        let html = '';
+        
+        if (typeof data === 'object' && data !== null) {
+            // Handle nested objects
+            Object.entries(data).forEach(([key, value]) => {
+                const fullKey = parentKey ? `${parentKey}.${key}` : key;
+                
+                if (typeof value === 'object' && value !== null) {
+                    // Add a fieldset with legend for each object group
+                    html += `
+                        <div class="form-group mt-4">
+                            <h3 class="text-md font-semibold">${key.replace(/_/g, ' ')}</h3>
+                            <div class="border rounded p-3 mt-2 bg-gray-50 dark:bg-gray-900">
+                                ${createFormFields(value, fullKey)}
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    // Add a standard input field for each value
+                    const fieldId = fullKey.replace(/\./g, '_');
+                    
+                    // Special handling for image URLs - add preview
+                    if (isImageURL(value)) {
+                        // Make sure image path is absolute for preview
+                        let imagePath = value;
+                        if (imagePath && imagePath.startsWith('static/')) {
+                            imagePath = '/' + imagePath;
+                        }
+                        
+                        html += `
+                            <div class="form-group">
+                                <label for="${fieldId}" class="label">${key.replace(/_/g, ' ')}</label>
+                                <div class="flex gap-2">
+                                    <input id="${fieldId}" name="${fieldId}" type="text" class="input flex-1"
+                                           value="${value || ''}" data-field-path="${fullKey}" data-initial-value="${value || ''}">
+                                    <div class="w-16 h-16 border rounded flex-shrink-0 overflow-hidden">
+                                        <img src="${imagePath}" alt="Preview" class="w-full h-full object-cover">
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        html += `
+                            <div class="form-group">
+                                <label for="${fieldId}" class="label">${key.replace(/_/g, ' ')}</label>
+                                <input id="${fieldId}" name="${fieldId}" type="text" class="input"
+                                       value="${value || ''}" data-field-path="${fullKey}" data-initial-value="${value || ''}">
+                            </div>
+                        `;
+                    }
+                }
+            });
+        } else {
+            // Handle primitive values
+            const fieldId = parentKey.replace(/\./g, '_');
+            html += `
+                <div class="form-group">
+                    <label for="${fieldId}" class="label">${parentKey.split('.').pop().replace(/_/g, ' ')}</label>
+                    <input id="${fieldId}" name="${fieldId}" type="text" class="input"
+                           value="${data || ''}" data-field-path="${parentKey}" data-initial-value="${data || ''}">
+                </div>
+            `;
+        }
+        
+        return html;
+    }
+    
+    // Function to extract values from form and update data structure
+    // Map section names to their section numbers
+    const sectionMapping = {
+        'SECTION 1': 'section_1',
+        'SECTION 2': 'section_2',
+        'SECTION 3': 'section_3',
+        'SECTION 4': 'section_4',
+        'SECTION 5': 'section_5', 
+        'SECTION 6': 'section_6',
+        'SECTION 7': 'section_7'
+    };
+    
+    // Helper function to format paths in the specific required format
+    /**
+ * Formats a key path according to the specified rules.
+ * @param {string} path - The path to format.
+ * @returns {string} The formatted path.
+ */
+function formatKeyPath(path) {
+    if (!path) return path;
+    
+    let parts = path.split('.');
+    
+    // Handle the first part (section name) using sectionMapping
+    if (parts.length > 0 && sectionMapping.hasOwnProperty(parts[0])) {
+        let mappedPrefix = sectionMapping[parts[0]];
+        mappedPrefix = mappedPrefix.slice(0, -1) + '_' + mappedPrefix.slice(-2, -1); 
+        // All Python params for update_homepage have a prefix, so mappedPrefix should not be empty.
+        parts[0] = mappedPrefix;
+    } else if (parts.length > 0) {
+        // Fallback for first part if not in mapping: convert to lowercase_snake_case.
+        // This path will generate keys not matching `update_homepage` params unless Python func changes.
+        parts[0] = parts[0].toLowerCase().replace(/\s+/g, '_');
+    }
+    
+    // If parts[0] became empty or parts is empty (e.g. if mapping was to '' and path was just that key)
+    if (parts.length === 0 || !parts[0]) {
+        // This scenario should ideally not happen if data keys are robust
+        console.warn(`formatKeyPath: Path "${path}" resulted in an empty or invalid prefix.`);
+        return ''; // Return empty or handle error appropriately
+    }
+    
+    let formattedPath = '';
+    for (let i = 0; i < parts.length; i++) {
+        const currentPart = parts[i];
+        
+        // Skip if currentPart is empty (e.g., from a malformed path like "section..field")
+        if (!currentPart && i > 0) continue;
+
+        // Check for patterns like "post_1", "item_2", etc. to handle numbered list items
+        // These usually appear as object keys in popup_fields, e.g., "post_1": { "title": ..., "image": ... }
+        const match = currentPart.match(/^(\w+)_(\d+)$/); // e.g., post_1, item_3
+        if (match && i < parts.length - 1) { // If current is "post_1" and there's a "title" (nextPart)
+            const actualFieldKey = parts[i+1]; // e.g., "title"
+            const numberSuffix = match[2];     // e.g., "1"
+            // Constructs "title1" from "post_1" (currentPart) and "title" (actualFieldKey)
+            const fieldNameWithNumber = actualFieldKey.toLowerCase() + numberSuffix;
+            if (formattedPath) formattedPath += '_';
+            formattedPath += fieldNameWithNumber;
+            i++; // Crucial: Skip nextPart (actualFieldKey) in the loop as it has been consumed
+        } else {
+            // Standard part
+            if (formattedPath && currentPart) formattedPath += '_';
+            // parts[0] is already correctly cased (e.g., "section_1")
+            // Subsequent parts (field names like "Title", "Description") should be lowercased.
+            if (currentPart) {
+                formattedPath += (i > 0 ? currentPart.toLowerCase() : currentPart);
+            }
+        }
+    }
+    
+    // Remove 'main_content_section' if present
+    if (formattedPath.includes('main_content_section')) {
+        formattedPath = formattedPath.replace('main_content_section', '');
+    }
+    
+    // Replace all spaces with underscores
+    formattedPath = formattedPath.replace(/ /g, '_');
+    
+    console.log('Formatted path:', formattedPath);
+    
+    // Final reformatting - extract section number and rebuild path
+    if (formattedPath.length >= 10) {
+        formattedPath = `section_${formattedPath.slice(7, 8)}_${formattedPath.slice(9)}`;
+    } else {
+        console.warn(`formatKeyPath: Path "${path}" resulted in a formatted path that's too short for final reformatting.`);
+    }
+    
+    return formattedPath;
+}
+    
+    function extractFormValues() {
+        const form = document.getElementById('editForm');
+        const inputs = form.querySelectorAll('input[data-field-path]');
+        const data = {};
+        
+        inputs.forEach(input => {
+            const path = input.getAttribute('data-field-path');
+            const value = input.value;
+            const initialValue = input.getAttribute('data-initial-value') || '';
+            
+            // Only include changed values
+            if (value !== initialValue) {
+                console.log('Changed field:', path);
+                
+                // Format the path in the required structure
+                const formattedPath = formatKeyPath(path);
+                console.log('Formatted to:', formattedPath);
+                
+                // Create the comment-style key with the formatted path
+                const commentKey = `${formattedPath}`;
+                data[commentKey] = value;
+            }
+        });
+        
+        console.log('Final data to send:', data);
+        return data;
     }
 
     lucide.createIcons();
@@ -1131,22 +1553,50 @@
                 }
             });
         }
-        // Function to create and display 5 cards
-        function toggleCardsDisplay(page = null) {
+        
+        // Global variable to store card data
+        let sectionData = null;
+        
+        // Function to fetch section data from the server
+        function fetchSectionData() {
+            console.log('Fetching section data from server...');
+            return fetch('/admin_get_card_structure')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    console.log('Response received, parsing JSON...');
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Full API response:', data);
+                    console.log('Root level keys:', Object.keys(data));
+                    if (data.homepage) {
+                        console.log('Homepage keys:', Object.keys(data.homepage));
+                    }
+                    return data;
+                })
+                .catch(error => {
+                    console.error('Error fetching section data:', error);
+                    return null;
+                });
+        }
+        
+        // Function to display section cards
+        function displaySectionCards(page = 'home') {
             const dashboard = document.querySelector('.dashboard');
             const gridLarge = document.querySelector('.grid-large');
             const gridItems = document.querySelector('.grid');
             let cardsContainer = document.getElementById('cardsContainer');
             
-            console.log(`Toggle cards display called for page: ${page}`);
+            console.log(`Displaying section cards for page: ${page}`);
             
             // If no page is selected, don't show cards
             if (!page) {
                 return;
             }
             
-            // Always show cards for the selected page
-            // Hide dashboard items
+            // Show loading indicator
             gridLarge.style.display = 'none';
             gridItems.style.display = 'none';
             
@@ -1158,35 +1608,152 @@
                 dashboard.appendChild(cardsContainer);
             }
             
-            // Generate exactly 4 cards to match our grid
-            let cardsHTML = '';
-            for (let i = 1; i <= 4; i++) {
-                // Customize card title based on selected page
-                const cardTitle = `${page.charAt(0).toUpperCase() + page.slice(1)} - Card ${i}`;
-                cardsHTML += createCardTemplate(i, cardTitle);
-            }
-            cardsContainer.innerHTML = cardsHTML;
-            
-            // Force proper display with !important
-            cardsContainer.style.cssText = `
-                display: flex !important;
-                justify-content: space-between !important;
-                width: 100% !important;
-                min-height: 100vh !important;
-                background-color: var(--content-bg) !important;
-                padding: 1rem !important;
-            `;
-            
-            // Force browser reflow
-            void cardsContainer.offsetHeight;
-            
-            // Add animation class to each card with slight delay between each
-            const cards = cardsContainer.querySelectorAll('.card-container');
-            cards.forEach((card, index) => {
-                setTimeout(() => {
-                    card.style.opacity = '1';
-                }, index * 100);
+            // Fetch section data from server
+            fetchSectionData().then(data => {
+                
+                if (!data) {
+                    console.error('No data received from server');
+                    return;
+                }else{
+                    console.log('Data received from server:', data);
+                }
+                
+                // Store data globally
+                sectionData = data;
+                console.log('Received section data:', data);
+                
+                // Generate cards for each section
+                let cardsHTML = '';
+                
+                // Create a combined data object for home page
+                let combinedData = {};
+                
+                if (page === 'home') {
+                    // Add homepage sections
+                    if (data.homepage) {
+                        Object.entries(data.homepage).forEach(([key, value]) => {
+                            combinedData[key] = value;
+                        });
+                    }
+                    
+                    // Add root-level sections
+                    Object.entries(data).forEach(([key, value]) => {
+                        if (key !== 'homepage') {
+                            combinedData[key] = value;
+                        }
+                    });
+                    
+                    console.log('Combined sections for homepage:', Object.keys(combinedData));
+                } else {
+                    // For other pages, just use the data as is
+                    combinedData = data;
+                }
+                
+                // Create cards for each section
+                Object.entries(combinedData).forEach(([key, value]) => {
+                    cardsHTML += createSectionCard(key, value);
+                });
+                
+                cardsContainer.innerHTML = cardsHTML;
+                
+                // Force proper display - changed to grid with 4 columns
+                cardsContainer.style.cssText = `
+                    display: grid !important;
+                    grid-template-columns: repeat(4, 1fr) !important;
+                    gap: 1rem !important;
+                    width: 100% !important;
+                    min-height: 50vh !important;
+                    background-color: var(--content-bg) !important;
+                    padding: 1rem !important;
+                `;
+                
+                // No notification display
+                
+                // Force browser reflow
+                void cardsContainer.offsetHeight;
+                
+                // Add animation class to each card with slight delay
+                const cards = cardsContainer.querySelectorAll('.card-container');
+                cards.forEach((card, index) => {
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                    }, index * 100);
+                    
+                    // Add click event handler to each card
+                    card.addEventListener('click', function() {
+                        const sectionKey = this.getAttribute('data-section');
+                        openEditModal(sectionKey, combinedData[sectionKey]);
+                    });
+                });
             });
+        }
+        
+        // Function to open the edit modal
+        function openEditModal(sectionKey, sectionData) {
+            console.log(`Opening edit modal for section: ${sectionKey}`, sectionData);
+            
+            const modal = document.getElementById('editModal');
+            const overlay = document.getElementById('editModalOverlay');
+            const titleElement = document.getElementById('editModalTitle');
+            const descriptionElement = document.getElementById('editModalDescription');
+            const fieldsContainer = document.getElementById('editFields');
+            const sectionKeyInput = document.getElementById('sectionKey');
+            
+            // Set modal title, description and section key
+            titleElement.textContent = sectionData.title || `Edit ${sectionKey.charAt(0).toUpperCase() + sectionKey.slice(1)}`;
+            // Description element no longer needed
+            sectionKeyInput.value = sectionKey;
+            
+            // Generate form fields based on section data
+            const popupFields = sectionData.popup_fields || {};
+            fieldsContainer.innerHTML = createFormFields(popupFields, sectionKey); 
+            
+            // Add template image preview
+            if (sectionData.template_image) {
+                // Make sure image path is absolute
+                let imagePath = sectionData.template_image;
+                if (imagePath.startsWith('static/')) {
+                    imagePath = '/' + imagePath;
+                }
+                
+                const imagePreview = document.createElement('div');
+                imagePreview.className = 'mb-4 p-2 border rounded';
+                imagePreview.innerHTML = `
+                    <p class="label mb-2">Template Image:</p>
+                    <img src="${imagePath}" alt="Template" class="w-full h-auto rounded">
+                `;
+                fieldsContainer.insertAdjacentElement('afterbegin', imagePreview);
+            }
+            
+            // Show the modal
+            overlay.style.display = 'block';
+            modal.style.display = 'flex'; /* Change to flex to match CSS */
+            modal.style.visibility = 'visible';
+            modal.style.zIndex = '51';
+            
+            requestAnimationFrame(() => {
+                setTimeout(() => {
+                    overlay.classList.add('open');
+                    modal.classList.add('open');
+                }, 0);
+            });
+        }
+        
+        // Function to close the edit modal
+        function closeEditModal() {
+            const modal = document.getElementById('editModal');
+            const overlay = document.getElementById('editModalOverlay');
+            
+            overlay.classList.remove('open');
+            modal.classList.remove('open');
+            
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                modal.style.display = 'none';
+                modal.style.visibility = 'hidden';
+                modal.style.zIndex = '-1';
+                document.getElementById('editFields').innerHTML = ''; // Clear form fields
+            }, 200);
         }
         
         // Add event listeners to dropdown menu items
@@ -1198,8 +1765,117 @@
                 console.log(`Selected page: ${page}`);
                 
                 // Show cards for the selected page
-                toggleCardsDisplay(page);
+                displaySectionCards(page);
             });
+        });
+        
+        // Add event listener for close button
+        document.getElementById('closeEditModal').addEventListener('click', closeEditModal);
+        
+        // Add event listener for edit form submission
+        document.getElementById('editForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Show loading state
+            const submitButton = document.querySelector('button[type="submit"][form="editForm"]');
+            const originalButtonText = submitButton.innerHTML;
+            submitButton.innerHTML = 'Saving...';
+            submitButton.disabled = true;
+            
+            // Extract form values
+            const updatedData = extractFormValues();
+            const sectionKey = document.getElementById('sectionKey').value;
+            
+            console.log('Form submission:', sectionKey, updatedData);
+            
+            // Send data to server
+            fetch('/admin_update_homepage', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(updatedData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Server response:', data);
+                
+                // Reset button state
+                submitButton.innerHTML = originalButtonText;
+                submitButton.disabled = false;
+                
+                // Show success notification
+                const statusClass = data.status === 'success' ?
+                    'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200' :
+                    'bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200';
+                    
+                const jsonStr = JSON.stringify(updatedData, null, 2);
+                const notification = document.createElement('div');
+                notification.className = `fixed top-4 right-4 p-4 ${statusClass} rounded shadow-lg z-50 max-w-md`;
+                notification.innerHTML = `
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="font-bold">${data.status === 'success' ? 'Changes Saved' : 'Error'}</h3>
+                        <button class="text-sm opacity-70 hover:opacity-100">✕</button>
+                    </div>
+                    <p class="mb-2">${data.message}</p>
+                    <details>
+                        <summary class="cursor-pointer text-sm">Show data</summary>
+                        <pre class="mt-2 p-2 bg-gray-100 dark:bg-gray-800 rounded text-xs overflow-auto max-h-40">${jsonStr}</pre>
+                        ${data.traceback ? `<pre class="mt-2 p-2 bg-gray-100 dark:bg-gray-800 rounded text-xs overflow-auto max-h-40 text-red-500">${data.traceback}</pre>` : ''}
+                    </details>
+                `;
+                
+                document.body.appendChild(notification);
+                
+                notification.querySelector('button').addEventListener('click', function() {
+                    notification.remove();
+                });
+                
+                setTimeout(() => {
+                    notification.classList.add('opacity-0', 'transition-opacity', 'duration-500');
+                    setTimeout(() => notification.remove(), 500);
+                }, 10000);
+                
+                if (data.status === 'success') {
+                    closeEditModal();
+                }
+            })
+            .catch(error => {
+                console.error('Error submitting form:', error);
+                
+                // Reset button state
+                submitButton.innerHTML = originalButtonText;
+                submitButton.disabled = false;
+                
+                // Show error notification
+                const notification = document.createElement('div');
+                notification.className = 'fixed top-4 right-4 p-4 bg-red-100 dark:bg-red-900 rounded shadow-lg text-red-800 dark:text-red-200 z-50 max-w-md';
+                notification.innerHTML = `
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="font-bold">Error</h3>
+                        <button class="text-sm opacity-70 hover:opacity-100">✕</button>
+                    </div>
+                    <p class="mb-2">Failed to save changes: ${error.message}</p>
+                `;
+                
+                document.body.appendChild(notification);
+                
+                notification.querySelector('button').addEventListener('click', function() {
+                    notification.remove();
+                });
+                
+                setTimeout(() => {
+                    notification.classList.add('opacity-0', 'transition-opacity', 'duration-500');
+                    setTimeout(() => notification.remove(), 500);
+                }, 10000);
+            });
+        });
+        
+        // Add event listener for edit modal overlay (close on click outside)
+        document.getElementById('editModalOverlay').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeEditModal();
+            }
         });
         
         updateAuthUI();

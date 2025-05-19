@@ -1,3 +1,4 @@
+HOMEPAGE_BLANK_TEMPLATE = """
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,7 +20,7 @@
 <style>
     @media screen and (min-width: 1024px) {
         body {
-            zoom:1.1;
+            zoom:1.08;
         }
     }
 
@@ -361,15 +362,13 @@
             <article class="flex flex-col w-full md:w-3/5">
                 
                 <div class="w-full aspect-video bg-cover bg-center relative  overflow-hidden">
-                      <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                      <div class="w-full h-full bg-cover bg-center <section_1_image> bg-[url(https://picsum.photos/seed/post1large/782/394)] <section_1_image>">
-                      </div>
-                      
+                     <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                     <div class="w-full h-full bg-cover bg-center bg-[url(https://picsum.photos/seed/post1large/782/394)]"></div>
                  </div>
                  
                  <div class="mt-3">
-                    <div class="font-jakarta font-normal text-xs text-gray-600 mb-1"><!-- <section_1_publisher> -->Craig Bator<!-- <section_1_publisher> --> - <!-- <section_1_date> -->27 Dec 2020<!-- <section_1_date> --></div>
-                    <h2 class="font-jakarta font-medium text-2xl md:text-[36px] leading-tight capitalize text-gray-900"><!-- <section_1_title> -->After all is said and done, more is done<!-- <section_1_title> --></h2>
+                    <div class="font-jakarta font-normal text-xs text-gray-600 mb-1">Craig Bator - 27 Dec 2020</div>
+                    <h2 class="font-jakarta font-medium text-2xl md:text-[36px] leading-tight capitalize text-gray-900">After all is said and done, more is done</h2>
                 </div>
             </article>
 
@@ -379,33 +378,33 @@
                  <article class="flex flex-col">
                      <div class="w-full aspect-video bg-cover bg-center relative  overflow-hidden">
                           <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
-                          <div class="w-full h-full bg-cover bg-center <section_1_top_right_image1> bg-[url(https://picsum.photos/seed/post2small/274/175)] <section_1_top_right_image1>"></div>
+                          <div class="w-full h-full bg-cover bg-center bg-[url(https://picsum.photos/seed/post2small/274/175)]"></div>
                       </div>
                      <div class="mt-2">
-                        <div class="font-jakarta font-normal text-[10px] text-gray-500 mb-0.5"><!-- <section_1_top_right_section_publisher1> -->Craig Bator<!-- <section_1_top_right_section_publisher1> --> - <!-- <section_1_top_right_section_date1> -->27 Dec 2020<!-- <section_1_top_right_section_date1> --></div>
-                        <h3 class="font-jakarta font-medium text-sm leading-snug capitalize text-gray-800"><!-- <section_1_top_right_section_title1> -->They’re back! Kennedy Darling named to return to<!-- <section_1_top_right_section_title1> --></h3>
+                        <div class="font-jakarta font-normal text-[10px] text-gray-500 mb-0.5">Craig Bator - 27 Dec 2020</div>
+                        <h3 class="font-jakarta font-medium text-sm leading-snug capitalize text-gray-800">They’re back! Kennedy Darling named to return to</h3>
                     </div>
                  </article>
                  
                  <article class="flex flex-col">
                       <div class="w-full aspect-video bg-cover bg-center relative  overflow-hidden">
                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
-                           <div class="w-full h-full bg-cover bg-center <section_1_top_right_image2> bg-[url(https://picsum.photos/seed/post3small/274/175)] <section_1_top_right_image2>"></div>
+                           <div class="w-full h-full bg-cover bg-center bg-[url(https://picsum.photos/seed/post3small/274/175)]"></div>
                        </div>
                       <div class="mt-2">
-                        <div class="font-jakarta font-normal text-[10px] text-gray-500 mb-0.5"><!-- <section_1_top_right_section_publisher2> -->Craig Bator<!-- <section_1_top_right_section_publisher2> --> - <!-- <section_1_top_right_section_date2> -->27 Dec 2020<!-- <section_1_top_right_section_date2> --></div>
-                        <h3 class="font-jakarta font-medium text-sm leading-snug capitalize text-gray-800"><!-- <section_1_top_right_section_title2> -->Swiss authorities say Uber drivers should<!-- <section_1_top_right_section_title2> --></h3>
+                        <div class="font-jakarta font-normal text-[10px] text-gray-500 mb-0.5">Craig Bator - 27 Dec 2020</div>
+                        <h3 class="font-jakarta font-medium text-sm leading-snug capitalize text-gray-800">Swiss authorities say Uber drivers should</h3>
                     </div>
                  </article>
                  
                  <article class="flex flex-col col-span-2 mt-2 md:mt-0">
                       <div class="w-full h-40 bg-cover bg-center relative overflow-hidden"> 
                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
-                           <div class="w-full h-full bg-cover bg-center <section_1_left_bottom_image1> bg-[url(https://picsum.photos/seed/post4medium/566/161)] <section_1_left_bottom_image1>"></div>
+                           <div class="w-full h-full bg-cover bg-center bg-[url(https://picsum.photos/seed/post4medium/566/161)]"></div>
                        </div>
                      <div class="mt-2">
-                        <div class="font-jakarta font-normal text-xs text-gray-600 mb-1"><!-- <section_1_left_bottom_section_publisher1> -->Craig Bator<!-- <section_1_left_bottom_section_publisher1> --> - <!-- <section_1_left_bottom_section_date1> -->27 Dec 2020<!-- <section_1_left_bottom_section_date1> --></div>
-                        <h2 class="font-jakarta font-medium text-xl md:text-[24px] leading-tight capitalize text-gray-900"><!-- <section_1_left_bottom_section_title1> -->Tourism in Dubai is booming by international tourist<!-- <section_1_left_bottom_section_title1> --></h2>
+                        <div class="font-jakarta font-normal text-xs text-gray-600 mb-1">Craig Bator - 27 Dec 2020</div>
+                        <h2 class="font-jakarta font-medium text-xl md:text-[24px] leading-tight capitalize text-gray-900">Tourism in Dubai is booming by international tourist</h2>
                     </div>
                  </article>
              </div>
@@ -418,13 +417,13 @@
         <div class="relative w-full h-full z-10 p-4 md:p-0 grid grid-cols-1 md:grid-cols-2 md:gap-0"> 
             
             <div class="relative w-full h-auto md:h-full"> 
-                <div class="relative w-[26rem] md:w-full h-[30rem] mt-[-1rem] md:mt-[0px] md:h-[40.5rem] -mx-4 md:mx-0 md:absolute md:inset-0 bg-cover bg-center rounded-none <section_2_image> bg-[url(https://picsum.photos/seed/trendinglarge/640/395)] <section_2_image>"> 
+                <div class="relative w-[26rem] md:w-full h-[30rem] mt-[-1rem] md:mt-[0px] md:h-[40.5rem] -mx-4 md:mx-0 md:absolute md:inset-0 bg-cover bg-center rounded-none bg-[url(https://picsum.photos/seed/trendinglarge/640/395)]"> 
                     
                     <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/80 via-black/50 to-transparent rounded-b-none"></div> 
                     
                     <div class="absolute bottom-4 left-4 right-4 md:bottom-6 md:left-6 md:right-6 z-10"> 
-                        <div class="font-dm font-normal text-sm leading-[1.1] text-white md:text-[18px] mb-1"><!-- <section_2_publisher> -->Debits<!-- <section_2_publisher> --> - <!-- <section_2_date> -->03 June 2023<!-- <section_2_date> --></div>
-                        <h2 class="font-jakarta font-bold text-xl leading-tight capitalize text-white md:text-[32px] md:leading-[40px]"><!-- <section_2_title> -->DISCOVER THE MEMBER BENEFITS OF BOL BUSINESS<!-- <section_2_title> --></h2>
+                        <div class="font-dm font-normal text-sm leading-[1.1] text-white md:text-[18px] mb-1">Debits - 03 June 2023</div>
+                        <h2 class="font-jakarta font-bold text-xl leading-tight capitalize text-white md:text-[32px] md:leading-[40px]">DISCOVER THE MEMBER BENEFITS OF BOL BUSINESS</h2>
                     </div>
                 </div>
             </div>
@@ -432,34 +431,9 @@
             
             <div class="flex flex-col gap-4 md:p-8"> 
                 <h2 class="w-auto md:w-[232.35px] h-auto md:h-[38px] font-jakarta font-bold text-2xl md:text-[28px] leading-[38px] text-white pb-4">Trending News</h2>
-                
-                <article class="flex flex-col md:flex-row gap-4 md:w-full border-b border-white/30 pb-3.5"> 
-                    <div class="w-full md:w-[289.2px] h-[150px] bg-cover bg-center rounded-[6px] bg-[url(https://picsum.photos/seed/racehorse/289/150)] flex-shrink-0"></div>
-                    <div class="flex flex-col justify-center">
-                         <div class="w-auto md:w-[137.18px] h-[10px] font-jakarta font-medium text-[10px] leading-[1] text-white/60 mb-2">Race98 - 03 June 2023</div>
-                         <h3 class="w-auto md:w-auto h-auto font-jakarta font-normal text-lg leading-[136.9%] text-white mb-2">6-Year-Old Horse Dies at Belmont Park After Race Injury</h3> 
-                         <p class="w-auto md:w-auto h-auto font-jakarta font-normal text-xs leading-[123.9%] text-white ">NEW YORK—A 6-year-old horse died after being injured in a race at Belmont Park ahead of next week’s</p> 
-                    </div>
-                </article>
-                
-                
-               <article class="flex flex-col md:flex-row gap-4 md:w-full border-b border-white/30 pb-3.5"> 
-                    <div class="w-full md:w-[289.2px] h-[150px] bg-cover bg-center rounded-[6px] bg-[url(https://picsum.photos/seed/cyclist/289/150)] flex-shrink-0"></div>
-                    <div class="flex flex-col justify-center">
-                        <div class="w-auto md:w-[135.95px] h-[10px] font-jakarta font-medium text-[10px] leading-[1] text-white/60 mb-2">Jony.Ls - 03 June 2023</div>
-                        <h3 class="w-auto md:w-auto h-auto font-jakarta font-normal text-lg leading-[136.9%] text-white capitalize mb-2">Savilia Blunk Embraces Longer Season with World Cup</h3> 
-                        <p class="w-auto md:w-auto h-auto font-jakarta font-normal text-xs leading-[123.9%] text-white ">Last year, Savilia Blunk took a more conservative approach to her first season as an Elite Class athlete, skipping some</p> 
-                    </div>
-                </article>
 
-                <article class="flex flex-col md:flex-row gap-4 md:w-full border-b border-white/30 pb-3.5"> 
-                    <div class="w-full md:w-[289.2px] h-[150px] bg-cover bg-center rounded-[6px] bg-[url(https://picsum.photos/seed/cyclist/289/150)] flex-shrink-0"></div>
-                    <div class="flex flex-col justify-center">
-                        <div class="w-auto md:w-[135.95px] h-[10px] font-jakarta font-medium text-[10px] leading-[1] text-white/60 mb-2">Jony.Ls - 03 June 2023</div>
-                        <h3 class="w-auto md:w-auto h-auto font-jakarta font-normal text-lg leading-[136.9%] text-white capitalize mb-2">Savilia Blunk Embraces Longer Season with World Cup</h3> 
-                        <p class="w-auto md:w-auto h-auto font-jakarta font-normal text-xs leading-[123.9%] text-white ">Last year, Savilia Blunk took a more conservative approach to her first season as an Elite Class athlete, skipping some</p> 
-                    </div>
-                </article>
+                [[[ARTICLES WILL BE ADDED HERE DYNAMICALLY]]]
+                
                 
             </div>
         </div>
@@ -482,20 +456,28 @@
 
 <section class="w-full py-4 md:py-6 px-4 md:px-8"> 
     <div class="flex flex-col md:flex-row gap-6 md:gap-4 max-w-7xl mx-auto">
+        <!-- Top Stories Section - grow to fill available space -->
         <div class="relative w-full h-[22rem] sm:h-[24rem] md:h-[32rem] md:flex-1">
             <div class="w-full h-full relative overflow-hidden">
+                <!-- Replace with the actual North Korea image -->
                 <img src="https://picsum.photos/seed/topstorymain/656/371" alt="Image related to North Korea's nuclear program" class="w-full h-full object-cover">
+                
+                <!-- TOP STORIES label -->
                 <div class="absolute left-[1rem] md:left-0 bottom-[6.5rem] sm:bottom-[10rem] md:bottom-[6rem] md:left-[2.5rem] z-10">
                     <div class="bg-[#3533CD] px-2 py-1 md:px-4 md:py-2">
                         <span class="font-roboto font-bold text-xs md:text-sm uppercase text-white">TOP STORIES</span>
                     </div>
                 </div>
+                
+                <!-- White overlay with title and description -->
                 <div class="absolute bottom-0 left-0 right-0 bg-white p-3 md:p-4 w-full md:max-w-3xl md:ml-8">
-                    <h2 class="font-jakarta font-semibold text-lg md:text-xl leading-tight text-[#222222] mb-1 md:mb-2"><!-- <section_3_title> -->What One Photo Tells Us About North Korea's Nuclear Program<!-- <section_3_title> --></h2>
-                    <p class="font-jakarta font-normal text-xs md:text-sm leading-relaxed text-[#555555]"><!-- <section_3_description> -->Clues from a propaganda photo reveal details about North Korea's expanding weapons programs and internal politics.<!-- <section_3_description> --></p>
+                    <h2 class="font-jakarta font-semibold text-lg md:text-xl leading-tight text-[#222222] mb-1 md:mb-2">What One Photo Tells Us About North Korea's Nuclear Program</h2>
+                    <p class="font-jakarta font-normal text-xs md:text-sm leading-relaxed text-[#555555]">Clues from a propaganda photo reveal details about North Korea's expanding weapons programs and internal politics.</p>
                 </div>
             </div>
         </div>
+        
+        <!-- Leadership Spotlight Section - fixed width -->
         <div class="h-auto py-6 md:py-0 md:h-[32rem] w-full md:w-[25rem] md:shrink-0 bg-gradient-to-r from-[#3533CD] to-[#0A0A24] rounded-[15px] p-4 md:p-8 flex flex-col items-center justify-center text-center text-white">
             <h2 class="font-helvetica-now font-bold text-2xl md:text-4xl leading-tight mb-3 md:mb-4">Leadership Spotlight</h2>
             <div class="flex flex-col items-center gap-3 md:gap-4">
@@ -526,13 +508,13 @@
         <div class="relative w-full h-full z-10 p-4 md:p-0 grid grid-cols-1 md:grid-cols-2 md:gap-0"> 
             
             <div class="relative w-full h-auto md:h-full"> 
-                <div class="relative w-[26rem] md:w-full h-[30rem] mt-[-1rem] md:mt-[0px] md:h-[40.5rem] -mx-4 md:mx-0 md:absolute md:inset-0 bg-cover bg-center rounded-none <section_4_image> bg-[url(https://picsum.photos/seed/trendinglarge/640/395)] <section_4_image>"> 
+                <div class="relative w-[26rem] md:w-full h-[30rem] mt-[-1rem] md:mt-[0px] md:h-[40.5rem] -mx-4 md:mx-0 md:absolute md:inset-0 bg-cover bg-center rounded-none bg-[url(https://picsum.photos/seed/trendinglarge/640/395)]"> 
                     
                     <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/80 via-black/50 to-transparent rounded-b-none"></div> 
                     
                     <div class="absolute bottom-4 left-4 right-4 md:bottom-6 md:left-6 md:right-6 z-10"> 
-                        <div class="font-dm font-normal text-sm leading-[1.1] text-white md:text-[18px] mb-1"><!-- <section_4_publisher> -->Debits<!-- <section_4_publisher> --> - <!-- <section_4_date> -->03 June 2023<!-- <section_4_date> --></div>
-                        <h2 class="font-jakarta font-bold text-xl leading-tight capitalize text-white md:text-[32px] md:leading-[40px]"><!-- <section_4_title> -->DISCOVER THE MEMBER BENEFITS OF BOL BUSINESS<!-- <section_4_title> --></h2>
+                        <div class="font-dm font-normal text-sm leading-[1.1] text-white md:text-[18px] mb-1">Debits - 03 June 2023</div>
+                        <h2 class="font-jakarta font-bold text-xl leading-tight capitalize text-white md:text-[32px] md:leading-[40px]">DISCOVER THE MEMBER BENEFITS OF BOL BUSINESS</h2>
                     </div>
                 </div>
             </div>
@@ -656,170 +638,172 @@
             <img src="static/images/checkout_magazine_button.png" alt="Checkout Magazine Button" class="block w-full h-auto">
         </a>
     </section>
-    
-    <section class="w-full px-6 md:px-8 bg-white" style="padding-top: 1rem; padding-bottom: 2rem;">
-      <div class="max-w-7xl mx-auto">
-        <div class="flex justify-between items-center mb-8">
-          <div class="relative">
-            <h2 class="font-jakarta font-bold text-3xl text-[#0D0D0D]"><!-- <section_5_header> -->AI<!-- <section_5_header> --></h2>
-            <div class="absolute h-1 w-16 bg-[#3533CD] bottom-0 left-0"></div>
-          </div>
-          <a href="#" class="font-jakarta text-sm text-[#3533CD] hover:underline flex items-center">
-            View All Articles
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-            </svg>
-          </a>
-        </div>
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-          <div class="lg:col-span-2 h-[500px]">
-            <article class="group relative h-full">
-              <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10"></div>
-              <!-- <section_5_image> -->
-              <img 
-                src="https://picsum.photos/seed/ailifestyle1/800/450" 
-                alt="Institutional delivery article" 
-                class="w-full h-full object-cover"
-              >
-              <!-- <section_5_image> -->
-              <div class="absolute left-0 top-6 z-20 flex items-center">
-                <span class="inline-block px-3 py-1 ml-6 text-xs font-medium bg-[#3533CD] text-white"><!-- <section_5_category> -->Health<!-- <section_5_category> --></span>
-                <span class="ml-2 text-white/80 text-xs"><!-- <section_5_publisher> -->Craig Bator<!-- <section_5_publisher> --> • <!-- <section_5_date> -->May 12<!-- <section_5_date> --></span>
-              </div>
-              <div class="absolute inset-x-0 bottom-0 p-6 z-20">
-                <h3 class="font-jakarta font-bold text-2xl text-white mb-2 truncate">
-                  <!-- <section_5_title> -->Institutional delivery vital for reducing maternal and neonatal deaths<!-- <section_5_title> -->
-                </h3>
-                <div class="flex items-center text-white/80 text-sm">
-                  <span><!-- <section_5_time> -->5<!-- <section_5_time> --> min read</span>
-                </div>
-              </div>
-            </article>
-          </div>
-          <div class="lg:col-span-1 flex flex-col gap-6 h-[500px]">
-            <article class="bg-gray-50 flex-1">
-              <div class="mb-2 flex items-center">
-                <span class="inline-block px-2 py-0.5 text-xs font-medium bg-[#3533CD] text-white"><!-- <section_5_left_section_category1> -->Psychology<!-- <section_5_left_section_category1> --></span>
-                <span class="ml-2 text-gray-500 text-xs flex items-center">
-                  <span><!-- <section_5_left_section_publisher1> -->Craig Bator<!-- <section_5_left_section_publisher1> --></span>
-                  <span class="mx-1">•</span>
-                  <span><!-- <section_5_left_section_date1> -->May 10, 2025<!-- <section_5_left_section_date1> --></span>
-                </span>
-              </div>
-              <h3 class="font-jakarta font-semibold text-lg text-gray-900 mb-2 truncate">
-                <!-- <section_5_left_section_title1> -->Being self-controlled child may lead to healthier middle-age<!-- <section_5_left_section_title1> -->
-              </h3>
-              <!-- <section_5_left_section_image1> -->
-              <img 
-                src="https://picsum.photos/seed/ailifestyle2/800/380" 
-                alt="Self-controlled child article" 
-                class="w-full h-[10.5rem] object-cover"
-              >
-              <!-- <section_5_left_section_image1> -->
-            </article>
-            
-            <article class="bg-gray-50 flex-1">
-              <div class="mb-2 flex items-center">
-                <span class="inline-block px-2 py-0.5 text-xs font-medium bg-[#3533CD] text-white"><!-- <section_5_left_section_category2> -->Adventure<!-- <section_5_left_section_category2> --></span>
-                <span class="ml-2 text-gray-500 text-xs flex items-center">
-                  <span><!-- <section_5_left_section_publisher2> -->Craig Bator<!-- <section_5_left_section_publisher2> --></span>
-                  <span class="mx-1">•</span>
-                  <span><!-- <section_5_left_section_date2> -->May 8, 2025<!-- <section_5_left_section_date2> --></span>
-                </span>
-              </div>
-              <h3 class="font-jakarta font-semibold text-lg text-gray-900 mb-2 truncate">
-                <!-- <section_5_left_section_title2> -->Best things you can do on a solo mountain climb<!-- <section_5_left_section_title2> -->
-              </h3>
-              <!-- <section_5_left_section_image2> -->
-              <img 
-                src="https://picsum.photos/seed/ailifestyle3/400/240" 
-                alt="Solo mountain climb" 
-                class="w-full h-[10.5rem] object-cover"
-              >
-              <!-- <section_5_left_section_image2> -->
-            </article>
-          </div>
-        </div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <article class="flex gap-4 items-start">
-            <!-- <section_5_bottom_section_image1> -->
-              <img
-              src="https://picsum.photos/seed/ailifestyle45/400/240"
-              alt="Home design principles"
-              class="w-16 h-16 object-cover flex-shrink-0"
-            >
-              <!-- <section_5_bottom_section_image1> -->
-            <div>
-              <div class="flex items-center">
-                <span class="text-xs font-medium text-[#3533CD]"><!-- <section_5_bottom_section_category1> -->Interior<!-- <section_5_bottom_section_category1> --></span>
-                <span class="ml-2 text-gray-500 text-xs"><!-- <section_5_bottom_section_publisher1> -->Craig Bator<!-- <section_5_bottom_section_publisher1> --> • <!-- <section_5_bottom_section_date1> -->May 5<!-- <section_5_bottom_section_date1> --></span>
-              </div>
-              <h4 class="font-jakarta font-semibold text-base mt-1 mb-1 text-gray-900 overflow-hidden" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
-                <!-- <section_5_bottom_section_title1> -->How to use basic design principles in your home<!-- <section_5_bottom_section_title1> -->
-              </h4>
-            </div>
-          </article>
-          
-            <article class="flex gap-4 items-start">
-            <!-- <section_5_bottom_section_image2> -->
-            <img
-              src="https://picsum.photos/seed/ailifestyle5/400/240"
-              alt="Decorating with houseplants"
-              class="w-16 h-16 object-cover flex-shrink-0"
-            >
-            <!-- <section_5_bottom_section_image2> -->
-            <div>
-              <div class="flex items-center">
-              <span class="text-xs font-medium text-[#3533CD]"><!-- <section_5_bottom_section_category2> -->Home<!-- <section_5_bottom_section_category2> --></span>
-              <span class="ml-2 text-gray-500 text-xs"><!-- <section_5_bottom_section_publisher2> -->Craig Bator<!-- <section_5_bottom_section_publisher2> --> • <!-- <section_5_bottom_section_date2> -->May 3<!-- <section_5_bottom_section_date2> --></span>
-              </div>
-              <h4 class="font-jakarta font-semibold text-base mt-1 mb-1 text-gray-900 overflow-hidden" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
-              <!-- <section_5_bottom_section_title2> -->Creative decorating with houseplants, from floor to ceiling<!-- <section_5_bottom_section_title2> -->
-              </h4>
-            </div>
-            </article>
-            
-            <article class="flex gap-4 items-start">
-            <!-- <section_5_bottom_section_image3> -->
-            <img
-              src="https://picsum.photos/seed/ailifestyle6/400/240"
-              alt="Burning calories"
-              class="w-16 h-16 object-cover flex-shrink-0"
-            >
-            <!-- <section_5_bottom_section_image3> -->
-            <div>
-              <div class="flex items-center">
-              <span class="text-xs font-medium text-[#3533CD]"><!-- <section_5_bottom_section_category3> -->Fitness<!-- <section_5_bottom_section_category3> --></span>
-              <span class="ml-2 text-gray-500 text-xs"><!-- <section_5_bottom_section_publisher3> -->Craig Bator<!-- <section_5_bottom_section_publisher3> --> • <!-- <section_5_bottom_section_date3> -->Apr 28<!-- <section_5_bottom_section_date3> --></span>
-              </div>
-              <h4 class="font-jakarta font-semibold text-base mt-1 mb-1 text-gray-900 overflow-hidden" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
-              <!-- <section_5_bottom_section_title3> -->How to burn calories with pleasant activities in your daily routine<!-- <section_5_bottom_section_title3> -->
-              </h4>
-            </div>
-            </article>
 
-            <article class="flex gap-4 items-start">
-            <!-- <section_5_bottom_section_image4> -->
-            <img
-              src="https://picsum.photos/seed/ailifestyle7/400/240"
-              alt="Healthy cooking tips"
-              class="w-16 h-16 object-cover flex-shrink-0"
-            >
-            <!-- <section_5_bottom_section_image4> -->
-            <div>
-              <div class="flex items-center">
-              <span class="text-xs font-medium text-[#3533CD]"><!-- <section_5_bottom_section_category4> -->Food<!-- <section_5_bottom_section_category4> --></span>
-              <span class="ml-2 text-gray-500 text-xs"><!-- <section_5_bottom_section_publisher4> -->Craig Bator<!-- <section_5_bottom_section_publisher4> --> • <!-- <section_5_bottom_section_date4> -->Apr 25<!-- <section_5_bottom_section_date4> --></span>
-              </div>
-              <h4 class="font-jakarta font-semibold text-base mt-1 mb-1 text-gray-900 overflow-hidden" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
-              <!-- <section_5_bottom_section_title4> -->Healthy cooking tips that will transform your kitchen experience<!-- <section_5_bottom_section_title4> -->
-              </h4>
-            </div>
-            </article>
-          
-        </div>
+
+
+    
+    <section class="w-full px-6 md:px-8 bg-white" style="padding-top: 1rem; padding-bottom: 2rem;"">
+  <div class="max-w-7xl mx-auto">
+    <!-- Section Header with simple styling -->
+    <div class="flex justify-between items-center mb-8">
+      <div class="relative">
+        <h2 class="font-jakarta font-bold text-3xl text-[#0D0D0D]">AI</h2>
+        <div class="absolute h-1 w-16 bg-[#3533CD] bottom-0 left-0"></div>
       </div>
+      <a href="#" class="font-jakarta text-sm text-[#3533CD] hover:underline flex items-center">
+        View All Articles
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+      </a>
+    </div>
+    
+    <!-- Main Content Layout with equal heights -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+      <!-- Main Feature Article - Set to same height as sidebar -->
+      <div class="lg:col-span-2 h-[500px]">
+        <article class="group relative h-full">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10"></div>
+          <img 
+            src="https://picsum.photos/seed/ailifestyle1/800/450" 
+            alt="Institutional delivery article" 
+            class="w-full h-full object-cover"
+          >
+          <div class="absolute left-0 top-6 z-20 flex items-center">
+            <span class="inline-block px-3 py-1 ml-6 text-xs font-medium bg-[#3533CD] text-white">Health</span>
+            <span class="ml-2 text-white/80 text-xs">Craig Bator • May 12</span>
+          </div>
+          <div class="absolute inset-x-0 bottom-0 p-6 z-20">
+            <h3 class="font-jakarta font-bold text-2xl text-white mb-2 truncate">
+              'Institutional delivery vital for reducing maternal and neonatal deaths'
+            </h3>
+            <div class="flex items-center text-white/80 text-sm">
+              <span>5 min read</span>
+            </div>
+          </div>
+        </article>
+      </div>
+      
+      <!-- Sidebar Articles - Set height to match main article -->
+      <div class="lg:col-span-1 flex flex-col gap-6 h-[500px]">
+        <!-- Psychology Article -->
+        <article class="bg-gray-50 flex-1">
+          <div class="mb-2 flex items-center">
+            <span class="inline-block px-2 py-0.5 text-xs font-medium bg-[#3533CD] text-white">Psychology</span>
+            <span class="ml-2 text-gray-500 text-xs flex items-center">
+              <span>Craig Bator</span>
+              <span class="mx-1">•</span>
+              <span>May 10, 2025</span>
+            </span>
+          </div>
+          <h3 class="font-jakarta font-semibold text-lg text-gray-900 mb-2 truncate">
+            Being self-controlled child may lead to healthier middle-age
+          </h3>
+          <img 
+            src="https://picsum.photos/seed/ailifestyle2/800/380" 
+            alt="Self-controlled child article" 
+            class="w-full h-[10.5rem] object-cover"
+          >
+        </article>
+        
+        <!-- Adventure Article -->
+        <article class="bg-gray-50 flex-1">
+          <div class="mb-2 flex items-center">
+            <span class="inline-block px-2 py-0.5 text-xs font-medium bg-[#3533CD] text-white">Adventure</span>
+            <span class="ml-2 text-gray-500 text-xs flex items-center">
+              <span>Craig Bator</span>
+              <span class="mx-1">•</span>
+              <span>May 8, 2025</span>
+            </span>
+          </div>
+          <h3 class="font-jakarta font-semibold text-lg text-gray-900 mb-2 truncate">
+            Best things you can do on a solo mountain climb
+          </h3>
+          <img 
+            src="https://picsum.photos/seed/ailifestyle3/400/240" 
+            alt="Solo mountain climb" 
+            class="w-full h-[10.5rem] object-cover"
+          >
+        </article>
+      </div>
+    </div>
+    
+    <!-- Bottom Row Articles with 5 posts -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <!-- Interior Article -->
+      <article class="flex gap-4 items-start">
+        <img
+          src="https://picsum.photos/seed/ailifestyle4/400/240"
+          alt="Home design principles"
+          class="w-16 h-16 object-cover flex-shrink-0"
+        >
+        <div>
+          <div class="flex items-center">
+            <span class="text-xs font-medium text-[#3533CD]">Interior</span>
+            <span class="ml-2 text-gray-500 text-xs">Craig Bator • May 5</span>
+          </div>
+          <h4 class="font-jakarta font-semibold text-base mt-1 mb-1 text-gray-900 overflow-hidden" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
+            How to use basic design principles in your home
+          </h4>
+        </div>
+      </article>
+      
+      <!-- Home Article -->
+      <article class="flex gap-4 items-start">
+        <img
+          src="https://picsum.photos/seed/ailifestyle5/400/240"
+          alt="Decorating with houseplants"
+          class="w-16 h-16 object-cover flex-shrink-0"
+        >
+        <div>
+          <div class="flex items-center">
+            <span class="text-xs font-medium text-[#3533CD]">Home</span>
+            <span class="ml-2 text-gray-500 text-xs">Craig Bator • May 3</span>
+          </div>
+          <h4 class="font-jakarta font-semibold text-base mt-1 mb-1 text-gray-900 overflow-hidden" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
+            Creative decorating with houseplants, from floor to ceiling
+          </h4>
+        </div>
+      </article>
+      
+      <!-- Fitness Article -->
+      <article class="flex gap-4 items-start">
+        <img
+          src="https://picsum.photos/seed/ailifestyle6/400/240"
+          alt="Burning calories"
+          class="w-16 h-16 object-cover flex-shrink-0"
+        >
+        <div>
+          <div class="flex items-center">
+            <span class="text-xs font-medium text-[#3533CD]">Fitness</span>
+            <span class="ml-2 text-gray-500 text-xs">Craig Bator • Apr 28</span>
+          </div>
+          <h4 class="font-jakarta font-semibold text-base mt-1 mb-1 text-gray-900 overflow-hidden" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
+            How to burn calories with pleasant activities in your daily routine
+          </h4>
+        </div>
+      </article>
+
+      <!-- Food Article (New) -->
+      <article class="flex gap-4 items-start">
+        <img
+          src="https://picsum.photos/seed/ailifestyle7/400/240"
+          alt="Healthy cooking tips"
+          class="w-16 h-16 object-cover flex-shrink-0"
+        >
+        <div>
+          <div class="flex items-center">
+            <span class="text-xs font-medium text-[#3533CD]">Food</span>
+            <span class="ml-2 text-gray-500 text-xs">Craig Bator • Apr 25</span>
+          </div>
+          <h4 class="font-jakarta font-semibold text-base mt-1 mb-1 text-gray-900 overflow-hidden" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
+            Healthy cooking tips that will transform your kitchen experience
+          </h4>
+        </div>
+      </article>
+      
+    </div>
+  </div>
 </section>
 
     
@@ -879,163 +863,175 @@
                  </form>
             </div>
             
-            <div class="w-full md:w-1/2 h-80 md:h-auto bg-cover bg-center rounded-[15px] mt-4 md:mt-0 <section_6_image> bg-[url(https://picsum.photos/seed/whatsappvisual/716/625)] <section_6_image>"></div> 
+            <div class="w-full md:w-1/2 h-80 md:h-auto bg-cover bg-center rounded-[15px] mt-4 md:mt-0 bg-[url(https://picsum.photos/seed/whatsappvisual/716/625)]"></div> 
         </div>
     </section>
 
     
     <section class="w-full px-6 md:px-8 bg-white" style="padding-top: 1rem; padding-bottom: 2rem;">
-    <div class="max-w-7xl mx-auto"></div>
+  <div class="max-w-7xl mx-auto">
+    <!-- Section Header with simple styling -->
     <div class="flex justify-between items-center mb-8">
       <div class="relative">
-      <h2 class="font-jakarta font-bold text-3xl text-[#0D0D0D]"><!-- <section_7_header> -->Lifestyle<!-- <section_7_header> --></h2>
-      <div class="absolute h-1 w-16 bg-[#3533CD] bottom-0 left-0"></div>
+        <h2 class="font-jakarta font-bold text-3xl text-[#0D0D0D]">Lifestyle</h2>
+        <div class="absolute h-1 w-16 bg-[#3533CD] bottom-0 left-0"></div>
       </div>
       <a href="#" class="font-jakarta text-sm text-[#3533CD] hover:underline flex items-center">
-      View All Articles
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-      </svg>
+        View All Articles
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
       </a>
     </div>
     
+    <!-- Main Content Layout with equal heights -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+      <!-- Main Feature Article - Set to same height as sidebar -->
       <div class="lg:col-span-2 h-[500px]">
-      <article class="group relative h-full">
-        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10"></div>
-        <!-- <section_7_image> --><img 
-        src="https://picsum.photos/seed/ailifestyle1/800/450" 
-        alt="Institutional delivery article" 
-        class="w-full h-full object-cover"
-        ><!-- <section_7_image> -->
-        <div class="absolute left-0 top-6 z-20 flex items-center">
-        <span class="inline-block px-3 py-1 ml-6 text-xs font-medium bg-[#3533CD] text-white"><!-- <section_7_category> -->Health<!-- <section_7_category> --></span>
-        <span class="ml-2 text-white/80 text-xs"><!-- <section_7_publisher> -->Craig Bator<!-- <section_7_publisher> --> • <!-- <section_7_date> -->May 12<!-- <section_7_date> --></span>
-        </div>
-        <div class="absolute inset-x-0 bottom-0 p-6 z-20">
-        <h3 class="font-jakarta font-bold text-2xl text-white mb-2 truncate">
-          <!-- <section_7_title> -->'Institutional delivery vital for reducing maternal and neonatal deaths'<!-- <section_7_title> -->
-        </h3>
-        <div class="flex items-center text-white/80 text-sm">
-          <span><!-- <section_7_time> -->5 min read<!-- <section_7_time> --></span>
-        </div>
-        </div>
-      </article>
+        <article class="group relative h-full">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10"></div>
+          <img 
+            src="https://picsum.photos/seed/ailifestyle1/800/450" 
+            alt="Institutional delivery article" 
+            class="w-full h-full object-cover"
+          >
+          <div class="absolute left-0 top-6 z-20 flex items-center">
+            <span class="inline-block px-3 py-1 ml-6 text-xs font-medium bg-[#3533CD] text-white">Health</span>
+            <span class="ml-2 text-white/80 text-xs">Craig Bator • May 12</span>
+          </div>
+          <div class="absolute inset-x-0 bottom-0 p-6 z-20">
+            <h3 class="font-jakarta font-bold text-2xl text-white mb-2 truncate">
+              'Institutional delivery vital for reducing maternal and neonatal deaths'
+            </h3>
+            <div class="flex items-center text-white/80 text-sm">
+              <span>5 min read</span>
+            </div>
+          </div>
+        </article>
       </div>
       
+      <!-- Sidebar Articles - Set height to match main article -->
       <div class="lg:col-span-1 flex flex-col gap-6 h-[500px]">
-      <article class="bg-gray-50 flex-1">
-        <div class="mb-2 flex items-center">
-        <span class="inline-block px-2 py-0.5 text-xs font-medium bg-[#3533CD] text-white"><!-- <section_7_left_section_category1> -->Psychology<!-- <section_7_left_section_category1> --></span>
-        <span class="ml-2 text-gray-500 text-xs flex items-center">
-          <span><!-- <section_7_left_section_publisher1> -->Craig Bator<!-- <section_7_left_section_publisher1> --></span>
-          <span class="mx-1">•</span>
-          <span><!-- <section_7_left_section_date1> -->May 10, 2025<!-- <section_7_left_section_date1> --></span>
-        </span>
-        </div>
-        <h3 class="font-jakarta font-semibold text-lg text-gray-900 mb-2 truncate">
-        <!-- <section_7_left_section_title1> -->Being self-controlled child may lead to healthier middle-age<!-- <section_7_left_section_title1> -->
-        </h3>
-        <!-- <section_7_left_section_image1> --><img 
-        src="https://picsum.photos/seed/ailifestyle2/800/380" 
-        alt="Self-controlled child article" 
-        class="w-full h-[10.5rem] object-cover"
-        ><!-- <section_7_left_section_image1> -->
-      </article>
-      
-      <article class="bg-gray-50 flex-1 pt-[1rem]">
-        <div class="mb-2 flex items-center">
-        <span class="inline-block px-2 py-0.5 text-xs font-medium bg-[#3533CD] text-white"><!-- <section_7_left_section_category2> -->Adventure<!-- <section_7_left_section_category2> --></span>
-        <span class="ml-2 text-gray-500 text-xs flex items-center">
-          <span><!-- <section_7_left_section_publisher2> -->Craig Bator<!-- <section_7_left_section_publisher2> --></span>
-          <span class="mx-1">•</span>
-          <span><!-- <section_7_left_section_date2> -->May 8, 2025<!-- <section_7_left_section_date2> --></span>
-        </span>
-        </div>
-        <h3 class="font-jakarta font-semibold text-lg text-gray-900 mb-2 truncate">
-        <!-- <section_7_left_section_title2> -->Best things you can do on a solo mountain climb<!-- <section_7_left_section_title2> -->
-        </h3>
-        <!-- <section_7_left_section_image2> --><img 
-        src="https://picsum.photos/seed/ailifestyle3/400/240" 
-        alt="Solo mountain climb" 
-        class="w-full h-[10.5rem] object-cover"
-        ><!-- <section_7_left_section_image2> -->
-      </article>
+        <!-- Psychology Article -->
+        <article class="bg-gray-50 flex-1">
+          <div class="mb-2 flex items-center">
+            <span class="inline-block px-2 py-0.5 text-xs font-medium bg-[#3533CD] text-white">Psychology</span>
+            <span class="ml-2 text-gray-500 text-xs flex items-center">
+              <span>Craig Bator</span>
+              <span class="mx-1">•</span>
+              <span>May 10, 2025</span>
+            </span>
+          </div>
+          <h3 class="font-jakarta font-semibold text-lg text-gray-900 mb-2 truncate">
+            Being self-controlled child may lead to healthier middle-age
+          </h3>
+          <img 
+            src="https://picsum.photos/seed/ailifestyle2/800/380" 
+            alt="Self-controlled child article" 
+            class="w-full h-[10.5rem] object-cover"
+          >
+        </article>
+        
+        <!-- Adventure Article -->
+        <article class="bg-gray-50 flex-1 pt-[1rem]">
+          <div class="mb-2 flex items-center">
+            <span class="inline-block px-2 py-0.5 text-xs font-medium bg-[#3533CD] text-white">Adventure</span>
+            <span class="ml-2 text-gray-500 text-xs flex items-center">
+              <span>Craig Bator</span>
+              <span class="mx-1">•</span>
+              <span>May 8, 2025</span>
+            </span>
+          </div>
+          <h3 class="font-jakarta font-semibold text-lg text-gray-900 mb-2 truncate">
+            Best things you can do on a solo mountain climb
+          </h3>
+          <img 
+            src="https://picsum.photos/seed/ailifestyle3/400/240" 
+            alt="Solo mountain climb" 
+            class="w-full h-[10.5rem] object-cover"
+          >
+        </article>
       </div>
     </div>
     
+    <!-- Bottom Row Articles with 5 posts -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <!-- Interior Article -->
       <article class="flex gap-4 items-start">
-      <!-- <section_7_bottom_section_image1> --><img
-        src="https://picsum.photos/seed/ailifestyle4/400/240"
-        alt="Home design principles"
-        class="w-16 h-16 object-cover flex-shrink-0"
-      ><!-- <section_7_bottom_section_image1> -->
-      <div>
-        <div class="flex items-center">
-        <span class="text-xs font-medium text-[#3533CD]"><!-- <section_7_bottom_section_category1> -->Interior<!-- <section_7_bottom_section_category1> --></span>
-        <span class="ml-2 text-gray-500 text-xs"><!-- <section_7_bottom_section_publisher1> -->Craig Bator<!-- <section_7_bottom_section_publisher1> --> • <!-- <section_7_bottom_section_date1> -->May 5<!-- <section_7_bottom_section_date1> --></span>
+        <img
+          src="https://picsum.photos/seed/ailifestyle4/400/240"
+          alt="Home design principles"
+          class="w-16 h-16 object-cover flex-shrink-0"
+        >
+        <div>
+          <div class="flex items-center">
+            <span class="text-xs font-medium text-[#3533CD]">Interior</span>
+            <span class="ml-2 text-gray-500 text-xs">Craig Bator • May 5</span>
+          </div>
+          <h4 class="font-jakarta font-semibold text-base mt-1 mb-1 text-gray-900 overflow-hidden" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
+            How to use basic design principles in your home
+          </h4>
         </div>
-        <h4 class="font-jakarta font-semibold text-base mt-1 mb-1 text-gray-900 overflow-hidden" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
-        <!-- <section_7_bottom_section_title1> -->How to use basic design principles in your home<!-- <section_7_bottom_section_title1> -->
-        </h4>
-      </div>
       </article>
       
+      <!-- Home Article -->
       <article class="flex gap-4 items-start">
-      <!-- <section_7_bottom_section_image2> --><img
-        src="https://picsum.photos/seed/ailifestyle5/400/240"
-        alt="Decorating with houseplants"
-        class="w-16 h-16 object-cover flex-shrink-0"
-      ><!-- <section_7_bottom_section_image2> -->
-      <div>
-        <div class="flex items-center"></div>
-        <span class="text-xs font-medium text-[#3533CD]"><!-- <section_7_bottom_section_category2> -->Home<!-- <section_7_bottom_section_category2> --></span>
-        <span class="ml-2 text-gray-500 text-xs"><!-- <section_7_bottom_section_publisher2> -->Craig Bator<!-- <section_7_bottom_section_publisher2> --> • <!-- <section_7_bottom_section_date2> -->May 3<!-- <section_7_bottom_section_date2> --></span>
+        <img
+          src="https://picsum.photos/seed/ailifestyle5/400/240"
+          alt="Decorating with houseplants"
+          class="w-16 h-16 object-cover flex-shrink-0"
+        >
+        <div>
+          <div class="flex items-center">
+            <span class="text-xs font-medium text-[#3533CD]">Home</span>
+            <span class="ml-2 text-gray-500 text-xs">Craig Bator • May 3</span>
+          </div>
+          <h4 class="font-jakarta font-semibold text-base mt-1 mb-1 text-gray-900 overflow-hidden" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
+            Creative decorating with houseplants, from floor to ceiling
+          </h4>
         </div>
-        <h4 class="font-jakarta font-semibold text-base mt-1 mb-1 text-gray-900 overflow-hidden" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
-        <!-- <section_7_bottom_section_title2> -->Creative decorating with houseplants, from floor to ceiling<!-- <section_7_bottom_section_title2> -->
-        </h4>
-      </div>
       </article>
       
+      <!-- Fitness Article -->
       <article class="flex gap-4 items-start">
-      <!-- <section_7_bottom_section_image3> --><img
-        src="https://picsum.photos/seed/ailifestyle6/400/240"
-        alt="Burning calories"
-        class="w-16 h-16 object-cover flex-shrink-0"
-      ><!-- <section_7_bottom_section_image3> -->
-      <div>
-        <div class="flex items-center">
-        <span class="text-xs font-medium text-[#3533CD]"><!-- <section_7_bottom_section_category3> -->Fitness<!-- <section_7_bottom_section_category3> --></span>
-        <span class="ml-2 text-gray-500 text-xs"><!-- <section_7_bottom_section_publisher3> -->Craig Bator<!-- <section_7_bottom_section_publisher3> --> • <!-- <section_7_bottom_section_date3> -->Apr 28<!-- <section_7_bottom_section_date3> --></span>
+        <img
+          src="https://picsum.photos/seed/ailifestyle6/400/240"
+          alt="Burning calories"
+          class="w-16 h-16 object-cover flex-shrink-0"
+        >
+        <div>
+          <div class="flex items-center">
+            <span class="text-xs font-medium text-[#3533CD]">Fitness</span>
+            <span class="ml-2 text-gray-500 text-xs">Craig Bator • Apr 28</span>
+          </div>
+          <h4 class="font-jakarta font-semibold text-base mt-1 mb-1 text-gray-900 overflow-hidden" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
+            How to burn calories with pleasant activities in your daily routine
+          </h4>
         </div>
-        <h4 class="font-jakarta font-semibold text-base mt-1 mb-1 text-gray-900 overflow-hidden" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
-        <!-- <section_7_bottom_section_title3> -->How to burn calories with pleasant activities in your daily routine<!-- <section_7_bottom_section_title3> -->
-        </h4>
-      </div>
       </article>
 
+      <!-- Food Article (New) -->
       <article class="flex gap-4 items-start">
-      <!-- <section_7_bottom_section_image4> --><img
-        src="https://picsum.photos/seed/ailifestyle7/400/240"
-        alt="Healthy cooking tips"
-        class="w-16 h-16 object-cover flex-shrink-0"
-      ><!-- <section_7_bottom_section_image4> -->
-      <div>
-        <div class="flex items-center">
-        <span class="text-xs font-medium text-[#3533CD]"><!-- <section_7_bottom_section_category4> -->Food<!-- <section_7_bottom_section_category4> --></span>
-        <span class="ml-2 text-gray-500 text-xs"><!-- <section_7_bottom_section_publisher4> -->Craig Bator<!-- <section_7_bottom_section_publisher4> --> • <!-- <section_7_bottom_section_date4> -->Apr 25<!-- <section_7_bottom_section_date4> --></span>
+        <img
+          src="https://picsum.photos/seed/ailifestyle7/400/240"
+          alt="Healthy cooking tips"
+          class="w-16 h-16 object-cover flex-shrink-0"
+        >
+        <div>
+          <div class="flex items-center">
+            <span class="text-xs font-medium text-[#3533CD]">Food</span>
+            <span class="ml-2 text-gray-500 text-xs">Craig Bator • Apr 25</span>
+          </div>
+          <h4 class="font-jakarta font-semibold text-base mt-1 mb-1 text-gray-900 overflow-hidden" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
+            Healthy cooking tips that will transform your kitchen experience
+          </h4>
         </div>
-        <h4 class="font-jakarta font-semibold text-base mt-1 mb-1 text-gray-900 overflow-hidden" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
-        <!-- <section_7_bottom_section_title4> -->Healthy cooking tips that will transform your kitchen experience<!-- <section_7_bottom_section_title4> -->
-        </h4>
-      </div>
       </article>
       
     </div>
-    </div>
-  </section>
+  </div>
+</section>
+    
     <footer class="w-full aspect-[120/60] relative bg-cover bg-no-repeat bg-center bg-[url(static/images/footer1.png)]">
         
         <a href="#" class="absolute bottom-[22%] left-[10%] w-[20%] max-w-[280px] hover:opacity-90 transition-opacity">
@@ -1193,3 +1189,4 @@
 </body>
 </html>
 </html>
+"""
