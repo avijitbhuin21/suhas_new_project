@@ -1211,12 +1211,6 @@
         'SECTION 7': 'section_7'
     };
     
-    // Helper function to format paths in the specific required format
-    /**
- * Formats a key path according to the specified rules.
- * @param {string} path - The path to format.
- * @returns {string} The formatted path.
- */
 function formatKeyPath(path) {
     if (!path) return path;
     
@@ -1225,7 +1219,7 @@ function formatKeyPath(path) {
     // Handle the first part (section name) using sectionMapping
     if (parts.length > 0 && sectionMapping.hasOwnProperty(parts[0])) {
         let mappedPrefix = sectionMapping[parts[0]];
-        mappedPrefix = mappedPrefix.slice(0, -1) + '_' + mappedPrefix.slice(-2, -1); 
+        mappedPrefix = mappedPrefix.slice(0, -1) + mappedPrefix.slice(-2, -1); 
         // All Python params for update_homepage have a prefix, so mappedPrefix should not be empty.
         parts[0] = mappedPrefix;
     } else if (parts.length > 0) {
@@ -1273,6 +1267,9 @@ function formatKeyPath(path) {
     // Remove 'main_content_section' if present
     if (formattedPath.includes('main_content_section')) {
         formattedPath = formattedPath.replace('main_content_section', '');
+    }
+    while (formattedPath.includes('__')) {
+        formattedPath = formattedPath.replace('__', '_');
     }
     
     // Replace all spaces with underscores
