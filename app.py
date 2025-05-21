@@ -9,6 +9,7 @@ from dotenv import load_dotenv
 
 from static.data.page_handler import *
 from static.data.page_editor import *
+from static.data.db_handler import *
 
 from flask_ngrok import run_with_ngrok
 load_dotenv()
@@ -96,6 +97,24 @@ def admin_update_homepage():
             "message": str(e),
             "traceback": error_traceback
         }), 500
+
+
+#--------------------------------------------------------------------------------#
+#                                 BLOGS ROUTE                                    #
+#--------------------------------------------------------------------------------#
+
+@app.route('/get_blog')
+def get_blog():
+    blog_id = request.args.get('blog_id')
+    # Add logic to fetch and return blog data based on blog_id
+    return jsonify({"blog_id": blog_id, "message": "Blog data will be here"})
+
+
+
+
+
+
+
 
 #--------------------------------------------------------------------------------#
 #                                 TRIAL ROUTE                                    #
