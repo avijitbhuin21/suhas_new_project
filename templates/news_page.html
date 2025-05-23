@@ -8,13 +8,13 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/@phosphor-icons/web@2.0.3"></script>
     <style>
-        @media screen and (min-width: 1024px) {
+        /* @media screen and (min-width: 1024px) {
         body {
             transform: scale(1.33);
             transform-origin: 0 0;
             width: 75.3%;
         }
-    }
+    } */
         
         /* Mobile-first approach - default styling for mobile */
         @media screen and (max-width: 768px) {
@@ -222,6 +222,23 @@ aside .p-6::-webkit-scrollbar-thumb,
             }
         }
     </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+                mobileMenuButton.classList.toggle('hamburger-active');
+                
+                if (!mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('slide-down');
+                } else {
+                    mobileMenu.classList.remove('slide-down');
+                }
+            });
+        });
+    </script>
 </head>
 <body>
     <body class="font-jakarta bg-white text-bol-black">
@@ -237,7 +254,7 @@ aside .p-6::-webkit-scrollbar-thumb,
             <nav class="flex flex-col items-stretch w-[700px] h-[93px] py-[14px] px-[18px] gap-[10px]">
                 <div class="flex flex-row justify-end items-center w-full gap-[60px] px-[30px]">
                     <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Careers </a>
-                    <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Editorial </a>
+                    <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Podcast </a>
                     <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Register </a>
                     <a href="#" class="bg-[#CDA7FF] rounded-[2px] px-2.5 py-0.5 text-[#0D0D0D] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Login </a>
                 </div>
@@ -316,7 +333,7 @@ aside .p-6::-webkit-scrollbar-thumb,
 
                 <div class="mobile-menu-item">
                     <i class="ph ph-newspaper text-white text-lg"></i>
-                    <span class="item-title">Editorial</span>
+                    <span class="item-title">Podcast</span>
                     <i class="ph ph-caret-right"></i>
                 </div>
 
