@@ -1,1 +1,200 @@
-1. 
+TOC - DESKTOP
+
+<aside class="sticky top-8 h-8rem lg:order-1 self-start md:mt-[0rem] mt-[-57rem]">
+    <div class="p-6 flex flex-col w-full rounded-xl bg-white border-gray-100 hidden lg:block overflow-y- max-h-[calc(100vh-4rem)]" style="scroll-behavior: smooth">
+        <h2 class="text-2xl font-bold text-[#3533CD] mb-6 border-b pb-3">
+        Table of Contents
+        </h2>
+        
+        <div class="mb-4 toc-section" data-section-id="crafting-customised-recruitment-campaigns">
+
+            <a href="#crafting-customised-recruitment-campaigns" data-toggle-target="#sub-crafting-customised-recruitment-campaigns-desktop" class="toc-h2-link flex items-center justify-between mt-1 mb-3 no-underline text-gray-800 hover:text-[#3533CD] transition-colors duration-200 toc-link">
+                <div class="text-lg font-medium"> Crafting Customised Recruitment Campaigns </div>
+                <i class="ph ph-caret-down text-xs ml-1 toc-arrow transition-transform duration-300" ></i>
+            </a>
+            
+            <div id="sub-crafting-customised-recruitment-campaigns-desktop" class="toc-subcategories hidden pl-4 mb-3 space-y-3">
+                <a href="#building-attractive-employer-identity" class="flex items-center mt-1 no-underline text-gray-600 hover:text-[#3533CD] transition-colors duration-200 toc-link border-l-2 border-gray-200 pl-3 hover:border-[#3533CD]">
+                    <div class="text-sm">Building an Attractive Employer Identity</div>
+                </a>
+                <a href="#strategic-outreach" class="flex items-center mt-1 no-underline text-gray-600 hover:text-[#3533CD] transition-colors duration-200 toc-link border-l-2 border-gray-200 pl-3 hover:border-[#3533CD]">
+                    <div class="text-sm">Strategic Outreach</div>
+                </a>
+                <a href="#encouraging-diversity" class="flex items-center mt-1 no-underline text-gray-600 hover:text-[#3533CD] transition-colors duration-200 toc-link border-l-2 border-gray-200 pl-3 hover:border-[#3533CD]">
+                    <div class="text-sm">Encouraging Diversity Through Inclusive Hiring</div>
+                </a>
+            </div>
+
+        </div>
+        
+        <div class="mb-4 toc-section" data-section-id="integrating-tech-innovations-in-hiring">
+
+            <a href="#integrating-tech-innovations-in-hiring" data-toggle-target="#sub-integrating-tech-innovations-in-hiring-desktop" class="toc-h2-link flex items-center justify-between mt-1 mb-3 no-underline text-gray-800 hover:text-[#3533CD] transition-colors duration-200 toc-link">
+                <div class="text-lg font-medium">Integrating Tech Innovations in Hiring</div>
+                <i class="ph ph-caret-down text-xs ml-1 toc-arrow transition-transform duration-300"></i>
+            </a>
+            
+            <div id="sub-integrating-tech-innovations-in-hiring-desktop" class="toc-subcategories hidden pl-4 mb-3 space-y-3">
+                <a href="#innovating-with-ai" class="flex items-center mt-1 no-underline text-gray-600 hover:text-[#3533CD] transition-colors duration-200 toc-link border-l-2 border-gray-200 pl-3 hover:border-[#3533CD]">
+                    <div class="text-sm"> Innovating with AI for Fairer Hiring </div>
+                </a>
+                <a href="#social-media-catalyst" class="flex items-center mt-1 no-underline text-gray-600 hover:text-[#3533CD] transition-colors duration-200 toc-link border-l-2 border-gray-200 pl-3 hover:border-[#3533CD]" >
+                    <div class="text-sm"> Social Media as a Recruitment Catalyst </div>
+                </a>
+                <a href="#digital-showcasing" class="flex items-center mt-1 no-underline text-gray-600 hover:text-[#3533CD] transition-colors duration-200 toc-link border-l-2 border-gray-200 pl-3 hover:border-[#3533CD]" >
+                    <div class="text-sm"> Digital Showcasing of Company Culture </div>
+                </a>
+            </div>
+
+        </div>
+        
+        <div class="mb-4 toc-section" data-section-id="tailoring-the-employee-experience" >
+
+            <a href="#tailoring-the-employee-experience" data-toggle-target="#sub-tailoring-the-employee-experience-desktop" class="toc-h2-link flex items-center justify-between mt-1 mb-3 no-underline text-gray-800 hover:text-[#3533CD] transition-colors duration-200 toc-link">
+                <div class="text-lg font-medium"> Tailoring the Employee Experience </div>
+                <i class="ph ph-caret-down text-xs ml-1 toc-arrow transition-transform duration-300"></i>
+            </a>
+            
+            <div id="sub-tailoring-the-employee-experience-desktop" class="toc-subcategories hidden pl-4 mb-3 space-y-3" >
+                <a href="#tailored-development-initiatives" class="flex items-center mt-1 no-underline text-gray-600 hover:text-[#3533CD] transition-colors duration-200 toc-link border-l-2 border-gray-200 pl-3 hover:border-[transparent]">
+                    <div class="text-sm"> Moreover, tailored development initiatives... </div>
+                </a>
+            </div>
+
+        </div>
+        
+
+        <div class="mt-8 space-y-4 border-t pt-6">
+            <button class="w-full h-[45px] md:h-[53px] bg-[#3533CD] rounded-xl flex items-center justify-center text-white font-jakarta font-medium text-[16px] md:text-[18px] leading-[120%] hover:bg-opacity-90 transition-colors shadow-md">
+                <i class="ph ph-download mr-2"></i> Download Article as PDF
+            </button>
+
+            <div class="flex items-center flex-wrap">
+                <div class="relative inline-flex items-center justify-center gap-2 bg-[#3533CD] rounded-xl h-[45px] md:h-[53px] px-4 cursor-pointer hover:bg-opacity-90 transition-colors shadow-md" >
+                    <span class="text-white font-jakarta font-medium text-[16px] md:text-[18px] leading-[120%] text-center" style="width: 7rem" >
+                        <i class="ph ph-share-network mr-2"></i> Share
+                    </span>
+                </div>
+                <div class="flex space-x-3 ml-3">
+                    <img src="static/images/whatsapp_logo.png" alt="WhatsApp" class="w-[35px] h-[35px] md:w-[45px] md:h-[45px] object-contain hover:opacity-80 transition-opacity" />
+                    <img src="static/images/insta_logo.png" alt="Instagram" class="w-[35px] h-[35px] md:w-[45px] md:h-[45px] object-contain hover:opacity-80 transition-opacity" />
+                </div>
+            </div>
+
+        </div>
+    </div>
+</aside>
+
+TOC - MOBILE:
+
+<div class="block lg:hidden px-4 mt-8">
+    <div class="relative toc-container p-5 bg-white rounded-xl border-gray-100">
+        <h2 class="text-xl font-bold text-[#3533CD] mb-4 border-b pb-3">Table of Contents</h2>
+        
+        <div class="mb-3 toc-section" data-section-id="crafting-customised-recruitment-campaigns">
+            <a href="#crafting-customised-recruitment-campaigns" data-toggle-target="#sub-crafting-customised-recruitment-campaigns" class="toc-h2-link flex items-center justify-between mt-1 mb-3 no-underline text-gray-800 hover:text-[#3533CD] transition-colors duration-200 toc-link">
+                <div class="text-base font-medium">Crafting Customised Recruitment Campaigns</div>
+                <i class="ph ph-caret-down text-xs ml-1 toc-arrow transition-transform duration-300"></i>
+            </a>
+            
+            <div id="sub-crafting-customised-recruitment-campaigns" class="toc-subcategories hidden pl-4 mb-3 space-y-2">
+                <a href="#building-attractive-employer-identity" class="flex items-center mt-1 no-underline text-gray-600 hover:text-[#3533CD] transition-colors duration-200 toc-link border-l-2 border-gray-200 pl-3 hover:border-[#3533CD]">
+                    <div class="text-sm">Building an Attractive Employer Identity</div>
+                </a>
+                <a href="#strategic-outreach" class="flex items-center mt-1 no-underline text-gray-600 hover:text-[#3533CD] transition-colors duration-200 toc-link border-l-2 border-gray-200 pl-3 hover:border-[#3533CD]">
+                    <div class="text-sm">Strategic Outreach</div>
+                </a>
+                <a href="#encouraging-diversity" class="flex items-center mt-1 no-underline text-gray-600 hover:text-[#3533CD] transition-colors duration-200 toc-link border-l-2 border-gray-200 pl-3 hover:border-[#3533CD]">
+                    <div class="text-sm">Encouraging Diversity Through Inclusive Hiring</div>
+                </a>
+            </div>
+        </div>
+        
+        <div class="mb-3 toc-section" data-section-id="integrating-tech-innovations-in-hiring">
+            <a href="#integrating-tech-innovations-in-hiring" data-toggle-target="#sub-integrating-tech-innovations-in-hiring" class="toc-h2-link flex items-center justify-between mt-1 mb-3 no-underline text-gray-800 hover:text-[#3533CD] transition-colors duration-200 toc-link">
+                <div class="text-base font-medium">Integrating Tech Innovations in Hiring</div>
+                <i class="ph ph-caret-down text-xs ml-1 toc-arrow transition-transform duration-300"></i>
+            </a>
+            
+            <div id="sub-integrating-tech-innovations-in-hiring" class="toc-subcategories hidden pl-4 mb-3 space-y-2">
+                <a href="#innovating-with-ai" class="flex items-center mt-1 no-underline text-gray-600 hover:text-[#3533CD] transition-colors duration-200 toc-link border-l-2 border-gray-200 pl-3 hover:border-[#3533CD]">
+                    <div class="text-sm">Innovating with AI for Fairer Hiring</div>
+                </a>
+                <a href="#social-media-catalyst" class="flex items-center mt-1 no-underline text-gray-600 hover:text-[#3533CD] transition-colors duration-200 toc-link border-l-2 border-gray-200 pl-3 hover:border-[#3533CD]">
+                    <div class="text-sm">Social Media as a Recruitment Catalyst</div>
+                </a>
+                <a href="#digital-showcasing" class="flex items-center mt-1 no-underline text-gray-600 hover:text-[#3533CD] transition-colors duration-200 toc-link border-l-2 border-gray-200 pl-3 hover:border-[#3533CD]">
+                    <div class="text-sm">Digital Showcasing of Company Culture</div>
+                </a>
+            </div>
+        </div>
+        
+        <div class="mb-3 toc-section" data-section-id="tailoring-the-employee-experience">
+            <a href="#tailoring-the-employee-experience" data-toggle-target="#sub-tailoring-the-employee-experience" class="toc-h2-link flex items-center justify-between mt-1 mb-3 no-underline text-gray-800 hover:text-[#3533CD] transition-colors duration-200 toc-link">
+                <div class="text-base font-medium">Tailoring the Employee Experience</div>
+                <i class="ph ph-caret-down text-xs ml-1 toc-arrow transition-transform duration-300"></i>
+            </a>
+            
+            <div id="sub-tailoring-the-employee-experience" class="toc-subcategories hidden pl-4 mb-3 space-y-2">
+                <a href="#tailored-development-initiatives" class="flex items-center mt-1 no-underline text-gray-600 hover:text-[#3533CD] transition-colors duration-200 toc-link border-l-2 border-gray-200 pl-3 hover:border-[#3533CD]">
+                    <div class="text-sm">Moreover, tailored development initiatives...</div>
+                </a>
+            </div>
+        </div>
+        
+        <div class="mt-6 space-y-4 border-t pt-5">
+            <button class="w-full h-[45px] bg-[#3533CD] rounded-xl flex items-center justify-center text-white font-jakarta font-medium text-[16px] leading-[120%] hover:bg-opacity-90 transition-colors shadow-md">
+                <i class="ph ph-download mr-2"></i>Download Article as PDF
+            </button>
+            <div class="flex items-center flex-wrap">
+                <div class="relative inline-flex items-center justify-center gap-2 bg-[#3533CD] rounded-xl h-[45px] px-4 cursor-pointer hover:bg-opacity-90 transition-colors shadow-md">
+                    <span class="text-white font-jakarta font-medium text-[16px] leading-[120%] text-center" style="width: 7rem">
+                        <i class="ph ph-share-network mr-2"></i>Share
+                    </span>
+                </div>
+                <div class="flex space-x-3 ml-3">
+                    <img src="static/images/whatsapp_logo.png" alt="WhatsApp" class="w-[35px] h-[35px] object-contain hover:opacity-80 transition-opacity"/>
+                    <img src="static/images/insta_logo.png" alt="Instagram" class="w-[35px] h-[35px] object-contain hover:opacity-80 transition-opacity"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+NO PADDING TEXT:
+<p class="font-jakarta font-medium text-[15px] md:text-[16px] leading-[26px] md:leading-[30px] text-black" >
+                The quest for top talent in the professional landscape has never
+                been more competitive. Companies are redefining their approaches to
+                attract and retain exceptional minds and this evolution calls for
+                innovative strategies in talent acquisition and retention. Reports
+                suggest 75% of HR professionals ring the bell on a talent shortage
+                as their biggest challenge. The figure throws into relief the
+                critical need for creative solutions.
+            </p>
+
+PADDING TEXT:
+
+<p class="font-jakarta font-medium text-[15px] md:text-[16px] leading-[26px] md:leading-[30px] text-black md:ml-[2rem]" >
+                These days, job advertisements don't carry a traditional approach
+                as they used to do a decade back. Today, attracting top-tier
+                talent requires bespoke recruitment initiatives that highlight
+                what makes your company stand out. It's about digging deeper to
+                understand what potential employees seek and ensuring these
+                desires mesh with your company's ethics and goals.
+            </p>
+
+H2 ELEMENT:
+<h2 id="crafting-customised-recruitment-campaigns" class="font-jakarta font-medium text-[22px] md:text-[28px] leading-[28px] md:leading-[30px] text-black scroll-mt-20" >
+                Crafting Customised Recruitment Campaigns
+            </h2>
+
+H3 ELEMENT:
+<h3 id="crafting-customised-recruitment-campaigns" class="font-jakarta font-semibold font-high text-[20px] leading-[28px] md:leading-[30px] text-black scroll-mt-20 md:ml-[2rem]" >
+                Building an Attractive Employer Identity
+            </h3>
+
+IMAGE ELEMENT:
+<div class="w-full h-[120px] sm:h-[160px] md:h-[236px] my-8 md:my-12">
+            <img src="https://picsum.photos/1200/236" alt="Advertisement" class="w-full h-full object-cover" />
+          </div>
