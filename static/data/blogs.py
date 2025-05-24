@@ -1,5 +1,5 @@
 import re
-
+from html_templates import BLOGS_TEMPLATE, more_in_business_single_post_template
 
 def parse_html_to_json(html_content):
     """
