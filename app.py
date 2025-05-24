@@ -198,17 +198,17 @@ if __name__ == "__main__":
 
 
 
-# 1. in ai lifestyle we need to add another bottom panel with 3 posts each.
-# 2. move the view all articles button to the bottom of the section.
+# 1. in ai lifestyle we need to add another bottom panel with 3 posts each. --done
+# 2. move the view all articles button to the bottom of the section.  --done
+# 5. editorial changes to podcast in header. --done
+# 8. remove the Entrepreneurship from header.   -- done
+# 9. news_page restructure  --done
 
 # 3. magazine_page_read_only page add a leadership section on the right of the magazine and a banner ad space on the left of the magazine.
-# 4. add a bar and full screen button and a downlod buttnon for the flipbook magazine.
+# 4. add a bar and full screen button and a download button for the flipbook magazine.
 
-# 5. editorial changes to podcast in header.
 # 6. newsletter page to be implemented.
 # 7. the startup and Business in the header will lead to category_homepage, and will changes based on which option is selected.
-# 8. remove the Entrepreneurship from header.
-# 9. news_page restructure
 
 
 
