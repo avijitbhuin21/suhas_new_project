@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Innovative Approaches to Talent Acquisition & Retention</title>
+    <title>News Page Dev</title>
+    <link rel="icon" type="image/png" href="static/icon/website_icon.png" />
     <!-- Tailwind CSS via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/@phosphor-icons/web@2.0.3"></script>
@@ -44,6 +45,23 @@
           },
         },
       };
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+                mobileMenuButton.classList.toggle('hamburger-active');
+                
+                if (!mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('slide-down');
+                } else {
+                    mobileMenu.classList.remove('slide-down');
+                }
+            });
+        });
     </script>
     <style>
       /* @media screen and (min-width: 1024px) {
@@ -253,176 +271,110 @@
   </head>
   <body class="font-poppins bg-white text-gray-800">
     <header class="w-full bg-black relative">
-      <!-- Desktop Header -->
-      <div
-        class="hidden lg:flex flex-row justify-center items-center px-20 py-[10px] gap-[70px] h-[113px]"
-      >
-        <img
-          src="static/images/header_logo.png"
-          alt="Brands Out Loud Logo"
-          class="w-20 h-20 flex-shrink-0"
-        />
-        <nav
-          class="flex flex-col items-stretch w-[700px] h-[93px] py-[14px] px-[18px] gap-[10px]"
-        >
-          <div
-            class="flex flex-row justify-end items-center w-full gap-[60px] px-[30px]"
-          >
-            <a
-              href="#"
-              class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1"
-              >Careers
-            </a>
-            <a
-              href="#"
-              class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1"
-              >Editorial
-            </a>
-            <a
-              href="#"
-              class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1"
-              >Register
-            </a>
-            <a
-              href="#"
-              class="bg-[#CDA7FF] rounded-[2px] px-2.5 py-0.5 text-[#0D0D0D] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1"
-              >Login
-            </a>
-          </div>
-          <div
-            class="w-full h-[1px] bg-gradient-to-r from-black to-[#9747FF]"
-          ></div>
-          <div
-            class="flex flex-row justify-end items-center w-full gap-[60px] px-2"
-          >
-            <a
-              href="#"
-              class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1"
-              >Newsletters
-            </a>
-            <a
-              href="#"
-              class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1"
-              >Magazine
-            </a>
-            <a
-              href="#"
-              class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1"
-              >Entrepreneurship
-            </a>
-            <a
-              href="#"
-              class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1"
-              >Startups
-            </a>
-            <a
-              href="#"
-              class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1"
-              >Business
-            </a>
-          </div>
-        </nav>
-      </div>
-      <!-- Mobile Header -->
-      <div class="flex lg:hidden items-center h-[68px] w-full bg-[#0D0D0D]">
-        <button
-          id="mobile-menu-button"
-          aria-label="Toggle Menu"
-          class="h-full px-4 flex flex-col justify-center items-center space-y-[5px] bg-transparent focus:outline-none transition-colors duration-200 ease-in-out"
-        >
-          <span
-            class="hamburger-line block w-6 h-[2px] bg-white rounded-full"
-          ></span>
-          <span
-            class="hamburger-line block w-6 h-[2px] bg-white rounded-full"
-          ></span>
-          <span
-            class="hamburger-line block w-6 h-[2px] bg-white rounded-full"
-          ></span>
-        </button>
-        <div class="h-full flex items-center px-3 flex-shrink-0">
-          <img
-            src="static/icon/website_icon.png"
-            alt="Brands Out Loud Logo"
-            class="h-10 w-auto"
-          />
+        <!-- Desktop Header -->
+        <div class="hidden lg:flex flex-row justify-center items-center px-20 py-[10px] gap-[70px] h-[113px]">
+            <img src="static/images/header_logo.png" alt="Brands Out Loud Logo" class="w-20 h-20 flex-shrink-0">
+            <nav class="flex flex-col items-stretch w-[700px] h-[93px] py-[14px] px-[18px] gap-[10px]">
+                <div class="flex flex-row justify-end items-center w-full gap-[60px] px-[30px]">
+                    <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Careers </a>
+                    <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Editorial </a>
+                    <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Register </a>
+                    <a href="#" class="bg-[#CDA7FF] rounded-[2px] px-2.5 py-0.5 text-[#0D0D0D] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Login </a>
+                </div>
+                <div class="w-full h-[1px] bg-gradient-to-r from-black to-[#9747FF]"></div>
+                <div class="flex flex-row justify-end items-center w-full gap-[60px] px-2">
+                    <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Newsletters </a>
+                    <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Magazine </a>
+                    <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Entrepreneurship </a>
+                    <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Startups </a>
+                    <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Business </a>
+                </div>
+            </nav>
         </div>
-        <div class="flex-grow px-3">
-          <div class="relative">
-            <input
-              type="text"
-              placeholder="Search..."
-              class="search-input w-full bg-[#1e1e1e] text-white text-sm rounded-full pl-10 pr-4 py-2.5 border border-[#2a2a2a] focus:outline-none focus:border-[#9747FF] transition-all"
-            />
-            <div
-              class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none"
-            >
-              <i class="ph ph-magnifying-glass text-gray-400 text-lg"></i>
+
+        <!-- Mobile Header -->
+        <div class="flex lg:hidden items-center h-[68px] w-full bg-[#0D0D0D]">
+            <button id="mobile-menu-button" aria-label="Toggle Menu" class="h-full px-4 flex flex-col justify-center items-center space-y-[5px] bg-transparent focus:outline-none transition-colors duration-200 ease-in-out">
+                <span class="hamburger-line block w-6 h-[2px] bg-white rounded-full"></span>
+                <span class="hamburger-line block w-6 h-[2px] bg-white rounded-full"></span>
+                <span class="hamburger-line block w-6 h-[2px] bg-white rounded-full"></span>
+            </button>
+            
+            <div class="h-full flex items-center px-3 flex-shrink-0">
+                <img src="static/icon/website_icon.png" alt="Brands Out Loud Logo" class="h-10 w-auto">
             </div>
-          </div>
+            
+            <div class="flex-grow px-3">
+                <div class="relative">
+                    <input type="text" placeholder="Search..." class="search-input w-full bg-[#1e1e1e] text-white text-sm rounded-full pl-10 pr-4 py-2.5 border border-[#2a2a2a] focus:outline-none focus:border-[#9747FF] transition-all">
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
+                        <i class="ph ph-magnifying-glass text-gray-400 text-lg"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Login button removed from here -->
         </div>
-        <!-- Login button removed from here -->
-      </div>
-      <!-- Mobile Menu -->
-      <div
-        id="mobile-menu"
-        class="hidden lg:hidden absolute top-[68px] left-0 w-full bg-[#121212] z-50 shadow-lg border-t border-[#2a2a2a] overflow-hidden"
-      >
-        <div class="">
-          <!-- Login button -->
-          <div class="px-4 py-3">
-            <a
-              href="#"
-              class="login-btn block w-full text-center bg-gradient-to-r from-[#9747FF] to-[#CDA7FF] rounded-full px-4 py-2.5 text-white font-medium text-sm shadow-lg hover:-translate-y-0.5 transition-all duration-300 relative overflow-hidden"
-            >
-              <span
-                class="relative z-10 flex items-center justify-center gap-2"
-              >
-                <i class="ph ph-sign-in text-lg"></i>
-                <span>Login</span>
-              </span>
-              <div
-                class="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full animate-[shine_2s_infinite]"
-              ></div>
-            </a>
-          </div>
-          <div class="mobile-menu-item">
-            <i class="ph ph-book-open text-white text-lg"></i>
-            <span class="item-title">Magazine</span>
-            <i class="ph ph-caret-right"></i>
-          </div>
-          <div class="mobile-menu-item">
-            <i class="ph ph-lightning text-white text-lg"></i>
-            <span class="item-title">Startups</span>
-            <i class="ph ph-caret-right"></i>
-          </div>
-          <div class="mobile-menu-item">
-            <i class="ph ph-rocket text-white text-lg"></i>
-            <span class="item-title">Entrepreneurship</span>
-            <i class="ph ph-caret-right"></i>
-          </div>
-          <div class="mobile-menu-item">
-            <i class="ph ph-envelope-open text-white text-lg"></i>
-            <span class="item-title">Newsletters</span>
-            <i class="ph ph-caret-right"></i>
-          </div>
-          <div class="mobile-menu-item">
-            <i class="ph ph-newspaper text-white text-lg"></i>
-            <span class="item-title">Editorial</span>
-            <i class="ph ph-caret-right"></i>
-          </div>
-          <div class="mobile-menu-item">
-            <i class="ph ph-buildings text-white text-lg"></i>
-            <span class="item-title">Business</span>
-            <i class="ph ph-caret-right"></i>
-          </div>
-          <div class="mobile-menu-item">
-            <i class="ph ph-briefcase text-white text-lg"></i>
-            <span class="item-title">Careers</span>
-            <i class="ph ph-caret-right"></i>
-          </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden lg:hidden absolute top-[68px] left-0 w-full bg-[#121212] z-50 shadow-lg border-t border-[#2a2a2a] overflow-hidden">
+            <div class="">
+                <!-- Login button -->
+                <div class="px-4 py-3">
+                    <a href="#" class="login-btn block w-full text-center bg-gradient-to-r from-[#9747FF] to-[#CDA7FF] rounded-full px-4 py-2.5 text-white font-medium text-sm shadow-lg hover:-translate-y-0.5 transition-all duration-300 relative overflow-hidden">
+                        <span class="relative z-10 flex items-center justify-center gap-2">
+                            <i class="ph ph-sign-in text-lg"></i>
+                            <span>Login</span>
+                        </span>
+                        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full animate-[shine_2s_infinite]"></div>
+                    </a>
+                </div>
+
+                <div class="mobile-menu-item">
+                    <i class="ph ph-book-open text-white text-lg"></i>
+                    <span class="item-title">Magazine</span>
+                    <i class="ph ph-caret-right"></i>
+                </div>
+
+                <div class="mobile-menu-item">
+                    <i class="ph ph-lightning text-white text-lg"></i>
+                    <span class="item-title">Startups</span>
+                    <i class="ph ph-caret-right"></i>
+                </div>
+
+                <div class="mobile-menu-item">
+                    <i class="ph ph-rocket text-white text-lg"></i>
+                    <span class="item-title">Entrepreneurship</span>
+                    <i class="ph ph-caret-right"></i>
+                </div>
+
+                <div class="mobile-menu-item">
+                    <i class="ph ph-envelope-open text-white text-lg"></i>
+                    <span class="item-title">Newsletters</span>
+                    <i class="ph ph-caret-right"></i>
+                </div>
+
+                <div class="mobile-menu-item">
+                    <i class="ph ph-newspaper text-white text-lg"></i>
+                    <span class="item-title">Editorial</span>
+                    <i class="ph ph-caret-right"></i>
+                </div>
+
+                <div class="mobile-menu-item">
+                    <i class="ph ph-buildings text-white text-lg"></i>
+                    <span class="item-title">Business</span>
+                    <i class="ph ph-caret-right"></i>
+                </div>
+
+                <div class="mobile-menu-item">
+                    <i class="ph ph-briefcase text-white text-lg"></i>
+                    <span class="item-title">Careers</span>
+                    <i class="ph ph-caret-right"></i>
+                </div>
+                
+            </div>
+                
         </div>
-      </div>
     </header>
     <main
       class="w-full px-4 sm:px-8 md:px-[65px] py-[21px] relative article-container"
@@ -441,7 +393,7 @@
         </div>
 
         <div
-          class="relative bg-white w-full max-w-[1175px] h-auto mx-auto -mt-[40px] sm:-mt-[60px] md:-mt-[76px] p-4 sm:p-6 md:p-8 z-10"
+          class="relative bg-white md:w-full w-[420px] md:ml-[6.85rem] ml-[-1.5rem] max-w-[1175px] h-auto mx-auto -mt-[40px] sm:-mt-[60px] md:-mt-[76px] p-4 sm:p-6 md:p-8 z-10"
         >
           <h1
             class="font-jakarta font-medium text-[28px] sm:text-[34px] md:text-[42px] lg:text-[50px] leading-[1.2] md:leading-[1.25] capitalize text-black mb-3 md:mb-4 text-center hero-text"
@@ -465,7 +417,7 @@
         </div>
 
         <p
-          class="font-jakarta font-medium text-[18px] md:text-[22px] leading-[26px] md:leading-[30px] text-[#636363] mt-6 md:mt-8 max-w-[1175px] mx-auto px-2 md:px-0"
+          class="font-jakarta font-medium text-[18px] md:text-[22px] leading-[26px] md:leading-[30px] text-[#636363] text-center mt-6 md:mt-8 max-w-[1175px] mx-auto px-2 md:px-0"
         >
           The quest for top talent in the professional landscape has never been
           more competitive. Companies are redefining their approaches to attract
@@ -477,7 +429,7 @@
         </p>
 
         <hr
-          class="border-t border-black my-8 md:my-12 w-full md:w-[90%] lg:w-[77rem] mx-auto"
+          class="border-t border-black my-8 md:my-12 w-full md:w-[90%] lg:w-[87rem] mx-auto"
         />
       </article>
       <!-- Main Content with TOC -->
@@ -649,7 +601,9 @@
         class="grid grid-cols-1 lg:grid-cols-[360px_1fr] gap-8 md:gap-12 mt-4 md:mt-8"
         style="margin-right: 0; margin-left: 0; padding: 0 0.5rem"
       >
-        <aside class="sticky top-8 h-screen lg:order-1 self-start">
+        <aside
+          class="sticky top-8 h-screen lg:order-1 self-start md:mt-[0rem] mt-[-57rem]"
+        >
           <div
             class="p-6 flex flex-col w-full rounded-xl bg-white border-gray-100 hidden lg:block overflow-y- max-h-[calc(100vh-4rem)]"
             style="scroll-behavior: smooth"
@@ -850,32 +804,34 @@
             </p>
             <p
               id="building-attractive-employer-identity"
-              class="font-jakarta font-medium text-[15px] md:text-[16px] leading-[26px] md:leading-[30px] text-black mb-3 md:mb-4 scroll-mt-20"
+              class="font-jakarta font-medium text-[15px] md:text-[16px] leading-[26px] md:leading-[30px] text-black mb-3 md:mb-4 scroll-mt-20 md:ml-[2rem]"
             >
-              <span class="font-semibold"
-                >Building an Attractive Employer Identity:</span
-              >
+              <span class="font-semibold font-high text-[20px]"
+                >Building an Attractive Employer Identity<br
+              /></span>
               Develop a strong employer brand that echoes your core values,
               workplace culture, and paths for advancement. Such branding should
               connect with prospective employees and set you apart in the crowd.
             </p>
             <p
               id="strategic-outreach"
-              class="font-jakarta font-medium text-[15px] md:text-[16px] leading-[26px] md:leading-[30px] text-black mb-3 md:mb-4 scroll-mt-20"
+              class="font-jakarta font-medium text-[15px] md:text-[16px] leading-[26px] md:leading-[30px] text-black mb-3 md:mb-4 scroll-mt-20 md:ml-[2rem]"
             >
-              <span class="font-semibold">Strategic Outreach:</span> Consider
-              embracing a variety of platforms. They may include social media,
-              industry gatherings, and professional circles. This will help you
-              pinpoint and engage individuals with the necessary competencies
-              and character.
+              <span class="font-semibold font-high text-[20px]"
+                >Strategic Outreach<br
+              /></span>
+              Consider embracing a variety of platforms. They may include social
+              media, industry gatherings, and professional circles. This will
+              help you pinpoint and engage individuals with the necessary
+              competencies and character.
             </p>
             <p
               id="encouraging-diversity"
-              class="font-jakarta font-medium text-[15px] md:text-[16px] leading-[26px] md:leading-[30px] text-black scroll-mt-20"
+              class="font-jakarta font-medium text-[15px] md:text-[16px] leading-[26px] md:leading-[30px] text-black scroll-mt-20 md:ml-[2rem]"
             >
-              <span class="font-semibold"
-                >Encouraging Diversity Through Inclusive Hiring:</span
-              >
+              <span class="font-semibold font-high text-[20px]"
+                >Encouraging Diversity Through Inclusive Hiring<br
+              /></span>
               Championing diversity and inclusivity in recruitment processes is
               critical. You should always aim for neutrality in job descriptions
               and interview setups. Furthermore, it's crucial to proactively
@@ -911,38 +867,44 @@
               values, which eventually draws in candidates aligned with these
               principles.
             </p>
-            <ul
-              class="list-disc list-inside font-jakarta font-normal text-[15px] md:text-[16px] leading-[26px] md:leading-[30px] text-black space-y-2 md:space-y-3 pl-2 md:pl-4"
+
+            <!-- Testing SD -->
+            <p
+              id="innovating-with-ai"
+              class="font-jakarta font-medium text-[15px] md:text-[16px] leading-[26px] md:leading-[30px] text-black mb-3 md:mb-4 scroll-mt-20 md:ml-[2rem]"
             >
-              <li id="innovating-with-ai" class="scroll-mt-20">
-                <span class="font-semibold"
-                  >Innovating with AI for Fairer Hiring:</span
-                >
-                Organisations should adopt AI-driven tools to refine the
-                screening process. This approach speeds up recruitment and
-                simultaneously guarantees fairness. Consequently, talents from
-                various backgrounds are considered on equal footing.
-              </li>
-              <li id="social-media-catalyst" class="scroll-mt-20">
-                <span class="font-semibold"
-                  >Social Media as a Recruitment Catalyst:</span
-                >
-                Harness the power of social platforms to broadcast your
-                company's culture and vision. This transparency attracts
-                professionals who resonate with your organisational values,
-                facilitating a better match between the company and potential
-                employees.
-              </li>
-              <li id="digital-showcasing" class="scroll-mt-20">
-                <span class="font-semibold"
-                  >Digital Showcasing of Company Culture:</span
-                >
-                Use online platforms to vividly present what it's like to work
-                at your company. Through engaging content and interactive
-                sessions, you can captivate the interest of prospective talents
-                who are seeking inclusive and innovative workplaces.
-              </li>
-            </ul>
+              <span class="font-semibold font-high text-[20px]"
+                >Innovating with AI for Fairer Hiring<br
+              /></span>
+              Organisations should adopt AI-driven tools to refine the screening
+              process. This approach speeds up recruitment and simultaneously
+              guarantees fairness. Consequently, talents from various
+              backgrounds are considered on equal footing.
+            </p>
+            <p
+              id="social-media-catalyst"
+              class="font-jakarta font-medium text-[15px] md:text-[16px] leading-[26px] md:leading-[30px] text-black mb-3 md:mb-4 scroll-mt-20 md:ml-[2rem]"
+            >
+              <span class="font-semibold font-high text-[20px]"
+                >Social Media as a Recruitment Catalyst<br
+              /></span>
+              Harness the power of social platforms to broadcast your company's
+              culture and vision. This transparency attracts professionals who
+              resonate with your organisational values, facilitating a better
+              match between the company and potential employees.
+            </p>
+            <p
+              id="digital-showcasing"
+              class="font-jakarta font-medium text-[15px] md:text-[16px] leading-[26px] md:leading-[30px] text-black scroll-mt-20 md:ml-[2rem]"
+            >
+              <span class="font-semibold font-high text-[20px]"
+                >Digital Showcasing of Company Culture<br
+              /></span>
+              Use online platforms to vividly present what it's like to work at
+              your company. Through engaging content and interactive sessions,
+              you can captivate the interest of prospective talents who are
+              seeking inclusive and innovative workplaces.
+            </p>
           </div>
           <!-- Advertisement Banner -->
           <div class="w-full h-[120px] sm:h-[160px] md:h-[236px] my-8 md:my-12">
@@ -975,14 +937,14 @@
           <div>
             <h3
               id="tailored-development-initiatives"
-              class="font-jakarta font-normal text-[20px] md:text-[28px] leading-[30px] md:leading-[40px] text-black mb-3 md:mb-4 scroll-mt-20"
+              class="font-jakarta font-normal text-[20px] md:text-[28px] leading-[30px] md:leading-[40px] text-black mb-3 md:mb-4 scroll-mt-20 md:ml-[2rem]"
             >
               Moreover, tailored development initiatives are now standard,
               enabling employees to forge their unique trajectories in the
               organisation.
             </h3>
             <p
-              class="font-jakarta font-medium text-[15px] md:text-[16px] leading-[26px] md:leading-[30px] text-black"
+              class="font-jakarta font-medium text-[15px] md:text-[16px] leading-[26px] md:leading-[30px] text-black md:ml-[2rem]"
             >
               The integration of technology has transformed recruitment into a
               more strategic and fair process. The application of artificial
@@ -1709,6 +1671,16 @@
       });
     </script> -->
     <script>
+      const stripSection = document.querySelector(".strip-section");
+      if (stripSection) {
+        const stripContent = stripSection.querySelector(".animate-marquee");
+        if (stripContent && stripContent.children.length > 0) {
+          const contentWidth = stripContent.scrollWidth / 2;
+          const containerWidth = stripSection.offsetWidth;
+
+          stripContent.innerHTML += stripContent.innerHTML;
+        }
+      }
       // Enhanced TOC with auto-scrolling functionality
       document.addEventListener("DOMContentLoaded", function () {
         const tocDesktop = document.querySelector("aside .p-6");
