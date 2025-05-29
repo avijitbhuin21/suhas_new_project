@@ -357,7 +357,7 @@ BLOGS_TEMPLATE = r"""
 
         <div class="mobile-menu-item">
             <i class="ph ph-buildings text-white text-lg"></i>
-            <span class="item-title">Business</span>
+            <span class="item-title">Business</span>f
             <i class="ph ph-caret-right"></i>
         </div>
 
@@ -389,7 +389,7 @@ BLOGS_TEMPLATE = r"""
             </div>
 
             <p class="font-jakarta font-medium text-[18px] md:text-[22px] leading-[26px] md:leading-[30px] text-[#636363] text-center mt-6 md:mt-8 max-w-[1175px] mx-auto px-2 md:px-0">
-            [[page_summary]]
+            [[blog_summary]]
             </p>
 
             <hr class="border-t border-black my-8 md:my-12 w-full md:w-[90%] lg:w-[87rem] mx-auto"/>
@@ -458,7 +458,7 @@ BLOGS_TEMPLATE = r"""
                 <div class="h-auto py-6 md:py-0 md:h-[32rem] w-full md:w-1/2 md:shrink-0 bg-gradient-to-r from-[#3533CD] to-[#0A0A24] rounded-[15px] p-4 md:p-8 flex flex-col items-center justify-center text-center text-white">
                     <h2 class="font-helvetica-now font-bold text-2xl md:text-4xl leading-tight mb-3 md:mb-4"> Leadership Spotlight </h2>
                         <div class="flex flex-col items-center gap-3 md:gap-4">
-                            <div class="w-[100px] h-[100px] sm:w-[120px] sm:h-[120px] md:w-[160px] md:h-[160px] bg-[url('[leadership_spotlight_image]')] bg-cover bg-center rounded-full shrink-0"></div>
+                            <div class="w-[100px] h-[100px] sm:w-[120px] sm:h-[120px] md:w-[160px] md:h-[160px] bg-[url('[[leadership_spotlight_image]]')] bg-cover bg-center rounded-full shrink-0"></div>
                             <div class="flex flex-col items-center">
                                 <h3 class="font-jakarta font-normal text-lg sm:text-xl md:text-2xl leading-tight mb-1" > [[leader_name]] </h3>
                                 <p class="font-jakarta font-normal text-base md:text-lg leading-tight mb-2 md:mb-3"> [[leader_designation]] </p>
@@ -471,20 +471,16 @@ BLOGS_TEMPLATE = r"""
                             </div>
                         </div>
                 </div>
-                <div class="w-full md:w-1/2 h-80 md:h-auto bg-cover bg-center rounded-[15px] mt-4 md:mt-0 bg-[url([[ad_banner_beside_leaderhip_spotlight]])]"></div>
+                <a class="w-full md:w-1/2 h-80 md:h-auto bg-cover bg-center rounded-[15px] mt-4 md:mt-0 bg-[url([[ad_banner_beside_leaderhip_spotlight]])]"></a>
             </div>
         </section>
 
-        <div class="w-full h-[120px] sm:h-[160px] md:h-[236px] my-8 md:my-12">
+        <a href="[[link_to_ad_banner_below_leadership_spotlight]]" class="block w-full h-[120px] sm:h-[160px] md:h-[236px] my-8 md:my-12">
             <img src="[[ad_banner_under_leadership_section]]" alt="Advertisement" class="w-full h-full object-cover" />
-        </div>
+        </a>
 
-        <div class="mt-8 md:mt-16">
-            <h2 class="font-jakarta font-bold text-[28px] md:text-[40px] leading-[30px] text-black mb-6 md:mb-8"> More in Business </h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8" >
-                [[more_in_business_posts]]
-            </div>
-        </div>
+        [[more_in_business_posts]]
+
     </main>
     <section class="w-full aspect-[120/47] relative bg-contain bg-no-repeat bg-center bg-[url(static/images/9_out_of_10.png)]" style="margin-bottom: -1%">
         <a href="#" class="absolute bottom-[15%] left-[9%] w-[15%] max-w-[250px] hover:opacity-90 transition-opacity">
@@ -809,23 +805,3 @@ more_in_business_single_post_template = r"""<div class="bg-white p-3 flex gap-4 
                 >
             </div>
           </div>"""
-
-table_of_contents_options = r"""
-<div class="mb-3 toc-section" data-section-id="[[data_section_id]]">
-                    <a href="#[[data_section_id]]" data-toggle-target="#sub-[[data_section_id]]" class="toc-h2-link flex items-center justify-between mt-1 mb-3 no-underline text-gray-800 hover:text-[#3533CD] transition-colors duration-200 toc-link">
-                        <div class="text-base font-medium">[[toc_main_header]]</div>
-                        <i class="ph ph-caret-down text-xs ml-1 toc-arrow transition-transform duration-300"></i>
-                    </a>
-                    <div id="sub-[[data_section_id]]" class="toc-subcategories hidden pl-4 mb-3 space-y-2">
-                        <a href="#building-attractive-employer-identity" class="flex items-center mt-1 no-underline text-gray-600 hover:text-[#3533CD] transition-colors duration-200 toc-link border-l-2 border-gray-200 pl-3 hover:border-[#3533CD]">
-                            <div class="text-sm">Building an Attractive Employer Identity</div>
-                        </a>
-                        <a href="#strategic-outreach" class="flex items-center mt-1 no-underline text-gray-600 hover:text-[#3533CD] transition-colors duration-200 toc-link border-l-2 border-gray-200 pl-3 hover:border-[#3533CD]">
-                            <div class="text-sm">Strategic Outreach</div>
-                        </a>
-                        <a href="#encouraging-diversity" class="flex items-center mt-1 no-underline text-gray-600 hover:text-[#3533CD] transition-colors duration-200 toc-link border-l-2 border-gray-200 pl-3 hover:border-[#3533CD]">
-                            <div class="text-sm">Encouraging Diversity Through Inclusive Hiring</div>
-                        </a>
-                    </div>
-                </div>
-"""

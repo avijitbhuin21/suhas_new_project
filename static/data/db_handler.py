@@ -67,7 +67,13 @@ def handle_blog(blog_id:str = None, insert_data:dict =None, update_data:dict= No
         return response.data
 
 
-
+def get_leadership_details():
+    response = (
+        supabase.table("leadership_table")
+        .select("*")
+        .execute()
+    )
+    return response.data[0] if response.data else None
 
 
 

@@ -6,10 +6,12 @@ import psutil
 import os
 import time
 from dotenv import load_dotenv
+import json
 
 from static.data.page_handler import *
 from static.data.page_editor import *
 from static.data.db_handler import *
+from static.data.blogs import *
 
 from flask_ngrok import run_with_ngrok
 load_dotenv()
@@ -62,6 +64,37 @@ def JD():
 @app.route('/admin_login')
 def admin_login():
     return render_template('admin.html')
+
+@app.route('/admin_blogs')
+def admin_blogs():
+    return render_template('admin_blogs.html')
+
+@app.route('/admin_blog_preview', methods=['POST'])
+def admin_blog_preview():
+    data = request.json
+    print(f"Received data for admin_blog_preview: {json.dumps(data, indent=2, ensure_ascii=False)}")
+
+    data = get_blog_html(data)
+
+    return jsonify({
+        "status": "success",
+        "message": "Blog added/edited successfully",
+        "data": data
+    })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 @app.route('/admin_get_card_structure')

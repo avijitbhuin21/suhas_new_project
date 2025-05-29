@@ -1,1910 +1,595 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Panel</title>
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <script src="https://cdn.tailwindcss.com"></script>
-  
-  <script>
-    tailwind.config = {
-        darkMode: 'class',
-        theme: {
-            extend: {
-                backgroundImage: {
-                    'square-pattern': `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 800'%3E%3Cg stroke-width='3.5' stroke='hsla(0, 0%25, 100%25, 1.00)' fill='none'%3E%3Crect width='400' height='400' x='0' y='0'%3E%3C/rect%3E%3Crect width='400' height='400' x='400' y='0'%3E%3C/rect%3E%3Crect width='400' height='400' x='800' y='0'%3E%3C/rect%3E%3Crect width='400' height='400' x='0' y='400'%3E%3C/rect%3E%3Crect width='400' height='400' x='400' y='400'%3E%3C/rect%3E%3Crect width='400' height='400' x='800' y='400'%3E%3C/rect%3E%3Crect width='400' height='400' x='0' y='800'%3E%3C/rect%3E%3Crect width='400' height='400' x='400' y='800'%3E%3C/rect%3E%3Crect width='400' height='400' x='800' y='800'%3E%3C/rect%3E%3C/g%3E%3C/svg%3E")`,
-                    'square-pattern-light': `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 800'%3E%3Cg stroke-width='3.5' stroke='hsla(215, 16%25, 47%25, 1.00)' fill='none'%3E%3Crect width='400' height='400' x='0' y='0'%3E%3C/rect%3E%3Crect width='400' height='400' x='400' y='0'%3E%3C/rect%3E%3Crect width='400' height='400' x='800' y='0'%3E%3C/rect%3E%3Crect width='400' height='400' x='0' y='400'%3E%3C/rect%3E%3Crect width='400' height='400' x='400' y='400'%3E%3C/rect%3E%3Crect width='400' height='400' x='800' y='400'%3E%3C/rect%3E%3Crect width='400' height='400' x='0' y='800'%3E%3C/rect%3E%3Crect width='400' height='400' x='400' y='800'%3E%3C/rect%3E%3Crect width='400' height='400' x='800' y='800'%3E%3C/rect%3E%3C/g%3E%3C/svg%3E")`,
-                },
-            },
-        },
-    }
-  </script>
-  <style>
-    
-    .size-full {
-        width: 100%;
-        height: 100%;
-    }
-    
-    .card-animation {
-        animation: fadeInUp 0.8s ease-out forwards;
-    }
-    
-    @keyframes fadeInUp {
-        0% {
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOL admin Panel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            margin: 0;
+            background-color: #030303;
+            color: white;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        }
+        .bg-clip-text {
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+        @keyframes elegantShapeTransform {
+            from {
+                transform: translateY(-150px) rotate(var(--initial-rotate-val));
+            }
+            to {
+                transform: translateY(0) rotate(var(--final-rotate-val));
+            }
+        }
+        @keyframes elegantShapeOpacity {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
+        @keyframes elegantShapeFloat {
+            0%, 100% { transform: translateY(0); }
+            50%      { transform: translateY(15px); }
+        }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .anim-hidden-initial {
             opacity: 0;
-            transform: translateY(-20px);
         }
-        100% {
-            opacity: 1;
-            transform: translateY(0);
+        .shape-theme-transition {
+            transition: all 0.6s cubic-bezier(0.25, 0.4, 0.25, 1);
         }
-    }
-    
-    
-    .grid-pattern-card {
-        min-height: 180px; /* Reduced from 200px */
-        min-width: 300px;
-        border-radius: 25px;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-        transition: transform 0.3s ease;
-    }
-    
-    
-    .card-container {
-        position: relative;
-        margin-bottom: 2rem;
-    }
-
-    
-    .image-popup {
-        position: absolute;
-        top: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        opacity: 0;
-        visibility: hidden;
-        transition: all 0.3s ease;
-        z-index: 50;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-        width: 100%;
-        border-radius: 25px;
-        /* Maintain similar aspect ratio as the card */
-        max-height: 200px;
-    }
-    
-    
-    .dropdown-container {
-        position: relative;
-        z-index: 10; 
-    }
-    
-    .dropdown-menu {
-        position: absolute;
-        left: calc(100% - 45%); 
-        top: -5rem;     
-        background-color: var(--sidebar-bg);
-        border: 1px solid var(--border-color);
-        border-radius: 12px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        opacity: 0;
-        visibility: hidden;
-        transition: all 0.3s ease;
-        z-index: 105; 
-        width: auto;
-        min-width: max-content; 
-    }
-    
-    .dropdown-container:hover .dropdown-menu {
-        opacity: 1;
-        visibility: visible;
-    }
-    
-    .dropdown-item {
-        padding: 8px 16px;
-        display: block;
-        color: var(--text-color);
-        text-decoration: none;
-        transition: background-color 0.2s ease;
-        white-space: nowrap;
-        text-align: center;
-    }
-    
-    .dropdown-item:hover {
-        background-color: rgba(0, 0, 0, 0.05);
-    }
-    
-    .dark-mode .dropdown-item:hover {
-        background-color: rgba(255, 255, 255, 0.05);
-    }
-    
-    
-    .has-dropdown {
-        display: flex;
-        align-items: center;
-        width: 100%;
-    }
-    
-    
-    .has-dropdown .icon {
-      margin-right: 4px; 
-    }
-    
-    
-    .dropdown-container {
-        position: relative;
-    }
-    
-    
-    .has-dropdown {
-        position: relative;
-        padding-right: 20px; 
-    }
-
-    
-    .image-popup:after {
-        position: absolute;
-        bottom: -10px;
-        left: 50%;
-        transform: translateX(-50%);
-        border-left: 10px solid transparent;
-        border-right: 10px solid transparent;
-        border-top: 10px solid white;
-    }
-
-    .dark .image-popup:after {
-        border-top-color: #09090b; 
-    }
-
-    
-    .card-container:hover .image-popup {
-        opacity: 1;
-        visibility: visible;
-        transform: translateX(-50%) translateY(-5px);
-    }
-
-    
-    .card-container:hover .grid-pattern-card {
-        transform: translateY(2px);
-    }
-    
-    
-    .cards-grid {
-        display: none;
-        justify-content: space-between;
-        width: 100%;
-        min-height: 100vh;
-        background-color: var(--content-bg);
-        padding: 1rem;
-    }
-    
-    
-    .card-container {
-        width: 100%; /* Take full width of grid cell instead of fixed width */
-        flex-shrink: 0;
-        flex-grow: 0;
-        margin-bottom: 1.5rem; /* Slightly reduced margin */
-        border-radius: 12px;
-    }
-    .login-page {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: #000000;
-      z-index: 100;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .login-button {
-      background-color: transparent;
-      border: 1px solid #333;
-      color: #fff;
-      border-radius: 4px;
-      padding: 8px 16px;
-      cursor: pointer;
-      font-size: 1rem;
-      transition: all 0.3s ease;
-    }
-    .login-button:hover {
-      background-color: rgba(255, 255, 255, 0.1);
-    }
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-      background-color: #f5f5f5;
-      color: #333;
-    }
-    :root {
-      --bg-color: #f5f5f5;
-      --sidebar-bg: #f3f3f3;
-      --text-color: #333;
-      --border-color: #e0e0e0;
-      --content-bg: #ffffff;
-    }
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg-color: #1a1a1a;
-        --sidebar-bg: #333333;
-        --text-color: #e0e0e0;
-        --border-color: #4a4a4a;
-        --content-bg: #1f1f1f;
-      }
-    }
-    .container {
-      display: flex;
-      height: 100vh;
-      width: 100%;
-      max-width: 100%;
-      margin: 0 auto;
-      border: 1px solid var(--border-color);
-      border-radius: 6px;
-      overflow: hidden;
-      background-color: var(--sidebar-bg);
-    }
-    .sidebar {
-      background-color: var(--sidebar-bg);
-      display: flex;
-      flex-direction: column;
-      padding: 16px;
-      height: 100%;
-      /* width: 300px; */
-      flex-shrink: 0;
-      transition: width 0.3s ease;
-      justify-content: space-between;
-      position: relative;
-    }
-    .sidebar.collapsed {
-      width: 60px;
-    }
-    .mobile-header {
-      display: none;
-      height: 50px;
-      padding: 0 16px;
-      background-color: var(--sidebar-bg);
-      align-items: center;
-      justify-content: flex-end;
-      width: 100%;
-    }
-    .mobile-sidebar {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: var(--content-bg);
-      padding: 40px;
-      z-index: 100;
-      flex-direction: column;
-      justify-content: space-between;
-      transform: translateX(-100%);
-      opacity: 0;
-      transition: transform 0.3s ease, opacity 0.3s ease;
-    }
-    .mobile-sidebar.open {
-      transform: translateX(0);
-      opacity: 1;
-    }
-    .close-btn {
-      position: absolute;
-      right: 40px;
-      top: 40px;
-      cursor: pointer;
-      color: var(--text-color);
-    }
-    .theme-toggle {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 0;
-      cursor: pointer;
-      color: var(--text-color);
-      transition: transform 0.15s ease;
-    }
-    .theme-toggle:hover {
-      transform: translateX(4px);
-    }
-    .theme-toggle .toggle-text {
-      white-space: nowrap;
-      font-size: 14px;
-      transition: opacity 0.3s ease, display 0.3s ease;
-    }
-    .sidebar.collapsed .toggle-text {
-      display: none;
-      opacity: 0;
-    }
-    .sidebar-link {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 0;
-      text-decoration: none;
-      color: var(--text-color);
-      transition: transform 0.15s ease;
-    }
-    .sidebar-link:hover {
-      transform: translateX(4px);
-      background-color: rgba(0, 0, 0, 0.05);
-    }
-    .sidebar-link .link-text {
-      white-space: nowrap;
-      font-size: 14px;
-      transition: opacity 0.3s ease, display 0.3s ease;
-    }
-    .sidebar.collapsed .link-text {
-      display: none;
-      opacity: 0;
-    }
-
-    .sidebar.collapsed .dropdown-menu {
-        left: 0;
-        top: 100%;
-        width: 240px; 
-    }
-    
-    .sidebar.collapsed .has-dropdown::after {
-        display: none;
-    }
-    
-    
-    /* Hide the chevron-right icon when sidebar is collapsed */
-    .sidebar.collapsed .has-dropdown [data-lucide="chevron-right"] {
-        display: none !important;
-    }
-    
-    /* Make sure the edit icon stays visible when sidebar is collapsed */
-    .sidebar.collapsed .has-dropdown [data-lucide="edit"] {
-        display: block !important;
-        width: 20px !important; /* Set consistent size to match other icons */
-        height: 20px !important;
-    }
-    
-    .sidebar.collapsed .dropdown-container:hover {
-        position: relative;
-    }
-    
-    
-    .sidebar.collapsed .dropdown-menu .dropdown-item {
-        padding: 10px 16px;
-        white-space: nowrap;
-    }
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 4px 0;
-      margin-bottom: 24px;
-      text-decoration: none;
-      color: var(--text-color);
-    }
-    .logo-icon {
-      height: 20px;
-      width: 24px;
-      background-color: var(--text-color);
-      border-radius: 0 0 8px 0;
-      border-top-right-radius: 2px;
-      border-top-left-radius: 8px;
-      border-bottom-left-radius: 2px;
-      flex-shrink: 0;
-    }
-    .logo-text {
-      font-weight: 500;
-      white-space: nowrap;
-      transition: opacity 0.3s ease;
-    }
-    .sidebar.collapsed .logo-text {
-      display: none;
-      opacity: 0;
-    }
-    .content {
-      flex: 1;
-      background-color: var(--content-bg);
-      padding: 32px;
-      border-top-left-radius: 16px;
-      border-top: 1px solid var(--border-color);
-      border-right: 1px solid var(--border-color);
-      border-bottom: 1px solid var(--border-color);
-      border-left: none;
-      margin-left: -1px; 
-    }
-    .dashboard {
-      width: 100%;
-      height: 100%;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
-      margin-bottom: 8px;
-    }
-    .grid-item {
-      height: 80px;
-      background-color: var(--sidebar-bg);
-      border-radius: 8px;
-      animation: pulse 2s infinite ease-in-out;
-    }
-    .grid-large {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 8px;
-      flex: 1;
-      height: calc(100% - 88px);
-    }
-    .grid-large-item {
-      background-color: var(--sidebar-bg);
-      border-radius: 8px;
-      animation: pulse 2s infinite ease-in-out;
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.7; }
-    }
-    .avatar {
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      flex-shrink: 0;
-      object-fit: cover;
-    }
-    .nav-links {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-top: 32px;
-    }
-    body.dark-mode {
-      --bg-color: #1a1a1a;
-      --sidebar-bg: #333333;
-      --text-color: #e0e0e0;
-      --border-color: #4a4a4a;
-      --content-bg: #1f1f1f;
-      --color-page-background: #000000;
-      --color-background: #0D0D0D;
-      --color-input-background: #0A0A0A;
-      --color-foreground: #E0E0E0;
-      --color-primary-btn-bg: #FFFFFF;
-      --color-primary-btn-text: #0A0A0A;
-      --color-primary-btn-bg-hover: #F5F5F5;
-      --color-outline-btn-bg: transparent;
-      --color-outline-btn-text: #E0E0E0;
-      --color-outline-btn-border: #262626;
-      --color-outline-btn-bg-hover: #1F1F1F;
-      --color-outline-btn-text-hover: #FFFFFF;
-      --color-outline-btn-border-hover: #333333;
-      --color-muted-foreground: #737373;
-      --color-muted-foreground-rgb: 115, 115, 115;
-      --color-border-default: #262626;
-      --color-focus-ring: #D0D0D0;
-      --color-focus-ring-rgb: 208, 208, 208;
-    }
-    body.light-mode {
-      --bg-color: #f5f5f5;
-      --sidebar-bg: #f3f3f3;
-      --text-color: #333;
-      --border-color: #e0e0e0;
-      --content-bg: #ffffff;
-      --color-page-background: #ffffff;
-      --color-background: #ffffff;
-      --color-input-background: #f5f5f5;
-      --color-foreground: #0D0D0D;
-      --color-primary-btn-bg: #0A0A0A;
-      --color-primary-btn-text: #FFFFFF;
-      --color-primary-btn-bg-hover: #333333;
-      --color-outline-btn-bg: transparent;
-      --color-outline-btn-text: #0D0D0D;
-      --color-outline-btn-border: #d4d4d4;
-      --color-outline-btn-bg-hover: #f5f5f5;
-      --color-outline-btn-text-hover: #0A0A0A;
-      --color-outline-btn-border-hover: #a3a3a3;
-      --color-muted-foreground: #6b7280;
-      --color-muted-foreground-rgb: 107, 114, 128;
-      --color-border-default: #d4d4d4;
-      --color-focus-ring: #0D0D0D;
-      --color-focus-ring-rgb: 13, 13, 13;
-    }
-    :root {
-      --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-      --shadow-sm: none;
-      --shadow-lg: none;
-      --radius-sm: 0.125rem;
-      --radius-md: 0.375rem;
-      --radius-lg: 0.75rem;
-      --dialog-animation-duration: 0.2s;
-    }
-    @media (max-width: 768px) {
-      .sidebar {
-        display: none;
-      }
-      .mobile-header {
-        display: flex;
-      }
-      .mobile-sidebar {
-        display: flex;
-      }
-      .container {
-        flex-direction: column;
-        max-width: 100%;
-      }
-      
-      
-      .mobile-sidebar .dropdown-menu {
-        position: static;
-        margin-left: 24px;
-        margin-top: 8px;
-        margin-bottom: 8px;
-        box-shadow: none;
-        border-left: 1px solid var(--border-color);
-        opacity: 0;
-        max-height: 0;
-        overflow: hidden;
-        transition: all 0.3s ease;
-      }
-      
-      .mobile-sidebar .dropdown-container:hover .dropdown-menu {
-        opacity: 1;
-        visibility: visible;
-        max-height: 300px;
-      }
-      
-      
-      .mobile-sidebar .has-dropdown:after {
-        content: "";
-        position: absolute;
-        right: 0;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 16px;
-        height: 16px;
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: contain;
-        opacity: 0.7;
-      }
-    }
-    .sr-only {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border-width: 0;
-    }
-    .dialog-overlay {
-      position: fixed;
-      inset: 0;
-      z-index: 50;
-      background-color: rgba(0, 0, 0, 0.85);
-      opacity: 0;
-      transition: opacity var(--dialog-animation-duration) ease-in-out;
-    }
-    .dialog-overlay.open {
-      opacity: 1;
-    }
-    .dialog-content {
-      position: fixed;
-      left: 50%;
-      top: 50%;
-      z-index: 51; /* Higher than overlay */
-      display: grid;
-      width: 100%;
-      max-width: 60rem; /* Increased from 32rem to make modal more spacious */
-      /* gap: 1rem;  */
-      border: 1px solid var(--color-border-default); 
-      background-color: var(--color-background);
-      padding: 0.5rem; 
-      box-shadow: var(--shadow-lg); 
-      border-radius: var(--radius-lg); 
-      opacity: 0;
-      transform: translate(-50%, -50%) scale(0.95);
-      transition: opacity var(--dialog-animation-duration) ease-in-out, transform var(--dialog-animation-duration) ease-in-out;
-    }
-    .dialog-content.open {
-      opacity: 1;
-      transform: translate(-50%, -50%) scale(1);
-    }
-    .dialog-header {
-      display: flex;
-      flex-direction: column;
-      gap: 0.375rem; 
-      text-align: left; 
-    }
-    .dialog-title {
-      font-size: 1.25rem; 
-      font-weight: 600; 
-      line-height: 1.25;
-      color: var(--color-foreground);
-    }
-    .dialog-description {
-      font-size: 0.875rem; 
-      color: var(--color-muted-foreground);
-    }
-    .dialog-form {
-      display: grid;
-      gap: 1.25rem; 
-    }
-    .form-group {
-      display: grid;
-      gap: 0.5rem; 
-    }
-    .label {
-      font-size: 0.875rem; 
-      font-weight: 500; 
-      line-height: 1rem; 
-      color: var(--color-foreground);
-    }
-    .input {
-      display: flex;
-      height: 2.5rem; 
-      width: 100%;
-      border-radius: var(--radius-md);
-      border: 1px solid var(--color-border-default);
-      background-color: var(--color-input-background); 
-      padding: 0.5rem 0.75rem; 
-      font-size: 0.875rem; 
-      color: var(--color-foreground);
-      box-shadow: var(--shadow-sm); 
-      transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-      caret-color: var(--color-foreground);
-    }
-    .input::placeholder {
-      color: var(--color-muted-foreground);
-    }
-    .input:focus-visible, .input:focus {
-      outline: none;
-      box-shadow: 0 0 0 1px var(--color-focus-ring);
-    }
-    .dialog-footer {
-      display: flex;
-      flex-direction: row; 
-      justify-content: flex-end; 
-      gap: 0.75rem; 
-      margin-top: 0.5rem; 
-    }
-    .button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      white-space: nowrap;
-      border-radius: var(--radius-md);
-      font-size: 0.875rem; 
-      font-weight: 500; 
-      transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, color 0.15s ease-in-out;
-      padding: 0 1rem; 
-      height: 2.5rem; 
-      cursor: pointer;
-      border: 1px solid transparent;
-      box-shadow: var(--shadow-sm); 
-    }
-    .button:focus-visible, .button:focus {
-      outline: 2px solid var(--color-focus-ring);
-      outline-offset: 2px;
-    }
-    .button:disabled {
-      pointer-events: none;
-      opacity: 0.5;
-    }
-    .button-default {
-      background-color: var(--color-primary-btn-bg);
-      color: var(--color-primary-btn-text);
-      border-color: var(--color-primary-btn-bg); 
-    }
-    .button-default:hover {
-      background-color: var(--color-primary-btn-bg-hover); 
-      border-color: var(--color-primary-btn-bg-hover);
-    }
-    .button-outline {
-      background-color: var(--color-outline-btn-bg); 
-      color: var(--color-outline-btn-text); 
-      border: 1px solid var(--color-outline-btn-border);
-    }
-    .dialog-footer .button-outline {
-      background-color: var(--color-background);
-    }
-    .button-outline:hover {
-      background-color: var(--color-outline-btn-bg-hover); 
-      border-color: var(--color-outline-btn-border-hover);
-      color: var(--color-outline-btn-text-hover);
-    }
-    #loginDialogTrigger.button-outline {
-      background-color: var(--color-input-background);
-      border-color: var(--color-border-default);
-      color: var(--color-foreground);
-    }
-    #loginDialogTrigger.button-outline:hover {
-      background-color: var(--color-outline-btn-bg-hover);
-      border-color: var(--color-outline-btn-border-hover);
-      color: var(--color-outline-btn-text-hover);
-    }
-    /* Modern Modal Styling */
-    #editModal {
-      border-radius: 16px;
-      background: var(--color-background);
-      backdrop-filter: blur(12px);
-      border: 1px solid var(--color-border-default);
-      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.1);
-      transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-      overflow: hidden; /* Keep this to prevent content from spilling out */
-      display: flex !important; /* Ensure flex display is used for proper layout */
-      flex-direction: column;
-    }
-
-    #editModal.open {
-      transform: translate(-50%, -50%) scale(1);
-      height: auto; /* Let the modal height adjust to content */
-    }
-
-    /* Modal Header */
-    #editModal .dialog-header {
-      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-    }
-
-    #editModal .dialog-title {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: var(--color-foreground);
-      letter-spacing: -0.01em;
-    }
-
-    #editModal .dialog-description {
-      font-size: 0.95rem;
-      margin-top: 0.5rem;
-      opacity: 0.75;
-    }
-
-    /* Form Styling with Hidden Scrollbar */
-    #editModal .dialog-form {
-      flex: 1;
-      overflow-y: auto !important; /* Enable vertical scrolling */
-      max-height: 81vh; /* Increased from 50vh to allow more content to be visible */
-      padding: 0px;
-      scrollbar-width: none; /* Firefox */
-      -ms-overflow-style: none; /* IE and Edge */
-    }
-
-    #editModal .dialog-form::-webkit-scrollbar {
-      display: none; /* Chrome, Safari, Opera */
-    }
-
-    #editModal .form-group {
-      margin-bottom: 0.5rem; /* Increased spacing between form groups */
-    }
-
-    #editModal .label {
-      display: block;
-      margin-bottom: 0.5rem;
-      font-weight: 500;
-      font-size: 0.9rem;
-      color: var(--color-foreground);
-    }
-
-    #editModal .input {
-      width: 100%;
-      padding: 0.875rem 1rem;
-      border-radius: 10px;
-      border: 1px solid var(--color-border-default);
-      background-color: var(--color-input-background);
-      font-size: 0.95rem;
-      transition: all 0.2s ease;
-    }
-
-    #editModal .input:focus {
-      outline: none;
-      border-color: var(--color-focus-ring);
-      box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.07);
-    }
-
-    /* Image Preview Enhancement */
-    #editModal .form-group img {
-      border-radius: 10px;
-      object-fit: cover;
-      transition: transform 0.2s ease;
-    }
-
-    #editModal .form-group img:hover {
-      transform: scale(1.02);
-    }
-
-    /* Modal Footer */
-    #editModal .dialog-footer {
-      padding-top: 1rem;
-      display: flex;
-      justify-content: flex-end;
-      gap: 0.75rem;
-      border-top: 1px solid rgba(0, 0, 0, 0.08);
-    }
-
-    #editModal .button {
-      padding: 1rem 1.5rem; /* Increased padding for buttons */
-      border-radius: 10px;
-      font-weight: 500;
-      font-size: 0.95rem;
-      transition: all 0.2s ease;
-      cursor: pointer;
-    }
-
-    #editModal .button:focus-visible {
-      outline: none;
-      box-shadow: 0 0 0 2px var(--color-focus-ring), 0 0 0 4px rgba(0, 0, 0, 0.1);
-    }
-
-    #editModal .button-outline {
-      background: transparent;
-      border: 1px solid var(--color-border-default);
-      color: var(--color-foreground);
-    }
-
-    #editModal .button-outline:hover {
-      background: var(--color-outline-btn-bg-hover);
-      border-color: var(--color-outline-btn-border-hover);
-    }
-
-    #editModal .button-default {
-      background: var(--color-primary-btn-bg);
-      color: var(--color-primary-btn-text);
-      border: none;
-    }
-
-    #editModal .button-default:hover {
-      background: var(--color-primary-btn-bg-hover);
-      transform: translateY(-1px);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    /* Modal Overlay with Improved Backdrop */
-    #editModalOverlay {
-      background: rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(4px);
-      transition: opacity 0.3s ease;
-    }
-
-    /* Nested Objects Styling */
-    #editModal .form-group .border {
-      border-radius: 12px;
-      background: var(--color-input-background);
-      border: 1px solid var(--color-border-default);
-    }
-
-    #editModal .form-group h3 {
-      font-size: 1.1rem;
-      font-weight: 600;
-      margin-bottom: 0.75rem;
-      color: var(--color-foreground);
-    }
-
-    /* Image Preview Improvements */
-    #editModal .mb-4.p-2.border.rounded {
-      border-radius: 12px;
-      background: var(--color-input-background);
-      border: 1px solid var(--color-border-default);
-    }
-
-    #editModal .mb-4.p-2.border.rounded img {
-      border-radius: 10px;
-      width: 100%;
-      height: auto;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-    }
-
-    /* Dark Mode Specific Adjustments */
-    .dark-mode #editModal {
-      background: rgba(13, 13, 13, 0.95);
-      backdrop-filter: blur(20px);
-    }
-
-    .dark-mode #editModal .dialog-header,
-    .dark-mode #editModal .dialog-footer {
-      border-color: rgba(255, 255, 255, 0.08);
-    }
-
-    .dark-mode #editModalOverlay {
-      background: rgba(0, 0, 0, 0.7);
-    }
-
-    .dark-mode #editModal .form-group .border,
-    .dark-mode #editModal .mb-4.p-2.border.rounded {
-      background: rgba(10, 10, 10, 0.5);
-    }
-
-    .dark-mode #editModal .input:focus {
-      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
-    }
-  </style>
+        .login-form-container {
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .input-field {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        .input-field:focus {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(99, 102, 241, 0.5);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+        .login-button {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.8), rgba(168, 85, 247, 0.8));
+            transition: all 0.3s ease;
+        }
+        .login-button:hover {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.9), rgba(168, 85, 247, 0.9));
+            transform: translateY(-1px);
+        }
+        .error-message {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #fca5a5;
+        }
+        .loading-spinner {
+            animation: spin 1s linear infinite;
+        }
+    </style>
 </head>
 <body>
-  <div class="login-page" id="loginPage">
-    <button class="login-button" id="initialLoginButton" onclick="document.getElementById('dialogOverlay').style.display='block'; document.getElementById('loginDialog').style.display='grid'; setTimeout(function(){ document.getElementById('dialogOverlay').classList.add('open'); document.getElementById('loginDialog').classList.add('open'); document.querySelector('#loginDialog input').focus(); }, 50);">Login</button>
-  </div>
-  <div class="container" style="max-width: 100%;">
-    <div class="sidebar" id="sidebar">
-      <div class="sidebar-content">
-        <a href="#" class="logo">
-          <div class="logo-icon"></div>
-          <span class="logo-text">BOL</span>
-        </a>
-        <div class="nav-links">
-          <a href="#" class="sidebar-link">
-            <i data-lucide="bar-chart" class="icon"></i>
-            <span class="link-text">Analytics</span>
-          </a>
-          <div class="dropdown-container">
-            <a class="has-dropdown sidebar-link">
-              <i data-lucide="edit" class="icon"></i>
-              <span class="link-text">Update Page </span>
-                <i data-lucide="chevron-right" class="icon w-4 h-4" style="margin-left: 5px; margin-bottom: -5px"></i>
-            </a>
-            <div class="dropdown-menu">
-              <a href="#" class="dropdown-item" data-page="home">Home</a>
-              <a href="#" class="dropdown-item" data-page="news">News</a>
-              <a href="#" class="dropdown-item" data-page="magazine">Magazine</a>
-              <a href="#" class="dropdown-item" data-page="magazine-read">Magazine Read</a>
-              <a href="#" class="dropdown-item" data-page="advertise">Advertise with us</a>
-              <a href="#" class="dropdown-item" data-page="job-description">Job Description</a>
-              <a href="#" class="dropdown-item" data-page="career">Career</a>
-            </div>
-          </div>
-          <a href="#" class="sidebar-link">
-            <i data-lucide="file-plus" class="icon"></i>
-            <span class="link-text">Add Blogs</span>
-          </a>
-          <div class="theme-toggle sidebar-link" id="themeToggle">
-            <i data-lucide="sun-moon" class="icon"></i>
-            <span class="toggle-text">Toggle Theme</span>
-          </div>
-          <div class="sidebar-link" id="loginDialogTrigger" data-login="true">
-            <i data-lucide="log-in" class="icon"></i>
-            <span class="link-text">Login</span>
-          </div>
-          <a href="#" class="sidebar-link" data-logout="true">
-            <i data-lucide="log-out" class="icon"></i>
-            <span class="link-text">Logout</span>
-          </a>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="fixed inset-0 z-50 flex items-center justify-center bg-[#030303] hidden">
+        <div class="text-center">
+            <div class="loading-spinner w-8 h-8 border-2 border-white/20 border-t-white rounded-full mx-auto mb-4"></div>
+            <p class="text-white/60 text-sm">Authenticating...</p>
         </div>
-      </div>
-      <div class="user-section">
-        <a href="#" class="sidebar-link">
-          <img src="https://picsum.photos/seed/racehorse/289/150" alt="Avatar" class="avatar">
-          <span class="link-text">Demo name</span>
-        </a>
-      </div>
     </div>
-    <div class="mobile-header">
-      <i data-lucide="menu" class="menu-icon" id="menuBtn"></i>
-    </div>
-    <div class="mobile-sidebar" id="mobileSidebar">
-      <i data-lucide="x" class="close-btn" id="closeBtn"></i>
-      <div class="sidebar-content">
-        <a href="#" class="logo">
-          <div class="logo-icon"></div>
-          <span class="logo-text">Acet Labs</span>
-        </a>
-        <div class="nav-links">
-          <a href="#" class="sidebar-link">
-            <i data-lucide="layout-dashboard" class="icon"></i>
-            <span class="link-text">Dashboard</span>
-          </a>
-          <a href="#" class="sidebar-link">
-            <i data-lucide="user-cog" class="icon"></i>
-            <span class="link-text">Profile</span>
-          </a>
-          <div class="sidebar-link dropdown-container">
-            <div class="has-dropdown">
-              <i data-lucide="edit" class="icon"></i>
-              <span class="link-text">Update Page</span>
-            </div>
-            <div class="dropdown-menu">
-              <a href="#" class="dropdown-item" data-page="home">Home</a>
-              <a href="#" class="dropdown-item" data-page="news">News</a>
-              <a href="#" class="dropdown-item" data-page="magazine">Magazine</a>
-              <a href="#" class="dropdown-item" data-page="magazine-read">Magazine Read</a>
-              <a href="#" class="dropdown-item" data-page="advertise">Advertise with us</a>
-              <a href="#" class="dropdown-item" data-page="job-description">Job Description</a>
-              <a href="#" class="dropdown-item" data-page="career">Career</a>
-            </div>
-          </div>
-          <a href="#" class="sidebar-link">
-            <i data-lucide="settings" class="icon"></i>
-            <span class="link-text">Settings</span>
-          </a>
-          <a href="#" class="sidebar-link" data-logout="true">
-            <i data-lucide="log-out" class="icon"></i>
-            <span class="link-text">Logout</span>
-          </a>
-          <div class="sidebar-link" id="mobileLoginDialogTrigger" data-login="true">
-            <i data-lucide="log-in" class="icon"></i>
-            <span class="link-text">Login</span>
-          </div>
-          <div class="theme-toggle" id="mobileThemeToggle">
-            <i data-lucide="sun-moon" class="icon"></i>
-            <span class="toggle-text">Toggle Theme</span>
-          </div>
-        </div>
-      </div>
-      <div class="user-section">
-        <a href="#" class="sidebar-link">
-          <img src="https://assets.aceternity.com/manu.png" alt="Avatar" class="avatar">
-          <span class="link-text">Manu Arora</span>
-        </a>
-      </div>
-    </div>
-    <div class="content">
-      <div class="dashboard">
-        <div class="grid">
-          <div class="grid-item"></div>
-          <div class="grid-item"></div>
-          <div class="grid-item"></div>
-          <div class="grid-item"></div>
-        </div>
-        <div class="grid-large">
-          <div class="grid-large-item"></div>
-          <div class="grid-large-item"></div>
+
+    <!-- Login Form -->
+    <div id="login-container" class="fixed inset-0 z-40 flex items-center justify-center bg-[#030303] hidden">
+        <!-- Background shapes for login -->
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="absolute left-[-10%] top-[15%] w-96 h-24 bg-gradient-to-r from-indigo-500/[0.1] to-transparent rounded-full blur-xl"></div>
+            <div class="absolute right-[-5%] top-[70%] w-80 h-20 bg-gradient-to-r from-rose-500/[0.1] to-transparent rounded-full blur-xl"></div>
+            <div class="absolute left-[5%] bottom-[10%] w-60 h-16 bg-gradient-to-r from-violet-500/[0.1] to-transparent rounded-full blur-xl"></div>
         </div>
         
-        <!-- Cards Grid Container -->
-        <div id="cardsContainer" class="cards-grid">
-          <!-- Cards will be added here dynamically -->
-        </div>
-        
-        <!-- Edit Modal -->
-        <div id="editModal" class="dialog-content" style="display: none; max-width: 50rem; max-height: 150vh; height:96vh; visibility: hidden; z-index: -1;" role="dialog" aria-modal="true" aria-labelledby="editModalTitle">
-            <div class="dialog-header">
-                <h2 id="editModalTitle" class="dialog-title">Edit Section</h2>
-                <!-- Description removed as requested -->
-            </div>
-            <form id="editForm" class="dialog-form">
-                <input type="hidden" id="sectionKey" name="sectionKey">
-                <div id="editFields">
-                    <!-- Fields will be dynamically generated here -->
+        <div class="relative z-10 w-full max-w-md mx-4">
+            <div class="login-form-container rounded-2xl p-8 shadow-2xl">
+                <div class="text-center mb-8">
+                    <h1 class="text-3xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-white to-white/80">
+                        Admin Login
+                    </h1>
+                    <p class="text-white/60 text-sm">Access the Business Out Loud admin panel</p>
                 </div>
-            </form>
-            <div class="dialog-footer">
-                <button type="button" class="button button-outline" id="closeEditModal">Cancel</button>
-                <button type="submit" form="editForm" class="button button-default">Save Changes</button>
-            </div>
-        </div>
-        <div id="editModalOverlay" class="dialog-overlay" style="display: none;"></div>
-      </div>
-    </div>
-  </div>
-  <script>
-    // Card template function to create a card for each section
-    function createSectionCard(sectionKey, sectionData) {
-      // Use the title from sectionData if available, otherwise capitalize the section key
-      const title = sectionData.title || sectionKey.charAt(0).toUpperCase() + sectionKey.slice(1);
-      // Make sure image path is absolute
-      let templateImage = sectionData.template_image || `https://picsum.photos/seed/${sectionKey}/289/150`;
-      if (templateImage && templateImage.startsWith('static/')) {
-          templateImage = '/' + templateImage;
-      }
-      
-      return `
-        <div class="w-full card-container rounded-[25px] cursor-pointer" data-section="${sectionKey}">
-            <!-- Image Popup that shows on hover -->
-            <div class="image-popup">
-                <div class="p-2 bg-white dark:bg-zinc-950 rounded-lg">
-                    <img src="${templateImage}" alt="Section template"
-                         class="rounded-[25px] w-full h-auto object-cover" style="aspect-ratio: 16/7.5;">
-                </div>
-            </div>
-            
-            <!-- Card Component -->
-            <div class="grid-pattern-card card-animation border w-full h-[9rem] overflow-hidden bg-white dark:bg-zinc-950 border-zinc-200 dark:border-zinc-900 relative">
-                <div class="size-full bg-repeat bg-[length:50px_50px] bg-square-pattern-light dark:bg-square-pattern">
-                    <div class="size-full bg-gradient-to-tr from-white via-white/[0.85] to-white dark:from-zinc-950 dark:via-zinc-950/[.85] dark:to-zinc-950">
-                        <div class="text-left p-4 md:p-6">
-                            <h3 class="text-lg font-bold mb-1 text-zinc-900 dark:text-white">
-                                ${title}
-                            </h3>
-                            <p class="text-wrap text-sm text-zinc-700 dark:text-zinc-300">
-                                ${sectionData.description || "Click to edit the content for this section"}
-                            </p>
-                        </div>
-                        <!-- New edit button at bottom right -->
-                        <div class="absolute bottom-2 right-3">
-                            <button class="px-3 py-1 text-white text-[1.05rem] rounded transition-colors flex items-center" style="padding-bottom: 0.75rem; padding-left: 1.75rem;">
-                                edit content <span class="ml-1">→</span>
-                            </button>
-                        </div>
+                
+                <form id="login-form" class="space-y-6">
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-white/80 mb-2">Email</label>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email" 
+                            required 
+                            class="input-field w-full px-4 py-3 rounded-lg text-white placeholder-white/40 focus:outline-none"
+                            placeholder="Enter your email"
+                        >
                     </div>
-                </div>
+                    
+                    <div>
+                        <label for="password" class="block text-sm font-medium text-white/80 mb-2">Password</label>
+                        <input 
+                            type="password" 
+                            id="password" 
+                            name="password" 
+                            required 
+                            class="input-field w-full px-4 py-3 rounded-lg text-white placeholder-white/40 focus:outline-none"
+                            placeholder="Enter your password"
+                        >
+                    </div>
+                    
+                    <div id="error-message" class="error-message rounded-lg p-3 text-sm hidden">
+                        Invalid email or password. Please try again.
+                    </div>
+                    
+                    <button 
+                        type="submit" 
+                        id="login-btn"
+                        class="login-button w-full py-3 rounded-lg font-medium text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
+                    >
+                        <span id="login-btn-text">Sign In</span>
+                        <div id="login-btn-spinner" class="loading-spinner w-5 h-5 border-2 border-white/30 border-t-white rounded-full mx-auto hidden"></div>
+                    </button>
+                </form>
             </div>
         </div>
-      `;
-    }
-    
-    // Helper function to handle images in forms
-    function isImageURL(str) {
-        return typeof str === 'string' &&
-            (str.startsWith('http') || str.startsWith('/static/') || str.startsWith('./static/')) &&
-            (str.endsWith('.png') || str.endsWith('.jpg') || str.endsWith('.jpeg') || str.endsWith('.gif') || str.endsWith('.webp'));
-    }
-    
-    // Function to create form fields based on the section data structure
-    function createFormFields(data, parentKey = '') {
-        let html = '';
-        
-        if (typeof data === 'object' && data !== null) {
-            // Handle nested objects
-            Object.entries(data).forEach(([key, value]) => {
-                const fullKey = parentKey ? `${parentKey}.${key}` : key;
-                
-                if (typeof value === 'object' && value !== null) {
-                    // Add a fieldset with legend for each object group
-                    html += `
-                        <div class="form-group mt-4">
-                            <h3 class="text-md font-semibold">${key.replace(/_/g, ' ')}</h3>
-                            <div class="border rounded p-3 mt-2 bg-gray-50 dark:bg-gray-900">
-                                ${createFormFields(value, fullKey)}
-                            </div>
-                        </div>
-                    `;
-                } else {
-                    // Add a standard input field for each value
-                    const fieldId = fullKey.replace(/\./g, '_');
-                    
-                    // Special handling for image URLs - add preview
-                    if (isImageURL(value)) {
-                        // Make sure image path is absolute for preview
-                        let imagePath = value;
-                        if (imagePath && imagePath.startsWith('static/')) {
-                            imagePath = '/' + imagePath;
-                        }
-                        
-                        html += `
-                            <div class="form-group">
-                                <label for="${fieldId}" class="label">${key.replace(/_/g, ' ')}</label>
-                                <div class="flex gap-2">
-                                    <input id="${fieldId}" name="${fieldId}" type="text" class="input flex-1"
-                                           value="${value || ''}" data-field-path="${fullKey}" data-initial-value="${value || ''}">
-                                    <div class="w-16 h-16 border rounded flex-shrink-0 overflow-hidden">
-                                        <img src="${imagePath}" alt="Preview" class="w-full h-full object-cover">
-                                    </div>
-                                </div>
-                            </div>
-                        `;
-                    } else {
-                        html += `
-                            <div class="form-group">
-                                <label for="${fieldId}" class="label">${key.replace(/_/g, ' ')}</label>
-                                <input id="${fieldId}" name="${fieldId}" type="text" class="input"
-                                       value="${value || ''}" data-field-path="${fullKey}" data-initial-value="${value || ''}">
-                            </div>
-                        `;
-                    }
-                }
-            });
-        } else {
-            // Handle primitive values
-            const fieldId = parentKey.replace(/\./g, '_');
-            html += `
-                <div class="form-group">
-                    <label for="${fieldId}" class="label">${parentKey.split('.').pop().replace(/_/g, ' ')}</label>
-                    <input id="${fieldId}" name="${fieldId}" type="text" class="input"
-                           value="${data || ''}" data-field-path="${parentKey}" data-initial-value="${data || ''}">
-                </div>
-            `;
-        }
-        
-        return html;
-    }
-    
-    // Function to extract values from form and update data structure
-    // Map section names to their section numbers
-    const sectionMapping = {
-        'SECTION 1': 'section_1',
-        'SECTION 2': 'section_2',
-        'SECTION 3': 'section_3',
-        'SECTION 4': 'section_4',
-        'SECTION 5': 'section_5', 
-        'SECTION 6': 'section_6',
-        'SECTION 7': 'section_7'
-    };
-    
-function formatKeyPath(path) {
-    if (!path) return path;
-    
-    let parts = path.split('.');
-    
-    // Handle the first part (section name) using sectionMapping
-    if (parts.length > 0 && sectionMapping.hasOwnProperty(parts[0])) {
-        let mappedPrefix = sectionMapping[parts[0]];
-        mappedPrefix = mappedPrefix.slice(0, -1) + mappedPrefix.slice(-2, -1); 
-        // All Python params for update_homepage have a prefix, so mappedPrefix should not be empty.
-        parts[0] = mappedPrefix;
-    } else if (parts.length > 0) {
-        // Fallback for first part if not in mapping: convert to lowercase_snake_case.
-        // This path will generate keys not matching `update_homepage` params unless Python func changes.
-        parts[0] = parts[0].toLowerCase().replace(/\s+/g, '_');
-    }
-    
-    // If parts[0] became empty or parts is empty (e.g. if mapping was to '' and path was just that key)
-    if (parts.length === 0 || !parts[0]) {
-        // This scenario should ideally not happen if data keys are robust
-        console.warn(`formatKeyPath: Path "${path}" resulted in an empty or invalid prefix.`);
-        return ''; // Return empty or handle error appropriately
-    }
-    
-    let formattedPath = '';
-    for (let i = 0; i < parts.length; i++) {
-        const currentPart = parts[i];
-        
-        // Skip if currentPart is empty (e.g., from a malformed path like "section..field")
-        if (!currentPart && i > 0) continue;
+    </div>
 
-        // Check for patterns like "post_1", "item_2", etc. to handle numbered list items
-        // These usually appear as object keys in popup_fields, e.g., "post_1": { "title": ..., "image": ... }
-        const match = currentPart.match(/^(\w+)_(\d+)$/); // e.g., post_1, item_3
-        if (match && i < parts.length - 1) { // If current is "post_1" and there's a "title" (nextPart)
-            const actualFieldKey = parts[i+1]; // e.g., "title"
-            const numberSuffix = match[2];     // e.g., "1"
-            // Constructs "title1" from "post_1" (currentPart) and "title" (actualFieldKey)
-            const fieldNameWithNumber = actualFieldKey.toLowerCase() + numberSuffix;
-            if (formattedPath) formattedPath += '_';
-            formattedPath += fieldNameWithNumber;
-            i++; // Crucial: Skip nextPart (actualFieldKey) in the loop as it has been consumed
-        } else {
-            // Standard part
-            if (formattedPath && currentPart) formattedPath += '_';
-            // parts[0] is already correctly cased (e.g., "section_1")
-            // Subsequent parts (field names like "Title", "Description") should be lowercased.
-            if (currentPart) {
-                formattedPath += (i > 0 ? currentPart.toLowerCase() : currentPart);
-            }
-        }
-    }
-    
-    // Remove 'main_content_section' if present
-    if (formattedPath.includes('main_content_section')) {
-        formattedPath = formattedPath.replace('main_content_section', '');
-    }
-    while (formattedPath.includes('__')) {
-        formattedPath = formattedPath.replace('__', '_');
-    }
-    
-    // Replace all spaces with underscores
-    formattedPath = formattedPath.replace(/ /g, '_');
-    
-    console.log('Formatted path:', formattedPath);
-    
-    // Final reformatting - extract section number and rebuild path
-    if (formattedPath.length >= 10) {
-        formattedPath = `section_${formattedPath.slice(7, 8)}_${formattedPath.slice(9)}`;
-    } else {
-        console.warn(`formatKeyPath: Path "${path}" resulted in a formatted path that's too short for final reformatting.`);
-    }
-    
-    return formattedPath;
-}
-    
-    function extractFormValues() {
-        const form = document.getElementById('editForm');
-        const inputs = form.querySelectorAll('input[data-field-path]');
-        const data = {};
-        
-        inputs.forEach(input => {
-            const path = input.getAttribute('data-field-path');
-            const value = input.value;
-            const initialValue = input.getAttribute('data-initial-value') || '';
-            
-            // Only include changed values
-            if (value !== initialValue) {
-                console.log('Changed field:', path);
-                
-                // Format the path in the required structure
-                const formattedPath = formatKeyPath(path);
-                console.log('Formatted to:', formattedPath);
-                
-                // Create the comment-style key with the formatted path
-                const commentKey = `${formattedPath}`;
-                data[commentKey] = value;
-            }
-        });
-        
-        console.log('Final data to send:', data);
-        return data;
-    }
+    <!-- Main Admin Panel -->
+    <div id="admin-panel" class="hidden">
+        <!-- Header will be prepended here by JavaScript -->
+        <div id="root"></div>
+    </div>
 
-    lucide.createIcons();
-    const sidebar = document.getElementById('sidebar');
-    const mobileSidebar = document.getElementById('mobileSidebar');
-    const menuBtn = document.getElementById('menuBtn');
-    const closeBtn = document.getElementById('closeBtn');
-    let isMouseOver = false;
-    sidebar.addEventListener('mouseenter', () => {
-      isMouseOver = true;
-      sidebar.classList.remove('collapsed');
-    });
-    sidebar.addEventListener('mouseleave', () => {
-      isMouseOver = false;
-      sidebar.classList.add('collapsed');
-    });
-    sidebar.classList.add('collapsed');
-    menuBtn.addEventListener('click', () => {
-      mobileSidebar.classList.add('open');
-    });
-    closeBtn.addEventListener('click', () => {
-      mobileSidebar.classList.remove('open');
-    });
-    const themeToggle = document.getElementById('themeToggle');
-    const mobileThemeToggle = document.getElementById('mobileThemeToggle');
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-      document.body.classList.add('dark-mode');
-      document.body.classList.add('dark');
-      document.body.classList.remove('light-mode');
-    } else if (savedTheme === 'light') {
-      document.body.classList.add('light-mode');
-      document.body.classList.remove('dark-mode');
-      document.body.classList.remove('dark');
-    } else {
-      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        document.body.classList.add('dark-mode');
-        document.body.classList.add('dark');
-      } else {
-        document.body.classList.add('light-mode');
-      }
-    }
-    function toggleTheme() {
-      if (document.body.classList.contains('dark-mode')) {
-        document.body.classList.remove('dark-mode');
-        document.body.classList.remove('dark');
-        document.body.classList.add('light-mode');
-        localStorage.setItem('theme', 'light');
-      } else {
-        document.body.classList.remove('light-mode');
-        document.body.classList.add('dark-mode');
-        document.body.classList.add('dark');
-        localStorage.setItem('theme', 'dark');
-      }
-    }
-    themeToggle.addEventListener('click', toggleTheme);
-    mobileThemeToggle.addEventListener('click', toggleTheme);
-    document.addEventListener('DOMContentLoaded', () => {
-        const dialogTrigger = document.getElementById('loginDialogTrigger');
-        const mobileDialogTrigger = document.getElementById('mobileLoginDialogTrigger');
-        const dialog = document.getElementById('loginDialog');
-        const overlay = document.getElementById('dialogOverlay');
-        const closeButtons = document.querySelectorAll('.dialog-close');
-        const loginForm = document.getElementById('actualLoginForm');
-        const content = document.querySelector('.content');
-        const container = document.querySelector('.container');
-        const loginPage = document.getElementById('loginPage');
-        const initialLoginButton = document.getElementById('initialLoginButton');
-        const loginLinks = document.querySelectorAll('[data-login="true"]');
-        const logoutLinks = document.querySelectorAll('[data-logout="true"]');
-        let isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
-        container.style.display = 'none';
-        function showDashboard() {
-            if (content) content.style.display = 'block';
-            if (container) container.style.display = 'flex';
-            if (loginPage) loginPage.style.display = 'none';
+    <script>
+        // Global state
+        let currentUser = null;
+        let isAuthenticated = false;
+
+        // Utility functions
+        function cn(...classes) {
+            return classes.filter(Boolean).join(' ');
         }
-        function hideDashboard() {
-            if (content) content.style.display = 'none';
-            if (container) container.style.display = 'none';
-            if (loginPage) loginPage.style.display = 'flex';
+
+        function showElement(elementId) {
+            document.getElementById(elementId).classList.remove('hidden');
         }
-        function updateAuthUI() {
-            loginLinks.forEach(link => {
-                link.style.display = isAuthenticated ? 'none' : 'flex';
-            });
-            logoutLinks.forEach(link => {
-                link.style.display = isAuthenticated ? 'flex' : 'none';
-            });
+
+        function hideElement(elementId) {
+            document.getElementById(elementId).classList.add('hidden');
         }
-        console.log('Dialog element:', dialog);
-        console.log('Overlay element:', overlay);
-        console.log('Login button element:', initialLoginButton);
-        if (initialLoginButton) {
-            console.log('Adding click event listener to login button');
-            initialLoginButton.addEventListener('click', function() {
-                console.log('Login button clicked!');
-                const modalDialog = document.getElementById('loginDialog');
-                const modalOverlay = document.getElementById('dialogOverlay');
-                console.log('Modal dialog:', modalDialog);
-                console.log('Modal overlay:', modalOverlay);
-                if (!modalDialog || !modalOverlay) {
-                    console.error('Could not find dialog or overlay by ID');
-                    return;
-                }
-                modalOverlay.setAttribute('style', 'display: block !important; z-index: 1000;');
-                modalDialog.setAttribute('style', 'display: grid !important; z-index: 1001;');
-                setTimeout(() => {
-                    console.log('Adding open classes');
-                    modalOverlay.classList.add('open');
-                    modalDialog.classList.add('open');
-                    const firstInput = modalDialog.querySelector('input');
-                    if (firstInput) {
-                        console.log('Focusing input');
-                        firstInput.focus();
-                    }
-                }, 50);
-                document.body.style.overflow = 'hidden';
-            });
-        } else {
-            console.error('Initial login button not found!');
+
+        function showLoading() {
+            showElement('loading-screen');
         }
-        function openDialog() {
-            if (!dialog || !overlay) return;
-            overlay.style.display = 'block';
-            dialog.style.display = 'grid';
-            requestAnimationFrame(() => {
-                setTimeout(() => {
-                    overlay.classList.add('open');
-                    dialog.classList.add('open');
-                }, 0);
-            });
-            document.body.style.overflow = 'hidden';
-            const firstFocusableElement = dialog.querySelector('input[type="email"]');
-            if (firstFocusableElement) {
-                firstFocusableElement.focus();
-            }
+
+        function hideLoading() {
+            hideElement('loading-screen');
         }
-        function closeDialog() {
-            if (!dialog || !overlay) return;
-                if (!isAuthenticated) {
-                    if (loginPage) loginPage.style.display = 'flex';
-                    return;
-                }
-            overlay.classList.remove('open');
-            dialog.classList.remove('open');
-            const animationDuration = parseFloat(getComputedStyle(dialog).getPropertyValue('--dialog-animation-duration')) * 1000 || 200;
-            setTimeout(() => {
-                overlay.style.display = 'none';
-                dialog.style.display = 'none';
-                document.body.style.overflow = 'auto';
-            }, animationDuration);
+
+        function showLogin() {
+            hideLoading();
+            showElement('login-container');
         }
-        function logout() {
-            isAuthenticated = false;
-            localStorage.removeItem('isAuthenticated');
-            hideDashboard();
-            updateAuthUI();
+
+        function showAdminPanel() {
+            hideElement('login-container');
+            hideLoading();
+            showElement('admin-panel');
         }
-        if (dialogTrigger) {
-            dialogTrigger.addEventListener('click', openDialog);
+
+        function showError(message) {
+            const errorElement = document.getElementById('error-message');
+            errorElement.textContent = message;
+            errorElement.classList.remove('hidden');
         }
-        if (mobileDialogTrigger) {
-            mobileDialogTrigger.addEventListener('click', () => {
-                mobileSidebar.classList.remove('open');
-                setTimeout(openDialog, 300);
-            });
+
+        function hideError() {
+            document.getElementById('error-message').classList.add('hidden');
         }
-        if (closeButtons.length > 0) {
-            closeButtons.forEach(button => {
-                button.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    if (isAuthenticated) {
-                        closeDialog();
-                    } else {
-                        if (dialog) dialog.style.display = 'none';
-                        if (overlay) overlay.style.display = 'none';
-                        if (loginPage) loginPage.style.display = 'flex';
-                    }
+
+        // Authentication functions
+        async function authenticateUser(email, password) {
+            try {
+                const response = await fetch('/admin_auth', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email, password })
                 });
-            });
-        }
-        if (overlay) {
-            overlay.addEventListener('click', (event) => {
-                if (event.target === overlay) { 
-                    if (isAuthenticated) {
-                        closeDialog();
-                    } else {
-                        if (dialog) dialog.style.display = 'none';
-                        if (overlay) overlay.style.display = 'none';
-                        if (loginPage) loginPage.style.display = 'flex';
-                    }
-                }
-            });
-        }
-        document.addEventListener('keydown', (event) => {
-            if (event.key === 'Escape' && dialog && dialog.classList.contains('open')) {
-                if (isAuthenticated) {
-                    closeDialog();
-                } else {
-                    if (dialog) dialog.style.display = 'none';
-                    if (overlay) overlay.style.display = 'none';
-                    if (loginPage) loginPage.style.display = 'flex';
-                }
+
+                const data = await response.json();
+                return data;
+            } catch (error) {
+                console.error('Authentication error:', error);
+                return { success: false, email };
             }
-        });
-        logoutLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                logout();
-            });
-        });
-        if (loginForm) {
-            loginForm.addEventListener('submit', (event) => {
-                event.preventDefault(); 
-                const emailInput = document.getElementById('email');
-                const passwordInput = document.getElementById('password');
-                if (!emailInput || !passwordInput) return;
-                const email = emailInput.value;
-                const password = passwordInput.value;
-                if (!email || !password) {
-                    alert('Please fill in both email and password.');
-                    if (!email && emailInput) emailInput.focus();
-                    else if (!password && passwordInput) passwordInput.focus();
-                    return;
-                }
-                if (email === 'admin' && password === 'admin') {
+        }
+
+        async function verifyStoredCredentials() {
+            const encEmail = localStorage.getItem('enc_email');
+            const encPwd = localStorage.getItem('enc_pwd');
+
+            if (!encEmail || !encPwd) {
+                return false;
+            }
+
+            try {
+                const response = await fetch('/admin_auth', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ 
+                        enc_email: encEmail, 
+                        enc_pwd: encPwd,
+                        auto_login: true 
+                    })
+                });
+
+                const data = await response.json();
+                if (data.success) {
+                    currentUser = data;
                     isAuthenticated = true;
-                    localStorage.setItem('isAuthenticated', 'true');
-                    closeDialog();
-                    showDashboard();
-                    updateAuthUI();
-                } else {
-                    alert('Invalid credentials. Please use admin/admin to login.');
+                    return true;
                 }
+            } catch (error) {
+                console.error('Auto-login error:', error);
+            }
+
+            // Clear invalid credentials
+            localStorage.removeItem('enc_email');
+            localStorage.removeItem('enc_pwd');
+            return false;
+        }
+
+        function logout() {
+            localStorage.removeItem('enc_email');
+            localStorage.removeItem('enc_pwd');
+            currentUser = null;
+            isAuthenticated = false;
+            location.reload();
+        }
+
+        // UI Components
+        const CircleSVG = ``
+
+        function createHeader() {
+            const header = document.createElement('header');
+            header.className = "fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 py-3 md:px-6 md:py-4 text-white shadow-md";
+            
+            const leftSide = document.createElement('div');
+            leftSide.className = "flex items-center gap-3 anim-hidden-initial";
+            leftSide.style.animation = `fadeUp 0.8s cubic-bezier(0.25, 0.4, 0.25, 1) 0.1s forwards`;
+            
+            const rightSide = document.createElement('div');
+            rightSide.className = "flex items-center gap-4";
+            
+            const userName = document.createElement('span');
+            userName.className = "text-sm font-medium text-white/60 anim-hidden-initial";
+            userName.textContent = currentUser ? currentUser.name : "Admin User";
+            userName.style.animation = `fadeUp 0.8s cubic-bezier(0.25, 0.4, 0.25, 1) 0.2s forwards`;
+            userName.style.fontWeight = '200';
+            
+            const logoutButton = document.createElement('button');
+            logoutButton.className = "flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.06] transition-colors text-xs font-medium text-white/60 anim-hidden-initial focus:outline-none focus:ring-2 focus:ring-white/20";
+            logoutButton.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white/60"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
+                <span class="text-white/60">Logout</span>
+            `;
+            logoutButton.style.animation = `fadeUp 0.8s cubic-bezier(0.25, 0.4, 0.25, 1) 0.3s forwards`;
+            logoutButton.onclick = logout;
+            
+            rightSide.appendChild(userName);
+            rightSide.appendChild(logoutButton);
+            header.appendChild(leftSide);
+            header.appendChild(rightSide);
+            
+            return header;
+        }
+
+        function ElegantShape({
+            className,
+            delay = 0,
+            width = 400,
+            height = 100,
+            rotate = 0,
+            gradient = "from-white/[0.08]",
+        }) {
+            const outerDiv = document.createElement('div');
+            const initialRotate = rotate - 15;
+            outerDiv.style.setProperty('--initial-rotate-val', `${initialRotate}deg`);
+            outerDiv.style.setProperty('--final-rotate-val', `${rotate}deg`);
+            outerDiv.style.opacity = '0';
+            outerDiv.style.animation = `
+                elegantShapeTransform 2.4s cubic-bezier(0.23, 0.86, 0.39, 0.96) ${delay}s forwards,
+                elegantShapeOpacity 1.2s cubic-bezier(0.23, 0.86, 0.39, 0.96) ${delay}s forwards
+            `;
+            outerDiv.className = cn("absolute", className);
+            
+            const innerDiv = document.createElement('div');
+            innerDiv.style.width = `${width}px`;
+            innerDiv.style.height = `${height}px`;
+            innerDiv.className = "relative";
+            innerDiv.style.animation = `elegantShapeFloat 12s ease-in-out infinite`;
+            innerDiv.style.animationDelay = `${delay}s`;
+            
+            const gradientDiv = document.createElement('div');
+            gradientDiv.className = cn(
+                "absolute inset-0 rounded-full",
+                "bg-gradient-to-r to-transparent",
+                gradient,
+                "backdrop-blur-[2px] border-2 border-white/[0.15]",
+                "shadow-[0_8px_32px_0_rgba(255,255,255,0.1)]",
+                "after:absolute after:inset-0 after:rounded-full",
+                "after:bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.2),transparent_70%)]",
+                "shape-theme-transition"
+            );
+            gradientDiv.setAttribute('data-original-gradient', gradient);
+            
+            innerDiv.appendChild(gradientDiv);
+            outerDiv.appendChild(innerDiv);
+            
+            return outerDiv;
+        }
+
+        function HeroGeometric({
+            badge = "Designing peace",
+            title1 = "Elevate Your Website",
+            title2 = "Crafting Exceptional Websites",
+        }) {
+            const componentRoot = document.createElement('div');
+            componentRoot.className = "relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-[#030303]";
+            
+            const bgBlurGradient = document.createElement('div');
+            bgBlurGradient.className = "absolute inset-0 bg-gradient-to-br from-indigo-500/[0.05] via-transparent to-rose-500/[0.05] blur-3xl";
+            componentRoot.appendChild(bgBlurGradient);
+            
+            const shapesContainer = document.createElement('div');
+            shapesContainer.className = "absolute inset-0 overflow-hidden";
+            
+            const shapesData = [
+                { delay: 0.3, width: 600, height: 140, rotate: 12, gradient: "from-indigo-500/[0.15]", className: "left-[-10%] md:left-[-5%] top-[15%] md:top-[20%]" },
+                { delay: 0.5, width: 500, height: 120, rotate: -15, gradient: "from-rose-500/[0.15]", className: "right-[-5%] md:right-[0%] top-[70%] md:top-[75%]" },
+                { delay: 0.4, width: 300, height: 80, rotate: -8, gradient: "from-violet-500/[0.15]", className: "left-[5%] md:left-[10%] bottom-[5%] md:bottom-[10%]" },
+                { delay: 0.6, width: 200, height: 60, rotate: 20, gradient: "from-amber-500/[0.15]", className: "right-[15%] md:right-[20%] top-[10%] md:top-[15%]" },
+                { delay: 0.7, width: 150, height: 40, rotate: -25, gradient: "from-cyan-500/[0.15]", className: "left-[20%] md:left-[25%] top-[5%] md:top-[10%]" },
+            ];
+            
+            shapesData.forEach(shapeProps => {
+                shapesContainer.appendChild(ElegantShape(shapeProps));
             });
-        }
-        
-        // Global variable to store card data
-        let sectionData = null;
-        
-        // Function to fetch section data from the server
-        function fetchSectionData() {
-            console.log('Fetching section data from server...');
-            return fetch('/admin_get_card_structure')
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
+            componentRoot.appendChild(shapesContainer);
+            
+            const contentOuterContainer = document.createElement('div');
+            contentOuterContainer.className = "relative z-10 container mx-auto px-4 md:px-6";
+            
+            const contentInnerContainer = document.createElement('div');
+            contentInnerContainer.className = "max-w-none mx-auto text-center";
+            
+            const createAnimatedTextElement = (tag, baseClasses, htmlContent, customIndex) => {
+                const el = document.createElement(tag);
+                el.className = cn(baseClasses, "anim-hidden-initial");
+                el.style.animation = `fadeUp 1s cubic-bezier(0.25, 0.4, 0.25, 1) ${0.6 + customIndex * 0.2}s forwards`;
+                el.innerHTML = htmlContent;
+                return el;
+            };
+            
+            const titleDiv = createAnimatedTextElement('div', "",
+                `<h1 class="text-4xl sm:text-6xl md:text-8xl font-bold mb-6 md:mb-8 tracking-tight">
+                    <span class="bg-clip-text text-transparent bg-gradient-to-b from-white to-white/80">
+                        ${title1}
+                    </span>
+                    <br />
+                    <span class="bg-clip-text text-transparent bg-gradient-to-r from-indigo-300 via-white/90 to-rose-300">
+                        ${title2}
+                    </span>
+                </h1>`,
+                1
+            );
+            contentInnerContainer.appendChild(titleDiv);
+            
+            const instructionText = createAnimatedTextElement('p',
+                "text-base text-white/70 mb-3 font-extralight tracking-wide",
+                "ADMIN OPTIONS",
+                1.5
+            );
+            contentInnerContainer.appendChild(instructionText);
+            
+            const buttonsContainer = createAnimatedTextElement('div',
+                "flex flex-wrap items-center justify-center gap-4 mb-8",
+                `
+                <button id="analytics-btn" class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.06] transition-colors">
+                    ${CircleSVG} <span class="text-sm text-white/60 tracking-wide">Analytics</span>
+                </button>
+                <button id="update-btn" class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.06] transition-colors">
+                    ${CircleSVG} <span class="text-sm text-white/60 tracking-wide">Update Page</span>
+                </button>
+                <button id="blogs-btn" class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.06] transition-colors" onclick="window.location.href='/admin_blogs'">
+                    ${CircleSVG} <span class="text-sm text-white/60 tracking-wide">Blogs</span>
+                </button>
+                <button id="upload-btn" class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.06] transition-colors">
+                    ${CircleSVG} <span class="text-sm text-white/60 tracking-wide">Upload Files</span>
+                </button>
+                <button id="newsletter-btn" class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.06] transition-colors">
+                    ${CircleSVG} <span class="text-sm text-white/60 tracking-wide">Newsletter Signups</span>
+                </button>
+                `,
+                2
+            );
+            contentInnerContainer.appendChild(buttonsContainer);
+            
+            contentOuterContainer.appendChild(contentInnerContainer);
+            componentRoot.appendChild(contentOuterContainer);
+            
+            const topFadeGradient = document.createElement('div');
+            topFadeGradient.className = "absolute inset-0 bg-gradient-to-t from-[#030303] via-transparent to-[#030303]/80 pointer-events-none";
+            componentRoot.appendChild(topFadeGradient);
+            
+            function setupButtonHoverEffects() {
+                const shapes = document.querySelectorAll('.shape-theme-transition');
+                const colorThemes = {
+                    'analytics-btn': {
+                        colors: ['from-emerald-400/[0.35]', 'from-teal-400/[0.35]', 'from-green-400/[0.35]', 'from-emerald-500/[0.3]', 'from-teal-500/[0.3]'],
+                        name: 'emerald-mint'
+                    },
+                    'update-btn': {
+                        colors: ['from-blue-400/[0.35]', 'from-sky-400/[0.35]', 'from-blue-500/[0.3]', 'from-cyan-400/[0.35]', 'from-sky-500/[0.3]'],
+                        name: 'blue-sky'
+                    },
+                    'blogs-btn': {
+                        colors: ['from-purple-400/[0.35]', 'from-violet-400/[0.35]', 'from-indigo-400/[0.35]', 'from-purple-500/[0.3]', 'from-violet-500/[0.3]'],
+                        name: 'purple-violet'
+                    },
+                    'theme-btn': {
+                        colors: ['from-pink-400/[0.35]', 'from-rose-400/[0.35]', 'from-fuchsia-400/[0.35]', 'from-pink-500/[0.3]', 'from-rose-500/[0.3]'],
+                        name: 'pink-rose'
+                    },
+                    'upload-btn': {
+                        colors: ['from-orange-400/[0.35]', 'from-amber-400/[0.35]', 'from-yellow-400/[0.35]', 'from-orange-500/[0.3]', 'from-amber-500/[0.3]'],
+                        name: 'orange-amber'
+                    },
+                    'newsletter-btn': {
+                        colors: ['from-red-400/[0.35]', 'from-red-500/[0.3]', 'from-rose-400/[0.35]', 'from-red-600/[0.25]', 'from-rose-500/[0.3]'],
+                        name: 'red-coral'
                     }
-                    console.log('Response received, parsing JSON...');
-                    return response.json();
-                })
-                .then(data => {
-                    console.log('Full API response:', data);
-                    console.log('Root level keys:', Object.keys(data));
-                    if (data.homepage) {
-                        console.log('Homepage keys:', Object.keys(data.homepage));
-                    }
-                    return data;
-                })
-                .catch(error => {
-                    console.error('Error fetching section data:', error);
-                    return null;
-                });
-        }
-        
-        // Function to display section cards
-        function displaySectionCards(page = 'home') {
-            const dashboard = document.querySelector('.dashboard');
-            const gridLarge = document.querySelector('.grid-large');
-            const gridItems = document.querySelector('.grid');
-            let cardsContainer = document.getElementById('cardsContainer');
-            
-            console.log(`Displaying section cards for page: ${page}`);
-            
-            // If no page is selected, don't show cards
-            if (!page) {
-                return;
-            }
-            
-            // Show loading indicator
-            gridLarge.style.display = 'none';
-            gridItems.style.display = 'none';
-            
-            // If cardsContainer doesn't exist or we need to recreate it
-            if (!cardsContainer) {
-                cardsContainer = document.createElement('div');
-                cardsContainer.id = 'cardsContainer';
-                cardsContainer.className = 'cards-grid';
-                dashboard.appendChild(cardsContainer);
-            }
-            
-            // Fetch section data from server
-            fetchSectionData().then(data => {
+                };
                 
-                if (!data) {
-                    console.error('No data received from server');
-                    return;
-                }else{
-                    console.log('Data received from server:', data);
+                const originalColors = ['from-indigo-500/[0.15]', 'from-rose-500/[0.15]', 'from-violet-500/[0.15]', 'from-amber-500/[0.15]', 'from-cyan-500/[0.15]'];
+                
+                function changeShapeColors(colors) {
+                    shapes.forEach((shape, index) => {
+                        const colorIndex = index % colors.length;
+                        const currentClasses = shape.className;
+                        const newClasses = currentClasses.replace(/from-\w+-\d+\/\[\d+\.\d+\]/g, colors[colorIndex]);
+                        shape.className = newClasses;
+                    });
                 }
                 
-                // Store data globally
-                sectionData = data;
-                console.log('Received section data:', data);
+                function resetShapeColors() {
+                    changeShapeColors(originalColors);
+                }
                 
-                // Generate cards for each section
-                let cardsHTML = '';
-                
-                // Create a combined data object for home page
-                let combinedData = {};
-                
-                if (page === 'home') {
-                    // Add homepage sections
-                    if (data.homepage) {
-                        Object.entries(data.homepage).forEach(([key, value]) => {
-                            combinedData[key] = value;
+                Object.keys(colorThemes).forEach(buttonId => {
+                    const button = document.getElementById(buttonId);
+                    if (button) {
+                        button.addEventListener('mouseenter', () => {
+                            changeShapeColors(colorThemes[buttonId].colors);
+                        });
+                        button.addEventListener('mouseleave', () => {
+                            resetShapeColors();
                         });
                     }
-                    
-                    // Add root-level sections
-                    Object.entries(data).forEach(([key, value]) => {
-                        if (key !== 'homepage') {
-                            combinedData[key] = value;
-                        }
-                    });
-                    
-                    console.log('Combined sections for homepage:', Object.keys(combinedData));
-                } else {
-                    // For other pages, just use the data as is
-                    combinedData = data;
-                }
-                
-                // Create cards for each section
-                Object.entries(combinedData).forEach(([key, value]) => {
-                    cardsHTML += createSectionCard(key, value);
                 });
-                
-                cardsContainer.innerHTML = cardsHTML;
-                
-                // Force proper display - changed to grid with 4 columns
-                cardsContainer.style.cssText = `
-                    display: grid !important;
-                    grid-template-columns: repeat(4, 1fr) !important;
-                    gap: 1rem !important;
-                    width: 100% !important;
-                    min-height: 50vh !important;
-                    background-color: var(--content-bg) !important;
-                    padding: 1rem !important;
-                `;
-                
-                // No notification display
-                
-                // Force browser reflow
-                void cardsContainer.offsetHeight;
-                
-                // Add animation class to each card with slight delay
-                const cards = cardsContainer.querySelectorAll('.card-container');
-                cards.forEach((card, index) => {
-                    setTimeout(() => {
-                        card.style.opacity = '1';
-                    }, index * 100);
-                    
-                    // Add click event handler to each card
-                    card.addEventListener('click', function() {
-                        const sectionKey = this.getAttribute('data-section');
-                        openEditModal(sectionKey, combinedData[sectionKey]);
-                    });
-                });
-            });
-        }
-        
-        // Function to open the edit modal
-        function openEditModal(sectionKey, sectionData) {
-            console.log(`Opening edit modal for section: ${sectionKey}`, sectionData);
-            
-            const modal = document.getElementById('editModal');
-            const overlay = document.getElementById('editModalOverlay');
-            const titleElement = document.getElementById('editModalTitle');
-            const descriptionElement = document.getElementById('editModalDescription');
-            const fieldsContainer = document.getElementById('editFields');
-            const sectionKeyInput = document.getElementById('sectionKey');
-            
-            // Set modal title, description and section key
-            titleElement.textContent = sectionData.title || `Edit ${sectionKey.charAt(0).toUpperCase() + sectionKey.slice(1)}`;
-            // Description element no longer needed
-            sectionKeyInput.value = sectionKey;
-            
-            // Generate form fields based on section data
-            const popupFields = sectionData.popup_fields || {};
-            fieldsContainer.innerHTML = createFormFields(popupFields, sectionKey); 
-            
-            // Add template image preview
-            if (sectionData.template_image) {
-                // Make sure image path is absolute
-                let imagePath = sectionData.template_image;
-                if (imagePath.startsWith('static/')) {
-                    imagePath = '/' + imagePath;
-                }
-                
-                const imagePreview = document.createElement('div');
-                imagePreview.className = 'mb-4 p-2 border rounded';
-                imagePreview.innerHTML = `
-                    <p class="label mb-2">Template Image:</p>
-                    <img src="${imagePath}" alt="Template" class="w-full h-auto rounded">
-                `;
-                fieldsContainer.insertAdjacentElement('afterbegin', imagePreview);
             }
             
-            // Show the modal
-            overlay.style.display = 'block';
-            modal.style.display = 'flex'; /* Change to flex to match CSS */
-            modal.style.visibility = 'visible';
-            modal.style.zIndex = '51';
-            
-            requestAnimationFrame(() => {
-                setTimeout(() => {
-                    overlay.classList.add('open');
-                    modal.classList.add('open');
-                }, 0);
-            });
+            setTimeout(setupButtonHoverEffects, 500);
+            return componentRoot;
         }
-        
-        // Function to close the edit modal
-        function closeEditModal() {
-            const modal = document.getElementById('editModal');
-            const overlay = document.getElementById('editModalOverlay');
-            
-            overlay.classList.remove('open');
-            modal.classList.remove('open');
-            
-            setTimeout(() => {
-                overlay.style.display = 'none';
-                modal.style.display = 'none';
-                modal.style.visibility = 'hidden';
-                modal.style.zIndex = '-1';
-                document.getElementById('editFields').innerHTML = ''; // Clear form fields
-            }, 200);
-        }
-        
-        // Add event listeners to dropdown menu items
-        const dropdownItems = document.querySelectorAll('.dropdown-item');
-        dropdownItems.forEach(item => {
-            item.addEventListener('click', (e) => {
+
+        // Login form handler
+        function setupLoginForm() {
+            const loginForm = document.getElementById('login-form');
+            const loginBtn = document.getElementById('login-btn');
+            const loginBtnText = document.getElementById('login-btn-text');
+            const loginBtnSpinner = document.getElementById('login-btn-spinner');
+
+            loginForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
-                const page = item.getAttribute('data-page');
-                console.log(`Selected page: ${page}`);
                 
-                // Show cards for the selected page
-                displaySectionCards(page);
-            });
-        });
-        
-        // Add event listener for close button
-        document.getElementById('closeEditModal').addEventListener('click', closeEditModal);
-        
-        // Add event listener for edit form submission
-        document.getElementById('editForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Show loading state
-            const submitButton = document.querySelector('button[type="submit"][form="editForm"]');
-            const originalButtonText = submitButton.innerHTML;
-            submitButton.innerHTML = 'Saving...';
-            submitButton.disabled = true;
-            
-            // Extract form values
-            const updatedData = extractFormValues();
-            const sectionKey = document.getElementById('sectionKey').value;
-            
-            console.log('Form submission:', sectionKey, updatedData);
-            
-            // Send data to server
-            fetch('/admin_update_homepage', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(updatedData)
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Server response:', data);
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
                 
-                // Reset button state
-                submitButton.innerHTML = originalButtonText;
-                submitButton.disabled = false;
+                // Show loading state
+                loginBtnText.classList.add('hidden');
+                loginBtnSpinner.classList.remove('hidden');
+                loginBtn.disabled = true;
+                hideError();
                 
-                // Show success notification
-                const statusClass = data.status === 'success' ?
-                    'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200' :
-                    'bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200';
+                try {
+                    const result = await authenticateUser(email, password);
                     
-                const jsonStr = JSON.stringify(updatedData, null, 2);
-                const notification = document.createElement('div');
-                notification.className = `fixed top-4 right-4 p-4 ${statusClass} rounded shadow-lg z-50 max-w-md`;
-                notification.innerHTML = `
-                    <div class="flex items-center justify-between mb-2">
-                        <h3 class="font-bold">${data.status === 'success' ? 'Changes Saved' : 'Error'}</h3>
-                        <button class="text-sm opacity-70 hover:opacity-100">✕</button>
-                    </div>
-                    <p class="mb-2">${data.message}</p>
-                    <details>
-                        <summary class="cursor-pointer text-sm">Show data</summary>
-                        <pre class="mt-2 p-2 bg-gray-100 dark:bg-gray-800 rounded text-xs overflow-auto max-h-40">${jsonStr}</pre>
-                        ${data.traceback ? `<pre class="mt-2 p-2 bg-gray-100 dark:bg-gray-800 rounded text-xs overflow-auto max-h-40 text-red-500">${data.traceback}</pre>` : ''}
-                    </details>
-                `;
-                
-                document.body.appendChild(notification);
-                
-                notification.querySelector('button').addEventListener('click', function() {
-                    notification.remove();
-                });
-                
-                setTimeout(() => {
-                    notification.classList.add('opacity-0', 'transition-opacity', 'duration-500');
-                    setTimeout(() => notification.remove(), 500);
-                }, 10000);
-                
-                if (data.status === 'success') {
-                    closeEditModal();
+                    if (result.success) {
+                        // Store encrypted credentials
+                        localStorage.setItem('enc_email', result.enc_email);
+                        localStorage.setItem('enc_pwd', result.enc_pwd);
+                        
+                        // Set current user
+                        currentUser = result;
+                        isAuthenticated = true;
+                        
+                        // Initialize admin panel
+                        initializeAdminPanel();
+                        showAdminPanel();
+                    } else {
+                        showError('Invalid email or password. Please try again.');
+                    }
+                } catch (error) {
+                    showError('An error occurred. Please try again.');
+                } finally {
+                    // Reset button state
+                    loginBtnText.classList.remove('hidden');
+                    loginBtnSpinner.classList.add('hidden');
+                    loginBtn.disabled = false;
                 }
-            })
-            .catch(error => {
-                console.error('Error submitting form:', error);
-                
-                // Reset button state
-                submitButton.innerHTML = originalButtonText;
-                submitButton.disabled = false;
-                
-                // Show error notification
-                const notification = document.createElement('div');
-                notification.className = 'fixed top-4 right-4 p-4 bg-red-100 dark:bg-red-900 rounded shadow-lg text-red-800 dark:text-red-200 z-50 max-w-md';
-                notification.innerHTML = `
-                    <div class="flex items-center justify-between mb-2">
-                        <h3 class="font-bold">Error</h3>
-                        <button class="text-sm opacity-70 hover:opacity-100">✕</button>
-                    </div>
-                    <p class="mb-2">Failed to save changes: ${error.message}</p>
-                `;
-                
-                document.body.appendChild(notification);
-                
-                notification.querySelector('button').addEventListener('click', function() {
-                    notification.remove();
-                });
-                
-                setTimeout(() => {
-                    notification.classList.add('opacity-0', 'transition-opacity', 'duration-500');
-                    setTimeout(() => notification.remove(), 500);
-                }, 10000);
             });
-        });
-        
-        // Add event listener for edit modal overlay (close on click outside)
-        document.getElementById('editModalOverlay').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeEditModal();
+        }
+
+        function initializeAdminPanel() {
+            const body = document.body;
+            const rootElement = document.getElementById('root');
+            const adminPanel = document.getElementById('admin-panel');
+            
+            // Clear any existing content
+            rootElement.innerHTML = '';
+            
+            // Create and add header
+            const headerElement = createHeader();
+            adminPanel.insertBefore(headerElement, rootElement);
+            
+            // Create hero section
+            const heroSection = HeroGeometric({
+                title1: "Welcome to",
+                title2: "Business Out Loud"
+            });
+            rootElement.appendChild(heroSection);
+        }
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', async () => {
+            showLoading();
+            
+            // Check for stored credentials
+            const hasValidCredentials = await verifyStoredCredentials();
+            
+            if (hasValidCredentials) {
+                // User is already authenticated
+                initializeAdminPanel();
+                showAdminPanel();
+            } else {
+                // Show login form
+                setupLoginForm();
+                showLogin();
             }
         });
-        
-        updateAuthUI();
-        if (!isAuthenticated) {
-            hideDashboard();
-        } else {
-            showDashboard();
-        }
-    });
-  </script>
-  <div id="dialogOverlay" class="dialog-overlay" style="display: none;"></div>
-  <div id="loginDialog" class="dialog-content" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="dialogTitle" aria-describedby="dialogDescription">
-      <div class="dialog-header">
-          <h2 id="dialogTitle" class="dialog-title">Login</h2>
-          <p id="dialogDescription" class="dialog-description">
-              Please login to continue using the application.
-          </p>
-      </div>
-      <form id="actualLoginForm" class="dialog-form">
-          <div class="form-group">
-              <label for="email" class="label">Username</label>
-              <input required id="email" type="text" autocomplete="username" placeholder="admin" class="input" />
-          </div>
-          <div class="form-group">
-              <label for="password" class="label">Password</label>
-              <input required id="password" type="password" placeholder="••••••••••" autocomplete="current-password" class="input" />
-          </div>
-      </form>
-      <div class="dialog-footer">
-          <button type="button" class="button button-outline dialog-close">Cancel</button>
-          <button type="submit" form="actualLoginForm" class="button button-default">Login</button>
-      </div>
-  </div>
+    </script>
 </body>
 </html>
