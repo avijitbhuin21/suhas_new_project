@@ -9,19 +9,24 @@ def slugify(text):
         s = s[:-3]
     s = s.strip('-')
     return s
+
 def get_toc(json_data_full): 
-    header_template = f"""<div class="mb-4 toc-section" data-section-id="[[section_id]]">
-            <a href="
-                <div class="text-lg font-medium"> [[header]] </div>
-                <i class="ph ph-caret-down text-xs ml-1 toc-arrow transition-transform duration-300" ></i>
+    # CORRECTED header_template
+    header_template = f"""<div class="mb-3 toc-section" data-section-id="[[section_id_slug]]">
+            <a href="#[[section_id_slug]]" data-toggle-target="#[[sub_header_pointer]]" class="toc-h2-link flex items-center justify-between mt-1 mb-3 no-underline text-gray-800 hover:text-[#3533CD] transition-colors duration-200 toc-link">
+                <div class="text-base font-medium">[[header]]</div>
+                <i class="ph ph-caret-down text-xs ml-1 toc-arrow transition-transform duration-300"></i>
             </a>
-            <div id="[[sub_header_pointer]]" class="toc-subcategories hidden pl-4 mb-3 space-y-3">
+            <div id="[[sub_header_pointer]]" class="toc-subcategories hidden pl-4 mb-3 space-y-2">
                 [[subcategories]]
             </div>
         </div>"""
-    subheader_template = """<a href="
+    
+    # CORRECTED subheader_template
+    subheader_template = """<a href="#[[sub_section_slug]]" class="flex items-center mt-1 no-underline text-gray-600 hover:text-[#3533CD] transition-colors duration-200 toc-link border-l-2 border-gray-200 pl-3 hover:border-[#3533CD]">
                     <div class="text-sm">[[subheader]]</div>
                 </a>"""
+
     dynamic_sections = json_data_full.get('dynamicSections', [])
     processed_headers = []
     current_header_details = None
@@ -43,22 +48,34 @@ def get_toc(json_data_full):
                     'content': subheader_content,
                     'slug': subheader_slug
                 })
+    
     toc_html_parts = []
     for header_detail in processed_headers:
         header_content = header_detail['content']
-        header_slug = header_detail['slug']
+        header_slug = header_detail['slug'] # This is for [[section_id_slug]]
+        
         subcategories_html_list = []
         for sub_detail in header_detail['subheaders']:
             sub_html = subheader_template.replace('[[subheader]]', sub_detail['content'])
             sub_html = sub_html.replace("[[sub_section_slug]]", sub_detail['slug']) 
             subcategories_html_list.append(sub_html)
         subcategories_str = '\n'.join(subcategories_html_list)
+        
         header_html_part = header_template.replace('[[header]]', header_content)
         header_html_part = header_html_part.replace('[[subcategories]]', subcategories_str)
-        header_html_part = header_html_part.replace('[[section_id]]', header_slug) 
+        # Ensure the placeholder in the template matches what you replace
+        header_html_part = header_html_part.replace('[[section_id_slug]]', header_slug) 
         header_html_part = header_html_part.replace('[[sub_header_pointer]]', f'sub-{header_slug}') 
         toc_html_parts.append(header_html_part)
+        
     return '\n'.join(toc_html_parts)
+
+
+
+
+
+
+
 def get_blog_content(json_data_full): 
     text_template = """<p class="font-jakarta font-medium text-[15px] md:text-[16px] leading-[26px] md:leading-[30px] text-black" >
                 [[textcontent]]
@@ -312,4 +329,6 @@ def get_blog_html(demo_json_data):
         raise ValueError("Missing 'adBannerBelowUrl' or 'adBannerBelowHref' in demo_json_data")
     base_blog = base_blog.replace('[[ad_banner_under_leadership_section]]', demo_json_data['adBannerBelowUrl'])
     base_blog = base_blog.replace('[[link_to_ad_banner_below_leadership_spotlight]]', demo_json_data['adBannerBelowHref'])
+    with open('check_temp.html', 'w', encoding='utf-8') as f:
+        f.write(base_blog)
     return  base_blog

@@ -7,11 +7,13 @@ import os
 import time
 from dotenv import load_dotenv
 import json
+import re
 
 from static.data.page_handler import *
 from static.data.page_editor import *
 from static.data.db_handler import *
 from static.data.blogs import *
+from static.data.global_functions import *
 
 from flask_ngrok import run_with_ngrok
 load_dotenv()
@@ -65,6 +67,18 @@ def JD():
 def admin_login():
     return render_template('admin.html')
 
+@app.route('/admin_auth', methods=['POST'])
+def admin_auth():
+    data = request.json
+    print(f"Received data for admin_auth: {json.dumps(data, indent=2, ensure_ascii=False)}")
+
+    email = sha256_hash(data.get('email')) if "@" in data.get('email',"a") else data.get('enc_email')
+    password = sha256_hash(data.get('password')) if "@" in data.get('email','a') else data.get('enc_pwd')
+
+    return admin_login_db_check(email, password)
+
+#------------------------------ ADMIN PAGE BLOG ------------------------------#
+
 @app.route('/admin_blogs')
 def admin_blogs():
     return render_template('admin_blogs.html')
@@ -75,15 +89,77 @@ def admin_blog_preview():
     print(f"Received data for admin_blog_preview: {json.dumps(data, indent=2, ensure_ascii=False)}")
 
     data = get_blog_html(data)
-
+               
     return jsonify({
         "status": "success",
         "message": "Blog added/edited successfully",
         "data": data
     })
 
+@app.route('/admin_save_blog', methods=['POST'])
+def admin_save_blog():
+    data = request.json
+    print(f"Received data for admin_save_blog: {json.dumps(data, indent=2, ensure_ascii=False)}")
 
+    minimum_required_keys = [
+        "mainImageUrl", "mainImageAlt", "blogTitle", "blogAuthor",
+        "blogDate", "blogSummary", "dynamicSections"
+    ]
 
+    error_identifiers = {
+        "mainImageUrl": "Main Image URL",
+        "mainImageAlt": "Main Image Alt Text",
+        "blogTitle": "Blog Title",
+        "blogAuthor": "Blog Author",
+        "blogDate": "Blog Date",
+        "blogSummary": "Blog Summary",
+        "dynamicSections": "Dynamic Sections"
+    }
+
+    for i in minimum_required_keys:
+        if isinstance(data.get(i), str):
+            if data[i].strip() == "":
+                return jsonify({"status": "error", "message": f"{error_identifiers[i]} cannot be empty"}), 400
+        elif isinstance(data.get(i), list):
+            if data[i] == []:
+                return jsonify({"status": "error", "message": f"{error_identifiers[i]} cannot be empty"}), 400
+    verification_status = admin_login_db_check(email=data.get('enc_email', ''), password=data.get('enc_pwd', ''))
+    if not verification_status['success']:
+        return jsonify({"status": "error", "message": "Admin authentication failed"}), 403
+    data['admin_name'] = verification_status['name']
+    if data.get('reason','insert') == 'insert':
+        result = save_blogs_to_db(data)
+    else:
+        result = update_blogs_to_db(data)
+
+    if result.get('status') == 'error':
+        return jsonify({"status": "error", "message": result.get('message')}), 400
+
+    print(f"Result from save_blogs_to_db: {result}")
+    
+    if result:
+        return jsonify({"status": "success", "message": "Blog saved successfully", "url": result.get('url', '')}), 200
+    else:
+        return jsonify({"status": "error", "message": "Failed to save blog"}), 500
+
+@app.route('/blog/<blog_id>')
+def display_blog(blog_id):
+    blog_data = get_blog(blog_id=blog_id)
+    if not blog_data:
+        return render_template('404.html'), 404
+    json_data = blog_data.get('json_data', {})
+    html_template = get_blog_html(json_data)
+    if not html_template:
+        return render_template('404.html'), 404
+        
+    
+    html_template = re.sub(
+        r'(src|href)="static/',
+        r'\1="/static/',
+        html_template
+    )
+    
+    return html_template
 
 
 
@@ -136,18 +212,125 @@ def admin_update_homepage():
 #                                 BLOGS ROUTE                                    #
 #--------------------------------------------------------------------------------#
 
-@app.route('/get_blog')
-def get_blog():
-    blog_id = request.args.get('blog_id')
-    # Add logic to fetch and return blog data based on blog_id
-    return jsonify({"blog_id": blog_id, "message": "Blog data will be here"})
+@app.route('/get_blog_list')
+def get_blog_list():
+    search_keyword = request.args.get('search_keyword')
+    print(f"Received search keyword: {search_keyword}")
+    list_of_blogs = get_blogs_list_db(search_keyword=search_keyword)
+    print(f"Blogs list retrieved: {list_of_blogs}")
+    return jsonify({
+        "status": "success",
+        "blogs": list_of_blogs
+    })
+
+@app.route('/delete_blog', methods=['POST'])
+def delete_blog():
+    data = request.json
+    print(f"Received data for delete_blog: {json.dumps(data, indent=2, ensure_ascii=False)}")
+
+    if 'blog_id' not in data:
+        return jsonify({"status": "error", "message": "Blog ID is required"}), 400
+
+    blog_id = data['blog_id']
+    result = delete_blog_from_db(blog_id)
+
+    if result['status'] == 'success':
+        return jsonify({"status": "success", "message": "Blog deleted successfully"}), 200
+    else:
+        return jsonify({"status": "error", "message": "Failed to delete blog"}), 500
 
 
+#--------------------------------------------------------------------------------#
+#                             UPLOAD FILES ROUTE                                 #
+#--------------------------------------------------------------------------------#
 
+@app.route('/manage_files')
+def manage_files():
+    return render_template('manage_files.html')
 
+@app.route('/upload_file', methods=['POST'])
+def upload_file():
+    try:
+        if 'file' not in request.files:
+            return jsonify({"status": "error", "message": "No file part"}), 400
+        
+        file = request.files['file']
+        
+        if file.filename == '':
+            return jsonify({"status": "error", "message": "No selected file"}), 400
+        
+        # Get file extension
+        file_extension = file.filename.rsplit('.', 1)[1].lower() if '.' in file.filename else ''
+        
+        # Define allowed extensions
+        image_extensions = {'png', 'jpg', 'jpeg', 'gif', 'webp', 'bmp', 'svg'}
+        pdf_extensions = {'pdf'}
+        
+        # Check file type and determine bucket path
+        if file_extension in image_extensions:
+            bucket_path = 'blog-images'
+        elif file_extension in pdf_extensions:
+            bucket_path = 'magazine-pdfs'
+        else:
+            return jsonify({
+                "status": "error", 
+                "message": "File not supported. Only images (PNG, JPG, JPEG, GIF, WEBP, BMP, SVG) and PDF files are allowed."
+            }), 400
+        
+        # Upload file to Supabase storage
+        result = upload_file_to_storage(file, bucket_path)
+        
+        if result.get('status') == 'success':
+            return jsonify({
+                "status": "success",
+                "message": "File uploaded successfully",
+                "url": result.get('url', ''),
+                "filename": file.filename
+            }), 200
+        else:
+            return jsonify({
+                "status": "error",
+                "message": result.get('message', 'Failed to upload file')
+            }), 500
+            
+    except Exception as e:
+        print(f"Error uploading file: {str(e)}")
+        return jsonify({
+            "status": "error",
+            "message": f"Upload failed: {str(e)}"
+        }), 500
 
+@app.route('/get_file_details', methods=['GET'])
+def get_file_details():
+    data = request.args
+    print(f"Received data for get_file_details: {json.dumps(data, indent=2, ensure_ascii=False)}")
 
+    bucket_name = data.get('bucket_name', None)
+    if not bucket_name:
+        return jsonify({"status": "error", "message": "Bucket name is required"}), 400
+    file_details = get_file_details_db(bucket_name)
+    if file_details['status'] == 'error':
+        return jsonify({"status": "error", "message": file_details.get('message', 'Failed to retrieve file details')}), 500
+    return jsonify({
+        "status": "success",
+        "data": file_details.get('data', [])
+    }), 200
 
+@app.route('/delete_file', methods=['POST'])
+def delete_file():
+    data = request.json
+    print(f"Received data for delete_file: {json.dumps(data, indent=2, ensure_ascii=False)}")
+
+    if 'file_name' not in data:
+        return jsonify({"status": "error", "message": "File name is required"}), 400
+
+    file_name = data['file_name']
+    result = delete_file_from_storage(file_name)
+
+    if result['status'] == 'success':
+        return jsonify({"status": "success", "message": result.get('message', 'File deleted successfully')}), 200
+    else:
+        return jsonify({"status": "error", "message": result.get('message', 'Failed to delete file')}), 500
 
 #--------------------------------------------------------------------------------#
 #                                 TRIAL ROUTE                                    #

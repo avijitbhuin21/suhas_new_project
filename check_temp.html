@@ -1,4 +1,4 @@
-BLOGS_TEMPLATE = r"""
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -373,22 +373,24 @@ BLOGS_TEMPLATE = r"""
     <main class="w-full px-4 sm:px-8 md:px-[65px] py-[21px] relative article-container">
         <article class="mb-8 md:mb-12 relative">
             <div class="relative w-full h-[300px] md:h-[478px]">
-                <img src="[[main_page_image]]" alt="[[main_page_image_alt]]" class="w-full h-full object-cover opacity-100 mix-blend-multiply"/>
+                <img src="https://iwyjssxhrcucnrkzkvmt.supabase.co/storage/v1/object/public/blog-images/minimalist-mountains-19.jpg" alt="main alt" class="w-full h-full object-cover opacity-100 mix-blend-multiply"/>
             </div>
 
             <div class="relative bg-white md:w-full w-[420px] md:ml-[6.85rem] ml-[-1.5rem] max-w-[1175px] h-auto mx-auto -mt-[40px] sm:-mt-[60px] md:-mt-[76px] p-4 sm:p-6 md:p-8 z-10">
                 <h1 class="font-jakarta font-medium text-[28px] sm:text-[34px] md:text-[42px] lg:text-[50px] leading-[1.2] md:leading-[1.25] capitalize text-black mb-3 md:mb-4 text-center hero-text">
-                    [[main_page_title]]
+                    Innovative Approaches to Talent Acquisition & Retention in Today's Professional Landscape
                 </h1>
                 <div class="flex justify-center items-center gap-2 text-center mb-4">
-                    <p class="font-jakarta font-semibold text-[11px] sm:text-[12px] md:text-[14px] leading-[100.9%] text-black"> [[author_name]] </p>
+                    <p class="font-jakarta font-semibold text-[11px] sm:text-[12px] md:text-[14px] leading-[100.9%] text-black"> Craig Bator </p>
                     <span class="text-black">- -</span>
-                    <p class="font-jakarta font-normal text-[11px] sm:text-[12px] md:text-[14px] leading-[100.9%] text-black"> [[publish_date]] </p>
+                    <p class="font-jakarta font-normal text-[11px] sm:text-[12px] md:text-[14px] leading-[100.9%] text-black"> 2025-06-04 </p>
                 </div>
             </div>
 
             <p class="font-jakarta font-medium text-[18px] md:text-[22px] leading-[26px] md:leading-[30px] text-[#636363] text-center mt-6 md:mt-8 max-w-[1175px] mx-auto px-2 md:px-0">
-            [[blog_summary]]
+            The quest for top talent in the professional landscape has never been more competitive. Companies are redefining their approaches to attract and retain exceptional minds and this evolution calls for innovative strategies in talent acquisition and retention. Reports suggest 75% of HR professionals ring the bell on a talent shortage as their biggest challenge. The figure throws into relief the critical need for creative solutions.
+
+
             </p>
 
             <hr class="border-t border-black my-8 md:my-12 w-full md:w-[90%] lg:w-[87rem] mx-auto"/>
@@ -398,7 +400,17 @@ BLOGS_TEMPLATE = r"""
             <div class="relative toc-container p-5 bg-white rounded-xl border-gray-100 lg:hidden">
                 <h2 class="text-xl font-bold text-[#3533CD] mb-4 border-b pb-3">Table of Contents</h2>
                 
-                [[table_of_contents_mobile_menu]]
+                <div class="mb-3 toc-section" data-section-id="crafting-customised-recruitment-campaigns">
+            <a href="#crafting-customised-recruitment-campaigns" data-toggle-target="#sub-crafting-customised-recruitment-campaigns" class="toc-h2-link flex items-center justify-between mt-1 mb-3 no-underline text-gray-800 hover:text-[#3533CD] transition-colors duration-200 toc-link">
+                <div class="text-base font-medium">Crafting Customised Recruitment Campaigns</div>
+                <i class="ph ph-caret-down text-xs ml-1 toc-arrow transition-transform duration-300"></i>
+            </a>
+            <div id="sub-crafting-customised-recruitment-campaigns" class="toc-subcategories hidden pl-4 mb-3 space-y-2">
+                <a href="#building-an-attractive-employer-identity-updated" class="flex items-center mt-1 no-underline text-gray-600 hover:text-[#3533CD] transition-colors duration-200 toc-link border-l-2 border-gray-200 pl-3 hover:border-[#3533CD]">
+                    <div class="text-sm">Building an Attractive Employer Identity updated</div>
+                </a>
+            </div>
+        </div>
                 
                 <div class="mt-6 space-y-4 border-t pt-5">
                     <button class="w-full h-[45px] bg-[#3533CD] rounded-xl flex items-center justify-center text-white font-jakarta font-medium text-[16px] leading-[120%] hover:bg-opacity-90 transition-colors shadow-md">
@@ -424,7 +436,17 @@ BLOGS_TEMPLATE = r"""
                 <div class="p-6 flex flex-col w-full rounded-xl bg-white border-gray-100 overflow-y-auto max-h-[calc(100vh-4rem)]" style="scroll-behavior: smooth">
                     <h2 class="text-2xl font-bold text-[#3533CD] mb-6 border-b pb-3">Table of Contents</h2>
                     
-                    [[table_of_contents_desktop_menu]]
+                    <div class="mb-3 toc-section" data-section-id="crafting-customised-recruitment-campaigns">
+            <a href="#crafting-customised-recruitment-campaigns" data-toggle-target="#sub-crafting-customised-recruitment-campaigns" class="toc-h2-link flex items-center justify-between mt-1 mb-3 no-underline text-gray-800 hover:text-[#3533CD] transition-colors duration-200 toc-link">
+                <div class="text-base font-medium">Crafting Customised Recruitment Campaigns</div>
+                <i class="ph ph-caret-down text-xs ml-1 toc-arrow transition-transform duration-300"></i>
+            </a>
+            <div id="sub-crafting-customised-recruitment-campaigns" class="toc-subcategories hidden pl-4 mb-3 space-y-2">
+                <a href="#building-an-attractive-employer-identity-updated" class="flex items-center mt-1 no-underline text-gray-600 hover:text-[#3533CD] transition-colors duration-200 toc-link border-l-2 border-gray-200 pl-3 hover:border-[#3533CD]">
+                    <div class="text-sm">Building an Attractive Employer Identity updated</div>
+                </a>
+            </div>
+        </div>
 
                     <div class="mt-6 space-y-4 border-t pt-5">
                         <button class="w-full h-[45px] bg-[#3533CD] rounded-xl flex items-center justify-center text-white font-jakarta font-medium text-[16px] leading-[120%] hover:bg-opacity-90 transition-colors shadow-md">
@@ -447,7 +469,21 @@ BLOGS_TEMPLATE = r"""
 
             <section class="space-y-6 md:space-y-5 text-justify order-1 lg:order-2" >
             
-            [[actual_blog_content]]
+            <p class="font-jakarta font-medium text-[15px] md:text-[16px] leading-[26px] md:leading-[30px] text-black" >
+                The quest for top talent in the professional landscape has never been more competitive. Companies are redefining their approaches to attract and retain exceptional minds and this evolution calls for innovative strategies in talent acquisition and retention. Reports suggest 75% of HR professionals ring the bell on a talent shortage as their biggest challenge. The figure throws into relief the critical need for creative solutions.
+            </p>
+<h2 id="crafting-customised-recruitment-campaigns" class="font-jakarta font-medium text-[22px] md:text-[28px] leading-[28px] md:leading-[30px] text-black scroll-mt-20" >
+                Crafting Customised Recruitment Campaigns
+            </h2>
+<p class="font-jakarta font-medium text-[15px] md:text-[16px] leading-[26px] md:leading-[30px] text-black md:ml-[2rem]" >
+                These days, job advertisements don't carry a traditional approach as they used to do a decade back. Today, attracting top-tier talent requires bespoke recruitment initiatives that highlight what makes your company stand out. It's about digging deeper to understand what potential employees seek and ensuring these desires mesh with your company's ethics and goals.
+            </p>
+<div>
+<p id="building-an-attractive-employer-identity-updated" class="font-jakarta font-medium text-[15px] md:text-[16px] leading-[26px] md:leading-[30px] text-black mb-3 md:mb-4 scroll-mt-20 md:ml-[2rem]">
+                <span class="font-semibold font-high text-[20px]">Building an Attractive Employer Identity updated<br/></span>
+                Develop a strong employer brand that echoes your core values, workplace culture, and paths for advancement. Such branding should connect with prospective employees and set you apart in the crowd.
+            </p>
+</div>
             
             </section>
         </div>
@@ -457,28 +493,169 @@ BLOGS_TEMPLATE = r"""
                 <div class="h-auto py-6 md:py-0 md:h-[32rem] w-full md:w-1/2 md:shrink-0 bg-gradient-to-r from-[#3533CD] to-[#0A0A24] rounded-[15px] p-4 md:p-8 flex flex-col items-center justify-center text-center text-white">
                     <h2 class="font-helvetica-now font-bold text-2xl md:text-4xl leading-tight mb-3 md:mb-4"> Leadership Spotlight </h2>
                         <div class="flex flex-col items-center gap-3 md:gap-4">
-                            <div class="w-[100px] h-[100px] sm:w-[120px] sm:h-[120px] md:w-[160px] md:h-[160px] bg-[url('[[leadership_spotlight_image]]')] bg-cover bg-center rounded-full shrink-0"></div>
+                            <div class="w-[100px] h-[100px] sm:w-[120px] sm:h-[120px] md:w-[160px] md:h-[160px] bg-[url('https://iwyjssxhrcucnrkzkvmt.supabase.co/storage/v1/object/public/leaders-images//swati_gupta.png')] bg-cover bg-center rounded-full shrink-0"></div>
                             <div class="flex flex-col items-center">
-                                <h3 class="font-jakarta font-normal text-lg sm:text-xl md:text-2xl leading-tight mb-1" > [[leader_name]] </h3>
-                                <p class="font-jakarta font-normal text-base md:text-lg leading-tight mb-2 md:mb-3"> [[leader_designation]] </p>
+                                <h3 class="font-jakarta font-normal text-lg sm:text-xl md:text-2xl leading-tight mb-1" > swati gupta </h3>
+                                <p class="font-jakarta font-normal text-base md:text-lg leading-tight mb-2 md:mb-3"> Founder CXO TechBot </p>
                                 <p class="font-jakarta font-normal text-sm md:text-base leading-relaxed mb-3 md:mb-4 max-w-xs md:max-w-sm" >
-                                    [[leader_brief_description]]
+                                    Discover insights from industry leaders who are transforming
+                  the way businesses operate in today's competitive landscape.
                                 </p>
-                                <a href="[[link_to_leadership_webstories]]" class="inline-block hover:opacity-90 transition-opacity" >
+                                <a href="#" class="inline-block hover:opacity-90 transition-opacity" >
                                     <img src="/static/images/webstories_button.png" alt="Web Stories" class="w-[110px] h-[31px] md:w-[140px] md:h-[40px]" />
                                 </a>
                             </div>
                         </div>
                 </div>
-                <a class="w-full md:w-1/2 h-80 md:h-auto bg-cover bg-center rounded-[15px] mt-4 md:mt-0 bg-[url([[ad_banner_beside_leaderhip_spotlight]])]"></a>
+                <a class="w-full md:w-1/2 h-80 md:h-auto bg-cover bg-center rounded-[15px] mt-4 md:mt-0 bg-[url(https://picsum.photos/1920/1080/?random=125)]"></a>
             </div>
         </section>
 
-        <a href="[[link_to_ad_banner_below_leadership_spotlight]]" class="block w-full h-[120px] sm:h-[160px] md:h-[236px] my-8 md:my-12">
-            <img src="[[ad_banner_under_leadership_section]]" alt="Advertisement" class="w-full h-full object-cover" />
+        <a href="ad" class="block w-full h-[120px] sm:h-[160px] md:h-[236px] my-8 md:my-12">
+            <img src="https://picsum.photos/1920/1080/?random=129" alt="Advertisement" class="w-full h-full object-cover" />
         </a>
 
-        [[more_in_business_posts]]
+        <div class="mt-8 md:mt-16">
+        <h2 class="font-jakarta font-bold text-[28px] md:text-[40px] leading-[30px] text-black mb-6 md:mb-8"> More in Business </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8" >
+          <div class="bg-white p-3 flex gap-4 h-auto min-h-[120px] md:h-[151px] transition-shadow hover:shadow-md">
+            <img src="https://picsum.photos/127/121?random=1" alt="Article image" class="w-[90px] md:w-[127px] h-auto md:h-[121px] object-cover flex-none"/>
+            <div class="flex flex-col">
+              <span class="font-jakarta font-bold text-[10px] md:text-[12px] leading-[24px] md:leading-[30px] text-black uppercase">BUSINESS</span>
+              <a
+                href="
+                class="font-jakarta font-medium text-[14px] md:text-[16px] leading-[22px] md:leading-[25px] underline text-black grow hover:text-[
+                >The best time to eat breakfast, according to a nutritional
+                expert</a
+              >
+              <span
+                class="font-jakarta italic font-bold text-[10px] md:text-[12px] text-black mt-auto"
+                >Author -- Date</span
+              >
+            </div>
+          </div>
+          <div
+            class="bg-white p-3 flex gap-4 h-auto min-h-[120px] md:h-[151px] transition-shadow hover:shadow-md"
+          >
+            <img
+              src="https://picsum.photos/127/121?random=2"
+              alt="Article image"
+              class="w-[90px] md:w-[127px] h-auto md:h-[121px] object-cover flex-none"
+            />
+            <div class="flex flex-col">
+              <span
+                class="font-jakarta font-bold text-[10px] md:text-[12px] leading-[24px] md:leading-[30px] text-black uppercase"
+                >BUSINESS</span
+              >
+              <a
+                href="
+                class="font-jakarta font-medium text-[14px] md:text-[16px] leading-[22px] md:leading-[25px] underline text-black grow hover:text-[
+                >Effective leadership practices for managing remote teams</a
+              >
+              <span
+                class="font-jakarta italic font-bold text-[10px] md:text-[12px] text-black mt-auto"
+                >Author</span
+              >
+            </div>
+          </div>
+          <div
+            class="bg-white p-3 flex gap-4 h-auto min-h-[120px] md:h-[151px] transition-shadow hover:shadow-md"
+          >
+            <img
+              src="https://picsum.photos/127/121?random=3"
+              alt="Article image"
+              class="w-[90px] md:w-[127px] h-auto md:h-[121px] object-cover flex-none"
+            />
+            <div class="flex flex-col">
+              <span
+                class="font-jakarta font-bold text-[10px] md:text-[12px] leading-[24px] md:leading-[30px] text-black uppercase"
+                >BUSINESS</span
+              >
+              <a
+                href="
+                class="font-jakarta font-medium text-[14px] md:text-[16px] leading-[22px] md:leading-[25px] underline text-black grow hover:text-[
+                >How AI is transforming modern recruitment processes</a
+              >
+              <span
+                class="font-jakarta italic font-bold text-[10px] md:text-[12px] text-black mt-auto"
+                >Author</span
+              >
+            </div>
+          </div>
+          <div
+            class="bg-white p-3 flex gap-4 h-auto min-h-[120px] md:h-[151px] transition-shadow hover:shadow-md"
+          >
+            <img
+              src="https://picsum.photos/127/121?random=4"
+              alt="Article image"
+              class="w-[90px] md:w-[127px] h-auto md:h-[121px] object-cover flex-none"
+            />
+            <div class="flex flex-col">
+              <span
+                class="font-jakarta font-bold text-[10px] md:text-[12px] leading-[24px] md:leading-[30px] text-black uppercase"
+                >BUSINESS</span
+              >
+              <a
+                href="
+                class="font-jakarta font-medium text-[14px] md:text-[16px] leading-[22px] md:leading-[25px] underline text-black grow hover:text-[
+                >The ROI of employee development programs</a
+              >
+              <span
+                class="font-jakarta italic font-bold text-[10px] md:text-[12px] text-black mt-auto"
+                >Author</span
+              >
+            </div>
+          </div>
+          <div
+            class="bg-white p-3 flex gap-4 h-auto min-h-[120px] md:h-[151px] transition-shadow hover:shadow-md"
+          >
+            <img
+              src="https://picsum.photos/127/121?random=5"
+              alt="Article image"
+              class="w-[90px] md:w-[127px] h-auto md:h-[121px] object-cover flex-none"
+            />
+            <div class="flex flex-col">
+              <span
+                class="font-jakarta font-bold text-[10px] md:text-[12px] leading-[24px] md:leading-[30px] text-black uppercase"
+                >BUSINESS</span
+              >
+              <a
+                href="
+                class="font-jakarta font-medium text-[14px] md:text-[16px] leading-[22px] md:leading-[25px] underline text-black grow hover:text-[
+                >Building inclusive workplaces: strategies that work</a
+              >
+              <span
+                class="font-jakarta italic font-bold text-[10px] md:text-[12px] text-black mt-auto"
+                >Author</span
+              >
+            </div>
+          </div>
+          <div
+            class="bg-white p-3 flex gap-4 h-auto min-h-[120px] md:h-[151px] transition-shadow hover:shadow-md"
+          >
+            <img
+              src="https://picsum.photos/127/121?random=6"
+              alt="Article image"
+              class="w-[90px] md:w-[127px] h-auto md:h-[121px] object-cover flex-none"
+            />
+            <div class="flex flex-col">
+              <span
+                class="font-jakarta font-bold text-[10px] md:text-[12px] leading-[24px] md:leading-[30px] text-black uppercase"
+                >BUSINESS</span
+              >
+              <a
+                href="
+                class="font-jakarta font-medium text-[14px] md:text-[16px] leading-[22px] md:leading-[25px] underline text-black grow hover:text-[
+                >The impact of corporate culture on retention rates</a
+              >
+              <span
+                class="font-jakarta italic font-bold text-[10px] md:text-[12px] text-black mt-auto"
+                >Author</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
 
     </main>
     <section class="w-full aspect-[120/47] relative bg-contain bg-no-repeat bg-center bg-[url(/static/images/9_out_of_10.png)]" style="margin-bottom: -1%">
@@ -813,17 +990,4 @@ BLOGS_TEMPLATE = r"""
     </script>
   </body>
 </html>  
-    """
-
-more_in_business_single_post_template = r"""<div class="bg-white p-3 flex gap-4 h-auto min-h-[120px] md:h-[151px] transition-shadow hover:shadow-md">
-            <img src="[[post_image]]" alt="[[post_alt]]" class="w-[90px] md:w-[127px] h-auto md:h-[121px] object-cover flex-none"/>
-            <div class="flex flex-col">
-                <span class="font-jakarta font-bold text-[10px] md:text-[12px] leading-[24px] md:leading-[30px] text-black uppercase">BUSINESS</span>
-                <a href="#" class="font-jakarta font-medium text-[14px] md:text-[16px] leading-[22px] md:leading-[25px] underline text-black grow hover:text-[#3533CD]">
-                    [[post_title]]</a>
-                <span
-                    class="font-jakarta italic font-bold text-[10px] md:text-[12px] text-black mt-auto"
-                    >[[post_author]] -- [[poat_date]]</span
-                >
-            </div>
-          </div>"""
+    

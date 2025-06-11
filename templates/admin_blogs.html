@@ -162,6 +162,208 @@
             color: white !important;
             transform: rotate(90deg);
         }
+        
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: transparent;
+            backdrop-filter: blur(5px);
+        }
+        
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        .modal-content {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .modal-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: white;
+            margin: 0;
+        }
+        
+        .modal-close {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            transition: all 0.2s ease;
+        }
+        
+        .modal-close:hover {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .modal-body {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        
+        .modal-url-link {
+            color: #60a5fa;
+            text-decoration: underline;
+            word-break: break-all;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            hyphens: auto;
+            transition: color 0.2s ease;
+        }
+        
+        .modal-url-link:hover {
+            color: #93c5fd;
+            text-decoration: none;
+        }
+        
+        .modal-body p {
+            word-break: break-word;
+            overflow-wrap: break-word;
+        }
+        
+        .modal-button {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .modal-button-primary {
+            background-color: rgb(59, 130, 246);
+            color: white;
+        }
+        
+        .modal-button-primary:hover {
+            background-color: rgb(37, 99, 235);
+        }
+        
+        .modal-button-secondary {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .modal-button-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .error-modal .modal-title {
+            color: #ef4444;
+        }
+        
+        .success-modal .modal-title {
+            color: #10b981;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        
+        /* Line clamp utility for text truncation */
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        /* Blog list item hover effects */
+        .blog-item {
+            transition: all 0.2s ease-in-out;
+        }
+        
+        .blog-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* Pagination button styles */
+        .pagination-btn {
+            transition: all 0.2s ease-in-out;
+        }
+        
+        .pagination-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .pagination-btn:not(:disabled):hover {
+            transform: translateY(-1px);
+        }
+        
+        /* Search input focus enhancement */
+        .search-input:focus {
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            border-color: rgb(59, 130, 246);
+        }
+        
+        /* Status badge styles */
+        .status-badge {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 9999px;
+            font-weight: 500;
+        }
+        
+        .status-published {
+            background-color: rgba(34, 197, 94, 0.2);
+            color: rgb(74, 222, 128);
+        }
+        
+        .status-draft {
+            background-color: rgba(234, 179, 8, 0.2);
+            color: rgb(250, 204, 21);
+        }
     </style>
 </head>
 <body>
@@ -270,6 +472,23 @@
                         ></textarea>
                     </div>
 
+                    <!-- Blog Status (Only visible in edit mode) -->
+                    <div class="form-item" id="blogStatusSection" style="display: none;">
+                        <label class="form-label">
+                            <i data-lucide="settings" class="w-4 h-4 inline mr-2"></i>Blog Status
+                        </label>
+                        <div class="flex gap-4">
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="radio" name="blogStatus" value="draft" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
+                                <span class="text-sm text-white">Draft</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="radio" name="blogStatus" value="published" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
+                                <span class="text-sm text-white">Published</span>
+                            </label>
+                        </div>
+                    </div>
+
                     <!-- Ad Banner One (Beside Leadership Spotlight) -->
                     <div class="form-item">
                         <div class="flex justify-between items-center mb-2">
@@ -336,121 +555,103 @@
 
                     <!-- Action Buttons -->
                     <div class="flex justify-end gap-3">
-                        <button type="button" id="loadPreviewBtn" class="form-button bg-white hover:bg-gray-100 text-black">
-                            <i data-lucide="eye" class="w-4 h-4 mr-2"></i>
-                            Load Preview
-                        </button>
-                        <button type="submit" id="saveBlogBtn" class="form-button bg-white hover:bg-gray-100 text-black">
-                            <i data-lucide="save" class="w-4 h-4 mr-2"></i>
-                            Save Blog
-                        </button>
+                        <!-- Add Mode Buttons -->
+                        <div id="addModeButtons" style="gap: 1rem;">
+                            <button type="button" id="loadPreviewBtn" class="form-button bg-white hover:bg-gray-100 text-black">
+                                <i data-lucide="eye" class="w-4 h-4 mr-2"></i>
+                                Preview
+                            </button>
+                            <button type="button" id="saveDraftBtn" class="form-button bg-gray-600 hover:bg-gray-700 text-white">
+                                <i data-lucide="file-text" class="w-4 h-4 mr-2"></i>
+                                Draft
+                            </button>
+                            <button type="submit" id="savePublishBtn" class="form-button bg-green-600 hover:bg-green-700 text-white">
+                                <i data-lucide="send" class="w-4 h-4 mr-2"></i>
+                                Publish
+                            </button>
+                        </div>
+                        
+                        <!-- Edit Mode Buttons -->
+                        <div id="editModeButtons" style="display: none; gap: 1rem;">
+                            <button type="button" id="loadPreviewEditBtn" class="form-button bg-white hover:bg-gray-100 text-black">
+                                <i data-lucide="eye" class="w-4 h-4 mr-2"></i>
+                                Preview
+                            </button>
+                            <button type="button" id="deleteBlogBtn" class="form-button bg-red-600 hover:bg-red-700 text-white">
+                                <i data-lucide="trash-2" class="w-4 h-4 mr-2"></i>
+                                Delete
+                            </button>
+                            <button type="button" id="updateBlogBtn" class="form-button bg-green-600 hover:bg-green-700 text-white">
+                                <i data-lucide="save" class="w-4 h-4 mr-2"></i>
+                                Update
+                            </button>
+                        </div>
                     </div>
                 </form>
             </div>
         </section>
 
-        <!-- Edit Blogs Section -->
+        <!-- Edit/Delete Blog Section -->
         <section id="editBlogs" class="content-section">
             <div class="form-container">
-                <h2 class="section-title">Edit Blogs</h2>
+                <h2 class="section-title text-center">Edit/Delete Blog</h2>
                 <div class="section-content">
+                    <!-- Search Bar -->
                     <div class="mb-6">
-                        <label class="form-label" for="searchBlog">Search Blog to Edit</label>
-                        <input
-                            type="text"
-                            id="searchBlog"
-                            class="form-input"
-                            placeholder="Search by title or author..."
-                        />
-                    </div>
-                    <div class="space-y-4">
-                        <div class="p-4 bg-white/5 rounded-lg border border-white/10">
-                            <h3 class="font-semibold mb-2">Sample Blog Title 1</h3>
-                            <p class="text-sm text-white/60 mb-2">By John Doe • Technology • Dec 15, 2024</p>
-                            <p class="text-sm mb-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
-                            <div class="flex gap-2">
-                                <button class="form-button text-xs px-3 py-1">
-                                    <i data-lucide="edit" class="w-3 h-3 mr-1"></i>
-                                    Edit
-                                </button>
-                                <button class="form-button bg-gray-600 hover:bg-gray-700 text-xs px-3 py-1">
-                                    <i data-lucide="eye" class="w-3 h-3 mr-1"></i>
-                                    Preview
-                                </button>
-                            </div>
-                        </div>
-                        <div class="p-4 bg-white/5 rounded-lg border border-white/10">
-                            <h3 class="font-semibold mb-2">Sample Blog Title 2</h3>
-                            <p class="text-sm text-white/60 mb-2">By Jane Smith • Business • Dec 12, 2024</p>
-                            <p class="text-sm mb-3">Sed do eiusmod tempor incididunt ut labore et dolore...</p>
-                            <div class="flex gap-2">
-                                <button class="form-button text-xs px-3 py-1">
-                                    <i data-lucide="edit" class="w-3 h-3 mr-1"></i>
-                                    Edit
-                                </button>
-                                <button class="form-button bg-gray-600 hover:bg-gray-700 text-xs px-3 py-1">
-                                    <i data-lucide="eye" class="w-3 h-3 mr-1"></i>
-                                    Preview
-                                </button>
+                        <label class="form-label" for="searchBlog">
+                            <i data-lucide="search" class="w-4 h-4 inline mr-2"></i>Search Blog to Edit
+                        </label>
+                        <div class="relative">
+                            <input
+                                type="text"
+                                id="searchBlog"
+                                class="form-input pr-10"
+                                placeholder="Search by title, author, or content..."
+                            />
+                            <div class="absolute inset-y-0 right-0 flex items-center pr-3">
+                                <i data-lucide="search" class="w-4 h-4 text-white/40"></i>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </section>
 
-        <!-- Delete Blogs Section -->
-        <section id="deleteBlogs" class="content-section">
-            <div class="form-container">
-                <h2 class="section-title">Delete Blogs</h2>
-                <div class="section-content">
-                    <div class="mb-6">
-                        <label class="form-label" for="searchDeleteBlog">Search Blog to Delete</label>
-                        <input
-                            type="text"
-                            id="searchDeleteBlog"
-                            class="form-input"
-                            placeholder="Search by title or author..."
-                        />
+                    <!-- Loading State -->
+                    <div id="blogsLoading" class="text-center py-8 hidden">
+                        <i data-lucide="loader-2" class="w-6 h-6 animate-spin mx-auto mb-2 text-white/60"></i>
+                        <p class="text-white/60">Loading blogs...</p>
                     </div>
-                    <div class="space-y-4">
-                        <div class="p-4 bg-white/5 rounded-lg border border-red-500/20">
-                            <h3 class="font-semibold mb-2">Sample Blog Title 1</h3>
-                            <p class="text-sm text-white/60 mb-2">By John Doe • Technology • Dec 15, 2024</p>
-                            <p class="text-sm mb-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
-                            <div class="flex gap-2">
-                                <button class="form-button bg-red-600 hover:bg-red-700 text-xs px-3 py-1">
-                                    <i data-lucide="trash-2" class="w-3 h-3 mr-1"></i>
-                                    Delete
-                                </button>
-                                <button class="form-button bg-gray-600 hover:bg-gray-700 text-xs px-3 py-1">
-                                    <i data-lucide="eye" class="w-3 h-3 mr-1"></i>
-                                    Preview
-                                </button>
-                            </div>
-                        </div>
-                        <div class="p-4 bg-white/5 rounded-lg border border-red-500/20">
-                            <h3 class="font-semibold mb-2">Sample Blog Title 2</h3>
-                            <p class="text-sm text-white/60 mb-2">By Jane Smith • Business • Dec 12, 2024</p>
-                            <p class="text-sm mb-3">Sed do eiusmod tempor incididunt ut labore et dolore...</p>
-                            <div class="flex gap-2">
-                                <button class="form-button bg-red-600 hover:bg-red-700 text-xs px-3 py-1">
-                                    <i data-lucide="trash-2" class="w-3 h-3 mr-1"></i>
-                                    Delete
-                                </button>
-                                <button class="form-button bg-gray-600 hover:bg-gray-700 text-xs px-3 py-1">
-                                    <i data-lucide="eye" class="w-3 h-3 mr-1"></i>
-                                    Preview
-                                </button>
-                            </div>
-                        </div>
+
+                    <!-- No Results State -->
+                    <div id="noBlogsFound" class="text-center py-8 hidden">
+                        <i data-lucide="file-x" class="w-12 h-12 mx-auto mb-4 text-white/40"></i>
+                        <h3 class="text-lg font-semibold mb-2 text-white/80">No blogs found</h3>
+                        <p class="text-white/60">Try adjusting your search terms or check back later.</p>
+                    </div>
+
+                    <!-- Blogs List Container -->
+                    <div id="blogsList" class="space-y-4">
+                        <!-- Dynamic blog entries will be inserted here -->
+                    </div>
+
+                    <!-- Pagination Controls -->
+                    <div id="paginationControls" class="flex justify-center items-center gap-4 mt-6 hidden">
+                        <button id="prevPage" class="form-button bg-gray-600 hover:bg-gray-700 text-xs px-3 py-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                            <i data-lucide="chevron-left" class="w-3 h-3 mr-1"></i>
+                            Previous
+                        </button>
+                        <span id="pageInfo" class="text-sm text-white/60 px-4">
+                            Page 1 of 1
+                        </span>
+                        <button id="nextPage" class="form-button bg-gray-600 hover:bg-gray-700 text-xs px-3 py-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                            Next
+                            <i data-lucide="chevron-right" class="w-3 h-3 ml-1"></i>
+                        </button>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Manage Images Section -->
-        <section id="manageImages" class="content-section">
+        <!-- <section id="manageImages" class="content-section">
             <div class="form-container">
                 <h2 class="section-title">Manage Images</h2>
                 <div class="section-content">
@@ -520,10 +721,81 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section> -->
     </main>
     
+    <!-- Modal for displaying messages -->
+    <div id="messageModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle" class="modal-title">Message</h3>
+                <button type="button" class="modal-close" onclick="closeModal()">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="modalMessage">Message content goes here.</p>
+            </div>
+        </div>
+    </div>
+    
     <script>
+       
+        function showModal(title, message, type = 'info') {
+            const modal = document.getElementById('messageModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalMessage = document.getElementById('modalMessage');
+            const modalContent = modal.querySelector('.modal-content');
+            
+           
+            modalTitle.textContent = title;
+            modalMessage.style.whiteSpace = 'pre-line';
+            
+           
+            const urlRegex = /(https?:\/\/[^\s]+)/g;
+            if (urlRegex.test(message)) {
+                modalMessage.innerHTML = message.replace(urlRegex, '<a href="$1" target="_blank" rel="noopener noreferrer" class="modal-url-link">$1</a>');
+            } else {
+                modalMessage.textContent = message;
+            }
+            
+           
+            modalContent.classList.remove('error-modal', 'success-modal');
+            
+           
+            if (type === 'error') {
+                modalContent.classList.add('error-modal');
+            } else if (type === 'success') {
+                modalContent.classList.add('success-modal');
+            }
+            
+           
+            modal.classList.add('show');
+            
+           
+            lucide.createIcons();
+        }
+        
+        function closeModal() {
+            const modal = document.getElementById('messageModal');
+            modal.classList.remove('show');
+        }
+        
+       
+        document.addEventListener('click', function(event) {
+            const modal = document.getElementById('messageModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
+        
+       
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+        
         class ExpandableTabs {
             constructor(container, options = {}) {
                 this.container = container;
@@ -617,28 +889,25 @@
                 });
             }
         }
-        // Function to show/hide content sections
+       
         function showContentSection(tabTitle) {
-            // Hide all sections
+           
             const sections = document.querySelectorAll('.content-section');
             sections.forEach(section => {
                 section.classList.remove('active');
             });
             
-            // Show the selected section
+           
             let sectionId = '';
             switch(tabTitle) {
                 case 'Add Blogs':
                     sectionId = 'addBlogs';
                     break;
-                case 'Edit Blogs':
+                case 'Edit/Delete Blog':
                     sectionId = 'editBlogs';
                     break;
-                case 'Delete Blogs':
-                    sectionId = 'deleteBlogs';
-                    break;
-                case 'Manage Images':
-                    sectionId = 'manageImages';
+                // case 'Manage Images':
+                //     sectionId = 'manageImages';
                     break;
             }
             
@@ -650,7 +919,7 @@
             }
         }
         
-        // Form submission handler
+       
         function handleFormSubmit(event) {
             event.preventDefault();
             const formData = new FormData(event.target);
@@ -659,7 +928,7 @@
                 data[key] = value;
             }
             
-            // Set today's date if no date is provided
+           
             if (!data.blogDate) {
                 const today = new Date().toISOString().split('T')[0];
                 data.blogDate = today;
@@ -670,37 +939,37 @@
             event.target.reset();
         }
         
-        // Load Preview handler
+       
         async function handleLoadPreview() {
             const form = document.getElementById('addBlogForm');
             const formData = new FormData(form);
             const data = {};
             for (let [key, value] of formData.entries()) {
-                // Filter out dynamic section fields (they start with 'dynamic_')
+               
                 if (!key.startsWith('dynamic_')) {
                     data[key] = value;
                 }
             }
             
-            // Set today's date if no date is provided
+           
             if (!data.blogDate) {
                 const today = new Date().toISOString().split('T')[0];
                 data.blogDate = today;
                 document.getElementById('blogDate').value = today;
             }
             
-            // Collect dynamic sections
+           
             const dynamicSections = collectDynamicSections();
             data.dynamicSections = dynamicSections;
             
             try {
-                // Show loading state
+               
                 const loadPreviewBtn = document.getElementById('loadPreviewBtn');
                 const originalText = loadPreviewBtn.innerHTML;
                 loadPreviewBtn.innerHTML = '<i data-lucide="loader-2" class="w-4 h-4 mr-2 animate-spin"></i>Loading...';
                 loadPreviewBtn.disabled = true;
                 
-                // Send POST request to server
+               
                 const response = await fetch('/admin_blog_preview', {
                     method: 'POST',
                     headers: {
@@ -715,12 +984,12 @@
                 
                 const result = await response.json();
                 
-                // Restore button state
+               
                 loadPreviewBtn.innerHTML = originalText;
                 loadPreviewBtn.disabled = false;
                 
                 if (result.status === 'success') {
-                    // Open preview in new window with server-returned HTML
+                   
                     const previewWindow = window.open('', 'preview', 'width=800,height=600,scrollbars=yes');
                     previewWindow.document.write(result.data);
                     previewWindow.document.close();
@@ -729,7 +998,7 @@
                 }
                 
             } catch (error) {
-                // Restore button state on error
+               
                 const loadPreviewBtn = document.getElementById('loadPreviewBtn');
                 loadPreviewBtn.innerHTML = '<i data-lucide="eye" class="w-4 h-4 mr-2"></i>Load Preview';
                 loadPreviewBtn.disabled = false;
@@ -739,7 +1008,184 @@
             }
         }
         
-        // Dynamic Content Sections Management
+       
+        async function handleSaveDraft() {
+            const form = document.getElementById('addBlogForm');
+            const formData = new FormData(form);
+            const data = {};
+            for (let [key, value] of formData.entries()) {
+               
+                if (!key.startsWith('dynamic_')) {
+                    data[key] = value;
+                }
+            }
+            
+           
+            if (!data.blogDate) {
+                const today = new Date().toISOString().split('T')[0];
+                data.blogDate = today;
+                document.getElementById('blogDate').value = today;
+            }
+            
+           
+            const dynamicSections = collectDynamicSections();
+            data.dynamicSections = dynamicSections;
+            
+           
+            data.status = 'draft';
+            data.enc_email = localStorage.getItem('enc_email') || '';
+            data.enc_pwd = localStorage.getItem('enc_pwd') || '';
+            data.base_url = window.location.origin;
+            
+            try {
+               
+                const saveDraftBtn = document.getElementById('saveDraftBtn');
+                const originalText = saveDraftBtn.innerHTML;
+                saveDraftBtn.innerHTML = '<i data-lucide="loader-2" class="w-4 h-4 mr-2 animate-spin"></i>Saving...';
+                saveDraftBtn.disabled = true;
+                
+               
+                const response = await fetch('/admin_save_blog', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+               
+                saveDraftBtn.innerHTML = originalText;
+                saveDraftBtn.disabled = false;
+                
+                if (!response.ok) {
+                   
+                    let errorMessage = `Server error (${response.status})`;
+                    try {
+                        const errorResult = await response.json();
+                        errorMessage = errorResult.message || errorResult.error || errorMessage;
+                    } catch (e) {
+                       
+                        errorMessage = response.statusText || errorMessage;
+                    }
+                    showModal('Error Saving Draft', errorMessage, 'error');
+                    return;
+                }
+                
+                const result = await response.json();
+                
+                if (result.status === 'success') {
+                    let message = 'Blog saved as draft successfully!';
+                    if (result.url) {
+                        message += `\n\nBlog URL: ${result.url}`;
+                    }
+                    showModal('Success', message, 'success');
+                } else {
+                    showModal('Error Saving Draft', result.message || 'Unknown error', 'error');
+                }
+                
+            } catch (error) {
+               
+                const saveDraftBtn = document.getElementById('saveDraftBtn');
+                saveDraftBtn.innerHTML = '<i data-lucide="file-text" class="w-4 h-4 mr-2"></i>Save as Draft';
+                saveDraftBtn.disabled = false;
+                
+                console.error('Error saving draft:', error);
+                showModal('Error Saving Draft', error.message, 'error');
+            }
+        }
+        
+       
+        async function handleSavePublish() {
+            const form = document.getElementById('addBlogForm');
+            const formData = new FormData(form);
+            const data = {};
+            for (let [key, value] of formData.entries()) {
+               
+                if (!key.startsWith('dynamic_')) {
+                    data[key] = value;
+                }
+            }
+            
+           
+            if (!data.blogDate) {
+                const today = new Date().toISOString().split('T')[0];
+                data.blogDate = today;
+                document.getElementById('blogDate').value = today;
+            }
+            
+           
+            const dynamicSections = collectDynamicSections();
+            data.dynamicSections = dynamicSections;
+            
+           
+            data.status = 'published';
+            data.enc_email = localStorage.getItem('enc_email') || '';
+            data.enc_pwd = localStorage.getItem('enc_pwd') || '';
+            data.base_url = window.location.origin;
+            
+            try {
+               
+                const savePublishBtn = document.getElementById('savePublishBtn');
+                const originalText = savePublishBtn.innerHTML;
+                savePublishBtn.innerHTML = '<i data-lucide="loader-2" class="w-4 h-4 mr-2 animate-spin"></i>Publishing...';
+                savePublishBtn.disabled = true;
+                
+               
+                const response = await fetch('/admin_save_blog', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+               
+                savePublishBtn.innerHTML = originalText;
+                savePublishBtn.disabled = false;
+                
+                if (!response.ok) {
+                   
+                    let errorMessage = `Server error (${response.status})`;
+                    try {
+                        const errorResult = await response.json();
+                        errorMessage = errorResult.message || errorResult.error || errorMessage;
+                    } catch (e) {
+                       
+                        errorMessage = response.statusText || errorMessage;
+                    }
+                    showModal('Error Publishing Blog', errorMessage, 'error');
+                    return;
+                }
+                
+                const result = await response.json();
+                
+                if (result.status === 'success') {
+                    let message = 'Blog published successfully!';
+                    if (result.url) {
+                        message += `\n\nBlog URL: ${result.url}`;
+                    }
+                    showModal('Success', message, 'success');
+                   
+                    form.reset();
+                   
+                    document.getElementById('dynamicSections').innerHTML = '';
+                    sectionCounter = 0;
+                } else {
+                    showModal('Error Publishing Blog', result.message || 'Unknown error', 'error');
+                }
+                
+            } catch (error) {
+               
+                const savePublishBtn = document.getElementById('savePublishBtn');
+                savePublishBtn.innerHTML = '<i data-lucide="send" class="w-4 h-4 mr-2"></i>Save & Publish';
+                savePublishBtn.disabled = false;
+                
+                console.error('Error publishing blog:', error);
+                showModal('Error Publishing Blog', error.message, 'error');
+            }
+        }
+        
+       
         let sectionCounter = 0;
         
         function createDynamicSection(type, content = '') {
@@ -832,23 +1278,23 @@
             const section = createDynamicSection(type);
             container.appendChild(section);
             
-            // Re-initialize Lucide icons for the new section
+           
             lucide.createIcons();
             
-            // Add event listener for remove button
+           
             const removeBtn = section.querySelector('.remove-section');
             removeBtn.addEventListener('click', function() {
                 section.remove();
                 updatePreviewIfVisible();
             });
             
-            // Add input event listeners for live preview updates
+           
             const inputs = section.querySelectorAll('input, textarea');
             inputs.forEach(input => {
                 input.addEventListener('input', updatePreviewIfVisible);
             });
             
-            // Scroll to the newly added section
+           
             setTimeout(() => {
                 section.scrollIntoView({
                     behavior: 'smooth',
@@ -860,8 +1306,8 @@
         }
         
         function updatePreviewIfVisible() {
-            // This function will be called to update preview in real-time
-            // We'll implement this when the preview window is open
+           
+           
         }
         
         function collectDynamicSections() {
@@ -901,34 +1347,518 @@
             return sections;
         }
         
+        // Blog management variables
+        let currentPage = 1;
+        let totalPages = 1;
+        let searchTimeout = null;
+        const blogsPerPage = 8;
+        
+        // Search and load blogs function
+        async function searchAndLoadBlogs(searchKeyword = '', page = 1) {
+            const blogsLoading = document.getElementById('blogsLoading');
+            const noBlogsFound = document.getElementById('noBlogsFound');
+            const blogsList = document.getElementById('blogsList');
+            const paginationControls = document.getElementById('paginationControls');
+            
+            // Show loading state
+            blogsLoading.classList.remove('hidden');
+            noBlogsFound.classList.add('hidden');
+            blogsList.innerHTML = '';
+            paginationControls.classList.add('hidden');
+            
+            try {
+                const response = await fetch(`/get_blog_list?search_keyword=${encodeURIComponent(searchKeyword)}`);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const result = await response.json();
+                
+                // Hide loading state
+                blogsLoading.classList.add('hidden');
+                
+                if (result.status === 'success' && result.blogs && result.blogs.length > 0) {
+                    // Calculate pagination
+                    const startIndex = (page - 1) * blogsPerPage;
+                    const endIndex = startIndex + blogsPerPage;
+                    const paginatedBlogs = result.blogs.slice(startIndex, endIndex);
+                    totalPages = Math.ceil(result.blogs.length / blogsPerPage);
+                    currentPage = page;
+                    
+                    // Display blogs
+                    displayBlogs(paginatedBlogs);
+                    
+                    // Show pagination if needed
+                    if (totalPages > 1) {
+                        updatePaginationControls();
+                        paginationControls.classList.remove('hidden');
+                    }
+                } else {
+                    // Show no results state
+                    noBlogsFound.classList.remove('hidden');
+                }
+                
+            } catch (error) {
+                console.error('Error fetching blogs:', error);
+                blogsLoading.classList.add('hidden');
+                
+                // Show search to get started message
+                blogsList.innerHTML = `
+                    <div class="text-center py-8">
+                        <i data-lucide="search" class="w-12 h-12 mx-auto mb-4 text-white/40"></i>
+                        <h3 class="text-lg font-semibold mb-2 text-white/80">Search to get started</h3>
+                        <p class="text-white/60">Use the search bar above to find blogs to edit or delete.</p>
+                    </div>
+                `;
+                lucide.createIcons();
+            }
+        }
+        
+        // Display blogs function
+        function displayBlogs(blogs) {
+            const blogsList = document.getElementById('blogsList');
+            
+            blogsList.innerHTML = blogs.map(blog => {
+                // Extract data from the nested json_data structure
+                const jsonData = blog.json_data || {};
+                const title = jsonData.blogTitle || 'Untitled';
+                const author = jsonData.blogAuthor || 'Unknown';
+                const date = jsonData.blogDate || blog.created_at;
+                const status = blog.status || 'draft';
+                const mainImageUrl = jsonData.mainImageUrl || '';
+                const mainImageAlt = jsonData.mainImageAlt || '';
+                
+                return `
+                    <div class="p-4 bg-white/5 rounded-lg border border-white/10 hover:bg-white/10 transition-colors">
+                        <div class="flex justify-between items-start mb-3">
+                            <div class="flex-1">
+                                <h3 class="font-semibold mb-2 text-white line-clamp-2">${escapeHtml(title)}</h3>
+                                <p class="text-sm text-white/60 mb-2 flex items-center gap-2 flex-wrap">
+                                    <span class="flex items-center gap-1">
+                                        <i data-lucide="user" class="w-3 h-3"></i>
+                                        <span>By ${escapeHtml(author)}</span>
+                                    </span>
+                                    <span>•</span>
+                                    <span class="flex items-center gap-1">
+                                        <i data-lucide="calendar" class="w-3 h-3"></i>
+                                        <span>${formatDate(date)}</span>
+                                    </span>
+                                    <span>•</span>
+                                    <span class="px-2 py-1 rounded-full text-xs ${status === 'published' ? 'bg-green-600/20 text-green-400' : 'bg-yellow-600/20 text-yellow-400'}">${status}</span>
+                                </p>
+                            </div>
+                            ${mainImageUrl ? `
+                                <div class="ml-4 flex-shrink-0">
+                                    <img src="${escapeHtml(mainImageUrl)}" alt="${escapeHtml(mainImageAlt)}"
+                                         class="w-16 h-16 object-cover rounded-lg border border-white/10">
+                                </div>
+                            ` : ''}
+                        </div>
+                        <div class="flex gap-2 flex-wrap">
+                            <button class="form-button text-xs px-3 py-1 bg-white/10 hover:bg-white/20 border border-white/20 text-white" onclick="editBlog('${blog.id.replace("'","[quotetation_here]")}')">
+                                <i data-lucide="edit" class="w-3 h-3 mr-1"></i>
+                                Edit
+                            </button>
+                            <button class="form-button text-xs px-3 py-1 bg-white/10 hover:bg-white/20 border border-white/20 text-white" onclick="deleteBlog('${blog.id.replace("'","[quotetation_here]")}', '${title.replace("'", "[quotetation_here]")}')">
+                                <i data-lucide="trash-2" class="w-3 h-3 mr-1"></i>
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            lucide.createIcons();
+        }
+        
+        // Update pagination controls
+        function updatePaginationControls() {
+            const prevBtn = document.getElementById('prevPage');
+            const nextBtn = document.getElementById('nextPage');
+            const pageInfo = document.getElementById('pageInfo');
+            
+            prevBtn.disabled = currentPage <= 1;
+            nextBtn.disabled = currentPage >= totalPages;
+            pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
+        }
+        
+        // Utility functions
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        function formatDate(dateString) {
+            if (!dateString) return 'No date';
+            try {
+                const date = new Date(dateString);
+                return date.toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric'
+                });
+            } catch (e) {
+                return dateString;
+            }
+        }
+        
+        // Global variable to track current editing blog
+        let currentEditingBlog = null;
+        
+        // Blog action functions
+        async function editBlog(blogId) {
+            blogId = blogId.replace("[quotetation_here]", "'");
+            if (!blogId) {
+                showModal('Error', 'Blog ID not found', 'error');
+                return;
+            }
+            
+            try {
+                // Find the blog data from the current blogs list
+                const searchKeyword = document.getElementById('searchBlog').value.trim();
+                const response = await fetch(`/get_blog_list?search_keyword=${encodeURIComponent(searchKeyword)}`);
+                const result = await response.json();
+                
+                if (result.status === 'success' && result.blogs) {
+                    const blog = result.blogs.find(b => b.id === blogId);
+                    if (blog) {
+                        populateEditForm(blog);
+                        switchToEditMode();
+                        // Switch to Add Blogs tab to show the form
+                        showContentSection('Add Blogs');
+                    } else {
+                        showModal('Error', 'Blog not found', 'error');
+                    }
+                } else {
+                    showModal('Error', 'Failed to load blog data', 'error');
+                }
+            } catch (error) {
+                console.error('Error loading blog for edit:', error);
+                showModal('Error', 'An error occurred while loading the blog. Please try again.', 'error');
+            }
+        }
+        
+        function populateEditForm(blog) {
+            currentEditingBlog = blog;
+            const jsonData = blog.json_data || {};
+            
+            // Populate basic fields
+            document.getElementById('mainImageUrl').value = jsonData.mainImageUrl || '';
+            document.getElementById('mainImageAlt').value = jsonData.mainImageAlt || '';
+            document.getElementById('blogTitle').value = jsonData.blogTitle || '';
+            document.getElementById('blogAuthor').value = jsonData.blogAuthor || '';
+            document.getElementById('blogDate').value = jsonData.blogDate || '';
+            document.getElementById('blogSummary').value = jsonData.blogSummary || '';
+            
+            // Set status radio button
+            const statusRadios = document.querySelectorAll('input[name="blogStatus"]');
+            statusRadios.forEach(radio => {
+                radio.checked = radio.value === blog.status;
+            });
+            
+            // Populate ad banners
+            document.querySelector('input[name="adBannerBesideUrl"]').value = jsonData.adBannerBesideUrl || '';
+            document.querySelector('input[name="adBannerBesideHref"]').value = jsonData.adBannerBesideHref || '';
+            document.querySelector('input[name="adBannerBelowUrl"]').value = jsonData.adBannerBelowUrl || '';
+            document.querySelector('input[name="adBannerBelowHref"]').value = jsonData.adBannerBelowHref || '';
+            
+            // Clear existing dynamic sections
+            document.getElementById('dynamicSections').innerHTML = '';
+            sectionCounter = 0;
+            
+            // Populate dynamic sections
+            if (jsonData.dynamicSections && Array.isArray(jsonData.dynamicSections)) {
+                jsonData.dynamicSections.forEach(section => {
+                    const sectionElement = createDynamicSection(section.type, section.content);
+                    document.getElementById('dynamicSections').appendChild(sectionElement);
+                    
+                    // Add event listeners for remove buttons
+                    const removeBtn = sectionElement.querySelector('.remove-section');
+                    removeBtn.addEventListener('click', function() {
+                        sectionElement.remove();
+                    });
+                });
+            }
+            
+            lucide.createIcons();
+        }
+        
+        function switchToEditMode() {
+            // Update form title
+            document.querySelector('#addBlogs .section-title').textContent = 'Edit Blog';
+            
+            // Show status section
+            document.getElementById('blogStatusSection').style.display = 'block';
+            
+            // Hide add mode buttons, show edit mode buttons
+            document.getElementById('addModeButtons').style.display = 'none';
+            document.getElementById('editModeButtons').style.display = 'flex';
+        }
+        
+        function switchToAddMode() {
+            // Reset form title
+            document.querySelector('#addBlogs .section-title').textContent = 'Add New Blog';
+            
+            // Hide status section
+            document.getElementById('blogStatusSection').style.display = 'none';
+            
+            // Show add mode buttons, hide edit mode buttons
+            document.getElementById('addModeButtons').style.display = 'flex';
+            document.getElementById('editModeButtons').style.display = 'none';
+            
+            // Clear current editing blog
+            currentEditingBlog = null;
+            
+            // Reset form
+            document.getElementById('addBlogForm').reset();
+            document.getElementById('dynamicSections').innerHTML = '';
+            sectionCounter = 0;
+        }
+        
+        // Handle update blog functionality
+        async function handleUpdateBlog() {
+            if (!currentEditingBlog) {
+                showModal('Error', 'No blog selected for editing', 'error');
+                return;
+            }
+            
+            const form = document.getElementById('addBlogForm');
+            const formData = new FormData(form);
+            const data = {};
+            for (let [key, value] of formData.entries()) {
+                if (!key.startsWith('dynamic_')) {
+                    data[key] = value;
+                }
+            }
+            
+            // Get status from radio buttons
+            const statusRadio = document.querySelector('input[name="blogStatus"]:checked');
+            data.status = statusRadio ? statusRadio.value : 'draft';
+            
+            // Set blog date if not provided
+            if (!data.blogDate) {
+                const today = new Date().toISOString().split('T')[0];
+                data.blogDate = today;
+                document.getElementById('blogDate').value = today;
+            }
+            
+            // Collect dynamic sections
+            const dynamicSections = collectDynamicSections();
+            data.dynamicSections = dynamicSections;
+            
+            // Add blog ID for update
+            data.blog_id = currentEditingBlog.id;
+            data.enc_email = localStorage.getItem('enc_email') || '';
+            data.enc_pwd = localStorage.getItem('enc_pwd') || '';
+            data.base_url = window.location.origin;
+            data.reason = 'update';
+            
+            try {
+                const updateBlogBtn = document.getElementById('updateBlogBtn');
+                const originalText = updateBlogBtn.innerHTML;
+                updateBlogBtn.innerHTML = '<i data-lucide="loader-2" class="w-4 h-4 mr-2 animate-spin"></i>Updating...';
+                updateBlogBtn.disabled = true;
+                
+                // TODO: Replace with actual update endpoint when available
+                const response = await fetch('/admin_save_blog', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                updateBlogBtn.innerHTML = originalText;
+                updateBlogBtn.disabled = false;
+                
+                if (!response.ok) {
+                    let errorMessage = `Server error (${response.status})`;
+                    try {
+                        const errorResult = await response.json();
+                        errorMessage = errorResult.message || errorResult.error || errorMessage;
+                    } catch (e) {
+                        errorMessage = response.statusText || errorMessage;
+                    }
+                    showModal('Error Updating Blog', errorMessage, 'error');
+                    return;
+                }
+                
+                const result = await response.json();
+                
+                if (result.status === 'success') {
+                    let message = 'Blog updated successfully!';
+                    if (result.url) {
+                        message += `\n\nBlog URL: ${result.url}`;
+                    }
+                    showModal('Success', message, 'success');
+                    
+                    // Switch back to add mode and refresh blog list
+                    switchToAddMode();
+                    showContentSection('Edit/Delete Blog');
+                } else {
+                    showModal('Error Updating Blog', result.message || 'Unknown error', 'error');
+                }
+                
+            } catch (error) {
+                const updateBlogBtn = document.getElementById('updateBlogBtn');
+                updateBlogBtn.innerHTML = '<i data-lucide="save" class="w-4 h-4 mr-2"></i>Update Blog';
+                updateBlogBtn.disabled = false;
+                
+                console.error('Error updating blog:', error);
+                showModal('Error Updating Blog', error.message, 'error');
+            }
+        }
+        
+        async function deleteBlog(blogId, blogTitle) {
+            blogId = blogId.replace("[quotetation_here]", "'");
+            blogTitle = blogTitle.replace("[quotetation_here]", "'");
+            if (!blogId) {
+                showModal('Error', 'Blog ID not found', 'error');
+                return;
+            }
+            
+            if (confirm(`Are you sure you want to delete the blog "${blogTitle}"? This action cannot be undone.`)) {
+                try {
+                    const response = await fetch('/delete_blog', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            blog_id: blogId
+                        })
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (result.status === 'success') {
+                        showModal('Success', `Blog "${blogTitle}" has been deleted successfully.`, 'success');
+                        // Refresh the blog list
+                        const searchKeyword = document.getElementById('searchBlog').value.trim();
+                        searchAndLoadBlogs(searchKeyword, currentPage);
+                    } else {
+                        showModal('Error', result.message || 'Failed to delete blog', 'error');
+                    }
+                } catch (error) {
+                    console.error('Error deleting blog:', error);
+                    showModal('Error', 'An error occurred while deleting the blog. Please try again.', 'error');
+                }
+            }
+        }
+        
         document.addEventListener('DOMContentLoaded', function() {
             lucide.createIcons();
             
-            // Add form submission handler
+           
             const addBlogForm = document.getElementById('addBlogForm');
             if (addBlogForm) {
                 addBlogForm.addEventListener('submit', handleFormSubmit);
             }
             
-            // Add load preview button handler
+           
             const loadPreviewBtn = document.getElementById('loadPreviewBtn');
             if (loadPreviewBtn) {
                 loadPreviewBtn.addEventListener('click', handleLoadPreview);
             }
             
-            // Add dynamic section button handlers
+           
+            const saveDraftBtn = document.getElementById('saveDraftBtn');
+            if (saveDraftBtn) {
+                saveDraftBtn.addEventListener('click', handleSaveDraft);
+            }
+            
+           
+            const savePublishBtn = document.getElementById('savePublishBtn');
+            if (savePublishBtn) {
+                savePublishBtn.addEventListener('click', handleSavePublish);
+            }
+            
+            // Edit mode button event listeners
+            const loadPreviewEditBtn = document.getElementById('loadPreviewEditBtn');
+            if (loadPreviewEditBtn) {
+                loadPreviewEditBtn.addEventListener('click', handleLoadPreview);
+            }
+            
+            const deleteBlogBtn = document.getElementById('deleteBlogBtn');
+            if (deleteBlogBtn) {
+                deleteBlogBtn.addEventListener('click', function() {
+                    if (currentEditingBlog) {
+                        const title = currentEditingBlog.json_data?.blogTitle || 'Untitled';
+                        deleteBlog(currentEditingBlog.id, title);
+                    }
+                });
+            }
+            
+            const updateBlogBtn = document.getElementById('updateBlogBtn');
+            if (updateBlogBtn) {
+                updateBlogBtn.addEventListener('click', handleUpdateBlog);
+            }
+            
+           
             document.getElementById('addTextBtn').addEventListener('click', () => addDynamicSection('text'));
             document.getElementById('addHeaderBtn').addEventListener('click', () => addDynamicSection('header'));
             document.getElementById('addSubHeaderBtn').addEventListener('click', () => addDynamicSection('subheader'));
             document.getElementById('addSubHeaderTextBtn').addEventListener('click', () => addDynamicSection('subheader-text'));
             document.getElementById('addImageBtn').addEventListener('click', () => addDynamicSection('image'));
             
+            // Search functionality for Edit/Delete section
+            const searchBlog = document.getElementById('searchBlog');
+            if (searchBlog) {
+                searchBlog.addEventListener('input', function(e) {
+                    clearTimeout(searchTimeout);
+                    searchTimeout = setTimeout(() => {
+                        searchAndLoadBlogs(e.target.value.trim(), 1);
+                    }, 300); // Debounce search
+                });
+            }
+            
+            // Pagination event listeners
+            const prevPage = document.getElementById('prevPage');
+            const nextPage = document.getElementById('nextPage');
+            
+            if (prevPage) {
+                prevPage.addEventListener('click', () => {
+                    if (currentPage > 1) {
+                        const searchKeyword = document.getElementById('searchBlog').value.trim();
+                        searchAndLoadBlogs(searchKeyword, currentPage - 1);
+                    }
+                });
+            }
+            
+            if (nextPage) {
+                nextPage.addEventListener('click', () => {
+                    if (currentPage < totalPages) {
+                        const searchKeyword = document.getElementById('searchBlog').value.trim();
+                        searchAndLoadBlogs(searchKeyword, currentPage + 1);
+                    }
+                });
+            }
+            
+            // Load initial blogs when Edit/Delete section is shown
+            const originalShowContentSection = showContentSection;
+            showContentSection = function(tabTitle) {
+                // Reset to add mode when switching away from Add Blogs tab
+                if (tabTitle !== 'Add Blogs' && currentEditingBlog) {
+                    switchToAddMode();
+                }
+                
+                originalShowContentSection(tabTitle);
+                
+                if (tabTitle === 'Edit/Delete Blog') {
+                    // Load blogs when the section is first shown
+                    setTimeout(() => {
+                        searchAndLoadBlogs('', 1);
+                    }, 100);
+                }
+            };
+            
             const navbarTabs = [
                 { title: "Homepage", icon: "home" },
                 { title: "Add Blogs", icon: "plus-circle" },
-                { title: "Edit Blogs", icon: "edit" },
-                { title: "Delete Blogs", icon: "trash-2" },
-                { title: "Manage Images", icon: "image" }
+                { title: "Edit/Delete Blog", icon: "edit" },
+                // { title: "Manage Images", icon: "image" }
             ];
             const navbarContainer = document.getElementById('navbarTabs');
             const expandableTabs = new ExpandableTabs(navbarContainer, {
@@ -940,6 +1870,10 @@
                         console.log('Selected tab:', navbarTabs[index].title);
                         if (navbarTabs[index].title === "Homepage") {
                             window.location.href = '/admin_login';
+                        } else if (navbarTabs[index].title === "Add Blogs") {
+                            // Clear and refresh the form when Add Blogs is clicked
+                            switchToAddMode();
+                            showContentSection(navbarTabs[index].title);
                         } else {
                             showContentSection(navbarTabs[index].title);
                         }

@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Base styles from original example */
+        body {
+            margin: 0;
+            background-color: #030303;
+            color: white;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+        .tab-button { transition: all 0.6s cubic-bezier(0.25, 0.4, 0.25, 1); }
+        .tab-text {
+            transition: all 0.8s cubic-bezier(0.25, 0.4, 0.25, 1);
+            max-width: 0;
+            opacity: 0;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .tab-text.expanded { max-width: 200px; opacity: 1; margin-left: 0.5rem; }
+        .tab-button.selected { padding-left: 1rem; padding-right: 1rem; }
+        .tab-button:not(.selected) { padding-left: 0.75rem; padding-right: 0.75rem; }
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .anim-hidden-initial { opacity: 0; }
+        /* UPDATED: Content section animation to match navbar */
+        .content-section {
+            display: none;
+        }
+        .content-section.active {
+            display: block;
+            animation: slideDownContent 0.6s cubic-bezier(0.25, 0.4, 0.25, 1);
+        }
+        @keyframes slideDownContent {
+            from { opacity: 0; transform: translateY(-20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .container-box { max-width: 800px; margin: 0 auto; padding: 2rem; }
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            color: white;
+            letter-spacing: -0.025em;
+        }
+        .form-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1.25rem;
+            border: none;
+            border-radius: 20px; /* UPDATED */
+            background-color: rgb(59, 130, 246);
+            color: white;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+        }
+        .form-button:hover:not(:disabled) { background-color: rgb(37, 99, 235); }
+        .form-button:disabled { background-color: rgba(59, 130, 246, 0.4); cursor: not-allowed; }
+        /* NEW: Glass container for toggles */
+        .glass-pill-container {
+            display: inline-block;
+            backdrop-filter: blur(35px);
+            -webkit-backdrop-filter: blur(35px);
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 70px;
+            padding: 6px;
+        }
+        /* UPDATED: Toggle button styles with enhanced animations */
+        .toggle-group button {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: rgba(255,255,255,0.6);
+            background-color: transparent;
+            border: none;
+            transition: all 0.4s cubic-bezier(0.25, 0.4, 0.25, 1);
+            transform: scale(1);
+            position: relative;
+            overflow: hidden;
+        }
+        .toggle-group button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #262626;
+            border-radius: 20px;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.4s cubic-bezier(0.25, 0.4, 0.25, 1);
+            z-index: -1;
+        }
+        .toggle-group button.active {
+            color: white;
+            transform: scale(1.05);
+        }
+        .toggle-group button.active::before {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .toggle-group button:not(.active):hover {
+            color: white;
+            transform: scale(1.02);
+        }
+        .toggle-group button:not(.active):hover::before {
+            opacity: 0.3;
+            transform: scale(1);
+        }
+        /* Icon and text animations */
+        .toggle-group button i,
+        .toggle-group button span {
+            transition: transform 0.3s cubic-bezier(0.25, 0.4, 0.25, 1);
+            position: relative;
+            z-index: 1;
+        }
+        .toggle-group button.active i {
+            transform: rotate(360deg) scale(1.1);
+        }
+        .dropzone {
+            border: 2px dashed rgba(255, 255, 255, 0.2);
+            border-radius: 20px; /* UPDATED */
+            padding: 2.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+        .dropzone.dragover {
+            border-color: rgb(59, 130, 246);
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+        /* Dropzone content animations */
+        .dropzone i,
+        .dropzone p {
+            transition: opacity 0.2s ease-in-out;
+        }
+        .file-queue-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            border-radius: 20px; /* UPDATED */
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px; /* UPDATED */
+            transition: all 0.2s ease;
+            background-color: rgba(255, 255, 255, 0.03);
+        }
+        .gallery-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+        .gallery-item .overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent 50%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .gallery-item:hover .overlay {
+            opacity: 1;
+        }
+        .gallery-item .actions {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            display: flex;
+            gap: 0.5rem;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 10; /* Added z-index to ensure buttons are on top */
+            pointer-events: auto; /* Ensure pointer events are enabled */
+        }
+        .gallery-item:hover .actions {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .gallery-item .actions button {
+            border-radius: 9999px; /* UPDATED to circle */
+            padding: 0.5rem;
+            background-color: rgba(0,0,0,0.5);
+            transition: background-color 0.2s;
+        }
+        .gallery-item .actions button:hover {
+             background-color: black; /* Grey hover for all buttons */
+        }
+        /* Search input container styles */
+        .search-input-container {
+            position: relative;
+        }
+        .search-input-container::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.6);
+            transform: translateX(-50%);
+            transition: width 0.3s ease-in-out;
+        }
+        .search-input-container:hover::after {
+            width: 100%;
+        }
+        .search-input-container.focused::after {
+            width: 100%;
+        }
+        /* Search input styles */
+        .search-input {
+            background-color: transparent;
+            border: none;
+            color: white;
+            transition: all 0.3s ease-in-out;
+        }
+        .search-input:focus {
+            outline: none;
+        }
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+        /* Delete confirmation modal styles */
+        .delete-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s cubic-bezier(0.25, 0.4, 0.25, 1);
+        }
+        .delete-modal.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .delete-modal-content {
+            background: rgba(30, 30, 30, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+            transform: scale(0.9) translateY(20px);
+            transition: all 0.3s cubic-bezier(0.25, 0.4, 0.25, 1);
+        }
+        .delete-modal.show .delete-modal-content {
+            transform: scale(1) translateY(0);
+        }
+        .delete-modal-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 1.5rem;
+            background: rgba(239, 68, 68, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .delete-modal-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+        .delete-modal-message {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 2rem;
+            line-height: 1.5;
+        }
+        .delete-modal-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+        .delete-modal-btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            min-width: 100px;
+        }
+        .delete-modal-btn-cancel {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        .delete-modal-btn-cancel:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        .delete-modal-btn-delete {
+            background: rgb(239, 68, 68);
+            color: white;
+        }
+        .delete-modal-btn-delete:hover {
+            background: rgb(220, 38, 38);
+        }
+    </style>
+</head>
+<body>
+    <nav class="fixed top-0 left-0 right-0 z-50">
+        <div class="flex justify-center py-6">
+            <div style="backdrop-filter: blur(35px); -webkit-backdrop-filter: blur(35px); background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 70px; padding: 12px 20px;">
+                <div id="navbarTabs" class="flex items-center gap-4 anim-hidden-initial" style="animation: slideDown 0.8s cubic-bezier(0.25, 0.4, 0.25, 1) 0.3s forwards;">
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="fixed inset-0 bg-gradient-to-br from-indigo-500/[0.03] via-transparent to-rose-500/[0.03] pointer-events-none"></div>
+    <main class="pt-20 px-4">
+        <!-- Upload Section -->
+        <section id="uploadFiles" class="content-section active">
+            <div class="container-box">
+                <h2 class="section-title text-center">Upload Media</h2>
+                <div class="bg-black/20 border border-white/10 rounded-[20px] p-6 md:p-8" style="border-width: 0px;">
+                    <!-- UPDATED: Upload Type Toggle -->
+                    <div class="flex justify-center mb-6">
+                        <div class="glass-pill-container">
+                            <div class="toggle-group inline-flex items-center gap-1">
+                                <button id="imgToggle" data-type="image" class="active">
+                                    <i data-lucide="image" class="w-4 h-4 inline-block mr-2"></i>Images
+                                </button>
+                                <button id="pdfToggle" data-type="pdf">
+                                    <i data-lucide="file-text" class="w-4 h-4 inline-block mr-2"></i>Magazines
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Dropzone -->
+                    <div id="dropzone" class="dropzone flex flex-col items-center justify-center space-y-3">
+                        <i id="dropzone-icon" data-lucide="upload-cloud" class="w-12 h-12 text-white/40"></i>
+                        <p class="font-semibold">Drag & drop files here</p>
+                        <p id="dropzone-text" class="text-sm text-white/60">Upload JPG, PNG, GIF. Max 10MB.</p>
+                        <p class="text-xs text-white/50">or</p>
+                        <button type="button" onclick="document.getElementById('fileInput').click()" class="form-button bg-white/10 hover:bg-white/20 text-white/90 !px-4 !py-2">Browse Files</button>
+                    </div>
+                    <input type="file" id="fileInput" multiple class="hidden">
+                    <!-- File Queue -->
+                    <div id="file-queue" class="mt-6 space-y-3"></div>
+                    <!-- Upload Button -->
+                    <div class="mt-8 flex justify-center">
+                        <button id="uploadBtn" class="form-button" disabled>
+                            <i data-lucide="upload" class="w-4 h-4 mr-2"></i>
+                            <span id="uploadBtnText">Upload 0 Files</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Gallery Section -->
+        <section id="gallery" class="content-section">
+            <div class="container-box">
+                <h2 class="section-title text-center">Media Gallery</h2>
+                 <!-- UPDATED: Filters -->
+                 <div class="flex flex-col sm:flex-row justify-between items-center mb-8 gap-4">
+                    <div class="relative w-full sm:w-auto sm:flex-1 max-w-xs">
+                        <div class="search-input-container">
+                            <i data-lucide="search" class="w-4 h-4 absolute left-4 top-1/2 -translate-y-1/2 text-white/40 z-10"></i>
+                            <input type="text" placeholder="Search media..." class="search-input w-full py-2 pl-11 pr-4 text-sm rounded-[20px] focus:ring-0 focus:outline-none transition" id="searchInput">
+                        </div>
+                    </div>
+                    <div class="glass-pill-container">
+                        <div class="toggle-group inline-flex items-center gap-1">
+                            <button data-filter="image" class="gallery-filter-btn active">
+                                <i data-lucide="image" class="w-4 h-4 inline-block sm:mr-2"></i><span class="hidden sm:inline">Images</span>
+                            </button>
+                            <button data-filter="pdf" class="gallery-filter-btn">
+                                <i data-lucide="file-text" class="w-4 h-4 inline-block sm:mr-2"></i><span class="hidden sm:inline">Magazines</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Gallery Grid -->
+                <div id="galleryGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                </div>
+                 <div id="no-gallery-items" class="text-center py-16 hidden">
+                    <i data-lucide="folder-x" class="w-16 h-16 mx-auto text-white/20 mb-4"></i>
+                    <h3 class="text-xl font-medium text-white/80">No Media Found</h3>
+                    <p class="text-white/50 mt-2">Try uploading some files or changing your filter.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="delete-modal">
+        <div class="delete-modal-content">
+            <div class="delete-modal-icon">
+                <i data-lucide="trash-2" class="w-8 h-8 text-red-400"></i>
+            </div>
+            <h3 class="delete-modal-title">Delete File</h3>
+            <p class="delete-modal-message" id="deleteModalMessage">
+                Are you sure you want to delete this file? This action cannot be undone.
+            </p>
+            <div class="delete-modal-actions">
+                <button class="delete-modal-btn delete-modal-btn-cancel" id="deleteModalCancel">
+                    Cancel
+                </button>
+                <button class="delete-modal-btn delete-modal-btn-delete" id="deleteModalConfirm">
+                    Delete
+                </button>
+            </div>
+        </div>
+    </div>
+    <script>
+        let imageFiles = [];
+        let pdfFiles = [];
+        let currentGalleryFilter = 'image';
+        let isLoadingFiles = false;
+        const BUCKET_MAPPING = {
+            'image': 'blog-images',
+            'pdf': 'magazine-pdfs'
+        };
+        async function fetchFilesFromAPI(fileType) {
+            const bucketName = BUCKET_MAPPING[fileType];
+            if (!bucketName) {
+                console.error(`No bucket mapping found for file type: ${fileType}`);
+                return [];
+            }
+            try {
+                const response = await fetch(`/get_file_details?bucket_name=${encodeURIComponent(bucketName)}`);
+                const result = await response.json();
+                if (result.status === 'success' && result.data) {
+                    const transformedData = result.data.map(file => ({
+                        id: file.id,
+                        type: fileType,
+                        name: file.name,
+                        url: file.public_url,
+                        size: file.size
+                    }));
+                    return transformedData;
+                } else {
+                    console.error(`Failed to fetch ${fileType} files:`, result.message || 'Unknown error');
+                    return [];
+                }
+            } catch (error) {
+                console.error(`Error fetching ${fileType} files:`, error);
+                return [];
+            }
+        }
+        async function loadAllFiles() {
+            if (isLoadingFiles) {
+                return;
+            }
+            isLoadingFiles = true;
+            try {
+                const [images, pdfs] = await Promise.all([
+                    fetchFilesFromAPI('image'),
+                    fetchFilesFromAPI('pdf')
+                ]);
+                imageFiles = images;
+                pdfFiles = pdfs;
+                renderGallery(currentGalleryFilter);
+            } catch (error) {
+                console.error('Error loading files:', error);
+                showToast('Failed to load files from server', 'error');
+            } finally {
+                isLoadingFiles = false;
+            }
+        }
+        function getCurrentFiles() {
+            return currentGalleryFilter === 'image' ? imageFiles : pdfFiles;
+        }
+        class ExpandableTabs {
+            constructor(container, options = {}) {
+                this.container = container;
+                this.tabs = options.tabs || [];
+                this.activeColor = options.activeColor || 'text-blue-600';
+                this.onChange = options.onChange || (() => {});
+                this.selected = null;
+                this.init();
+            }
+            init() { this.render(); this.bindEvents(); }
+            render() {
+                this.container.innerHTML = '';
+                this.tabs.forEach((tab, index) => {
+                    const button = this.createTabButton(tab, index);
+                    this.container.appendChild(button);
+                });
+            }
+            createTabButton(tab, index) {
+                const button = document.createElement('button');
+                const isSelected = this.selected === index;
+                button.className = `tab-button relative flex items-center text-sm font-medium tracking-wide transition-all duration-[600ms] ${isSelected ? 'selected' : ''}`;
+                button.style.color = isSelected ? (this.activeColor || 'rgb(147, 197, 253)') : 'rgba(255, 255, 255, 0.6)';
+                button.dataset.index = index;
+                button.innerHTML = `
+                    <div class="flex-shrink-0"><i data-lucide="${tab.icon}" class="w-4 h-4"></i></div>
+                    <span class="tab-text ${isSelected ? 'expanded' : ''}">${tab.title}</span>
+                `;
+                button.addEventListener('mouseenter', () => !button.classList.contains('selected') && (button.style.color = 'rgba(255, 255, 255, 0.9)'));
+                button.addEventListener('mouseleave', () => !button.classList.contains('selected') && (button.style.color = 'rgba(255, 255, 255, 0.6)'));
+                return button;
+            }
+            handleSelect(index) {
+                this.selected = index;
+                const buttons = this.container.querySelectorAll('.tab-button');
+                buttons.forEach(button => {
+                    const buttonIndex = parseInt(button.dataset.index);
+                    const textElement = button.querySelector('.tab-text');
+                    const isSelected = this.selected === buttonIndex;
+                    button.classList.toggle('selected', isSelected);
+                    textElement.classList.toggle('expanded', isSelected);
+                    button.style.color = isSelected ? (this.activeColor || 'rgb(147, 197, 253)') : 'rgba(255, 255, 255, 0.6)';
+                });
+                this.onChange(this.selected);
+            }
+            bindEvents() {
+                this.container.addEventListener('click', (e) => {
+                    const button = e.target.closest('.tab-button');
+                    if (button && button.dataset.index !== undefined) {
+                        this.handleSelect(parseInt(button.dataset.index));
+                    }
+                });
+            }
+        }
+        function showContentSection(tabTitle) {
+            if (tabTitle === 'Home') {
+                window.location.href = '/admin_login';
+                return;
+            }
+            document.querySelectorAll('.content-section').forEach(section => section.classList.remove('active'));
+            let sectionId = '';
+            if (tabTitle === 'Upload') sectionId = 'uploadFiles';
+            if (tabTitle === 'Gallery') sectionId = 'gallery';
+            if (sectionId) {
+                const section = document.getElementById(sectionId);
+                if (section) {
+                    section.classList.add('active');
+                    if(sectionId === 'gallery') {
+                       requestAnimationFrame(async () => {
+                           await loadAllFiles();
+                       });
+                    }
+                }
+            }
+        }
+        function truncate(str, len) {
+            return str.length > len ? str.substring(0, len) + "..." : str;
+        }
+        function updateFilterButtons(activeFilter) {
+            const filterButtons = document.querySelectorAll('.gallery-filter-btn');
+            filterButtons.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.filter === activeFilter) {
+                    btn.classList.add('active');
+                }
+            });
+            currentGalleryFilter = activeFilter;
+        }
+        function renderGallery(filter) {
+            const galleryGrid = document.getElementById('galleryGrid');
+            if (!galleryGrid) return;
+            updateFilterButtons(filter);
+            const filteredMedia = getCurrentFiles();
+            galleryGrid.innerHTML = '';
+            if(filteredMedia.length === 0) {
+                document.getElementById('no-gallery-items').classList.remove('hidden');
+            } else {
+                document.getElementById('no-gallery-items').classList.add('hidden');
+                filteredMedia.forEach(item => {
+                    const itemEl = document.createElement('div');
+                    itemEl.className = 'gallery-item group aspect-square';
+                    if (item.type === 'image') {
+                        itemEl.innerHTML = `
+                            <img data-src="${item.url}" alt="${item.name}" class="lazy-image absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-300" loading="lazy">
+                            <div class="image-placeholder absolute inset-0 bg-gray-800 flex items-center justify-center">
+                                <i data-lucide="image" class="w-8 h-8 text-white/20"></i>
+                            </div>
+                            <div class="overlay"></div>
+                            <div class="relative z-10 text-white p-3 flex flex-col justify-end h-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <p class="text-xs font-semibold truncate">${item.name}</p>
+                                <p class="text-[10px] text-white/60">${item.size}</p>
+                            </div>
+                        `;
+                    } else {
+                        const nameWithoutExt = item.name.replace(/\.[^/.]+$/, "");
+                        const truncatedName = truncate(nameWithoutExt, 15);
+                        itemEl.classList.add('flex', 'flex-col', 'justify-center', 'items-center', 'text-center', 'p-4', 'bg-[#1C1C1E]');
+                        itemEl.innerHTML = `
+                            <i data-lucide="file-text" class="w-16 h-16 text-white/20 mb-4"></i>
+                            <div class="w-full">
+                                <p class="text-sm font-medium text-white">${truncatedName}</p>
+                                <p class="text-xs text-white/60 mt-1">${item.size}</p>
+                            </div>
+                        `;
+                    }
+                    itemEl.innerHTML += `
+                        <div class="actions">
+                            <button class="action-btn" data-action="view" data-id="${item.id}" data-url="${item.url}" title="View"><i data-lucide="external-link" class="w-4 h-4 text-white"></i></button>
+                            <button class="action-btn" data-action="download" data-id="${item.id}" data-url="${item.url}" data-name="${item.name}" title="Download"><i data-lucide="download" class="w-4 h-4 text-white"></i></button>
+                            <button class="action-btn" data-action="copy" data-id="${item.id}" data-url="${item.url}" title="Copy URL"><i data-lucide="link" class="w-4 h-4 text-white"></i></button>
+                            <button class="action-btn delete" data-action="delete" data-id="${item.id}" data-name="${item.name}" title="Delete"><i data-lucide="trash" class="w-4 h-4 text-white"></i></button>
+                        </div>
+                    `;
+                    galleryGrid.appendChild(itemEl);
+                });
+                initializeLazyLoading();
+            }
+            lucide.createIcons();
+        }
+        function initializeLazyLoading() {
+            const lazyImages = document.querySelectorAll('.lazy-image');
+            if ('IntersectionObserver' in window) {
+                const imageObserver = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const img = entry.target;
+                            const placeholder = img.nextElementSibling;
+                            img.src = img.dataset.src;
+                            img.onload = () => {
+                                img.classList.remove('opacity-0');
+                                img.classList.add('opacity-100');
+                                if (placeholder && placeholder.classList.contains('image-placeholder')) {
+                                    placeholder.style.display = 'none';
+                                }
+                            };
+                            img.onerror = () => {
+                                console.error('Failed to load image:', img.dataset.src);
+                                if (placeholder && placeholder.classList.contains('image-placeholder')) {
+                                    placeholder.innerHTML = '<i data-lucide="image-off" class="w-8 h-8 text-red-400/50"></i>';
+                                    lucide.createIcons();
+                                }
+                            };
+                            observer.unobserve(img);
+                        }
+                    });
+                });
+                lazyImages.forEach(img => imageObserver.observe(img));
+            } else {
+                lazyImages.forEach(img => {
+                    img.src = img.dataset.src;
+                    img.classList.remove('opacity-0');
+                    img.classList.add('opacity-100');
+                    const placeholder = img.nextElementSibling;
+                    if (placeholder && placeholder.classList.contains('image-placeholder')) {
+                        placeholder.style.display = 'none';
+                    }
+                });
+            }
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            lucide.createIcons();
+            const navbarTabsData = [
+                { title: "Home", icon: "home" },
+                { title: "Upload", icon: "upload-cloud" },
+                { title: "Gallery", icon: "grid" }
+            ];
+            const expandableTabs = new ExpandableTabs(document.getElementById('navbarTabs'), {
+                tabs: navbarTabsData,
+                activeColor: 'text-blue-400',
+                onChange: (index) => {
+                    if (index !== null) showContentSection(navbarTabsData[index].title);
+                }
+            });
+            expandableTabs.handleSelect(1);
+            lucide.createIcons();
+            loadAllFiles();
+            const dropzone = document.getElementById('dropzone');
+            const fileInput = document.getElementById('fileInput');
+            const imgToggle = document.getElementById('imgToggle');
+            const pdfToggle = document.getElementById('pdfToggle');
+            const fileQueueContainer = document.getElementById('file-queue');
+            const uploadBtn = document.getElementById('uploadBtn');
+            const uploadBtnText = document.getElementById('uploadBtnText');
+            let uploadType = 'image';
+            let filesToUpload = [];
+            function setUploadType(type) {
+                uploadType = type;
+                filesToUpload = [];
+                updateFileQueueUI();
+                const dropzoneIcon = document.getElementById('dropzone-icon');
+                const dropzoneText = document.getElementById('dropzone-text');
+                dropzoneIcon.style.opacity = '0';
+                dropzoneText.style.opacity = '0';
+                setTimeout(() => {
+                    if (type === 'image') {
+                        imgToggle.classList.add('active');
+                        pdfToggle.classList.remove('active');
+                        fileInput.accept = 'image/*';
+                        dropzoneIcon.dataset.lucide = 'image';
+                        dropzoneText.textContent = 'Upload JPG, PNG, GIF. Max 10MB.';
+                    } else {
+                        pdfToggle.classList.add('active');
+                        imgToggle.classList.remove('active');
+                        fileInput.accept = 'application/pdf';
+                        dropzoneIcon.dataset.lucide = 'file-text';
+                        dropzoneText.textContent = 'Upload PDF files. Max 50MB.';
+                    }
+                    lucide.createIcons();
+                    setTimeout(() => {
+                        dropzoneIcon.style.opacity = '1';
+                        dropzoneText.style.opacity = '1';
+                    }, 50);
+                }, 200);
+            }
+            imgToggle.addEventListener('click', () => setUploadType('image'));
+            pdfToggle.addEventListener('click', () => setUploadType('pdf'));
+            
+            // Initialize the upload type to 'image' on page load
+            setUploadType('image');
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                dropzone.addEventListener(eventName, e => { e.preventDefault(); e.stopPropagation(); });
+            });
+            ['dragenter', 'dragover'].forEach(eventName => {
+                dropzone.addEventListener(eventName, () => dropzone.classList.add('dragover'));
+            });
+            ['dragleave', 'drop'].forEach(eventName => {
+                dropzone.addEventListener(eventName, () => dropzone.classList.remove('dragover'));
+            });
+            dropzone.addEventListener('click', (e) => {
+                if (!e.target.closest('button')) {
+                    fileInput.click();
+                }
+            });
+            dropzone.addEventListener('drop', (e) => handleFiles(e.dataTransfer.files));
+            fileInput.addEventListener('change', (e) => handleFiles(e.target.files));
+            function handleFiles(files) {
+                const validFiles = [];
+                const invalidFiles = [];
+                Array.from(files).forEach(file => {
+                    if (isValidFileType(file)) {
+                        validFiles.push(file);
+                    } else {
+                        invalidFiles.push(file);
+                    }
+                });
+                if (invalidFiles.length > 0) {
+                    const fileNames = invalidFiles.map(f => f.name).join(', ');
+                    const expectedTypes = uploadType === 'image' ? 'PNG, JPG, JPEG, GIF, WEBP, BMP, SVG' : 'PDF';
+                    showToast(`Invalid file type(s): ${fileNames}. Expected: ${expectedTypes}`, 'error');
+                }
+                if (validFiles.length > 0) {
+                    filesToUpload.push(...validFiles);
+                    updateFileQueueUI();
+                }
+            }
+            function isValidFileType(file) {
+                if (uploadType === 'image') {
+                    return file.type.startsWith('image/') &&
+                           ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp', 'image/bmp', 'image/svg+xml'].includes(file.type.toLowerCase());
+                } else if (uploadType === 'pdf') {
+                    return file.type === 'application/pdf';
+                }
+                return false;
+            }
+            function updateFileQueueUI() {
+                fileQueueContainer.innerHTML = '';
+                if (filesToUpload.length > 0) {
+                     filesToUpload.forEach((file, index) => {
+                        const fileItem = document.createElement('div');
+                        fileItem.className = 'file-queue-item';
+                        fileItem.innerHTML = `
+                            <div class="flex-shrink-0 mr-3">
+                                <i data-lucide="${file.type.startsWith('image/') ? 'image' : 'file-text'}" class="w-5 h-5 text-white/70"></i>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <p class="text-sm font-medium truncate">${file.name}</p>
+                                <p class="text-xs text-white/50">${(file.size / 1024 / 1024).toFixed(2)} MB</p>
+                            </div>
+                            <button data-index="${index}" class="remove-file-btn ml-4 text-white/50 hover:text-red-500 transition-colors p-1">
+                                <i data-lucide="x" class="w-5 h-5"></i>
+                            </button>
+                        `;
+                        fileQueueContainer.appendChild(fileItem);
+                    });
+                    lucide.createIcons();
+                }
+                uploadBtn.disabled = filesToUpload.length === 0;
+                uploadBtnText.textContent = `Upload ${filesToUpload.length} File${filesToUpload.length !== 1 ? 's' : ''}`;
+            }
+            fileQueueContainer.addEventListener('click', (e) => {
+                const removeBtn = e.target.closest('.remove-file-btn');
+                if (removeBtn) {
+                    filesToUpload.splice(parseInt(removeBtn.dataset.index), 1);
+                    updateFileQueueUI();
+                }
+            });
+            uploadBtn.addEventListener('click', async () => {
+                if (filesToUpload.length === 0) {
+                    showToast('No files selected for upload', 'error');
+                    return;
+                }
+                uploadBtn.disabled = true;
+                uploadBtnText.textContent = 'Uploading...';
+                let successCount = 0;
+                let errorCount = 0;
+                const uploadResults = [];
+                for (let i = 0; i < filesToUpload.length; i++) {
+                    const file = filesToUpload[i];
+                    try {
+                        const formData = new FormData();
+                        formData.append('file', file);
+                        const response = await fetch('/upload_file', {
+                            method: 'POST',
+                            body: formData
+                        });
+                        const result = await response.json();
+                        if (response.ok && result.status === 'success') {
+                            successCount++;
+                            uploadResults.push({
+                                filename: file.name,
+                                status: 'success',
+                                url: result.url
+                            });
+                        } else {
+                            errorCount++;
+                            uploadResults.push({
+                                filename: file.name,
+                                status: 'error',
+                                message: result.message || 'Upload failed'
+                            });
+                            console.error(`✗ Failed to upload ${file.name}:`, result.message);
+                        }
+                    } catch (error) {
+                        errorCount++;
+                        uploadResults.push({
+                            filename: file.name,
+                            status: 'error',
+                            message: error.message
+                        });
+                        console.error(`✗ Network error uploading ${file.name}:`, error);
+                    }
+                    uploadBtnText.textContent = `Uploading... (${i + 1}/${filesToUpload.length})`;
+                }
+                if (successCount > 0 && errorCount === 0) {
+                    showToast(`Successfully uploaded ${successCount} file${successCount !== 1 ? 's' : ''}!`, 'success');
+                } else if (successCount > 0 && errorCount > 0) {
+                    const failedFiles = uploadResults.filter(r => r.status === 'error');
+                    const errorDetails = failedFiles.map(f => `${f.filename}: ${f.message}`).join('\n');
+                    showDetailedToast(`Uploaded ${successCount} files successfully, but ${errorCount} failed:`, errorDetails, 'warning');
+                } else {
+                    const errorDetails = uploadResults.map(r => `${r.filename}: ${r.message}`).join('\n');
+                    showDetailedToast('All uploads failed:', errorDetails, 'error');
+                }
+                if (successCount > 0) {
+                    await loadAllFiles();
+                }
+                filesToUpload = [];
+                updateFileQueueUI();
+                uploadBtn.disabled = false;
+                uploadBtnText.textContent = 'Upload 0 Files';
+            });
+            const filterButtons = document.querySelectorAll('.gallery-filter-btn');
+            filterButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    currentGalleryFilter = btn.dataset.filter;
+                    renderGallery(currentGalleryFilter);
+                });
+            });
+            const galleryGrid = document.getElementById('galleryGrid');
+            galleryGrid.addEventListener('click', (e) => {
+                const actionBtn = e.target.closest('.action-btn');
+                if (!actionBtn) {
+                    return;
+                }
+                const action = actionBtn.dataset.action;
+                const itemId = actionBtn.dataset.id;
+                const itemUrl = actionBtn.dataset.url;
+                const itemName = actionBtn.dataset.name;
+                switch(action) {
+                    case 'view':
+                        handleViewAction(itemUrl, itemName);
+                        break;
+                    case 'download':
+                        handleDownloadAction(itemUrl, itemName);
+                        break;
+                    case 'copy':
+                        handleCopyAction(itemUrl);
+                        break;
+                    case 'delete':
+                        handleDeleteAction(itemId, itemName);
+                        break;
+                }
+            });
+            function handleViewAction(url, name) {
+                if (url === '#') {
+                    alert(`Cannot preview ${name} - PDF preview not available in this demo`);
+                } else {
+                    window.open(url, '_blank');
+                }
+            }
+            async function handleDownloadAction(url, name) {
+                if (url === '#') {
+                    alert(`Download simulation for ${name}`);
+                    return;
+                }
+                showToast('Starting download...', 'success');
+                try {
+                    const response = await fetch(url);
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    const blob = await response.blob();
+                    const downloadUrl = window.URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.href = downloadUrl;
+                    link.download = name || 'download';
+                    link.style.display = 'none';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    window.URL.revokeObjectURL(downloadUrl);
+                    showToast(`Downloaded ${name}`, 'success');
+                } catch (error) {
+                    console.error('Download failed, trying fallback method:', error);
+                    try {
+                        const link = document.createElement('a');
+                        link.href = url;
+                        link.download = name || 'download';
+                        link.style.display = 'none';
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                        showToast(`Download initiated for ${name}`, 'success');
+                    } catch (fallbackError) {
+                        console.error('Fallback download also failed:', fallbackError);
+                        const link = document.createElement('a');
+                        link.href = url;
+                        link.target = '_blank';
+                        link.rel = 'noopener noreferrer';
+                        link.click();
+                        showToast('Download may have opened in new tab', 'warning');
+                    }
+                }
+            }
+            function handleCopyAction(url) {
+                if (navigator.clipboard && window.isSecureContext) {
+                    navigator.clipboard.writeText(url).then(() => {
+                        showToast('URL copied to clipboard!');
+                    }).catch(err => {
+                        console.error('Failed to copy: ', err);
+                        fallbackCopyTextToClipboard(url);
+                    });
+                } else {
+                    fallbackCopyTextToClipboard(url);
+                }
+            }
+            function fallbackCopyTextToClipboard(text) {
+                const textArea = document.createElement("textarea");
+                textArea.value = text;
+                textArea.style.top = "0";
+                textArea.style.left = "0";
+                textArea.style.position = "fixed";
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    showToast('URL copied to clipboard!');
+                } catch (err) {
+                    console.error('Fallback: Oops, unable to copy', err);
+                    alert('Failed to copy URL to clipboard');
+                }
+                document.body.removeChild(textArea);
+            }
+            function showDeleteModal(fileName, onConfirm) {
+                const modal = document.getElementById('deleteModal');
+                const message = document.getElementById('deleteModalMessage');
+                const confirmBtn = document.getElementById('deleteModalConfirm');
+                const cancelBtn = document.getElementById('deleteModalCancel');
+                message.innerHTML = `Are you sure you want to delete <strong>"${fileName}"</strong>?<br>This action cannot be undone.`;
+                modal.classList.add('show');
+                const handleConfirm = () => {
+                    hideDeleteModal();
+                    onConfirm();
+                    confirmBtn.removeEventListener('click', handleConfirm);
+                    cancelBtn.removeEventListener('click', handleCancel);
+                };
+                const handleCancel = () => {
+                    hideDeleteModal();
+                    confirmBtn.removeEventListener('click', handleConfirm);
+                    cancelBtn.removeEventListener('click', handleCancel);
+                };
+                confirmBtn.addEventListener('click', handleConfirm);
+                cancelBtn.addEventListener('click', handleCancel);
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        handleCancel();
+                    }
+                });
+                const handleEscape = (e) => {
+                    if (e.key === 'Escape') {
+                        handleCancel();
+                        document.removeEventListener('keydown', handleEscape);
+                    }
+                };
+                document.addEventListener('keydown', handleEscape);
+            }
+            function hideDeleteModal() {
+                const modal = document.getElementById('deleteModal');
+                modal.classList.remove('show');
+            }
+            async function handleDeleteAction(itemId, itemName) {
+                if (!itemName) {
+                    console.error('No file name provided to handleDeleteAction');
+                    showToast('Error: File name is missing', 'error');
+                    return;
+                }
+                showDeleteModal(itemName, async () => {
+                    showToast('Deleting file...', 'success');
+                    const requestData = { file_name: itemName };
+                    try {
+                        const response = await fetch('/delete_file', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(requestData)
+                        });
+                        const result = await response.json();
+                        if (response.ok && result.status === 'success') {
+                            let itemIndex = -1;
+                            let targetArray = null;
+                            if (currentGalleryFilter === 'image') {
+                                itemIndex = imageFiles.findIndex(item => item.id == itemId);
+                                targetArray = imageFiles;
+                            } else {
+                                itemIndex = pdfFiles.findIndex(item => item.id == itemId);
+                                targetArray = pdfFiles;
+                            }
+                            if (itemIndex > -1 && targetArray) {
+                                targetArray.splice(itemIndex, 1);
+                                renderGallery(currentGalleryFilter);
+                                showToast(`File "${itemName}" deleted successfully!`, 'success');
+                            } else {
+                                await loadAllFiles();
+                                showToast(`File "${itemName}" deleted successfully!`, 'success');
+                            }
+                        } else {
+                            console.error('Delete failed:', result.message);
+                            showToast(`Failed to delete file: ${result.message || 'Unknown error'}`, 'error');
+                        }
+                    } catch (error) {
+                        console.error('Error deleting file:', error);
+                        showToast(`Error deleting file: ${error.message}`, 'error');
+                    }
+                });
+            }
+            function showToast(message, type = 'success') {
+                const toast = document.createElement('div');
+                let bgColor = 'bg-green-600';
+                if (type === 'error') {
+                    bgColor = 'bg-red-600';
+                } else if (type === 'warning') {
+                    bgColor = 'bg-yellow-600';
+                }
+                toast.className = `fixed top-4 right-4 ${bgColor} text-white px-4 py-2 rounded-lg shadow-lg z-50 transition-all duration-300`;
+                toast.textContent = message;
+                document.body.appendChild(toast);
+                setTimeout(() => {
+                    toast.style.opacity = '0';
+                    toast.style.transform = 'translateY(-20px)';
+                    setTimeout(() => {
+                        document.body.removeChild(toast);
+                    }, 300);
+                }, 3000);
+            }
+            function translateErrorMessage(errorMessage) {
+                const message = errorMessage.toLowerCase();
+                if (message.includes('409') ||
+                    message.includes('duplicate') ||
+                    message.includes('already exists') ||
+                    message.includes('resource already exists') ||
+                    message.includes('statuscode') ||
+                    errorMessage.includes('409') || 
+                    errorMessage.includes('Duplicate') ||
+                    errorMessage.includes('duplicate')) {
+                    return 'A file with this name already exists. Please rename your file or delete the existing one.';
+                } else if (message.includes('too large') || message.includes('file size') ||
+                          message.includes('413') || message.includes('payload too large')) {
+                    return 'File is too large. Please choose a smaller file.';
+                } else if (message.includes('network') || message.includes('connection') ||
+                          message.includes('failed to fetch')) {
+                    return 'Connection problem. Please check your internet and try again.';
+                } else if (message.includes('unauthorized') || message.includes('permission') ||
+                          message.includes('401') || message.includes('403')) {
+                    return 'You don\'t have permission to upload this file.';
+                } else if (message.includes('invalid') || message.includes('format') ||
+                          message.includes('unsupported') || message.includes('400')) {
+                    return 'Invalid file format. Please choose a different file.';
+                } else if (message.includes('server error') || message.includes('500') ||
+                          message.includes('internal server')) {
+                    return 'Server is having issues. Please try again later.';
+                } else if (message.includes('timeout') || message.includes('408')) {
+                    return 'Upload took too long. Please try again with a smaller file.';
+                } else if (message.includes('quota') || message.includes('storage') ||
+                          message.includes('insufficient space')) {
+                    return 'Not enough storage space available.';
+                } else {
+                    return 'Something went wrong while uploading. Please try again.';
+                }
+            }
+            function showDetailedToast(title, details, type = 'error') {
+                const toast = document.createElement('div');
+                let bgColor = 'bg-red-600';
+                if (type === 'warning') {
+                    bgColor = 'bg-yellow-600';
+                } else if (type === 'success') {
+                    bgColor = 'bg-green-600';
+                }
+                const friendlyDetails = details.split('\n').map(line => {
+                    if (line.includes(':')) {
+                        const [filename, errorMsg] = line.split(': ', 2);
+                        const friendlyError = translateErrorMessage(errorMsg);
+                        return `${filename}: ${friendlyError}`;
+                    }
+                    return line;
+                }).join('\n');
+                toast.className = `fixed top-4 right-4 ${bgColor} text-white p-4 rounded-lg shadow-lg z-50 transition-all duration-300 max-w-md`;
+                toast.innerHTML = `
+                    <div class="flex justify-between items-start mb-2">
+                        <h4 class="font-semibold text-sm">${title}</h4>
+                        <button onclick="this.parentElement.parentElement.remove()" class="text-white/80 hover:text-white ml-2">
+                            <i data-lucide="x" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                    <div class="text-xs text-white/90 whitespace-pre-line max-h-32 overflow-y-auto">${friendlyDetails}</div>
+                `;
+                document.body.appendChild(toast);
+                lucide.createIcons();
+                setTimeout(() => {
+                    if (toast.parentElement) {
+                        toast.style.opacity = '0';
+                        toast.style.transform = 'translateY(-20px)';
+                        setTimeout(() => {
+                            if (toast.parentElement) {
+                                document.body.removeChild(toast);
+                            }
+                        }, 300);
+                    }
+                }, 8000);
+            }
+            const searchInput = document.getElementById('searchInput');
+            const searchContainer = searchInput.parentElement;
+            searchInput.addEventListener('focus', () => {
+                searchContainer.classList.add('focused');
+            });
+            searchInput.addEventListener('blur', () => {
+                searchContainer.classList.remove('focused');
+            });
+            searchInput.addEventListener('input', (e) => {
+                const searchTerm = e.target.value.toLowerCase().trim();
+                renderGalleryWithSearch(currentGalleryFilter, searchTerm);
+            });
+        });
+        function renderGalleryWithSearch(filter, searchTerm = '') {
+            const galleryGrid = document.getElementById('galleryGrid');
+            if (!galleryGrid) return;
+            updateFilterButtons(filter);
+            let filteredMedia = getCurrentFiles();
+            if (searchTerm) {
+                filteredMedia = filteredMedia.filter(item =>
+                    item.name.toLowerCase().includes(searchTerm)
+                );
+            }
+            galleryGrid.innerHTML = '';
+            if(filteredMedia.length === 0) {
+                document.getElementById('no-gallery-items').classList.remove('hidden');
+            } else {
+                document.getElementById('no-gallery-items').classList.add('hidden');
+                filteredMedia.forEach(item => {
+                    const itemEl = document.createElement('div');
+                    itemEl.className = 'gallery-item group aspect-square';
+                    if (item.type === 'image') {
+                        itemEl.innerHTML = `
+                            <img data-src="${item.url}" alt="${item.name}" class="lazy-image absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-300" loading="lazy">
+                            <div class="image-placeholder absolute inset-0 bg-gray-800 flex items-center justify-center">
+                                <i data-lucide="image" class="w-8 h-8 text-white/20"></i>
+                            </div>
+                            <div class="overlay"></div>
+                            <div class="relative z-10 text-white p-3 flex flex-col justify-end h-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <p class="text-xs font-semibold truncate">${item.name}</p>
+                                <p class="text-[10px] text-white/60">${item.size}</p>
+                            </div>
+                        `;
+                    } else {
+                        const nameWithoutExt = item.name.replace(/\.[^/.]+$/, "");
+                        const truncatedName = truncate(nameWithoutExt, 15);
+                        itemEl.classList.add('flex', 'flex-col', 'justify-center', 'items-center', 'text-center', 'p-4', 'bg-[#1C1C1E]');
+                        itemEl.innerHTML = `
+                            <i data-lucide="file-text" class="w-16 h-16 text-white/20 mb-4"></i>
+                            <div class="w-full">
+                                <p class="text-sm font-medium text-white">${truncatedName}</p>
+                                <p class="text-xs text-white/60 mt-1">${item.size}</p>
+                            </div>
+                        `;
+                    }
+                    itemEl.innerHTML += `
+                        <div class="actions">
+                            <button class="action-btn" data-action="view" data-id="${item.id}" data-url="${item.url}" title="View"><i data-lucide="external-link" class="w-4 h-4 text-white"></i></button>
+                            <button class="action-btn" data-action="download" data-id="${item.id}" data-url="${item.url}" data-name="${item.name}" title="Download"><i data-lucide="download" class="w-4 h-4 text-white"></i></button>
+                            <button class="action-btn" data-action="copy" data-id="${item.id}" data-url="${item.url}" title="Copy URL"><i data-lucide="link" class="w-4 h-4 text-white"></i></button>
+                            <button class="action-btn delete" data-action="delete" data-id="${item.id}" data-name="${item.name}" title="Delete"><i data-lucide="trash" class="w-4 h-4 text-white"></i></button>
+                        </div>
+                    `;
+                    galleryGrid.appendChild(itemEl);
+                });
+                initializeLazyLoading();
+            }
+            lucide.createIcons();
+        }
+        function renderGallery(filter) {
+            const searchInput = document.getElementById('searchInput');
+            const searchTerm = searchInput ? searchInput.value.toLowerCase().trim() : '';
+            renderGalleryWithSearch(filter, searchTerm);
+        }
+    </script>
+</body>
+</html>

@@ -407,12 +407,12 @@
             );
             contentInnerContainer.appendChild(titleDiv);
             
-            const instructionText = createAnimatedTextElement('p',
-                "text-base text-white/70 mb-3 font-extralight tracking-wide",
-                "ADMIN OPTIONS",
-                1.5
-            );
-            contentInnerContainer.appendChild(instructionText);
+            // const instructionText = createAnimatedTextElement('p',
+            //     "text-base text-white/70 mb-3 font-extralight tracking-wide",
+            //     "ADMIN OPTIONS",
+            //     1.5
+            // );
+            // contentInnerContainer.appendChild(instructionText);
             
             const buttonsContainer = createAnimatedTextElement('div',
                 "flex flex-wrap items-center justify-center gap-4 mb-8",
@@ -426,11 +426,8 @@
                 <button id="blogs-btn" class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.06] transition-colors" onclick="window.location.href='/admin_blogs'">
                     ${CircleSVG} <span class="text-sm text-white/60 tracking-wide">Blogs</span>
                 </button>
-                <button id="upload-btn" class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.06] transition-colors">
+                <button id="upload-btn" class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.06] transition-colors" onclick="window.location.href='/manage_files'">
                     ${CircleSVG} <span class="text-sm text-white/60 tracking-wide">Upload Files</span>
-                </button>
-                <button id="newsletter-btn" class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.06] transition-colors">
-                    ${CircleSVG} <span class="text-sm text-white/60 tracking-wide">Newsletter Signups</span>
                 </button>
                 `,
                 2
@@ -529,6 +526,7 @@
                     
                     if (result.success) {
                         // Store encrypted credentials
+                        console.log(result);
                         localStorage.setItem('enc_email', result.enc_email);
                         localStorage.setItem('enc_pwd', result.enc_pwd);
                         
