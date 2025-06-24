@@ -107,7 +107,7 @@
                     <h1 class="text-3xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-white to-white/80">
                         Admin Login
                     </h1>
-                    <p class="text-white/60 text-sm">Access the Business Out Loud admin panel</p>
+                    <p class="text-white/60 text-sm">Access the Brands Out Loud admin panel</p>
                 </div>
                 
                 <form id="login-form" class="space-y-6">
@@ -417,17 +417,17 @@
             const buttonsContainer = createAnimatedTextElement('div',
                 "flex flex-wrap items-center justify-center gap-4 mb-8",
                 `
-                <button id="analytics-btn" class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.06] transition-colors">
-                    ${CircleSVG} <span class="text-sm text-white/60 tracking-wide">Analytics</span>
+                <button id="analytics-btn" class="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.12] hover:border-white/[0.2] hover:scale-105 hover:shadow-lg hover:shadow-emerald-500/10 transition-all duration-300 ease-out">
+                    ${CircleSVG} <span class="text-base text-white/70 hover:text-white/90 tracking-wide font-medium transition-colors duration-300">Analytics</span>
                 </button>
-                <button id="update-btn" class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.06] transition-colors">
-                    ${CircleSVG} <span class="text-sm text-white/60 tracking-wide">Update Page</span>
+                <button id="update-btn" class="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.12] hover:border-white/[0.2] hover:scale-105 hover:shadow-lg hover:shadow-blue-500/10 transition-all duration-300 ease-out">
+                    ${CircleSVG} <span class="text-base text-white/70 hover:text-white/90 tracking-wide font-medium transition-colors duration-300">Update Page</span>
                 </button>
-                <button id="blogs-btn" class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.06] transition-colors" onclick="window.location.href='/admin_blogs'">
-                    ${CircleSVG} <span class="text-sm text-white/60 tracking-wide">Blogs</span>
+                <button id="blogs-btn" class="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.12] hover:border-white/[0.2] hover:scale-105 hover:shadow-lg hover:shadow-purple-500/10 transition-all duration-300 ease-out" onclick="window.location.href='/admin_blogs'">
+                    ${CircleSVG} <span class="text-base text-white/70 hover:text-white/90 tracking-wide font-medium transition-colors duration-300">Blogs</span>
                 </button>
-                <button id="upload-btn" class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.06] transition-colors" onclick="window.location.href='/manage_files'">
-                    ${CircleSVG} <span class="text-sm text-white/60 tracking-wide">Upload Files</span>
+                <button id="upload-btn" class="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.12] hover:border-white/[0.2] hover:scale-105 hover:shadow-lg hover:shadow-orange-500/10 transition-all duration-300 ease-out" onclick="window.location.href='/manage_files'">
+                    ${CircleSVG} <span class="text-base text-white/70 hover:text-white/90 tracking-wide font-medium transition-colors duration-300">Upload Files</span>
                 </button>
                 `,
                 2
@@ -566,7 +566,7 @@
             // Create hero section
             const heroSection = HeroGeometric({
                 title1: "Welcome to",
-                title2: "Business Out Loud"
+                title2: "Brands Out Loud"
             });
             rootElement.appendChild(heroSection);
         }

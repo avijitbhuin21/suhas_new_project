@@ -1,1967 +1,943 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>News Page Dev</title>
-    <link rel="icon" type="image/png" href="static/icon/website_icon.png" />
-    <!-- Tailwind CSS via CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/@phosphor-icons/web@2.0.3"></script>
-    <!-- Google Fonts -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@600&family=Inter:wght@500&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,700&display=swap"
-      rel="stylesheet"
-    />
-    <!-- Custom styles -->
-    <script>
-      /* Define custom fonts in Tailwind (optional, better in tailwind.config.js) */
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              jakarta: ['"Plus Jakarta Sans"', "sans-serif"],
-              "helvetica-now": ['"Helvetica Now Display"', "sans-serif"],
-              helvetica: ['"Helvetica"', "sans-serif"],
-              "ibm-plex": ['"IBM Plex Sans"', "sans-serif"],
-              inter: ['"Inter"', "sans-serif"],
-            },
-            backgroundImage: {
-              "header-banner":
-                "url('digital-marketing-agency-website-banner-ad-template-lzytv.png')",
-              "hero-gradient":
-                "linear-gradient(0deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://picsum.photos/1920/1080')", // Placeholder image used for gradient bg
-              "podcast-bg":
-                "linear-gradient(360deg, rgba(255, 255, 255, 0) 74.02%, #FFFFFF 100%), linear-gradient(180deg, rgba(255, 255, 255, 0) 61.61%, #FFFFFF 100%), url('Your paragraph text (8).png')",
-              "cta-bg":
-                "linear-gradient(0deg, rgba(0, 0, 0, 0.69), rgba(0, 0, 0, 0.69)), url('Screenshot 2024-09-18 at 9.57.41\u202FPM.png')",
-              "gradient-line":
-                "linear-gradient(90deg, #000000 0%, #9747FF 100%)",
-            },
-          },
-        },
-      };
-    </script>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const mobileMenuButton = document.getElementById("mobile-menu-button");
-        const mobileMenu = document.getElementById("mobile-menu");
-
-        mobileMenuButton.addEventListener("click", function () {
-          mobileMenu.classList.toggle("hidden");
-          mobileMenuButton.classList.toggle("hamburger-active");
-
-          if (!mobileMenu.classList.contains("hidden")) {
-            mobileMenu.classList.add("slide-down");
-          } else {
-            mobileMenu.classList.remove("slide-down");
-          }
-        });
-      });
-    </script>
-    <style>
-      /* @media screen and (min-width: 1024px) {
-        body {
-            transform: scale(1.33);
-            transform-origin: 0 0;
-            width: 75.3%;
-        }
-    } */
-
-      /* Mobile-first approach - default styling for mobile */
-      @media screen and (max-width: 768px) {
-        .hero-text {
-          font-size: 28px !important; /* Smaller hero text on mobile */
-          line-height: 36px !important;
-        }
-
-        .article-container {
-          padding-left: 20px !important;
-          padding-right: 20px !important;
-        }
-
-        .toc-container {
-          padding: 10px !important;
-        }
-      }
-
-      /* Import custom fonts (example using Google Fonts) */
-      @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@600&family=Inter:wght@500&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,700&display=swap");
-      /* Basic support for Helvetica Now Display (use fallback) */
-      @font-face {
-        font-family: "Helvetica Now Display";
-        src: local("Helvetica Neue"), local("Helvetica"), local("Arial"),
-          sans-serif; /* Basic fallback */
-        font-weight: 700;
-      }
-      @font-face {
-        font-family: "Helvetica";
-        src: local("Helvetica Neue"), local("Helvetica"), local("Arial"),
-          sans-serif; /* Basic fallback */
-        font-weight: 400;
-      }
-      ::-webkit-scrollbar {
-        display: none;
-      }
-
-      body {
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-      }
-      @keyframes slideDown {
-        from {
-          transform: translateY(-10px);
-          opacity: 0;
-        }
-        to {
-          transform: translateY(0);
-          opacity: 1;
-        }
-      }
-
-      .slide-down {
-        animation: slideDown 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-      }
-
-      :root {
-        --clr-dark-black: #121212;
-        --clr-bdr-gray: #2a2a2a;
-        --clr-white: #fff;
-        --clr-primary: #9747ff;
-        --clr-primary-light: #cda7ff;
-        --clr-gray-800: #1e1e1e;
-      }
-
-      .mobile-menu-item {
-        padding: 0.875rem 1rem;
-        background: var(--clr-dark-black);
-        border-bottom: solid 1px var(--clr-bdr-gray);
-        color: var(--clr-white);
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        transition: background-color 0.2s ease;
-      }
-
-      .mobile-menu-item:hover {
-        background-color: #1a1a1a;
-      }
-
-      .mobile-menu-item:active {
-        background-color: #252525;
-      }
-
-      .item-title {
-        flex-grow: 1;
-        margin-left: 0.75rem;
-        font-weight: 500;
-      }
-
-      .hamburger-line {
-        transition: all 0.3s ease;
-      }
-
-      .hamburger-active .hamburger-line:nth-child(1) {
-        transform: translateY(7px) rotate(45deg);
-      }
-
-      .hamburger-active .hamburger-line:nth-child(2) {
-        opacity: 0;
-      }
-
-      .hamburger-active .hamburger-line:nth-child(3) {
-        transform: translateY(-7px) rotate(-45deg);
-      }
-
-      .search-input {
-        transition: all 0.2s ease;
-      }
-
-      .search-input:focus {
-        box-shadow: 0 0 0 2px rgba(151, 71, 255, 0.5);
-      }
-
-      @keyframes shine {
-        from {
-          transform: translateX(-100%);
-        }
-        to {
-          transform: translateX(100%);
-        }
-      }
-
-      .login-btn {
-        transition: all 0.2s ease;
-      }
-
-      .login-btn:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 2px 8px rgba(205, 167, 255, 0.4);
-      }
-      /* TOC container enhancements */
-      aside .p-6 {
-        scrollbar-width: thin;
-        scrollbar-color: #3533cd #f5f5f5;
-        scroll-behavior: smooth;
-        transition: all 0.3s ease;
-      }
-
-      .toc-container {
-        scrollbar-width: thin;
-        scrollbar-color: #3533cd #f5f5f5;
-        scroll-behavior: smooth;
-        transition: all 0.3s ease;
-      }
-
-      /* Custom scrollbar for webkit browsers */
-      aside .p-6::-webkit-scrollbar,
-      .toc-container::-webkit-scrollbar {
-        width: 6px;
-      }
-
-      aside .p-6::-webkit-scrollbar-track,
-      .toc-container::-webkit-scrollbar-track {
-        background: #f5f5f5;
-        border-radius: 10px;
-      }
-
-      aside .p-6::-webkit-scrollbar-thumb,
-      .toc-container::-webkit-scrollbar-thumb {
-        background: rgba(53, 51, 205, 0.5);
-        border-radius: 10px;
-      }
-
-      /* Smooth transitions for TOC links */
-      .toc-link {
-        transition: color 0.3s ease, font-weight 0.2s ease,
-          border-color 0.3s ease;
-      }
-
-      /* Active indicator animation */
-      .toc-link.text-\[\#3533CD\] {
-        position: relative;
-      }
-
-      .toc-link.text-\[\#3533CD\]::after {
-        content: "";
-        position: absolute;
-        right: 0;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 4px;
-        height: 70%;
-        background-color: #3533cd;
-        border-radius: 2px;
-        animation: fadeIn 0.3s ease;
-      }      @keyframes fadeIn {
-        from {
-          opacity: 0;
-        }
-        to {
-          opacity: 1;
-        }
-      }      /* Mobile TOC arrow styling for better touch targets */
-      @media screen and (max-width: 1023px) {
-        .toc-arrow {
-          padding: 8px;
-          margin: -8px;
-          cursor: pointer;
-          border-radius: 4px;
-          transition: background-color 0.2s ease;
-          position: relative;
-          z-index: 10;
-        }
-        
-        .toc-arrow:hover {
-          background-color: rgba(53, 51, 205, 0.1);
-        }
-      }
-    </style>
-  </head>
-  <body class="font-poppins bg-white text-gray-800">
-    <header class="w-full bg-black relative">
-      <!-- Desktop Header -->
-        <div class="hidden lg:flex flex-row justify-center items-center px-20 py-[10px] gap-[70px] h-[113px]">
-            <img src="static/images/header_logo.png" alt="Brands Out Loud Logo" class="w-20 h-20 flex-shrink-0">
-            <nav class="flex flex-col items-stretch w-[700px] h-[93px] py-[14px] px-[18px] gap-[10px]">
-                <div class="flex flex-row justify-end items-center w-full gap-[60px] px-[30px]">
-                    <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Careers </a>
-                    <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Podcast </a>
-                    <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Register </a>
-                    <a href="#" class="bg-[#CDA7FF] rounded-[2px] px-2.5 py-0.5 text-[#0D0D0D] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Login </a>
-                </div>
-                <div class="w-full h-[1px] bg-gradient-to-r from-black to-[#9747FF]"></div>
-                <div class="flex flex-row justify-end items-center w-full gap-[60px] px-2">
-                    <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Newsletters </a>
-                    <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Magazine </a>
-                    <!-- <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Entrepreneurship </a> -->
-                    <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Startups </a>
-                    <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Business </a>
-                </div>
-            </nav>
-        </div>
-
-      <!-- Mobile Header -->
-      <div class="flex lg:hidden items-center h-[68px] w-full bg-[#0D0D0D]">
-        <button
-          id="mobile-menu-button"
-          aria-label="Toggle Menu"
-          class="h-full px-4 flex flex-col justify-center items-center space-y-[5px] bg-transparent focus:outline-none transition-colors duration-200 ease-in-out"
-        >
-          <span
-            class="hamburger-line block w-6 h-[2px] bg-white rounded-full"
-          ></span>
-          <span
-            class="hamburger-line block w-6 h-[2px] bg-white rounded-full"
-          ></span>
-          <span
-            class="hamburger-line block w-6 h-[2px] bg-white rounded-full"
-          ></span>
-        </button>
-
-        <div class="h-full flex items-center px-3 flex-shrink-0">
-          <img
-            src="static/icon/website_icon.png"
-            alt="Brands Out Loud Logo"
-            class="h-10 w-auto"
-          />
-        </div>
-
-        <div class="flex-grow px-3">
-          <div class="relative">
-            <input
-              type="text"
-              placeholder="Search..."
-              class="search-input w-full bg-[#1e1e1e] text-white text-sm rounded-full pl-10 pr-4 py-2.5 border border-[#2a2a2a] focus:outline-none focus:border-[#9747FF] transition-all"
-            />
-            <div
-              class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none"
-            >
-              <i class="ph ph-magnifying-glass text-gray-400 text-lg"></i>
-            </div>
-          </div>
-        </div>
-
-        <!-- Login button removed from here -->
-      </div>
-
-      <!-- Mobile Menu -->
-      <div
-        id="mobile-menu"
-        class="hidden lg:hidden absolute top-[68px] left-0 w-full bg-[#121212] z-50 shadow-lg border-t border-[#2a2a2a] overflow-hidden"
-      >
-        <div class="">
-          <!-- Login button -->
-          <div class="px-4 py-3">
-            <a
-              href="#"
-              class="login-btn block w-full text-center bg-gradient-to-r from-[#9747FF] to-[#CDA7FF] rounded-full px-4 py-2.5 text-white font-medium text-sm shadow-lg hover:-translate-y-0.5 transition-all duration-300 relative overflow-hidden"
-            >
-              <span
-                class="relative z-10 flex items-center justify-center gap-2"
-              >
-                <i class="ph ph-sign-in text-lg"></i>
-                <span>Login</span>
-              </span>
-              <div
-                class="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full animate-[shine_2s_infinite]"
-              ></div>
-            </a>
-          </div>
-
-          <div class="mobile-menu-item">
-            <i class="ph ph-book-open text-white text-lg"></i>
-            <span class="item-title">Magazine</span>
-            <i class="ph ph-caret-right"></i>
-          </div>
-
-          <div class="mobile-menu-item">
-            <i class="ph ph-lightning text-white text-lg"></i>
-            <span class="item-title">Startups</span>
-            <i class="ph ph-caret-right"></i>
-          </div>
-
-          <!-- <div class="mobile-menu-item">
-            <i class="ph ph-rocket text-white text-lg"></i>
-            <span class="item-title">Entrepreneurship</span>
-            <i class="ph ph-caret-right"></i>
-          </div> -->
-
-          <div class="mobile-menu-item">
-            <i class="ph ph-envelope-open text-white text-lg"></i>
-            <span class="item-title">Newsletters</span>
-            <i class="ph ph-caret-right"></i>
-          </div>
-
-          <div class="mobile-menu-item">
-            <i class="ph ph-newspaper text-white text-lg"></i>
-            <span class="item-title">Podcast</span>
-            <i class="ph ph-caret-right"></i>
-          </div>
-
-          <div class="mobile-menu-item">
-            <i class="ph ph-buildings text-white text-lg"></i>
-            <span class="item-title">Business</span>
-            <i class="ph ph-caret-right"></i>
-          </div>
-
-          <div class="mobile-menu-item">
-            <i class="ph ph-briefcase text-white text-lg"></i>
-            <span class="item-title">Careers</span>
-            <i class="ph ph-caret-right"></i>
-          </div>
-        </div>
-      </div>
-    </header>
-
-
-    
-    <main
-      class="w-full px-4 sm:px-8 md:px-[65px] py-[21px] relative article-container"
-    >
-      <!-- Article Hero Section -->
-      <article class="mb-8 md:mb-12 relative">
-        <div class="relative w-full h-[300px] md:h-[478px]">
-          <div
-            class="absolute inset-0 bg-hero-gradient bg-cover bg-center"
-          ></div>
-          <img
-            src="https://picsum.photos/1920/1080"
-            alt="Hero article image"
-            class="w-full h-full object-cover opacity-40 mix-blend-multiply"
-          />
-        </div>
-
-        <div
-          class="relative bg-white md:w-full w-[420px] md:ml-[6.85rem] ml-[-1.5rem] max-w-[1175px] h-auto mx-auto -mt-[40px] sm:-mt-[60px] md:-mt-[76px] p-4 sm:p-6 md:p-8 z-10"
-        >
-          <h1
-            class="font-jakarta font-medium text-[28px] sm:text-[34px] md:text-[42px] lg:text-[50px] leading-[1.2] md:leading-[1.25] capitalize text-black mb-3 md:mb-4 text-center hero-text"
-          >
-            Innovative Approaches to Talent Acquisition & Retention in Today's
-            Professional Landscape
-          </h1>
-          <div class="flex justify-center items-center gap-2 text-center mb-4">
-            <p
-              class="font-jakarta font-semibold text-[11px] sm:text-[12px] md:text-[14px] leading-[100.9%] text-black"
-            >
-              Craig Bator
-            </p>
-            <span class="text-black">- -</span>
-            <p
-              class="font-jakarta font-normal text-[11px] sm:text-[12px] md:text-[14px] leading-[100.9%] text-black"
-            >
-              27 Dec 2020
-            </p>
-          </div>
-        </div>
-
-        <p
-          class="font-jakarta font-medium text-[18px] md:text-[22px] leading-[26px] md:leading-[30px] text-[#636363] text-center mt-6 md:mt-8 max-w-[1175px] mx-auto px-2 md:px-0"
-        >
-          The quest for top talent in the professional landscape has never been
-          more competitive. Companies are redefining their approaches to attract
-          and retain exceptional minds and this evolution calls for innovative
-          strategies in talent acquisition and retention. Reports suggest 75% of
-          HR professionals ring the bell on a talent shortage as their biggest
-          challenge. The figure throws into relief the critical need for
-          creative solutions.
-        </p>
-
-        <hr
-          class="border-t border-black my-8 md:my-12 w-full md:w-[90%] lg:w-[87rem] mx-auto"
-        />
-      </article>
-      <!-- Main Content with TOC -->
-      <!-- Mobile Table of Contents -->
-      <div class="block lg:hidden px-4 mt-8">
-        <div
-          class="relative toc-container p-5 bg-white rounded-xl border-gray-100"
-        >
-          <h2 class="text-xl font-bold text-[#3533CD] mb-4 border-b pb-3">
-            Table of Contents
-          </h2>
-          <!-- H2 Section - Collapsible -->
-          <div
-            class="mb-3 toc-section"
-            data-section-id="crafting-customised-recruitment-campaigns"
-          >
-            <a
-              href="#crafting-customised-recruitment-campaigns"
-              data-toggle-target="#sub-crafting-customised-recruitment-campaigns"
-              class="toc-h2-link flex items-center justify-between mt-1 mb-3 no-underline text-gray-800 hover:text-[#3533CD] transition-colors duration-200 toc-link"
-            >
-              <div class="text-base font-medium">
-                Crafting Customised Recruitment Campaigns
-              </div>
-              <i
-                class="ph ph-caret-down text-xs ml-1 toc-arrow transition-transform duration-300"
-              ></i>
-            </a>
-            <!-- Subcategories Container -->
-            <div
-              id="sub-crafting-customised-recruitment-campaigns"
-              class="toc-subcategories hidden pl-4 mb-3 space-y-2"
-            >
-              <a
-                href="#building-attractive-employer-identity"
-                class="flex items-center mt-1 no-underline text-gray-600 hover:text-[#3533CD] transition-colors duration-200 toc-link border-l-2 border-gray-200 pl-3 hover:border-[#3533CD]"
-              >
-                <div class="text-sm">
-                  Building an Attractive Employer Identity
-                </div>
-              </a>
-              <a
-                href="#strategic-outreach"
-                class="flex items-center mt-1 no-underline text-gray-600 hover:text-[#3533CD] transition-colors duration-200 toc-link border-l-2 border-gray-200 pl-3 hover:border-[#3533CD]"
-              >
-                <div class="text-sm">Strategic Outreach</div>
-              </a>
-              <a
-                href="#encouraging-diversity"
-                class="flex items-center mt-1 no-underline text-gray-600 hover:text-[#3533CD] transition-colors duration-200 toc-link border-l-2 border-gray-200 pl-3 hover:border-[#3533CD]"
-              >
-                <div class="text-sm">
-                  Encouraging Diversity Through Inclusive Hiring
-                </div>
-              </a>
-            </div>
-          </div>
-          <!-- H2 Section - Collapsible -->
-          <div
-            class="mb-3 toc-section"
-            data-section-id="integrating-tech-innovations-in-hiring"
-          >
-            <a
-              href="#integrating-tech-innovations-in-hiring"
-              data-toggle-target="#sub-integrating-tech-innovations-in-hiring"
-              class="toc-h2-link flex items-center justify-between mt-1 mb-3 no-underline text-gray-800 hover:text-[#3533CD] transition-colors duration-200 toc-link"
-            >
-              <div class="text-base font-medium">
-                Integrating Tech Innovations in Hiring
-              </div>
-              <i
-                class="ph ph-caret-down text-xs ml-1 toc-arrow transition-transform duration-300"
-              ></i>
-            </a>
-            <!-- Subcategories Container -->
-            <div
-              id="sub-integrating-tech-innovations-in-hiring"
-              class="toc-subcategories hidden pl-4 mb-3 space-y-2"
-            >
-              <a
-                href="#innovating-with-ai"
-                class="flex items-center mt-1 no-underline text-gray-600 hover:text-[#3533CD] transition-colors duration-200 toc-link border-l-2 border-gray-200 pl-3 hover:border-[#3533CD]"
-              >
-                <div class="text-sm">Innovating with AI for Fairer Hiring</div>
-              </a>
-              <a
-                href="#social-media-catalyst"
-                class="flex items-center mt-1 no-underline text-gray-600 hover:text-[#3533CD] transition-colors duration-200 toc-link border-l-2 border-gray-200 pl-3 hover:border-[#3533CD]"
-              >
-                <div class="text-sm">
-                  Social Media as a Recruitment Catalyst
-                </div>
-              </a>
-              <a
-                href="#digital-showcasing"
-                class="flex items-center mt-1 no-underline text-gray-600 hover:text-[#3533CD] transition-colors duration-200 toc-link border-l-2 border-gray-200 pl-3 hover:border-[#3533CD]"
-              >
-                <div class="text-sm">Digital Showcasing of Company Culture</div>
-              </a>
-            </div>
-          </div>
-          <!-- H2 Section - Collapsible -->
-          <div
-            class="mb-3 toc-section"
-            data-section-id="tailoring-the-employee-experience"
-          >
-            <a
-              href="#tailoring-the-employee-experience"
-              data-toggle-target="#sub-tailoring-the-employee-experience"
-              class="toc-h2-link flex items-center justify-between mt-1 mb-3 no-underline text-gray-800 hover:text-[#3533CD] transition-colors duration-200 toc-link"
-            >
-              <div class="text-base font-medium">
-                Tailoring the Employee Experience
-              </div>
-              <i
-                class="ph ph-caret-down text-xs ml-1 toc-arrow transition-transform duration-300"
-              ></i>
-            </a>
-            <!-- Subcategories Container -->
-            <div
-              id="sub-tailoring-the-employee-experience"
-              class="toc-subcategories hidden pl-4 mb-3 space-y-2"
-            >
-              <a
-                href="#tailored-development-initiatives"
-                class="flex items-center mt-1 no-underline text-gray-600 hover:text-[#3533CD] transition-colors duration-200 toc-link border-l-2 border-gray-200 pl-3 hover:border-[#3533CD]"
-              >
-                <div class="text-sm">
-                  Moreover, tailored development initiatives...
-                </div>
-              </a>
-            </div>
-          </div>
-          <!-- Share/Download Buttons -->
-          <div class="mt-6 space-y-4 border-t pt-5">
-            <button
-              class="w-full h-[45px] bg-[#3533CD] rounded-xl flex items-center justify-center text-white font-jakarta font-medium text-[16px] leading-[120%] hover:bg-opacity-90 transition-colors shadow-md"
-            >
-              <i class="ph ph-download mr-2"></i> Download Article as PDF
-            </button>
-            <div class="flex items-center flex-wrap">
-              <div
-                class="relative inline-flex items-center justify-center gap-2 bg-[#3533CD] rounded-xl h-[45px] px-4 cursor-pointer hover:bg-opacity-90 transition-colors shadow-md"
-              >
-                <span
-                  class="text-white font-jakarta font-medium text-[16px] leading-[120%] text-center"
-                  style="width: 7rem"
-                >
-                  <i class="ph ph-share-network mr-2"></i> Share
-                </span>
-              </div>
-              <div class="flex space-x-3 ml-3">
-                <img
-                  src="static/images/whatsapp_logo.png"
-                  alt="WhatsApp"
-                  class="w-[35px] h-[35px] object-contain hover:opacity-80 transition-opacity"
-                />
-                <img
-                  src="static/images/insta_logo.png"
-                  alt="Instagram"
-                  class="w-[35px] h-[35px] object-contain hover:opacity-80 transition-opacity"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div
-        class="grid grid-cols-1 lg:grid-cols-[360px_1fr] gap-8 md:gap-12 mt-4 md:mt-8"
-        style="margin-right: 0; margin-left: 0; padding: 0 0.5rem"
-      >
-        <aside
-          class="sticky top-8 h-8rem lg:order-1 self-start md:mt-[0rem] mt-[-57rem]"
-        >
-          <div
-            class="p-6 flex flex-col w-full rounded-xl bg-white border-gray-100 hidden lg:block overflow-y- max-h-[calc(100vh-4rem)]"
-            style="scroll-behavior: smooth"
-          >
-            <h2 class="text-2xl font-bold text-[#3533CD] mb-6 border-b pb-3">
-              Table of Contents
-            </h2>
-            <!-- H2 Section - Collapsible -->
-            <div
-              class="mb-4 toc-section"
-              data-section-id="crafting-customised-recruitment-campaigns"
-            >
-              <a
-                href="#crafting-customised-recruitment-campaigns"
-                data-toggle-target="#sub-crafting-customised-recruitment-campaigns-desktop"
-                class="toc-h2-link flex items-center justify-between mt-1 mb-3 no-underline text-gray-800 hover:text-[#3533CD] transition-colors duration-200 toc-link"
-              >
-                <div class="text-lg font-medium">
-                  Crafting Customised Recruitment Campaigns
-                </div>
-                <i
-                  class="ph ph-caret-down text-xs ml-1 toc-arrow transition-transform duration-300"
-                ></i>
-              </a>
-              <!-- Subcategories Container -->
-              <div
-                id="sub-crafting-customised-recruitment-campaigns-desktop"
-                class="toc-subcategories hidden pl-4 mb-3 space-y-3"
-              >
-                <a
-                  href="#building-attractive-employer-identity"
-                  class="flex items-center mt-1 no-underline text-gray-600 hover:text-[#3533CD] transition-colors duration-200 toc-link border-l-2 border-gray-200 pl-3 hover:border-[#3533CD]"
-                >
-                  <div class="text-sm">
-                    Building an Attractive Employer Identity
-                  </div>
-                </a>
-                <a
-                  href="#strategic-outreach"
-                  class="flex items-center mt-1 no-underline text-gray-600 hover:text-[#3533CD] transition-colors duration-200 toc-link border-l-2 border-gray-200 pl-3 hover:border-[#3533CD]"
-                >
-                  <div class="text-sm">Strategic Outreach</div>
-                </a>
-                <a
-                  href="#encouraging-diversity"
-                  class="flex items-center mt-1 no-underline text-gray-600 hover:text-[#3533CD] transition-colors duration-200 toc-link border-l-2 border-gray-200 pl-3 hover:border-[#3533CD]"
-                >
-                  <div class="text-sm">
-                    Encouraging Diversity Through Inclusive Hiring
-                  </div>
-                </a>
-              </div>
-            </div>
-            <!-- H2 Section - Collapsible -->
-            <div
-              class="mb-4 toc-section"
-              data-section-id="integrating-tech-innovations-in-hiring"
-            >
-              <a
-                href="#integrating-tech-innovations-in-hiring"
-                data-toggle-target="#sub-integrating-tech-innovations-in-hiring-desktop"
-                class="toc-h2-link flex items-center justify-between mt-1 mb-3 no-underline text-gray-800 hover:text-[#3533CD] transition-colors duration-200 toc-link"
-              >
-                <div class="text-lg font-medium">
-                  Integrating Tech Innovations in Hiring
-                </div>
-                <i
-                  class="ph ph-caret-down text-xs ml-1 toc-arrow transition-transform duration-300"
-                ></i>
-              </a>
-              <!-- Subcategories Container -->
-              <div
-                id="sub-integrating-tech-innovations-in-hiring-desktop"
-                class="toc-subcategories hidden pl-4 mb-3 space-y-3"
-              >
-                <a
-                  href="#innovating-with-ai"
-                  class="flex items-center mt-1 no-underline text-gray-600 hover:text-[#3533CD] transition-colors duration-200 toc-link border-l-2 border-gray-200 pl-3 hover:border-[#3533CD]"
-                >
-                  <div class="text-sm">
-                    Innovating with AI for Fairer Hiring
-                  </div>
-                </a>
-                <a
-                  href="#social-media-catalyst"
-                  class="flex items-center mt-1 no-underline text-gray-600 hover:text-[#3533CD] transition-colors duration-200 toc-link border-l-2 border-gray-200 pl-3 hover:border-[#3533CD]"
-                >
-                  <div class="text-sm">
-                    Social Media as a Recruitment Catalyst
-                  </div>
-                </a>
-                <a
-                  href="#digital-showcasing"
-                  class="flex items-center mt-1 no-underline text-gray-600 hover:text-[#3533CD] transition-colors duration-200 toc-link border-l-2 border-gray-200 pl-3 hover:border-[#3533CD]"
-                >
-                  <div class="text-sm">
-                    Digital Showcasing of Company Culture
-                  </div>
-                </a>
-              </div>
-            </div>
-            <!-- H2 Section - Collapsible -->
-            <div
-              class="mb-4 toc-section"
-              data-section-id="tailoring-the-employee-experience"
-            >
-              <a
-                href="#tailoring-the-employee-experience"
-                data-toggle-target="#sub-tailoring-the-employee-experience-desktop"
-                class="toc-h2-link flex items-center justify-between mt-1 mb-3 no-underline text-gray-800 hover:text-[#3533CD] transition-colors duration-200 toc-link"
-              >
-                <div class="text-lg font-medium">
-                  Tailoring the Employee Experience
-                </div>
-                <i
-                  class="ph ph-caret-down text-xs ml-1 toc-arrow transition-transform duration-300"
-                ></i>
-              </a>
-              <!-- Subcategories Container -->
-              <div
-                id="sub-tailoring-the-employee-experience-desktop"
-                class="toc-subcategories hidden pl-4 mb-3 space-y-3"
-              >
-                <a
-                  href="#tailored-development-initiatives"
-                  class="flex items-center mt-1 no-underline text-gray-600 hover:text-[#3533CD] transition-colors duration-200 toc-link border-l-2 border-gray-200 pl-3 hover:border-[transparent]"
-                >
-                  <div class="text-sm">
-                    Moreover, tailored development initiatives...
-                  </div>
-                </a>
-              </div>
-            </div>
-            <!-- Share/Download Buttons -->
-            <div class="mt-8 space-y-4 border-t pt-6">
-              <button
-                class="w-full h-[45px] md:h-[53px] bg-[#3533CD] rounded-xl flex items-center justify-center text-white font-jakarta font-medium text-[16px] md:text-[18px] leading-[120%] hover:bg-opacity-90 transition-colors shadow-md"
-              >
-                <i class="ph ph-download mr-2"></i> Download Article as PDF
-              </button>
-              <div class="flex items-center flex-wrap">
-                <div
-                  class="relative inline-flex items-center justify-center gap-2 bg-[#3533CD] rounded-xl h-[45px] md:h-[53px] px-4 cursor-pointer hover:bg-opacity-90 transition-colors shadow-md"
-                >
-                  <span
-                    class="text-white font-jakarta font-medium text-[16px] md:text-[18px] leading-[120%] text-center"
-                    style="width: 7rem"
-                  >
-                    <i class="ph ph-share-network mr-2"></i> Share
-                  </span>
-                </div>
-                <div class="flex space-x-3 ml-3">
-                  <img
-                    src="static/images/whatsapp_logo.png"
-                    alt="WhatsApp"
-                    class="w-[35px] h-[35px] md:w-[45px] md:h-[45px] object-contain hover:opacity-80 transition-opacity"
-                  />
-                  <img
-                    src="static/images/insta_logo.png"
-                    alt="Instagram"
-                    class="w-[35px] h-[35px] md:w-[45px] md:h-[45px] object-contain hover:opacity-80 transition-opacity"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </aside>
-        <section
-          class="space-y-6 md:space-y-10 text-justify order-1 lg:order-2"
-        >
-          <p
-            class="font-jakarta font-medium text-[15px] md:text-[16px] leading-[26px] md:leading-[30px] text-black"
-          >
-            The quest for top talent in the professional landscape has never
-            been more competitive. Companies are redefining their approaches to
-            attract and retain exceptional minds and this evolution calls for
-            innovative strategies in talent acquisition and retention. Reports
-            suggest 75% of HR professionals ring the bell on a talent shortage
-            as their biggest challenge. The figure throws into relief the
-            critical need for creative solutions.
-          </p>
-          <div>
-            <h2
-              id="crafting-customised-recruitment-campaigns"
-              class="font-jakarta font-medium text-[22px] md:text-[28px] leading-[28px] md:leading-[30px] text-black mb-3 md:mb-4 scroll-mt-20"
-            >
-              Crafting Customised Recruitment Campaigns
-            </h2>
-            <p
-              class="font-jakarta font-medium text-[15px] md:text-[16px] leading-[26px] md:leading-[30px] text-black mb-3 md:mb-4"
-            >
-              These days, job advertisements don't carry a traditional approach
-              as they used to do a decade back. Today, attracting top-tier
-              talent requires bespoke recruitment initiatives that highlight
-              what makes your company stand out. It's about digging deeper to
-              understand what potential employees seek and ensuring these
-              desires mesh with your company's ethics and goals.
-            </p>
-            <p
-              id="building-attractive-employer-identity"
-              class="font-jakarta font-medium text-[15px] md:text-[16px] leading-[26px] md:leading-[30px] text-black mb-3 md:mb-4 scroll-mt-20 md:ml-[2rem]"
-            >
-              <span class="font-semibold font-high text-[20px]"
-                >Building an Attractive Employer Identity<br
-              /></span>
-              Develop a strong employer brand that echoes your core values,
-              workplace culture, and paths for advancement. Such branding should
-              connect with prospective employees and set you apart in the crowd.
-            </p>
-            <p
-              id="strategic-outreach"
-              class="font-jakarta font-medium text-[15px] md:text-[16px] leading-[26px] md:leading-[30px] text-black mb-3 md:mb-4 scroll-mt-20 md:ml-[2rem]"
-            >
-              <span class="font-semibold font-high text-[20px]"
-                >Strategic Outreach<br
-              /></span>
-              Consider embracing a variety of platforms. They may include social
-              media, industry gatherings, and professional circles. This will
-              help you pinpoint and engage individuals with the necessary
-              competencies and character.
-            </p>
-            <p
-              id="encouraging-diversity"
-              class="font-jakarta font-medium text-[15px] md:text-[16px] leading-[26px] md:leading-[30px] text-black scroll-mt-20 md:ml-[2rem]"
-            >
-              <span class="font-semibold font-high text-[20px]"
-                >Encouraging Diversity Through Inclusive Hiring<br
-              /></span>
-              Championing diversity and inclusivity in recruitment processes is
-              critical. You should always aim for neutrality in job descriptions
-              and interview setups. Furthermore, it's crucial to proactively
-              approach candidates from diverse backgrounds.
-            </p>
-          </div>
-
-          <!-- Advertisement Banner -->
-          <div class="w-full h-[120px] sm:h-[160px] md:h-[236px] my-8 md:my-12">
-            <img
-              src="https://picsum.photos/1200/236"
-              alt="Advertisement"
-              class="w-full h-full object-cover"
-            />
-          </div>
-
-          <div>
-            <h2
-              id="integrating-tech-innovations-in-hiring"
-              class="font-jakarta font-medium text-[22px] md:text-[28px] leading-[28px] md:leading-[30px] text-black mb-3 md:mb-4 scroll-mt-20"
-            >
-              Integrating Tech Innovations in Hiring
-            </h2>
-            <p
-              class="font-jakarta font-medium text-[15px] md:text-[16px] leading-[26px] md:leading-[30px] text-black mb-4 md:mb-6"
-            >
-              The integration of technology has transformed recruitment into a
-              more strategic and fair process. The application of artificial
-              intelligence (AI) for candidate evaluation streamlines hiring,
-              ensuring decisions are free from bias. Furthermore, as mentioned
-              earlier, social media has emerged as a crucial platform for
-              engagement. It offers a window into an organisation's culture and
-              values, which eventually draws in candidates aligned with these
-              principles.
-            </p>
-
-            <!-- Testing SD -->
-            <p
-              id="innovating-with-ai"
-              class="font-jakarta font-medium text-[15px] md:text-[16px] leading-[26px] md:leading-[30px] text-black mb-3 md:mb-4 scroll-mt-20 md:ml-[2rem]"
-            >
-              <span class="font-semibold font-high text-[20px]"
-                >Innovating with AI for Fairer Hiring<br
-              /></span>
-              Organisations should adopt AI-driven tools to refine the screening
-              process. This approach speeds up recruitment and simultaneously
-              guarantees fairness. Consequently, talents from various
-              backgrounds are considered on equal footing.
-            </p>
-            <p
-              id="social-media-catalyst"
-              class="font-jakarta font-medium text-[15px] md:text-[16px] leading-[26px] md:leading-[30px] text-black mb-3 md:mb-4 scroll-mt-20 md:ml-[2rem]"
-            >
-              <span class="font-semibold font-high text-[20px]"
-                >Social Media as a Recruitment Catalyst<br
-              /></span>
-              Harness the power of social platforms to broadcast your company's
-              culture and vision. This transparency attracts professionals who
-              resonate with your organisational values, facilitating a better
-              match between the company and potential employees.
-            </p>
-            <p
-              id="digital-showcasing"
-              class="font-jakarta font-medium text-[15px] md:text-[16px] leading-[26px] md:leading-[30px] text-black scroll-mt-20 md:ml-[2rem]"
-            >
-              <span class="font-semibold font-high text-[20px]"
-                >Digital Showcasing of Company Culture<br
-              /></span>
-              Use online platforms to vividly present what it's like to work at
-              your company. Through engaging content and interactive sessions,
-              you can captivate the interest of prospective talents who are
-              seeking inclusive and innovative workplaces.
-            </p>
-          </div>
-          <!-- Advertisement Banner -->
-          <div class="w-full h-[120px] sm:h-[160px] md:h-[236px] my-8 md:my-12">
-            <img
-              src="https://picsum.photos/1200/238"
-              alt="Advertisement"
-              class="w-full h-full object-cover"
-            />
-          </div>
-          <div>
-            <h2
-              id="tailoring-the-employee-experience"
-              class="font-jakarta font-medium text-[22px] md:text-[28px] leading-[28px] md:leading-[30px] text-black mb-3 md:mb-4 scroll-mt-20"
-            >
-              Tailoring the Employee Experience
-            </h2>
-            <p
-              class="font-jakarta font-medium text-[15px] md:text-[16px] leading-[26px] md:leading-[30px] text-black"
-            >
-              The integration of technology has transformed recruitment into a
-              more strategic and fair process. The application of artificial
-              intelligence (AI) for candidate evaluation streamlines hiring,
-              ensuring decisions are free from bias. Furthermore, as mentioned
-              earlier, social media has emerged as a crucial platform for
-              engagement. It offers a window into an organisation's culture and
-              values, which eventually draws in candidates aligned with these
-              principles.
-            </p>
-          </div>
-          <div class="md:ml-[2rem]">
-              <span
-                id="tailored-development-initiatives"
-                class="font-jakarta font-semibold text-[15px] md:text-[20px] leading-[26px] md:leading-[30px] text-black scroll-mt-20 text-[20px]"
-                >Moreover, tailored development initiatives are now
-                standard enabling employees to forge their unique trajectories
-                in the organisation.
-              </span>
-              <div class="font-jakarta font-medium text-[15px] md:text-[16px] leading-[26px] md:leading-[30px] text-black md:mt-[1rem]">
-                <span>
-                The integration of technology has transformed recruitment into a
-                more strategic and fair process. The application of artificial
-                intelligence (AI) for candidate evaluation streamlines hiring,
-                ensuring decisions are free from bias. Furthermore, as mentioned
-                earlier, social media has emerged as a crucial platform for
-                engagement. It offers a window into an organisation's culture
-                and values, which eventually draws in candidates aligned with
-                these principles.
-              </span>
-              </div>
-              
-            </p>
-          </div>
-          <p
-            class="font-jakarta font-medium text-[15px] md:text-[16px] leading-[26px] md:leading-[30px] text-black md:ml-[2rem]"
-          >
-            The integration of technology has transformed recruitment into a
-            more strategic and fair process. The application of artificial
-            intelligence (AI) for candidate evaluation streamlines hiring,
-            ensuring decisions are free from bias. Furthermore, as mentioned
-            earlier, social media has emerged as a crucial platform for
-            engagement. It offers a window into an organisation's culture and
-            values, which eventually draws in candidates aligned with these
-            principles.
-          </p>
-        </section>
-      </div>
-      <!-- Leadership Spotlight Section -->
-      <section class="w-full max-w-7xl mx-auto px-4 md:px-8 py-9 my-8">
-        <div class="flex flex-col md:flex-row items-stretch gap-8">
-          <div
-            class="h-auto py-6 md:py-0 md:h-[32rem] w-full md:w-1/2 md:shrink-0 bg-gradient-to-r from-[#3533CD] to-[#0A0A24] rounded-[15px] p-4 md:p-8 flex flex-col items-center justify-center text-center text-white"
-          >
-            <h2
-              class="font-helvetica-now font-bold text-2xl md:text-4xl leading-tight mb-3 md:mb-4"
-            >
-              Leadership Spotlight
-            </h2>
-            <div class="flex flex-col items-center gap-3 md:gap-4">
-              <div
-                class="w-[100px] h-[100px] sm:w-[120px] sm:h-[120px] md:w-[160px] md:h-[160px] bg-[url('static/images/swati_gupta.png')] bg-cover bg-center rounded-full shrink-0"
-              ></div>
-              <div class="flex flex-col items-center">
-                <h3
-                  class="font-jakarta font-normal text-lg sm:text-xl md:text-2xl leading-tight mb-1"
-                >
-                  Q & A with SWATI GUPTA
-                </h3>
-                <p
-                  class="font-jakarta font-normal text-base md:text-lg leading-tight mb-2 md:mb-3"
-                >
-                  Founder CXO TechBot
-                </p>
-                <p
-                  class="font-jakarta font-normal text-sm md:text-base leading-relaxed mb-3 md:mb-4 max-w-xs md:max-w-sm"
-                >
-                  Discover insights from industry leaders who are transforming
-                  the way businesses operate in today's competitive landscape.
-                </p>
-                <a
-                  href="#"
-                  class="inline-block hover:opacity-90 transition-opacity"
-                >
-                  <img
-                    src="static/images/webstories_button.png"
-                    alt="Web Stories"
-                    class="w-[110px] h-[31px] md:w-[140px] md:h-[40px]"
-                  />
-                </a>
-              </div>
-            </div>
-          </div>
-          <div
-            class="w-full md:w-1/2 h-80 md:h-auto bg-cover bg-center rounded-[15px] mt-4 md:mt-0 bg-[url(https://picsum.photos/seed/leadership/716/625)]"
-          ></div>
-        </div>
-      </section>
-      <!-- Advertisement Banner -->
-      <div class="w-full h-[120px] sm:h-[160px] md:h-[236px] my-8 md:my-12">
-        <img
-          src="https://picsum.photos/1200/236"
-          alt="Advertisement"
-          class="w-full h-full object-cover"
-        />
-      </div>
-      <!-- More in Business Section -->
-      <div class="mt-8 md:mt-16">
-        <h2
-          class="font-jakarta font-bold text-[28px] md:text-[40px] leading-[30px] text-black mb-6 md:mb-8"
-        >
-          More in Business
-        </h2>
-        <div
-          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8"
-        >
-          <!-- Article Cards - 6 items -->
-          <!-- Card 1 -->
-          <div
-            class="bg-white p-3 flex gap-4 h-auto min-h-[120px] md:h-[151px] transition-shadow hover:shadow-md"
-          >
-            <img
-              src="https://picsum.photos/127/121?random=1"
-              alt="Article image"
-              class="w-[90px] md:w-[127px] h-auto md:h-[121px] object-cover flex-none"
-            />
-            <div class="flex flex-col">
-              <span
-                class="font-jakarta font-bold text-[10px] md:text-[12px] leading-[24px] md:leading-[30px] text-black uppercase"
-                >BUSINESS</span
-              >
-              <a
-                href="#"
-                class="font-jakarta font-medium text-[14px] md:text-[16px] leading-[22px] md:leading-[25px] underline text-black grow hover:text-[#3533CD]"
-                >The best time to eat breakfast, according to a nutritional
-                expert</a
-              >
-              <span
-                class="font-jakarta italic font-bold text-[10px] md:text-[12px] text-black mt-auto"
-                >Author</span
-              >
-            </div>
-          </div>
-          <!-- Card 2 -->
-          <div
-            class="bg-white p-3 flex gap-4 h-auto min-h-[120px] md:h-[151px] transition-shadow hover:shadow-md"
-          >
-            <img
-              src="https://picsum.photos/127/121?random=2"
-              alt="Article image"
-              class="w-[90px] md:w-[127px] h-auto md:h-[121px] object-cover flex-none"
-            />
-            <div class="flex flex-col">
-              <span
-                class="font-jakarta font-bold text-[10px] md:text-[12px] leading-[24px] md:leading-[30px] text-black uppercase"
-                >BUSINESS</span
-              >
-              <a
-                href="#"
-                class="font-jakarta font-medium text-[14px] md:text-[16px] leading-[22px] md:leading-[25px] underline text-black grow hover:text-[#3533CD]"
-                >Effective leadership practices for managing remote teams</a
-              >
-              <span
-                class="font-jakarta italic font-bold text-[10px] md:text-[12px] text-black mt-auto"
-                >Author</span
-              >
-            </div>
-          </div>
-          <!-- Card 3 -->
-          <div
-            class="bg-white p-3 flex gap-4 h-auto min-h-[120px] md:h-[151px] transition-shadow hover:shadow-md"
-          >
-            <img
-              src="https://picsum.photos/127/121?random=3"
-              alt="Article image"
-              class="w-[90px] md:w-[127px] h-auto md:h-[121px] object-cover flex-none"
-            />
-            <div class="flex flex-col">
-              <span
-                class="font-jakarta font-bold text-[10px] md:text-[12px] leading-[24px] md:leading-[30px] text-black uppercase"
-                >BUSINESS</span
-              >
-              <a
-                href="#"
-                class="font-jakarta font-medium text-[14px] md:text-[16px] leading-[22px] md:leading-[25px] underline text-black grow hover:text-[#3533CD]"
-                >How AI is transforming modern recruitment processes</a
-              >
-              <span
-                class="font-jakarta italic font-bold text-[10px] md:text-[12px] text-black mt-auto"
-                >Author</span
-              >
-            </div>
-          </div>
-          <!-- Card 4 -->
-          <div
-            class="bg-white p-3 flex gap-4 h-auto min-h-[120px] md:h-[151px] transition-shadow hover:shadow-md"
-          >
-            <img
-              src="https://picsum.photos/127/121?random=4"
-              alt="Article image"
-              class="w-[90px] md:w-[127px] h-auto md:h-[121px] object-cover flex-none"
-            />
-            <div class="flex flex-col">
-              <span
-                class="font-jakarta font-bold text-[10px] md:text-[12px] leading-[24px] md:leading-[30px] text-black uppercase"
-                >BUSINESS</span
-              >
-              <a
-                href="#"
-                class="font-jakarta font-medium text-[14px] md:text-[16px] leading-[22px] md:leading-[25px] underline text-black grow hover:text-[#3533CD]"
-                >The ROI of employee development programs</a
-              >
-              <span
-                class="font-jakarta italic font-bold text-[10px] md:text-[12px] text-black mt-auto"
-                >Author</span
-              >
-            </div>
-          </div>
-          <!-- Card 5 -->
-          <div
-            class="bg-white p-3 flex gap-4 h-auto min-h-[120px] md:h-[151px] transition-shadow hover:shadow-md"
-          >
-            <img
-              src="https://picsum.photos/127/121?random=5"
-              alt="Article image"
-              class="w-[90px] md:w-[127px] h-auto md:h-[121px] object-cover flex-none"
-            />
-            <div class="flex flex-col">
-              <span
-                class="font-jakarta font-bold text-[10px] md:text-[12px] leading-[24px] md:leading-[30px] text-black uppercase"
-                >BUSINESS</span
-              >
-              <a
-                href="#"
-                class="font-jakarta font-medium text-[14px] md:text-[16px] leading-[22px] md:leading-[25px] underline text-black grow hover:text-[#3533CD]"
-                >Building inclusive workplaces: strategies that work</a
-              >
-              <span
-                class="font-jakarta italic font-bold text-[10px] md:text-[12px] text-black mt-auto"
-                >Author</span
-              >
-            </div>
-          </div>
-          <!-- Card 6 -->
-          <div
-            class="bg-white p-3 flex gap-4 h-auto min-h-[120px] md:h-[151px] transition-shadow hover:shadow-md"
-          >
-            <img
-              src="https://picsum.photos/127/121?random=6"
-              alt="Article image"
-              class="w-[90px] md:w-[127px] h-auto md:h-[121px] object-cover flex-none"
-            />
-            <div class="flex flex-col">
-              <span
-                class="font-jakarta font-bold text-[10px] md:text-[12px] leading-[24px] md:leading-[30px] text-black uppercase"
-                >BUSINESS</span
-              >
-              <a
-                href="#"
-                class="font-jakarta font-medium text-[14px] md:text-[16px] leading-[22px] md:leading-[25px] underline text-black grow hover:text-[#3533CD]"
-                >The impact of corporate culture on retention rates</a
-              >
-              <span
-                class="font-jakarta italic font-bold text-[10px] md:text-[12px] text-black mt-auto"
-                >Author</span
-              >
-            </div>
-          </div>
-        </div>
-      </div>
-    </main>
-    <!-- Promotional Sections -->
-    <section
-      class="w-full aspect-[120/47] relative bg-contain bg-no-repeat bg-center bg-[url(static/images/9_out_of_10.png)]"
-      style="margin-bottom: -1%"
-    >
-      <a
-        href="#"
-        class="absolute bottom-[15%] left-[9%] w-[15%] max-w-[250px] hover:opacity-90 transition-opacity"
-      >
-        <img
-          src="static/images/checkot_button.png"
-          alt="Checkout Podcast Button"
-          class="block w-full h-auto"
-        />
-      </a>
-    </section>
-    <section
-      class="w-full aspect-[120/47] relative bg-contain bg-no-repeat bg-center bg-[url(static/images/fuel_ambition.png)]"
-      style="margin-bottom: -1%"
-    >
-      <a
-        href="#"
-        class="absolute bottom-[18%] left-[50%] -translate-x-1/2 w-[20%] max-w-[300px] hover:opacity-90 transition-opacity"
-      >
-        <img
-          src="static/images/checkout_magazine_button.png"
-          alt="Checkout Magazine Button"
-          class="block w-full h-auto"
-        />
-      </a>
-    </section>
-    <!-- Footer -->
-    <footer
-      class="w-full bg-black px-4 sm:px-6 md:px-[111px] pt-[40px] md:pt-[70px] pb-[20px] md:pb-[30px] relative text-white"
-    >
-      <div
-        class="flex flex-row flex-wrap justify-around items-start gap-6 md:gap-16 mb-8 md:mb-[100px] pt-6 md:pt-0 text-center sm:text-left"
-      >
-        <!-- Logo -->
-        <div
-          class="w-auto flex flex-col items-center sm:items-start order-1 mb-6 sm:mb-0 flex-shrink-0"
-        >
-          <div
-            class="w-[80px] h-[80px] sm:w-[100px] sm:h-[100px] md:w-[161px] md:h-[161px] bg-contain bg-no-repeat bg-center sm:bg-left bg-[url(static/images/header_logo.png)] mb-2 flex-shrink-0"
-            loading="lazy"
-          ></div>
-        </div>
-        <!-- Quick Links -->
-        <div class="w-auto order-2 flex-shrink-0">
-          <div
-            class="font-helvetica font-bold text-sm md:text-base leading-[90%] text-[#8B8B8B] mb-3 md:mb-[19px] uppercase"
-          >
-            Quick Links
-          </div>
-          <ul class="list-none p-0 m-0 space-y-2 md:space-y-[17px]">
-            <li>
-              <a
-                href="#"
-                class="font-helvetica font-bold text-xs sm:text-sm md:text-base leading-[90%] text-white no-underline hover:text-[#C4C3FF] uppercase"
-                >Home</a
-              >
-            </li>
-            <li>
-              <a
-                href="#"
-                class="font-helvetica font-bold text-xs sm:text-sm md:text-base leading-[90%] text-white no-underline hover:text-[#C4C3FF] uppercase"
-                >About Us</a
-              >
-            </li>
-            <li>
-              <a
-                href="#"
-                class="font-helvetica font-bold text-xs sm:text-sm md:text-base leading-[90%] text-white no-underline hover:text-[#C4C3FF] uppercase"
-                >Careers</a
-              >
-            </li>
-            <li>
-              <a
-                href="#"
-                class="font-helvetica font-bold text-xs sm:text-sm md:text-base leading-[90%] text-white no-underline hover:text-[#C4C3FF] uppercase"
-                >Web Stories</a
-              >
-            </li>
-            <li>
-              <a
-                href="#"
-                class="font-helvetica font-bold text-xs sm:text-sm md:text-base leading-[90%] text-white no-underline hover:text-[#C4C3FF] uppercase"
-                >Magazine</a
-              >
-            </li>
-          </ul>
-        </div>
-        <!-- News Categories -->
-        <div class="w-auto order-3 flex-shrink-0">
-          <div
-            class="font-helvetica font-bold text-sm md:text-base leading-[90%] text-[#8B8B8B] mb-3 md:mb-[20px] uppercase"
-          >
-            News
-          </div>
-          <ul class="list-none p-0 m-0 space-y-2 md:space-y-[17px]">
-            <li>
-              <a
-                href="#"
-                class="font-helvetica font-bold text-xs sm:text-sm md:text-base leading-[90%] text-white no-underline hover:text-[#C4C3FF] uppercase"
-                >Business</a
-              >
-            </li>
-            <li>
-              <a
-                href="#"
-                class="font-helvetica font-bold text-xs sm:text-sm md:text-base leading-[90%] text-white no-underline hover:text-[#C4C3FF] uppercase"
-                >Startup</a
-              >
-            </li>
-            <li>
-              <a
-                href="#"
-                class="font-helvetica font-bold text-xs sm:text-sm md:text-base leading-[90%] text-white no-underline hover:text-[#C4C3FF] uppercase"
-                >AI</a
-              >
-            </li>
-            <li>
-              <a
-                href="#"
-                class="font-helvetica font-bold text-xs sm:text-sm md:text-base leading-[90%] text-white no-underline hover:text-[#C4C3FF] uppercase"
-                >Entrepreneur</a
-              >
-            </li>
-            <li>
-              <a
-                href="#"
-                class="font-helvetica font-bold text-xs sm:text-sm md:text-base leading-[90%] text-white no-underline hover:text-[#C4C3FF] uppercase"
-                >Events</a
-              >
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="border-t border-white/30 w-full my-[30px] md:my-[40px]"></div>
-      <!-- Footer Bottom Section -->
-      <div class="flex flex-col md:flex-row justify-between items-center">
-        <!-- Social Links -->
-        <div
-          class="block mb-6 md:mb-4 w-full md:w-auto text-center md:text-left"
-        >
-          <div
-            class="font-helvetica font-bold text-sm md:text-base leading-[90%] text-[#8B8B8B] mb-[12px] md:mb-[15px] uppercase"
-          >
-            Social Links
-          </div>
-          <div class="flex justify-center md:justify-start space-x-4">
-            <a
-              href="#"
-              aria-label="Instagram"
-              class="text-white hover:text-[#C4C3FF] transition-colors duration-200"
-            >
-              <svg
-                class="w-5 h-5 md:w-6 md:h-6"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
-                <path
-                  d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"
-                />
-              </svg>
-            </a>
-            <a
-              href="#"
-              aria-label="Facebook"
-              class="text-white hover:text-[#C4C3FF] transition-colors duration-200"
-            >
-              <svg
-                class="w-5 h-5 md:w-6 md:h-6"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
-                <path
-                  d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
-                />
-              </svg>
-            </a>
-            <a
-              href="#"
-              aria-label="X (Twitter)"
-              class="text-white hover:text-[#C4C3FF] transition-colors duration-200"
-            >
-              <svg
-                class="w-5 h-5 md:w-6 md:h-6"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
-                <path
-                  d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"
-                />
-              </svg>
-            </a>
-            <a
-              href="#"
-              aria-label="YouTube"
-              class="text-white hover:text-[#C4C3FF] transition-colors duration-200"
-            >
-              <svg
-                class="w-5 h-5 md:w-6 md:h-6"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
-                <path
-                  d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"
-                />
-              </svg>
-            </a>
-            <a
-              href="#"
-              aria-label="LinkedIn"
-              class="text-white hover:text-[#C4C3FF] transition-colors duration-200"
-            >
-              <svg
-                class="w-5 h-5 md:w-6 md:h-6"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
-                <path
-                  d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"
-                />
-              </svg>
-            </a>
-          </div>
-        </div>
-        <!-- Advertise Link -->
-        <div
-          class="flex flex-col md:flex-row justify-between items-center gap-4 md:gap-[20px] flex-wrap mb-6 md:mb-[40px]"
-        >
-          <a
-            href="#"
-            class="font-jakarta font-bold text-sm md:text-base leading-[20px] text-white no-underline hover:text-[#C4C3FF] uppercase"
-            >Advertise With Us</a
-          >
-        </div>
-        <!-- Newsletter Subscribe -->
-        <div
-          class="text-center md:text-left col-span-1 lg:col-span-1 flex flex-col items-center md:items-start"
-        >
-          <div
-            class="font-helvetica font-bold text-base leading-[90%] text-[#8B8B8B] mb-[20px] uppercase"
-          >
-            Subscribe to Newsletter
-          </div>
-          <form
-            class="flex flex-row items-stretch gap-2 w-full max-w-md sm:hidden"
-          >
-            <input
-              type="email"
-              placeholder="Enter your email"
-              required
-              class="flex-grow h-[40px] bg-white border-none rounded-[4px] px-[15px] text-black placeholder:text-gray-500 focus:ring-2 focus:ring-bol-purple"
-              style="left: 1rem; position: relative"
-            />
-            <input
-              type="image"
-              src="static/images/subscribe_button.png"
-              alt="Subscribe"
-              class="h-[40px] w-auto cursor-pointer hover:opacity-90 transition duration-150 ease-in-out shrink-0"
-              style="left: -1rem; position: relative"
-            />
-          </form>
-          <form
-            class="hidden sm:flex sm:flex-row items-stretch gap-2 w-full max-w-md"
-          >
-            <input
-              type="email"
-              placeholder="Enter your email"
-              required
-              class="flex-grow h-[40px] bg-white border-none rounded-[4px] px-[15px] text-black placeholder:text-gray-500 focus:ring-2 focus:ring-bol-purple"
-            />
-            <input
-              type="image"
-              src="static/images/subscribe_button.png"
-              alt="Subscribe"
-              class="h-[40px] w-auto cursor-pointer hover:opacity-90 transition duration-150 ease-in-out shrink-0"
-              style="left: -2rem; position: relative"
-            />
-          </form>
-        </div>
-      </div>
-      <!-- Copyright -->
-      <div class="block">
-        <div
-          class="border-t border-white/30 w-full my-[30px] md:my-[40px]"
-        ></div>
-        <div
-          class="w-full text-center font-helvetica font-bold text-xs md:text-base leading-[90%] text-white/70 mt-[20px]"
-        >
-          © 2025 BRANDSOUTLOUD All Rights Reserved
-        </div>
-      </div>
-    </footer>
-    <!-- JavaScript -->
-    <!-- <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        // Mobile Menu Toggle
-        const mobileMenuButton = document.getElementById("mobile-menu-button");
-        const mobileMenu = document.getElementById("mobile-menu");
-      
-        if (mobileMenuButton && mobileMenu) {
-          mobileMenuButton.addEventListener("click", function () {
-            mobileMenu.classList.toggle("hidden");
-            mobileMenuButton.classList.toggle("hamburger-active");
-      
-            if (!mobileMenu.classList.contains("hidden")) {
-              mobileMenu.classList.add("slide-down");
-            } else {
-              mobileMenu.classList.remove("slide-down");
-            }
-          });
-        }
-      
-        // Table of Contents functionality
-        const tocLinks = document.querySelectorAll(".toc-link");
-        const sections = document.querySelectorAll('[id^="section-"]');
-        const tocMarker = document.querySelector(".toc-marker path");
-      
-        // Function to update TOC marker and highlight active links
-        function updateTOC() {
-          // Get current scroll position
-          const scrollPosition = window.scrollY + 100; // Offset for header
-      
-          // Find the current section
-          let currentSection = null;
-          sections.forEach((section) => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.offsetHeight;
-      
-            if (
-              scrollPosition >= sectionTop &&
-              scrollPosition < sectionTop + sectionHeight
-            ) {
-              currentSection = section;
-            }
-          });
-      
-          if (currentSection) {
-            const id = currentSection.getAttribute("id");
-      
-            // Remove active class from all links
-            tocLinks.forEach((link) => {
-              link.classList.remove("active");
-            });
-      
-            // Add active class to current link
-            const activeLink = document.querySelector(
-              `.toc-link[href="#${id}"]`
-            );
-            if (activeLink) {
-              activeLink.classList.add("active");
-      
-              // If it's a sub-item, make sure parent is active too
-              const parentItem = activeLink.closest(".toc-parent");
-              if (parentItem) {
-                parentItem.classList.add("active");
-              }
-      
-              // Update the SVG path for the TOC marker
-              if (tocMarker) {
-                const linkRect = activeLink.getBoundingClientRect();
-                const tocRect = document
-                  .querySelector(".toc")
-                  .getBoundingClientRect();
-      
-                const x = linkRect.left - tocRect.left;
-                const y = linkRect.top - tocRect.top + linkRect.height / 2;
-      
-                tocMarker.setAttribute("d", `M0,0 L${x},${y}`);
-                tocMarker.setAttribute(
-                  "stroke-dasharray",
-                  `0, ${y}, ${x}, 1000`
-                );
-                tocMarker.setAttribute("opacity", "1");
-              }
-            }
-          }
-        }
-        // Collapsible TOC functionality
-  const tocToggleLinks = document.querySelectorAll('a[data-toggle-target]');
-  tocToggleLinks.forEach(link => {
-    link.addEventListener('click', function(event) {
-      const targetId = this.getAttribute('data-toggle-target');
-      const targetElement = document.querySelector(targetId);
-      const arrowIcon = this.querySelector('.toc-arrow');
-      
-      if (targetElement) {
-        targetElement.classList.toggle('hidden');
-        if (arrowIcon) {
-          arrowIcon.classList.toggle('rotate-180');
-        }
-      }
-    });
-  });
-      
-        // Add click handlers for TOC links
-        tocLinks.forEach((link) => {
-          link.addEventListener("click", function (e) {
-            const targetId = this.getAttribute("href");
-            const targetElement = document.querySelector(targetId);
-      
-            if (targetElement) {
-              e.preventDefault();
-              window.scrollTo({
-                top: targetElement.offsetTop - 80,
-                behavior: "smooth",
-              });
-            }
-          });
-        });
-
-        // Auto-expand/collapse TOC sections
-    document.querySelectorAll('.toc-section').forEach(tocSection => {
-      const sectionId = tocSection.dataset.sectionId;
-      const subcategoriesDiv = tocSection.querySelector('.toc-subcategories');
-      const arrowIcon = tocSection.querySelector('.toc-arrow');
-      
-      if (subcategoriesDiv && arrowIcon) {
-        if (sectionId === currentParentSectionId) {
-          // Expand current section
-          subcategoriesDiv.classList.remove('hidden');
-          arrowIcon.classList.add('rotate-180');
-        } else {
-          // Collapse other sections
-          subcategoriesDiv.classList.add('hidden');
-          arrowIcon.classList.remove('rotate-180');
-        }
-      }
-    });
-    
-    // Scroll active link into view (for both mobile and desktop TOC)
-    if (activeLink) {
-      // Handle desktop TOC scrolling
-      if (tocDesktop && window.innerWidth >= 1024) {
-        const linkTop = activeLink.offsetTop;
-        const tocTop = tocDesktop.scrollTop;
-        const tocHeight = tocDesktop.clientHeight;
-        
-        // Check if link is not visible in the current view
-        if (linkTop < tocTop || linkTop > tocTop + tocHeight - 50) {
-          // Smoothly scroll to the active link
-          tocDesktop.scrollTo({
-            top: linkTop - tocHeight / 3,
-            behavior: 'smooth'
-          });
-        }
-      }
-      
-      // Handle mobile TOC scrolling
-      if (tocMobile && window.innerWidth < 1024) {
-        const linkTop = activeLink.offsetTop;
-        const tocTop = tocMobile.scrollTop;
-        const tocHeight = tocMobile.clientHeight;
-        
-        if (linkTop < tocTop || linkTop > tocTop + tocHeight - 40) {
-          tocMobile.scrollTo({
-            top: linkTop - tocHeight / 3,
-            behavior: 'smooth'
-          });
-        }
-      }
-    }
-      
-        // Initial call and add scroll listener
-        updateTOC();
-        window.addEventListener("scroll", updateTOC);
-        window.addEventListener("resize", updateTOC);
-      });
-    </script> -->
-    <script>
-      const stripSection = document.querySelector(".strip-section");
-      if (stripSection) {
-        const stripContent = stripSection.querySelector(".animate-marquee");
-        if (stripContent && stripContent.children.length > 0) {
-          const contentWidth = stripContent.scrollWidth / 2;
-          const containerWidth = stripSection.offsetWidth;
-
-          stripContent.innerHTML += stripContent.innerHTML;
-        }
-      }
-      // Enhanced TOC with auto-scrolling functionality
-      document.addEventListener("DOMContentLoaded", function () {
-        const tocDesktop = document.querySelector("aside .p-6");
-        const tocMobile = document.querySelector(".toc-container");
-        const tocLinks = document.querySelectorAll(".toc-link");
-        const sections = document.querySelectorAll("h2[id], h3[id], p[id]");
-
-        // Colors and styles for active/inactive states
-        const activeColorClass = "text-[blue]";
-        const inactiveColorClass = "text-gray-800";
-        const activeFontWeightClass = "font-bold";
-        const inactiveFontWeightClass = "font-medium";
-        const activeBorderClass = "border-[#3533CD]";
-        const inactiveBorderClass = "border-gray-200";        // Collapsible TOC functionality - different behavior for mobile and desktop
-        const tocToggleLinks = document.querySelectorAll(
-          "a[data-toggle-target]"
-        );
-        
-        tocToggleLinks.forEach((link) => {
-          const arrowIcon = link.querySelector(".toc-arrow");
-          const textDiv = link.querySelector("div");
-          
-          // Handle arrow clicks for mobile
-          if (arrowIcon) {
-            arrowIcon.addEventListener("click", function (event) {
-              event.preventDefault();
-              event.stopPropagation();
-              
-              const targetId = link.getAttribute("data-toggle-target");
-              const targetElement = document.querySelector(targetId);
-              
-              if (targetElement) {
-                targetElement.classList.toggle("hidden");
-                arrowIcon.classList.toggle("rotate-180");
-              }
-            });
-          }
-          
-          // Handle text clicks for navigation
-          if (textDiv) {
-            textDiv.addEventListener("click", function (event) {
-              const href = link.getAttribute("href");
-              if (href && href.startsWith("#")) {
-                event.preventDefault();
-                const targetElement = document.querySelector(href);
-                if (targetElement) {
-                  targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-              }
-            });
-          }
-          
-          // For desktop, maintain original behavior
-          link.addEventListener("click", function (event) {
-            const isMobile = window.innerWidth < 1024;
-            
-            if (!isMobile) {
-              const targetId = this.getAttribute("data-toggle-target");
-              const targetElement = document.querySelector(targetId);
-              
-              if (targetElement) {
-                targetElement.classList.toggle("hidden");
-                if (arrowIcon) {
-                  arrowIcon.classList.toggle("rotate-180");
-                }
-              }
-            }
-          });
-        });
-
-        // Handle sub-category links (those without data-toggle-target)
-        const subCategoryLinks = document.querySelectorAll('.toc-link:not([data-toggle-target])');
-        subCategoryLinks.forEach((link) => {
-          link.addEventListener("click", function (event) {
-            const href = this.getAttribute("href");
-            if (href && href.startsWith("#")) {
-              event.preventDefault();
-              const targetElement = document.querySelector(href);
-              if (targetElement) {
-                targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-              }
-            }
-          });
-        });
-
-        // Enhanced scrollspy with TOC auto-scrolling
-        function activateTocLink() {
-          let currentSectionId = "";
-          let currentParentSectionId = "";
-          const scrollPosition = window.scrollY;
-          const offset = 150; // Adjust based on header height
-          let activeLink = null;
-
-          // Find current section in view
-          sections.forEach((section) => {
-            const sectionTop = section.offsetTop;
-            if (scrollPosition >= sectionTop - offset) {
-              currentSectionId = section.getAttribute("id");
-
-              // Determine parent H2 section
-              let parentH2 = null;
-              if (section.tagName === "H2") {
-                parentH2 = section;
-              } else {
-                // Find preceding H2
-                let previousElement = section.previousElementSibling;
-                while (previousElement) {
-                  if (
-                    previousElement.tagName === "H2" &&
-                    previousElement.hasAttribute("id")
-                  ) {
-                    parentH2 = previousElement;
-                    break;
-                  }
-                  previousElement = previousElement.previousElementSibling;
-                }
-
-                if (!parentH2) {
-                  const parentDiv = section.closest("div");
-                  if (parentDiv) {
-                    const h2InDiv = parentDiv.querySelector("h2[id]");
-                    if (h2InDiv) parentH2 = h2InDiv;
-                  }
-                }
-              }
-
-              if (parentH2) {
-                currentParentSectionId = parentH2.getAttribute("id");
-              } else if (section.tagName === "H2") {
-                currentParentSectionId = currentSectionId;
-              }
-            }
-          });
-
-          // Update TOC link styles and expand sections
-          tocLinks.forEach((link) => {
-            const linkHref = link.getAttribute("href");
-            const linkTargetId = linkHref ? linkHref.substring(1) : null;
-            const isH2Link = link.classList.contains("toc-h2-link");
-            const parentTocSection = link.closest(".toc-section");
-            const parentSectionDataId = parentTocSection
-              ? parentTocSection.dataset.sectionId
-              : null;
-
-            // Reset styles
-            link.classList.remove(activeFontWeightClass);
-            link.classList.add(inactiveFontWeightClass);
-            link.classList.replace(activeColorClass, inactiveColorClass);
-
-            // Border classes for subcategory links
-            if (!isH2Link) {
-              link.classList.replace(activeBorderClass, inactiveBorderClass);
-            }
-
-            // Highlight active link
-            if (linkTargetId === currentSectionId) {
-              link.classList.add(activeFontWeightClass);
-              link.classList.remove(inactiveFontWeightClass);
-              link.classList.replace(inactiveColorClass, activeColorClass);
-
-              if (!isH2Link) {
-                link.classList.replace(inactiveBorderClass, activeBorderClass);
-              }
-
-              activeLink = link; // Store active link for scrolling
-            }
-            // Highlight parent H2 if child is active
-            else if (
-              isH2Link &&
-              parentSectionDataId === currentParentSectionId
-            ) {
-              link.classList.add(activeFontWeightClass);
-              link.classList.remove(inactiveFontWeightClass);
-            }
-          });          // Auto-expand/collapse TOC sections - disabled for mobile
-          document.querySelectorAll(".toc-section").forEach((tocSection) => {
-            const sectionId = tocSection.dataset.sectionId;
-            const subcategoriesDiv =
-              tocSection.querySelector(".toc-subcategories");
-            const arrowIcon = tocSection.querySelector(".toc-arrow");
-            const isMobile = window.innerWidth < 1024;
-
-            if (subcategoriesDiv && arrowIcon && !isMobile) {
-              // Only auto-expand/collapse for desktop
-              if (sectionId === currentParentSectionId) {
-                // Expand current section
-                subcategoriesDiv.classList.remove("hidden");
-                arrowIcon.classList.add("rotate-180");
-              } else {
-                // Collapse other sections
-                subcategoriesDiv.classList.add("hidden");
-                arrowIcon.classList.remove("rotate-180");
-              }
-            }
-          });
-
-          // Scroll active link into view (for both mobile and desktop TOC)
-          if (activeLink) {
-            // Handle desktop TOC scrolling
-            if (tocDesktop && window.innerWidth >= 1024) {
-              const linkTop = activeLink.offsetTop;
-              const tocTop = tocDesktop.scrollTop;
-              const tocHeight = tocDesktop.clientHeight;
-
-              // Check if link is not visible in the current view
-              if (linkTop < tocTop || linkTop > tocTop + tocHeight - 50) {
-                // Smoothly scroll to the active link
-                tocDesktop.scrollTo({
-                  top: linkTop - tocHeight / 3,
-                  behavior: "smooth",
-                });
-              }
-            }
-
-            // Handle mobile TOC scrolling
-            if (tocMobile && window.innerWidth < 1024) {
-              const linkTop = activeLink.offsetTop;
-              const tocTop = tocMobile.scrollTop;
-              const tocHeight = tocMobile.clientHeight;
-
-              if (linkTop < tocTop || linkTop > tocTop + tocHeight - 40) {
-                tocMobile.scrollTo({
-                  top: linkTop - tocHeight / 3,
-                  behavior: "smooth",
-                });
-              }
-            }
-          }
-        }
-
-        // Initialize active state on load
-        activateTocLink();
-
-        // Update on scroll
-        window.addEventListener("scroll", activateTocLink);
-      });
-    </script>
-  </body>
+
+	<head>
+
+		<meta charset="UTF-8">
+
+		<title>Progress Nav</title>
+
+		<meta name="description" content="">
+
+		<meta name="viewport" content="width=700, user-scalable=no" />
+
+		<link href="https://fonts.googleapis.com/css?family=Frank+Ruhl+Libre|Roboto" rel="stylesheet">
+		
+		<style>
+
+		html {
+		  font-family: sans-serif; /* 1 */
+		  line-height: 1.15; /* 2 */
+		  -ms-text-size-adjust: 100%; /* 3 */
+		  -webkit-text-size-adjust: 100%; /* 3 */
+		}
+
+		body {
+		  margin: 0;
+		}
+
+		/**
+		 * Add the correct display in IE 9-.
+		 */
+
+		article,
+		aside,
+		footer,
+		header,
+		nav,
+		section {
+		  display: block;
+		}
+
+		h1 {
+		  font-size: 2em;
+		  margin: 0.67em 0;
+		}
+
+		/* Grouping content
+		   ========================================================================== */
+
+		/**
+		 * Add the correct display in IE 9-.
+		 * 1. Add the correct display in IE.
+		 */
+
+		figcaption,
+		figure,
+		main { /* 1 */
+		  display: block;
+		}
+
+		/**
+		 * Add the correct margin in IE 8.
+		 */
+
+		figure {
+		  margin: 1em 40px;
+		}
+
+		/**
+		 * 1. Add the correct box sizing in Firefox.
+		 * 2. Show the overflow in Edge and IE.
+		 */
+
+		hr {
+		  box-sizing: content-box; /* 1 */
+		  height: 0; /* 1 */
+		  overflow: visible; /* 2 */
+		}
+
+		/**
+		 * 1. Correct the inheritance and scaling of font size in all browsers.
+		 * 2. Correct the odd `em` font sizing in all browsers.
+		 */
+
+		pre {
+		  font-family: monospace, monospace; /* 1 */
+		  font-size: 1em; /* 2 */
+		}
+
+		/* Text-level semantics
+		   ========================================================================== */
+
+		/**
+		 * 1. Remove the gray background on active links in IE 10.
+		 * 2. Remove gaps in links underline in iOS 8+ and Safari 8+.
+		 */
+
+		a {
+		  background-color: transparent; /* 1 */
+		  -webkit-text-decoration-skip: objects; /* 2 */
+		}
+
+		/**
+		 * Remove the outline on focused links when they are also active or hovered
+		 * in all browsers (opinionated).
+		 */
+
+		a:active,
+		a:hover {
+		  outline-width: 0;
+		}
+
+		/**
+		 * 1. Remove the bottom border in Firefox 39-.
+		 * 2. Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.
+		 */
+
+		abbr[title] {
+		  border-bottom: none; /* 1 */
+		  text-decoration: underline; /* 2 */
+		  text-decoration: underline dotted; /* 2 */
+		}
+
+		/**
+		 * Prevent the duplicate application of `bolder` by the next rule in Safari 6.
+		 */
+
+		b,
+		strong {
+		  font-weight: inherit;
+		}
+
+		/**
+		 * Add the correct font weight in Chrome, Edge, and Safari.
+		 */
+
+		b,
+		strong {
+		  font-weight: bolder;
+		}
+
+		/**
+		 * 1. Correct the inheritance and scaling of font size in all browsers.
+		 * 2. Correct the odd `em` font sizing in all browsers.
+		 */
+
+		code,
+		kbd,
+		samp {
+		  font-family: monospace, monospace; /* 1 */
+		  font-size: 1em; /* 2 */
+		}
+
+		/**
+		 * Add the correct font style in Android 4.3-.
+		 */
+
+		dfn {
+		  font-style: italic;
+		}
+
+		/**
+		 * Add the correct background and color in IE 9-.
+		 */
+
+		mark {
+		  background-color: #ff0;
+		  color: #000;
+		}
+
+		/**
+		 * Add the correct font size in all browsers.
+		 */
+
+		small {
+		  font-size: 80%;
+		}
+
+		/**
+		 * Prevent `sub` and `sup` elements from affecting the line height in
+		 * all browsers.
+		 */
+
+		sub,
+		sup {
+		  font-size: 75%;
+		  line-height: 0;
+		  position: relative;
+		  vertical-align: baseline;
+		}
+
+		sub {
+		  bottom: -0.25em;
+		}
+
+		sup {
+		  top: -0.5em;
+		}
+
+		/* Embedded content
+		   ========================================================================== */
+
+		/**
+		 * Add the correct display in IE 9-.
+		 */
+
+		audio,
+		video {
+		  display: inline-block;
+		}
+
+		/**
+		 * Add the correct display in iOS 4-7.
+		 */
+
+		audio:not([controls]) {
+		  display: none;
+		  height: 0;
+		}
+
+		/**
+		 * Remove the border on images inside links in IE 10-.
+		 */
+
+		img {
+		  border-style: none;
+		}
+
+		/**
+		 * Hide the overflow in IE.
+		 */
+
+		svg:not(:root) {
+		  overflow: hidden;
+		}
+
+		/* Forms
+		   ========================================================================== */
+
+		/**
+		 * 1. Change the font styles in all browsers (opinionated).
+		 * 2. Remove the margin in Firefox and Safari.
+		 */
+
+		button,
+		input,
+		optgroup,
+		select,
+		textarea {
+		  font-family: sans-serif; /* 1 */
+		  font-size: 100%; /* 1 */
+		  line-height: 1.15; /* 1 */
+		  margin: 0; /* 2 */
+		}
+
+		/**
+		 * Show the overflow in IE.
+		 * 1. Show the overflow in Edge.
+		 */
+
+		button,
+		input { /* 1 */
+		  overflow: visible;
+		}
+
+		/**
+		 * Remove the inheritance of text transform in Edge, Firefox, and IE.
+		 * 1. Remove the inheritance of text transform in Firefox.
+		 */
+
+		button,
+		select { /* 1 */
+		  text-transform: none;
+		}
+
+		/**
+		 * 1. Prevent a WebKit bug where (2) destroys native `audio` and `video`
+		 *    controls in Android 4.
+		 * 2. Correct the inability to style clickable types in iOS and Safari.
+		 */
+
+		button,
+		html [type="button"], /* 1 */
+		[type="reset"],
+		[type="submit"] {
+		  -webkit-appearance: button; /* 2 */
+		}
+
+		/**
+		 * Remove the inner border and padding in Firefox.
+		 */
+
+		button::-moz-focus-inner,
+		[type="button"]::-moz-focus-inner,
+		[type="reset"]::-moz-focus-inner,
+		[type="submit"]::-moz-focus-inner {
+		  border-style: none;
+		  padding: 0;
+		}
+
+		/**
+		 * Restore the focus styles unset by the previous rule.
+		 */
+
+		button:-moz-focusring,
+		[type="button"]:-moz-focusring,
+		[type="reset"]:-moz-focusring,
+		[type="submit"]:-moz-focusring {
+		  outline: 1px dotted ButtonText;
+		}
+
+		/**
+		 * Change the border, margin, and padding in all browsers (opinionated).
+		 */
+
+		fieldset {
+		  border: 1px solid #c0c0c0;
+		  margin: 0 2px;
+		  padding: 0.35em 0.625em 0.75em;
+		}
+
+		/**
+		 * 1. Correct the text wrapping in Edge and IE.
+		 * 2. Correct the color inheritance from `fieldset` elements in IE.
+		 * 3. Remove the padding so developers are not caught out when they zero out
+		 *    `fieldset` elements in all browsers.
+		 */
+
+		legend {
+		  box-sizing: border-box; /* 1 */
+		  color: inherit; /* 2 */
+		  display: table; /* 1 */
+		  max-width: 100%; /* 1 */
+		  padding: 0; /* 3 */
+		  white-space: normal; /* 1 */
+		}
+
+		/**
+		 * 1. Add the correct display in IE 9-.
+		 * 2. Add the correct vertical alignment in Chrome, Firefox, and Opera.
+		 */
+
+		progress {
+		  display: inline-block; /* 1 */
+		  vertical-align: baseline; /* 2 */
+		}
+
+		/**
+		 * Remove the default vertical scrollbar in IE.
+		 */
+
+		textarea {
+		  overflow: auto;
+		}
+
+		/**
+		 * 1. Add the correct box sizing in IE 10-.
+		 * 2. Remove the padding in IE 10-.
+		 */
+
+		[type="checkbox"],
+		[type="radio"] {
+		  box-sizing: border-box; /* 1 */
+		  padding: 0; /* 2 */
+		}
+
+		/**
+		 * Correct the cursor style of increment and decrement buttons in Chrome.
+		 */
+
+		[type="number"]::-webkit-inner-spin-button,
+		[type="number"]::-webkit-outer-spin-button {
+		  height: auto;
+		}
+
+		/**
+		 * 1. Correct the odd appearance in Chrome and Safari.
+		 * 2. Correct the outline style in Safari.
+		 */
+
+		[type="search"] {
+		  -webkit-appearance: textfield; /* 1 */
+		  outline-offset: -2px; /* 2 */
+		}
+
+		/**
+		 * Remove the inner padding and cancel buttons in Chrome and Safari on macOS.
+		 */
+
+		[type="search"]::-webkit-search-cancel-button,
+		[type="search"]::-webkit-search-decoration {
+		  -webkit-appearance: none;
+		}
+
+		/**
+		 * 1. Correct the inability to style clickable types in iOS and Safari.
+		 * 2. Change font properties to `inherit` in Safari.
+		 */
+
+		::-webkit-file-upload-button {
+		  -webkit-appearance: button; /* 1 */
+		  font: inherit; /* 2 */
+		}
+
+		/* Interactive
+		   ========================================================================== */
+
+		/*
+		 * Add the correct display in IE 9-.
+		 * 1. Add the correct display in Edge, IE, and Firefox.
+		 */
+
+		details, /* 1 */
+		menu {
+		  display: block;
+		}
+
+		/*
+		 * Add the correct display in all browsers.
+		 */
+
+		summary {
+		  display: list-item;
+		}
+
+		/* Scripting
+		   ========================================================================== */
+
+		/**
+		 * Add the correct display in IE 9-.
+		 */
+
+		canvas {
+		  display: inline-block;
+		}
+
+		/**
+		 * Add the correct display in IE.
+		 */
+
+		template {
+		  display: none;
+		}
+
+		/* Hidden
+		   ========================================================================== */
+
+		/**
+		 * Add the correct display in IE 10-.
+		 */
+
+		[hidden] {
+		  display: none;
+		}
+
+		/* Custom Styles */
+		* {
+		  box-sizing: border-box; 
+		}
+
+		body {
+		  width: 100vw;
+		  height: 100vh;
+		  overflow: auto; 
+		}
+
+		body {
+		  padding: 1em 2em 2em 17em;
+		  font-size: 16px;
+		  line-height: 1.6;
+		  font-family: 'Roboto', sans-serif; 
+		}
+
+		.toc {
+		  position: fixed;
+		  left: 3em;
+		  top: 5em;
+		  padding: 1em;
+		  width: 14em;
+		  line-height: 2; 
+		}
+
+		.toc ul {
+		  list-style: none;
+		  padding: 0;
+		  margin: 0; 
+		}
+
+		.toc ul ul {
+		  padding-left: 2em; 
+		}
+
+		.toc li a {
+		  display: inline-block;
+		  color: #aaa;
+		  text-decoration: none;
+		  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1); 
+		}
+
+		.toc li.visible > a {
+		  color: #111;
+		  transform: translate(5px); 
+		}
+
+		.toc-marker {
+		  position: absolute;
+		  top: 0;
+		  left: 0;
+		  width: 100%;
+		  height: 100%;
+		  z-index: -1; 
+		}
+
+		.toc-marker path {
+		  transition: all 0.3s ease; 
+		}
+
+		.contents {
+		  padding: 1em;
+		  max-width: 800px;
+		  font-size: 1.2em;
+		  font-family: 'Frank Ruhl Libre', sans-serif; 
+		}
+
+		.contents img {
+		  max-width: 100%; 
+		}
+
+		.contents .code-block {
+		  white-space: pre;
+		  overflow: auto;
+		  max-width: 100%; 
+		}
+
+		.contents .code-block code {
+		  display: block;
+		  background-color: #f9f9f9;
+		  padding: 10px; 
+		}
+
+		.contents .code-inline {
+		  background-color: #f9f9f9;
+		  padding: 4px; 
+		}
+
+		.contents h2,
+		.contents h3 {
+		  padding-top: 1em; 
+		}
+
+		.contents h2 {
+		  margin-top: 1.2em; 
+		}
+
+		@media screen and (max-width: 1200px) {
+		  body {
+		    font-size: 14px; 
+		  } 
+		}
+
+		.credits {
+			position: fixed;
+			left: 3em;
+			bottom: 4em;
+			font-size: 1em;
+			z-index: 20;
+			color: #444;
+			vertical-align: middle;
+		}
+
+		.credits * + * {
+			margin-top: 15px;
+		}
+
+		.credits a {
+			display: block;
+			padding: 8px 10px;
+			color: #777;
+			border: 2px solid #bbb;
+			background: #fff;
+			text-decoration: none;
+		}
+
+		.credits a:hover {
+			border-color: #555;
+			color: #222;
+		}
+
+		@media screen and (max-height: 700px) {
+			.credits {
+				display: none;
+			}
+		}
+		</style>
+
+	</head>
+
+	<body>
+
+		<nav class="toc">
+			<ul>
+				<li><a href="#intro">Intro</a></li>
+				<li>
+					<a href="#dev">Developer Mode</a>
+					<ul>
+						<li><a href="#dev-edit-html">Edit HTML</a></li>
+						<li><a href="#dev-element-classes">Element Classes</a></li>
+						<li><a href="#dev-slide-classes">Slide Classes</a></li>
+						<li><a href="#dev-export-html">Export HTML</a></li>
+					</ul>
+				</li>
+				<li>
+					<a href="#css">CSS Editor</a>
+					<ul>
+						<li><a href="#css-fonts">Custom Fonts</a></li>
+						<li><a href="#css-developer-mode">Developer Mode</a></li>
+						<li><a href="#css-examples">Examples</a></li>
+					</ul>
+				</li>
+			</ul>
+			<svg class="toc-marker" width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+				<path stroke="#444" stroke-width="3" fill="transparent" stroke-dasharray="0, 0, 0, 1000" stroke-linecap="round" stroke-linejoin="round" transform="translate(-0.5, -0.5)" />
+			</svg>
+		</nav>
+
+		<article class="contents">
+			<section id="intro">
+				<h2>Progress Nav</h2>
+				<p>
+					This page demonstrates an idea for how progress can be visualized inside of a standard page nav. Scroll the page and note how the marker animates to highlight all of the sections that are currently on screen.
+				</p>
+				<p>
+					The rest of the content below is taken from <a href="https://slides.com/developers" target="_top">slides.com/developers</a>. Take a look at that to see how the progress nav looks on a real page.
+				</p>
+
+				<h2>Slides for Developers</h2>
+				<p>
+					We strive to make Slides a great and flexible tool for developers. Presentations created on Slides are HTML documents under the hood, so generally anything that HTML can do, Slides can do. We make it easy to access and edit the underlying HTML and CSS through the <a href="#dev">Developer Mode</a>.
+				</p>
+				<p>
+					There's also an API for creating new presentations with preset content and we're aiming to add additional APIs in the future.
+				</p>
+			</section>
+
+			<section>
+				<div id="dev">
+					<h2>Developer Mode</h2>
+					<p>
+						The Slides editor has a developer mode which is useful if you know a bit of HTML and CSS. With this mode active you will be able to modify the underlying HTML of your deck, allowing you to make adjustments that the Slides editor does not provide interface options for.
+					</p>
+					<p>
+						To enable the developer mode open the editor settings in the bottom left corner:
+					</p>
+
+					<img class="developer-image" src="https://s3.amazonaws.com/static.slid.es/site/developers/slides-developer-mode-1.png">
+				</div>
+
+				<div id="dev-edit-html">
+					<h3>Editing HTML</h3>
+					<p>
+						The per-slide HTML editor can be accessed from the slide options area. It gives you raw access to the current slide's HTML, allowing you to change anything you like. Note that some elements, such as &lt;script&gt; and &lt;link&gt;, are not allowed for security reasons.﻿
+					</p>
+
+					<img class="developer-image" src="https://s3.amazonaws.com/static.slid.es/site/developers/slides-developer-mode-2.png">
+				</div>
+
+				<div id="dev-element-classes">
+					<h3>Element Classes <a href="/pricing" class="header-secondary-text">(Requires Pro)</a></h3>
+					<p>
+						As a paying Slides customer you have access to the <a href="#css">CSS editor</a> which allows you to add custom styles to your deck. By turning on the developer mode a new "class name" field will appear for any block that you focus. This allows you to easily target a specific element with your CSS.
+					</p>
+					<p>
+						Here's an example that defines an "upside-down" class using custom CSS and applies it to a text block.
+					</p>
+					<pre class="code-block" data-highlight-theme="github-gist"><code class="hljs css">.upside-down {
+		transform: scale( 1, -1 );
+}</code></pre>
+
+					<img class="developer-image" src="https://s3.amazonaws.com/static.slid.es/site/developers/slides-developer-mode-3.png">
+				</div>
+
+				<div id="dev-slide-classes">
+					<h3>Slide Classes <a href="/pricing" class="header-secondary-text">(Requires Pro)</a></h3>
+					<p>
+						Just like you can add custom classes to individual elements it's also possible to add custom classes at the slide level. This can used to apply broader changes to the whole slide like inverting text and icon colors or changing the slide transition.
+					</p>
+					<img class="developer-image" src="https://s3.amazonaws.com/static.slid.es/site/developers/slides-developer-mode-4.png">
+					<p>
+						Under the hood the slide background element is separate from the slide itself. Here are two examples showing how you'd target the slide contents or slide background using a custom class called "night-sky":
+					</p>
+
+					<pre class="code-block" data-highlight-theme="github-gist"><code class="hljs css">// Targets the slide contents
+.slides .night-sky svg path {
+		fill: yellow;
+}
+
+// Target the slide background
+.backgrounds .night-sky {
+		background: linear-gradient(0deg, #141528, #0b1bb2);
+}</code></pre>
+
+					<img class="developer-image" src="https://s3.amazonaws.com/static.slid.es/site/developers/slides-developer-mode-5.png">
+				</div>
+
+				<div id="dev-export-html">
+					<h3>Export HTML</h3>
+					<p>
+						You can access the complete HTML for all slides in your deck ﻿inside of the export panel, under "Export to reveal.js"﻿. This provides a way of exporting your deck markup and the core Slides styles to reveal.js. There are a few limitations with exporting this way but it should provide a good starting point.
+					</p>
+
+					<img class="developer-image" src="https://s3.amazonaws.com/static.slid.es/site/developers/slides-developer-mode-6.png">
+				</div>
+
+			</section>
+
+			<section>
+				<div id="css">
+					<h2>CSS Editor <a href="/pricing" class="header-secondary-text">(Requires Pro)</a></h2>
+					<p>
+						The CSS editor lets you author custom styles for your presentation with a real-time preview of the result. It's available as an option inside of the Style panel of the presentation editor.
+					</p>
+					<p>
+						The editor preprocesses styles using <a href="http://lesscss.org/">LESS</a>, though you're free to write plain CSS as well. We apply the styles in real-time as you type so there's no need to leave the editor or even press a refresh button to see what you're getting. Note that when your styles are saved they will be automatically wrapped in a ".reveal {}" selector to avoid conflicts with other page styles.
+					</p>
+				</div>
+				<div id="css-fonts">
+					<h3>Custom Fonts</h3>
+					<p>
+						You can load custom fonts from Typekit and Google fonts and apply them using custom CSS. <a href="http://help.slides.com/knowledgebase/articles/1077976-custom-fonts-pro">Find out more</a>.
+					</p>
+				</div>
+				<div id="css-developer-mode">
+					<h3>Developer Mode</h3>
+					<p>
+						If you turn on the <a href="#dev">developer mode</a> you can also add custom classes to any focused element. This is a convenient way to easily apply your CSS to specific elements.
+					</p>
+				</div>
+
+				<div id="css-examples">
+					<h3>Examples</h3>
+					<pre class="code-block" data-highlight-theme="github-gist"><code class="hljs css">// Change presentation background
+&amp; {
+		background: #a83239;
+}
+
+// Change color of body text
+.slides {
+		color: #009999;
+}
+
+// Turn text white if the slide has a dark background
+.has-dark-background {
+		color: #fff;
+}
+
+// Add a blue border to all slides (each slide is a &lt;section&gt;)
+.slides section {
+		outline: 1px solid blue;
+}
+
+// Add a red border to all vertical stacks of slides
+.slides section.stack {
+		outline: 1px solid red;
+}<br>
+// Include a custom font<br>@font-face {<br>&nbsp; font-family: "Cabin Sketch";<br>&nbsp; src: url("https://s3.amazonaws.com/static.slid.es/fonts/cabinsketch/cabinsketch-regular.woff") format("woff"),<br>&nbsp; &nbsp; &nbsp; &nbsp;url("https://s3.amazonaws.com/static.slid.es/fonts/cabinsketch/cabinsketch-regular.ttf") format("truetype");<br>}
+<br>.slides h1, .slides h2, .slides h3 {<br>&nbsp; &nbsp; font-family: "Cabin Sketch";<br>}
+
+
+// Change color of controls and progress bar
+﻿@interactiveColor: rgb(200,105,119);
+
+.progress span {
+		background: @interactiveColor !important;
+}
+
+.controls .navigate-left {
+		border-right-color: @interactiveColor !important;
+}
+.controls .navigate-right {
+		border-left-color: @interactiveColor !important;
+}
+.controls .navigate-up {
+		border-bottom-color: @interactiveColor !important;
+}
+.controls .navigate-down {
+		border-top-color: @interactiveColor !important;
+}</code></pre>
+				</div>
+
+				<p>Here's where you can access the CSS editor from inside of the Style panel:</p>
+				<img class="developer-image" src="https://s3.amazonaws.com/static.slid.es/site/developers/slides-css-editor-1.png">
+
+				<p>A screenshot of the editor:</p>
+				﻿<img class="developer-image" src="https://s3.amazonaws.com/static.slid.es/site/developers/slides-css-editor-2.png">
+
+			</section>
+		</article>
+
+		<script>
+		window.onload = function() {
+
+			var toc = document.querySelector( '.toc' );
+			var tocPath = document.querySelector( '.toc-marker path' );
+			var tocItems;
+
+			// Factor of screen size that the element must cross
+			// before it's considered visible
+			var TOP_MARGIN = 0.1,
+				BOTTOM_MARGIN = 0.2;
+
+			var pathLength;
+
+			var lastPathStart,
+				lastPathEnd;
+
+			window.addEventListener( 'resize', drawPath, false );
+			window.addEventListener( 'scroll', sync, false );
+
+			drawPath();
+
+			function drawPath() {
+
+				tocItems = [].slice.call( toc.querySelectorAll( 'li' ) );
+
+				// Cache element references and measurements
+				tocItems = tocItems.map( function( item ) {
+					var anchor = item.querySelector( 'a' );
+					var target = document.getElementById( anchor.getAttribute( 'href' ).slice( 1 ) );
+
+					return {
+						listItem: item,
+						anchor: anchor,
+						target: target
+					};
+				} );
+
+				// Remove missing targets
+				tocItems = tocItems.filter( function( item ) {
+					return !!item.target;
+				} );
+
+				var path = [];
+				var pathIndent;
+
+				tocItems.forEach( function( item, i ) {
+
+					var x = item.anchor.offsetLeft - 5,
+						y = item.anchor.offsetTop,
+						height = item.anchor.offsetHeight;
+
+					if( i === 0 ) {
+						path.push( 'M', x, y, 'L', x, y + height );
+						item.pathStart = 0;
+					}
+					else {
+						// Draw an additional line when there's a change in
+						// indent levels
+						if( pathIndent !== x ) path.push( 'L', pathIndent, y );
+
+						path.push( 'L', x, y );
+
+						// Set the current path so that we can measure it
+						tocPath.setAttribute( 'd', path.join( ' ' ) );
+						item.pathStart = tocPath.getTotalLength() || 0;
+
+						path.push( 'L', x, y + height );
+					}
+
+					pathIndent = x;
+
+					tocPath.setAttribute( 'd', path.join( ' ' ) );
+					item.pathEnd = tocPath.getTotalLength();
+
+				} );
+
+				pathLength = tocPath.getTotalLength();
+
+				sync();
+
+			}
+
+			function sync() {
+
+				var windowHeight = window.innerHeight;
+
+				var pathStart = pathLength,
+					pathEnd = 0;
+
+				var visibleItems = 0;
+
+				tocItems.forEach( function( item ) {
+
+					var targetBounds = item.target.getBoundingClientRect();
+
+					if( targetBounds.bottom > windowHeight * TOP_MARGIN && targetBounds.top < windowHeight * ( 1 - BOTTOM_MARGIN ) ) {
+						pathStart = Math.min( item.pathStart, pathStart );
+						pathEnd = Math.max( item.pathEnd, pathEnd );
+
+						visibleItems += 1;
+
+						item.listItem.classList.add( 'visible' );
+					}
+					else {
+						item.listItem.classList.remove( 'visible' );
+					}
+
+				} );
+
+				// Specify the visible path or hide the path altogether
+				// if there are no visible items
+				if( visibleItems > 0 && pathStart < pathEnd ) {
+					if( pathStart !== lastPathStart || pathEnd !== lastPathEnd ) {
+						tocPath.setAttribute( 'stroke-dashoffset', '1' );
+						tocPath.setAttribute( 'stroke-dasharray', '1, '+ pathStart +', '+ ( pathEnd - pathStart ) +', ' + pathLength );
+						tocPath.setAttribute( 'opacity', 1 );
+					}
+				}
+				else {
+					tocPath.setAttribute( 'opacity', 0 );
+				}
+
+				lastPathStart = pathStart;
+				lastPathEnd = pathEnd;
+
+			}
+
+		};
+		</script>
+
+		<script>
+			var _gaq = [['_setAccount', 'UA-15240703-1'], ['_trackPageview']];
+			(function(d, t) {
+			var g = d.createElement(t),
+			    s = d.getElementsByTagName(t)[0];
+			g.async = true;
+			g.src = ('https:' == location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			s.parentNode.insertBefore(g, s);
+			})(document, 'script');
+		</script>
+
+	</body>
+
 </html>

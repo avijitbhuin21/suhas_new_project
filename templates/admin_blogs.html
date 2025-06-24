@@ -63,9 +63,9 @@
             to { opacity: 1; transform: translateY(0); }
         }
         .form-container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 2rem;
+            max-width: none;
+            margin: 0;
+            padding: 1rem;
         }
         .form-item {
             margin-bottom: 1rem;
@@ -364,6 +364,245 @@
             background-color: rgba(234, 179, 8, 0.2);
             color: rgb(250, 204, 21);
         }
+        
+        /* Grid Layout Styles */
+        .main-grid-container {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            grid-template-rows: repeat(5, 1fr);
+            gap: 16px;
+            min-height: calc(100vh - 120px);
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .left-section {
+            grid-column: span 3 / span 3;
+            grid-row: span 5 / span 5;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 1.5rem;
+            overflow-y: auto;
+            overflow-x: hidden;
+            max-height: calc(100vh - 140px);
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        
+        .left-section::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .right-section {
+            grid-column: span 2 / span 2;
+            grid-row: span 5 / span 5;
+            grid-column-start: 4;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 1.5rem;
+            overflow-y: auto;
+            overflow-x: hidden;
+            max-height: calc(100vh - 140px);
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        
+        .right-section::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .left-section-header {
+            backdrop-filter: blur(35px);
+            -webkit-backdrop-filter: blur(35px);
+            /* background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05); */
+            border-radius: 70px;
+            padding: 12px 20px;
+            margin-bottom: 2rem;
+        }
+        
+        .left-section-tabs {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .left-tab-button {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 1.5rem;
+            /* background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1); */
+            border-radius: 12px;
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        
+        .left-tab-button:hover {
+            /* background: rgba(255, 255, 255, 0.1); */
+            color: rgba(255, 255, 255, 0.9);
+            transform: translateY(-2px);
+        }
+        
+        .left-tab-button.active {
+            /* background: rgba(59, 130, 246, 0.2); */
+            color: rgba(255, 255, 255, 0.9);;
+        }
+        
+        .left-content-section {
+            display: none;
+            margin-top: 1.5rem;
+        }
+        
+        .left-content-section.active {
+            display: block;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 1200px) {
+            .main-grid-container {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto;
+                gap: 1rem;
+            }
+            
+            .left-section {
+                grid-column: 1;
+                grid-row: 1;
+            }
+            
+            .right-section {
+                grid-column: 1;
+                grid-row: 2;
+                grid-column-start: auto;
+            }
+            
+            .left-section-tabs {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .main-grid-container {
+                padding: 0 1rem;
+            }
+            
+            .left-section, .right-section {
+                padding: 1rem;
+            }
+        }
+        
+        /* Upload and Gallery Styles from manage_files.html */
+        .dropzone {
+            border: 2px dashed rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+        .dropzone.dragover {
+            border-color: rgb(59, 130, 246);
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+        .dropzone i,
+        .dropzone p {
+            transition: opacity 0.2s ease-in-out;
+        }
+        .file-queue-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            border-radius: 20px;
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            transition: all 0.2s ease;
+            background-color: rgba(255, 255, 255, 0.03);
+        }
+        .gallery-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+        .gallery-item .overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent 50%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .gallery-item:hover .overlay {
+            opacity: 1;
+        }
+        .gallery-item .actions {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            display: flex;
+            gap: 0.5rem;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 10;
+            pointer-events: auto;
+        }
+        .gallery-item:hover .actions {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .gallery-item .actions button {
+            border-radius: 9999px;
+            padding: 0.5rem;
+            background-color: rgba(0,0,0,0.5);
+            transition: background-color 0.2s;
+        }
+        .gallery-item .actions button:hover {
+             background-color: black;
+        }
+        .search-input-container {
+            position: relative;
+        }
+        .search-input-container::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.6);
+            transform: translateX(-50%);
+            transition: width 0.3s ease-in-out;
+        }
+        .search-input-container:hover::after {
+            width: 100%;
+        }
+        .search-input-container.focused::after {
+            width: 100%;
+        }
+        .search-input {
+            background-color: transparent;
+            border: none;
+            color: white;
+            transition: all 0.3s ease-in-out;
+        }
+        .search-input:focus {
+            outline: none;
+        }
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
     </style>
 </head>
 <body>
@@ -379,10 +618,85 @@
     
     <!-- Main Content Sections -->
     <main class="pt-20 px-4">
-        <!-- Add Blogs Section -->
-        <section id="addBlogs" class="content-section active">
-            <div class="form-container">
-                <h2 class="section-title text-center">Add New Blog</h2>
+        <div class="main-grid-container">
+            <!-- Left Section -->
+            <div class="left-section">
+                <!-- Left Section Header -->
+                <div class="left-section-header">
+                    <div class="expandable-tabs flex items-center gap-4">
+                        <button class="left-tab-button active" data-left-tab="upload">
+                            <div class="flex-shrink-0">
+                                <i data-lucide="upload" class="w-4 h-4"></i>
+                            </div>
+                            <span>Upload Image</span>
+                        </button>
+                        <button class="left-tab-button" data-left-tab="gallery">
+                            <div class="flex-shrink-0">
+                                <i data-lucide="image" class="w-4 h-4"></i>
+                            </div>
+                            <span>Gallery</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Left Section Content -->
+                <div id="uploadContent" class="left-content-section active">
+                    <h3 class="text-lg font-semibold mb-4 text-white" style="font-family: 'Playfair Display', serif;">Upload Images</h3>
+                    <div class="bg-black/20 border-white/10 rounded-[20px] p-6">
+                        <!-- Dropzone -->
+                        <div id="leftDropzone" class="dropzone flex flex-col items-center justify-center space-y-3" style="border: 2px dashed rgba(255, 255, 255, 0.2); border-radius: 20px; padding: 2.5rem; text-align: center; cursor: pointer; transition: all 0.2s ease; background-color: rgba(255, 255, 255, 0.02);">
+                            <i id="leftDropzoneIcon" data-lucide="upload-cloud" class="w-12 h-12 text-white/40"></i>
+                            <p class="font-semibold">Drag & drop images here</p>
+                            <p id="leftDropzoneText" class="text-sm text-white/60">Upload JPG, PNG, WEBP. Max 10MB.</p>
+                            <p class="text-xs text-white/50">or</p>
+                            <button type="button" onclick="document.getElementById('leftFileInput').click()" class="form-button bg-white/10 hover:bg-white/20 text-white/90 !px-4 !py-2">Browse Files</button>
+                        </div>
+                        <input type="file" id="leftFileInput" multiple accept="image/*" class="hidden">
+                        
+                        <!-- File Queue -->
+                        <div id="leftFileQueue" class="mt-6 space-y-3"></div>
+                        
+                        <!-- Upload Button -->
+                        <div class="mt-8 flex justify-center">
+                            <button id="leftUploadBtn" class="form-button bg-white text-black hover:bg-gray-100" disabled>
+                                <i data-lucide="upload" class="w-4 h-4 mr-2"></i>
+                                <span id="leftUploadBtnText">Upload 0 Files</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="galleryContent" class="left-content-section">
+                    <h3 class="text-lg font-semibold mb-4 text-white" style="font-family: 'Playfair Display', serif;">Image Gallery</h3>
+                    
+                    <!-- Search Bar -->
+                    <div class="relative mb-6">
+                        <div class="search-input-container" style="position: relative;">
+                            <i data-lucide="search" class="w-4 h-4 absolute left-4 top-1/2 -translate-y-1/2 text-white/40 z-10"></i>
+                            <input type="text" placeholder="Search images..." class="search-input w-full py-2 pl-11 pr-4 text-sm rounded-[20px] focus:ring-0 focus:outline-none transition bg-transparent border-none color-white" id="leftSearchInput" style="background-color: transparent; border: none; color: white;">
+                        </div>
+                    </div>
+                    
+                    <!-- Gallery Grid -->
+                    <div id="leftGalleryGrid" class="grid grid-cols-4 gap-4">
+                        <!-- Dynamic gallery items will be inserted here -->
+                    </div>
+                    
+                    <div id="leftNoGalleryItems" class="text-center py-8 hidden">
+                        <i data-lucide="folder-x" class="w-12 h-12 mx-auto text-white/20 mb-4"></i>
+                        <h4 class="text-lg font-medium text-white/80">No Images Found</h4>
+                        <p class="text-white/50 mt-2">Try uploading some images or changing your search.</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Right Section -->
+            <div class="right-section">
+                <!-- Add Blogs Section -->
+                <section id="addBlogs" class="content-section active">
+                    <div class="form-container">
+                        <h2 class="section-title text-center">Add New Blog</h2>
                 <form id="addBlogForm">
                     <!-- Main Image URL and Alt Text -->
                     <div class="form-row">
@@ -722,6 +1036,8 @@
                 </div>
             </div>
         </section> -->
+            </div>
+        </div>
     </main>
     
     <!-- Modal for displaying messages -->
@@ -1882,6 +2198,389 @@
             });
             expandableTabs.selected = 1;
             expandableTabs.render();
+            
+            // Left sidebar tab functionality
+            const leftTabButtons = document.querySelectorAll('.left-tab-button');
+            const leftContentSections = document.querySelectorAll('.left-content-section');
+            
+            leftTabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const tabName = this.getAttribute('data-left-tab');
+                    
+                    // Remove active class from all buttons
+                    leftTabButtons.forEach(btn => btn.classList.remove('active'));
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    // Hide all content sections
+                    leftContentSections.forEach(section => section.classList.remove('active'));
+                    // Show corresponding content section
+                    const targetSection = document.getElementById(tabName + 'Content');
+                    if (targetSection) {
+                        targetSection.classList.add('active');
+                    }
+                });
+            });
+            
+            // Left sidebar upload and gallery functionality
+            let leftFilesToUpload = [];
+            let leftImageFiles = [];
+            
+            // Initialize left sidebar upload functionality
+            const leftDropzone = document.getElementById('leftDropzone');
+            const leftFileInput = document.getElementById('leftFileInput');
+            const leftFileQueue = document.getElementById('leftFileQueue');
+            const leftUploadBtn = document.getElementById('leftUploadBtn');
+            const leftUploadBtnText = document.getElementById('leftUploadBtnText');
+            
+            if (leftDropzone && leftFileInput) {
+                // Drag and drop functionality
+                ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                    leftDropzone.addEventListener(eventName, e => { e.preventDefault(); e.stopPropagation(); });
+                });
+                
+                ['dragenter', 'dragover'].forEach(eventName => {
+                    leftDropzone.addEventListener(eventName, () => leftDropzone.classList.add('dragover'));
+                });
+                
+                ['dragleave', 'drop'].forEach(eventName => {
+                    leftDropzone.addEventListener(eventName, () => leftDropzone.classList.remove('dragover'));
+                });
+                
+                leftDropzone.addEventListener('drop', (e) => handleLeftFiles(e.dataTransfer.files));
+                leftFileInput.addEventListener('change', (e) => handleLeftFiles(e.target.files));
+                
+                function handleLeftFiles(files) {
+                    const validFiles = [];
+                    const invalidFiles = [];
+                    
+                    Array.from(files).forEach(file => {
+                        if (file.type.startsWith('image/') &&
+                            ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp', 'image/bmp', 'image/svg+xml'].includes(file.type.toLowerCase())) {
+                            validFiles.push(file);
+                        } else {
+                            invalidFiles.push(file);
+                        }
+                    });
+                    
+                    if (invalidFiles.length > 0) {
+                        const fileNames = invalidFiles.map(f => f.name).join(', ');
+                        showToast(`Invalid file type(s): ${fileNames}. Expected: PNG, JPG, JPEG, GIF, WEBP, BMP, SVG`, 'error');
+                    }
+                    
+                    if (validFiles.length > 0) {
+                        leftFilesToUpload.push(...validFiles);
+                        updateLeftFileQueueUI();
+                    }
+                }
+                
+                function updateLeftFileQueueUI() {
+                    leftFileQueue.innerHTML = '';
+                    if (leftFilesToUpload.length > 0) {
+                        leftFilesToUpload.forEach((file, index) => {
+                            const fileItem = document.createElement('div');
+                            fileItem.className = 'file-queue-item';
+                            fileItem.innerHTML = `
+                                <div class="flex-shrink-0 mr-3">
+                                    <i data-lucide="image" class="w-5 h-5 text-white/70"></i>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-sm font-medium truncate">${file.name}</p>
+                                    <p class="text-xs text-white/50">${(file.size / 1024 / 1024).toFixed(2)} MB</p>
+                                </div>
+                                <button data-index="${index}" class="remove-left-file-btn ml-4 text-white/50 hover:text-red-500 transition-colors p-1">
+                                    <i data-lucide="x" class="w-5 h-5"></i>
+                                </button>
+                            `;
+                            leftFileQueue.appendChild(fileItem);
+                        });
+                        lucide.createIcons();
+                    }
+                    leftUploadBtn.disabled = leftFilesToUpload.length === 0;
+                    leftUploadBtnText.textContent = `Upload ${leftFilesToUpload.length} File${leftFilesToUpload.length !== 1 ? 's' : ''}`;
+                }
+                
+                leftFileQueue.addEventListener('click', (e) => {
+                    const removeBtn = e.target.closest('.remove-left-file-btn');
+                    if (removeBtn) {
+                        leftFilesToUpload.splice(parseInt(removeBtn.dataset.index), 1);
+                        updateLeftFileQueueUI();
+                    }
+                });
+                
+                leftUploadBtn.addEventListener('click', async () => {
+                    if (leftFilesToUpload.length === 0) {
+                        showToast('No files selected for upload', 'error');
+                        return;
+                    }
+                    
+                    leftUploadBtn.disabled = true;
+                    leftUploadBtnText.textContent = 'Uploading...';
+                    
+                    let successCount = 0;
+                    let errorCount = 0;
+                    
+                    for (let i = 0; i < leftFilesToUpload.length; i++) {
+                        const file = leftFilesToUpload[i];
+                        try {
+                            const formData = new FormData();
+                            formData.append('file', file);
+                            
+                            const response = await fetch('/upload_file', {
+                                method: 'POST',
+                                body: formData
+                            });
+                            
+                            const result = await response.json();
+                            
+                            if (response.ok && result.status === 'success') {
+                                successCount++;
+                            } else {
+                                errorCount++;
+                                console.error(`Failed to upload ${file.name}:`, result.message);
+                            }
+                        } catch (error) {
+                            errorCount++;
+                            console.error(`Network error uploading ${file.name}:`, error);
+                        }
+                        
+                        leftUploadBtnText.textContent = `Uploading... (${i + 1}/${leftFilesToUpload.length})`;
+                    }
+                    
+                    if (successCount > 0 && errorCount === 0) {
+                        showToast(`Successfully uploaded ${successCount} file${successCount !== 1 ? 's' : ''}!`, 'success');
+                    } else if (successCount > 0 && errorCount > 0) {
+                        showToast(`Uploaded ${successCount} files successfully, but ${errorCount} failed`, 'warning');
+                    } else {
+                        showToast('All uploads failed', 'error');
+                    }
+                    
+                    if (successCount > 0) {
+                        await loadLeftGallery();
+                    }
+                    
+                    leftFilesToUpload = [];
+                    updateLeftFileQueueUI();
+                    leftUploadBtn.disabled = false;
+                    leftUploadBtnText.textContent = 'Upload 0 Files';
+                });
+            }
+            
+            // Gallery functionality
+            async function loadLeftGallery() {
+                try {
+                    const response = await fetch('/get_file_details?bucket_name=blog-images');
+                    const result = await response.json();
+                    
+                    if (result.status === 'success' && result.data) {
+                        leftImageFiles = result.data.map(file => ({
+                            id: file.id,
+                            name: file.name,
+                            url: file.public_url,
+                            size: file.size
+                        }));
+                        renderLeftGallery();
+                    }
+                } catch (error) {
+                    console.error('Error loading gallery:', error);
+                }
+            }
+            
+            function renderLeftGallery(searchTerm = '') {
+                const galleryGrid = document.getElementById('leftGalleryGrid');
+                const noItemsDiv = document.getElementById('leftNoGalleryItems');
+                
+                if (!galleryGrid) return;
+                
+                let filteredImages = leftImageFiles;
+                if (searchTerm) {
+                    filteredImages = leftImageFiles.filter(item =>
+                        item.name.toLowerCase().includes(searchTerm.toLowerCase())
+                    );
+                }
+                
+                galleryGrid.innerHTML = '';
+                
+                if (filteredImages.length === 0) {
+                    noItemsDiv.classList.remove('hidden');
+                } else {
+                    noItemsDiv.classList.add('hidden');
+                    filteredImages.forEach(item => {
+                        const itemEl = document.createElement('div');
+                        itemEl.className = 'gallery-item group aspect-square';
+                        itemEl.innerHTML = `
+                            <img src="${item.url}" alt="${item.name}" class="absolute inset-0 w-full h-full object-cover" loading="lazy">
+                            <div class="overlay"></div>
+                            <div class="relative z-10 text-white p-2 flex flex-col justify-end h-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <p class="text-xs font-semibold truncate">${item.name}</p>
+                            </div>
+                            <div class="actions">
+                                <button class="action-btn" data-action="copy" data-url="${item.url}" title="Copy URL">
+                                    <i data-lucide="link" class="w-3 h-3 text-white"></i>
+                                </button>
+                                <button class="action-btn" data-action="view" data-url="${item.url}" title="View">
+                                    <i data-lucide="external-link" class="w-3 h-3 text-white"></i>
+                                </button>
+                                <button class="action-btn delete" data-action="delete" data-id="${item.id}" data-name="${item.name}" title="Delete">
+                                    <i data-lucide="trash-2" class="w-3 h-3 text-white"></i>
+                                </button>
+                            </div>
+                        `;
+                        galleryGrid.appendChild(itemEl);
+                    });
+                }
+                lucide.createIcons();
+            }
+            
+            // Gallery actions
+            const leftGalleryGrid = document.getElementById('leftGalleryGrid');
+            if (leftGalleryGrid) {
+                leftGalleryGrid.addEventListener('click', (e) => {
+                    const actionBtn = e.target.closest('.action-btn');
+                    if (!actionBtn) return;
+                    
+                    const action = actionBtn.dataset.action;
+                    const itemUrl = actionBtn.dataset.url;
+                    const itemId = actionBtn.dataset.id;
+                    const itemName = actionBtn.dataset.name;
+                    
+                    if (action === 'copy') {
+                        if (navigator.clipboard && window.isSecureContext) {
+                            navigator.clipboard.writeText(itemUrl).then(() => {
+                                showToast('URL copied to clipboard!', 'success');
+                            }).catch(() => {
+                                fallbackCopyTextToClipboard(itemUrl);
+                            });
+                        } else {
+                            fallbackCopyTextToClipboard(itemUrl);
+                        }
+                    } else if (action === 'view') {
+                        window.open(itemUrl, '_blank');
+                    } else if (action === 'delete') {
+                        handleLeftGalleryDelete(itemId, itemName);
+                    }
+                });
+            }
+            
+            function fallbackCopyTextToClipboard(text) {
+                const textArea = document.createElement("textarea");
+                textArea.value = text;
+                textArea.style.position = "fixed";
+                textArea.style.top = "0";
+                textArea.style.left = "0";
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    showToast('URL copied to clipboard!', 'success');
+                } catch (err) {
+                    console.error('Failed to copy', err);
+                    showToast('Failed to copy URL', 'error');
+                }
+                document.body.removeChild(textArea);
+            }
+            
+            // Search functionality
+            const leftSearchInput = document.getElementById('leftSearchInput');
+            if (leftSearchInput) {
+                const leftSearchContainer = leftSearchInput.parentElement;
+                
+                leftSearchInput.addEventListener('focus', () => {
+                    leftSearchContainer.classList.add('focused');
+                });
+                
+                leftSearchInput.addEventListener('blur', () => {
+                    leftSearchContainer.classList.remove('focused');
+                });
+                
+                leftSearchInput.addEventListener('input', (e) => {
+                    const searchTerm = e.target.value.trim();
+                    renderLeftGallery(searchTerm);
+                });
+            }
+            
+            // Toast notification function
+            function showToast(message, type = 'success') {
+                const toast = document.createElement('div');
+                let bgColor = 'bg-green-600';
+                if (type === 'error') {
+                    bgColor = 'bg-red-600';
+                } else if (type === 'warning') {
+                    bgColor = 'bg-yellow-600';
+                }
+                toast.className = `fixed top-4 right-4 ${bgColor} text-white px-4 py-2 rounded-lg shadow-lg z-50 transition-all duration-300`;
+                toast.textContent = message;
+                document.body.appendChild(toast);
+                setTimeout(() => {
+                    toast.style.opacity = '0';
+                    toast.style.transform = 'translateY(-20px)';
+                    setTimeout(() => {
+                        if (toast.parentElement) {
+                            document.body.removeChild(toast);
+                        }
+                    }, 300);
+                }, 3000);
+            }
+            
+            // Delete function for left gallery
+            async function handleLeftGalleryDelete(itemId, itemName) {
+                if (!itemName) {
+                    console.error('No file name provided to handleLeftGalleryDelete');
+                    showToast('Error: File name is missing', 'error');
+                    return;
+                }
+                
+                if (confirm(`Are you sure you want to delete "${itemName}"? This action cannot be undone.`)) {
+                    showToast('Deleting file...', 'success');
+                    
+                    try {
+                        const response = await fetch('/delete_file', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                file_name: itemName
+                            })
+                        });
+                        
+                        const result = await response.json();
+                        
+                        if (response.ok && result.status === 'success') {
+                            // Remove from local array
+                            const itemIndex = leftImageFiles.findIndex(item => item.id == itemId);
+                            if (itemIndex > -1) {
+                                leftImageFiles.splice(itemIndex, 1);
+                                renderLeftGallery();
+                                showToast(`File "${itemName}" deleted successfully!`, 'success');
+                            } else {
+                                await loadLeftGallery();
+                                showToast(`File "${itemName}" deleted successfully!`, 'success');
+                            }
+                        } else {
+                            console.error('Delete failed:', result.message);
+                            showToast(`Failed to delete file: ${result.message || 'Unknown error'}`, 'error');
+                        }
+                    } catch (error) {
+                        console.error('Error deleting file:', error);
+                        showToast(`Error deleting file: ${error.message}`, 'error');
+                    }
+                }
+            }
+            
+            // Load gallery when gallery tab is clicked
+            leftTabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const tabName = this.getAttribute('data-left-tab');
+                    if (tabName === 'gallery') {
+                        setTimeout(() => {
+                            loadLeftGallery();
+                        }, 100);
+                    }
+                });
+            });
+            
             setTimeout(() => {
                 lucide.createIcons();
             }, 100);

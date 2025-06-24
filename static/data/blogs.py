@@ -80,7 +80,7 @@ def get_blog_content(json_data_full):
     text_template = """<p class="font-jakarta font-medium text-[15px] md:text-[16px] leading-[26px] md:leading-[30px] text-black" >
                 [[textcontent]]
             </p>"""
-    text_indented_template = """<p class="font-jakarta font-medium text-[15px] md:text-[16px] leading-[26px] md:leading-[30px] text-black md:ml-[2rem]" >
+    text_indented_template = """<p class="font-jakarta font-medium text-[15px] md:text-[16px] leading-[26px] md:leading-[30px] text-black " >
                 [[textcontent]]
             </p>"""
     h2_template = """<h2 id="[[section_id]]" class="font-jakarta font-medium text-[22px] md:text-[28px] leading-[28px] md:leading-[30px] text-black scroll-mt-20" >

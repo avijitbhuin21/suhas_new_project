@@ -145,6 +145,7 @@ def admin_save_blog():
 @app.route('/blog/<blog_id>')
 def display_blog(blog_id):
     blog_data = get_blog(blog_id=blog_id)
+    
     if not blog_data:
         return render_template('404.html'), 404
     json_data = blog_data.get('json_data', {})
