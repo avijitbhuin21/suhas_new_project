@@ -603,6 +603,37 @@
         .search-input::placeholder {
             color: rgba(255, 255, 255, 0.5);
         }
+        
+        /* Text formatting toolbar styles */
+        .text-formatting-toolbar {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+        }
+        
+        .format-btn {
+            padding: 0.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 0.375rem;
+            background-color: rgba(255, 255, 255, 0.05);
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .format-btn:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+            border-color: rgb(59, 130, 246);
+        }
+        
+        .format-btn.active {
+            background-color: rgb(59, 130, 246);
+            border-color: rgb(59, 130, 246);
+        }
     </style>
 </head>
 <body>
@@ -698,6 +729,93 @@
                     <div class="form-container">
                         <h2 class="section-title text-center">Add New Blog</h2>
                 <form id="addBlogForm">
+                    <!-- Category Section -->
+                    <div class="category-section-wrapper p-4 rounded-lg bg-white/[0.01] border border-white/[0.03] mb-6">
+                        <h3 class="text-lg font-medium text-white/90 mb-4 flex items-center">
+                            <i data-lucide="tag" class="w-5 h-5 mr-2"></i>Category
+                        </h3>
+                        
+                        <div class="form-row">
+                            <div class="form-item">
+                                <label class="form-label" for="blogCategory">
+                                    <i data-lucide="folder" class="w-4 h-4 inline mr-2"></i>Category
+                                </label>
+                                <input
+                                    type="text"
+                                    id="blogCategory"
+                                    name="blogCategory"
+                                    class="form-input"
+                                    placeholder="Enter blog category..."
+                                />
+                            </div>
+                            <div class="form-item">
+                                <label class="form-label" for="blogSubCategory">
+                                    <i data-lucide="folder-open" class="w-4 h-4 inline mr-2"></i>Sub-Category
+                                </label>
+                                <input
+                                    type="text"
+                                    id="blogSubCategory"
+                                    name="blogSubCategory"
+                                    class="form-input"
+                                    placeholder="Enter blog sub-category..."
+                                />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SEO Section -->
+                    <div class="seo-section-wrapper p-4 rounded-lg bg-white/[0.01] border border-white/[0.03] mb-6">
+                        <h3 class="text-lg font-medium text-white/90 mb-4 flex items-center">
+                            <i data-lucide="search" class="w-5 h-5 mr-2"></i>SEO
+                        </h3>
+                        
+                        <div class="form-item">
+                            <label class="form-label" for="seoTitle">
+                                <i data-lucide="type" class="w-4 h-4 inline mr-2"></i>Title
+                            </label>
+                            <input
+                                type="text"
+                                id="seoTitle"
+                                name="seoTitle"
+                                class="form-input"
+                                placeholder="Enter SEO title..."
+                            />
+                        </div>
+
+                        <div class="form-item">
+                            <label class="form-label" for="seoMetaDescription">
+                                <i data-lucide="file-text" class="w-4 h-4 inline mr-2"></i>Meta Description
+                            </label>
+                            <textarea
+                                id="seoMetaDescription"
+                                name="seoMetaDescription"
+                                class="form-input"
+                                style="height: 4rem; resize: vertical;"
+                                placeholder="Enter SEO meta description..."
+                            ></textarea>
+                        </div>
+
+                        <div class="form-item">
+                            <label class="form-label" for="seoCanonicalUrl">
+                                <i data-lucide="link" class="w-4 h-4 inline mr-2"></i>Canonical URL
+                            </label>
+                            <input
+                                type="url"
+                                id="seoCanonicalUrl"
+                                name="seoCanonicalUrl"
+                                class="form-input"
+                                placeholder="https://example.com/current-page"
+                            />
+                            <p class="text-xs text-white/50 mt-1">Leave empty for self-referencing canonical URL</p>
+                        </div>
+                    </div>
+
+                    <!-- Content Section -->
+                    <div class="content-section-wrapper p-4 rounded-lg bg-white/[0.01] border border-white/[0.03] mb-6">
+                        <h3 class="text-lg font-medium text-white/90 mb-4 flex items-center">
+                            <i data-lucide="layout" class="w-5 h-5 mr-2"></i>Content
+                        </h3>
+                        
                     <!-- Main Image URL and Alt Text -->
                     <div class="form-row">
                         <div class="form-item">
@@ -805,11 +923,15 @@
 
                     <!-- Ad Banner One (Beside Leadership Spotlight) -->
                     <div class="form-item">
-                        <div class="flex justify-between items-center mb-2">
-                            <label class="form-label text-sm flex items-center">
-                                <i data-lucide="image" class="w-4 h-4 mr-2"></i>Ad Banner (Beside Leadership Spotlight)
-                            </label>
+                        <label class="form-label text-sm flex items-center mb-2">
+                            <i data-lucide="image" class="w-4 h-4 mr-2"></i>Ad Banner (Beside Leadership Spotlight)
+                        
+                        <div class="flex items-center gap-2">
+                                <span class="text-white/40 text-xs">Width: 576</span>
+                                <span class="text-white/40 text-xs">×</span>
+                                <span class="text-white/40 text-xs">Height: 512</span>
                         </div>
+                        </label>
                         <div class="space-y-2">
                             <input type="url" name="adBannerBesideUrl" class="form-input" placeholder="Image URL..." value="">
                             <input type="url" name="adBannerBesideHref" class="form-input" placeholder="Href for ad banner..." value="">
@@ -818,21 +940,25 @@
 
                     <!-- Ad Banner Two (Below Leadership Spotlight) -->
                     <div class="form-item">
-                        <div class="flex justify-between items-center mb-2">
-                            <label class="form-label text-sm flex items-center">
-                                <i data-lucide="image" class="w-4 h-4 mr-2"></i>Ad Banner (Below Leadership Spotlight)
-                            </label>
+                        <label class="form-label text-sm flex items-center mb-2">
+                            <i data-lucide="image" class="w-4 h-4 mr-2"></i>Ad Banner (Below Leadership Spotlight)
+                        
+                        <div class="flex items-center gap-2">
+                                <span class="text-white/40 text-xs">Width: 1406</span>
+                                <span class="text-white/40 text-xs">×</span>
+                                <span class="text-white/40 text-xs">Height: 236</span>
                         </div>
+                        </label>
                         <div class="space-y-2">
                             <input type="url" name="adBannerBelowUrl" class="form-input" placeholder="Image URL..." value="">
                             <input type="url" name="adBannerBelowHref" class="form-input" placeholder="Href for ad banner..." value="">
                         </div>
-                    </div>                   
+                    </div>
 
                     <!-- Dynamic Content Sections -->
                     <div class="form-item">
                         <label class="form-label">
-                            <i data-lucide="layers" class="w-4 h-4 inline mr-2"></i>Content Sections
+                            <i data-lucide="layers" class="w-4 h-4 inline mr-2"></i>Content Area
                         </label>
                         
                         <!-- Dynamic Sections Container - Moved to top -->
@@ -840,32 +966,54 @@
                             <!-- Dynamic sections will be added here -->
                         </div>
                         
-                        <!-- Add Section Buttons - Moved to bottom for easy access -->
-                        <div class="flex flex-wrap gap-2">
-                            <button type="button" id="addTextBtn" class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.06] transition-colors" title="Add Text Content">
-                                <i data-lucide="type" class="w-4 h-4"></i>
-                                
-                            </button>
-                            <button type="button" id="addHeaderBtn" class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.06] transition-colors" title="Add Header">
-                                <i data-lucide="heading-2" class="w-4 h-4"></i>
-                                
-                            </button>
-                            <button type="button" id="addSubHeaderBtn" class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.06] transition-colors" title="Add Sub Header">
-                                <i data-lucide="heading-3" class="w-4 h-4"></i>
-                                
-                            </button>
-                            <button type="button" id="addSubHeaderTextBtn" class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.06] transition-colors" title="Add Sub Header Text">
-                                <i data-lucide="heading-3" class="w-4 h-4"></i>
-                                -
-                                <i data-lucide="type" class="w-4 h-4"></i>
-                                
-                            </button>
-                            <button type="button" id="addImageBtn" class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.06] transition-colors" title="Add Image">
-                                <i data-lucide="image" class="w-4 h-4"></i>
-                                
-                            </button>
+                        <!-- Content Categories -->
+                        <div class="space-y-4">
+                            <!-- Headers Section -->
+                            <div class="p-3 rounded-lg bg-white/[0.02] border border-white/[0.05]">
+                                <h4 class="text-sm font-medium text-white/80 mb-3 flex items-center">
+                                    <i data-lucide="heading" class="w-4 h-4 mr-2"></i>Headers
+                                </h4>
+                                <div class="flex flex-wrap gap-2">
+                                    <button type="button" id="addH1Btn" class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.06] transition-colors" title="Add H1 Header">
+                                        <i data-lucide="heading-1" class="w-4 h-4"></i>
+                                    </button>
+                                    <button type="button" id="addH2Btn" class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.06] transition-colors" title="Add H2 Header">
+                                        <i data-lucide="heading-2" class="w-4 h-4"></i>
+                                    </button>
+                                    <button type="button" id="addH3Btn" class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.06] transition-colors" title="Add H3 Header">
+                                        <i data-lucide="heading-3" class="w-4 h-4"></i>
+                                    </button>
+                                    <button type="button" id="addH4Btn" class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.06] transition-colors" title="Add H4 Header">
+                                        <i data-lucide="heading-4" class="w-4 h-4"></i>
+                                    </button>
+                                    <button type="button" id="addH5Btn" class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.06] transition-colors" title="Add H5 Header">
+                                        <i data-lucide="heading-5" class="w-4 h-4"></i>
+                                    </button>
+                                    <button type="button" id="addH6Btn" class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.06] transition-colors" title="Add H6 Header">
+                                        <i data-lucide="heading-6" class="w-4 h-4"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Others Section -->
+                            <div class="p-3 rounded-lg bg-white/[0.02] border border-white/[0.05]">
+                                <h4 class="text-sm font-medium text-white/80 mb-3 flex items-center">
+                                    <i data-lucide="more-horizontal" class="w-4 h-4 mr-2"></i>Others
+                                </h4>
+                                <div class="flex flex-wrap gap-2">
+                                    <button type="button" id="addTextBtn" class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.06] transition-colors" title="Add Text Content">
+                                        <i data-lucide="type" class="w-4 h-4"></i>
+                                        <span class="text-sm">Text</span>
+                                    </button>
+                                    <button type="button" id="addImageBtn" class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.06] transition-colors" title="Add Image">
+                                        <i data-lucide="image" class="w-4 h-4"></i>
+                                        <span class="text-sm">Image</span>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    </div> <!-- End Content Section -->
 
                     <!-- Action Buttons -->
                     <div class="flex justify-end gap-3">
@@ -1525,33 +1673,122 @@
                                 <i data-lucide="x" class="w-4 h-4"></i>
                             </button>
                         </div>
+                        <div class="text-formatting-toolbar mb-2 flex flex-wrap gap-1">
+                            <button type="button" class="format-btn" data-format="bold" title="Bold"><i data-lucide="bold" class="w-4 h-4"></i></button>
+                            <button type="button" class="format-btn" data-format="italic" title="Italic"><i data-lucide="italic" class="w-4 h-4"></i></button>
+                            <button type="button" class="format-btn" data-format="underline" title="Underline"><i data-lucide="underline" class="w-4 h-4"></i></button>
+                            <button type="button" class="format-btn" data-format="link" title="Hyperlink"><i data-lucide="link" class="w-4 h-4"></i></button>
+                            <button type="button" class="format-btn" data-format="list" title="Bullet Points"><i data-lucide="list" class="w-4 h-4"></i></button>
+                        </div>
                         <textarea name="dynamic_text_${sectionId}" class="form-input" style="height: 4rem; resize: vertical;" placeholder="Enter your text content...">${content}</textarea>
                     `;
                     break;
-                case 'header':
+                case 'h1':
                     sectionHTML = `
                         <div class="flex justify-between items-center mb-2">
                             <label class="form-label text-sm flex items-center">
-                                <i data-lucide="heading" class="w-4 h-4 mr-2"></i>Header
+                                <i data-lucide="heading-1" class="w-4 h-4 mr-2"></i>H1 Header
                             </label>
                             <button type="button" class="remove-section" data-section-id="${sectionId}">
                                 <i data-lucide="x" class="w-4 h-4"></i>
                             </button>
                         </div>
-                        <input type="text" name="dynamic_header_${sectionId}" class="form-input" placeholder="Enter header text..." value="${content}">
+                        <div class="text-formatting-toolbar mb-2 flex flex-wrap gap-1">
+                            <button type="button" class="format-btn" data-format="bold" title="Bold"><i data-lucide="bold" class="w-4 h-4"></i></button>
+                            <button type="button" class="format-btn" data-format="italic" title="Italic"><i data-lucide="italic" class="w-4 h-4"></i></button>
+                            <button type="button" class="format-btn" data-format="underline" title="Underline"><i data-lucide="underline" class="w-4 h-4"></i></button>
+                        </div>
+                        <input type="text" name="dynamic_h1_${sectionId}" class="form-input" placeholder="Enter H1 header text..." value="${content}">
                     `;
                     break;
-                case 'subheader':
+                case 'h2':
                     sectionHTML = `
                         <div class="flex justify-between items-center mb-2">
                             <label class="form-label text-sm flex items-center">
-                                <i data-lucide="heading-2" class="w-4 h-4 mr-2"></i>SubHeader
+                                <i data-lucide="heading-2" class="w-4 h-4 mr-2"></i>H2 Header
                             </label>
                             <button type="button" class="remove-section" data-section-id="${sectionId}">
                                 <i data-lucide="x" class="w-4 h-4"></i>
                             </button>
                         </div>
-                        <input type="text" name="dynamic_subheader_${sectionId}" class="form-input" placeholder="Enter subheader text..." value="${content}">
+                        <div class="text-formatting-toolbar mb-2 flex flex-wrap gap-1">
+                            <button type="button" class="format-btn" data-format="bold" title="Bold"><i data-lucide="bold" class="w-4 h-4"></i></button>
+                            <button type="button" class="format-btn" data-format="italic" title="Italic"><i data-lucide="italic" class="w-4 h-4"></i></button>
+                            <button type="button" class="format-btn" data-format="underline" title="Underline"><i data-lucide="underline" class="w-4 h-4"></i></button>
+                        </div>
+                        <input type="text" name="dynamic_h2_${sectionId}" class="form-input" placeholder="Enter H2 header text..." value="${content}">
+                    `;
+                    break;
+                case 'h3':
+                    sectionHTML = `
+                        <div class="flex justify-between items-center mb-2">
+                            <label class="form-label text-sm flex items-center">
+                                <i data-lucide="heading-3" class="w-4 h-4 mr-2"></i>H3 Header
+                            </label>
+                            <button type="button" class="remove-section" data-section-id="${sectionId}">
+                                <i data-lucide="x" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                        <div class="text-formatting-toolbar mb-2 flex flex-wrap gap-1">
+                            <button type="button" class="format-btn" data-format="bold" title="Bold"><i data-lucide="bold" class="w-4 h-4"></i></button>
+                            <button type="button" class="format-btn" data-format="italic" title="Italic"><i data-lucide="italic" class="w-4 h-4"></i></button>
+                            <button type="button" class="format-btn" data-format="underline" title="Underline"><i data-lucide="underline" class="w-4 h-4"></i></button>
+                        </div>
+                        <input type="text" name="dynamic_h3_${sectionId}" class="form-input" placeholder="Enter H3 header text..." value="${content}">
+                    `;
+                    break;
+                case 'h4':
+                    sectionHTML = `
+                        <div class="flex justify-between items-center mb-2">
+                            <label class="form-label text-sm flex items-center">
+                                <i data-lucide="heading-4" class="w-4 h-4 mr-2"></i>H4 Header
+                            </label>
+                            <button type="button" class="remove-section" data-section-id="${sectionId}">
+                                <i data-lucide="x" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                        <div class="text-formatting-toolbar mb-2 flex flex-wrap gap-1">
+                            <button type="button" class="format-btn" data-format="bold" title="Bold"><i data-lucide="bold" class="w-4 h-4"></i></button>
+                            <button type="button" class="format-btn" data-format="italic" title="Italic"><i data-lucide="italic" class="w-4 h-4"></i></button>
+                            <button type="button" class="format-btn" data-format="underline" title="Underline"><i data-lucide="underline" class="w-4 h-4"></i></button>
+                        </div>
+                        <input type="text" name="dynamic_h4_${sectionId}" class="form-input" placeholder="Enter H4 header text..." value="${content}">
+                    `;
+                    break;
+                case 'h5':
+                    sectionHTML = `
+                        <div class="flex justify-between items-center mb-2">
+                            <label class="form-label text-sm flex items-center">
+                                <i data-lucide="heading-5" class="w-4 h-4 mr-2"></i>H5 Header
+                            </label>
+                            <button type="button" class="remove-section" data-section-id="${sectionId}">
+                                <i data-lucide="x" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                        <div class="text-formatting-toolbar mb-2 flex flex-wrap gap-1">
+                            <button type="button" class="format-btn" data-format="bold" title="Bold"><i data-lucide="bold" class="w-4 h-4"></i></button>
+                            <button type="button" class="format-btn" data-format="italic" title="Italic"><i data-lucide="italic" class="w-4 h-4"></i></button>
+                            <button type="button" class="format-btn" data-format="underline" title="Underline"><i data-lucide="underline" class="w-4 h-4"></i></button>
+                        </div>
+                        <input type="text" name="dynamic_h5_${sectionId}" class="form-input" placeholder="Enter H5 header text..." value="${content}">
+                    `;
+                    break;
+                case 'h6':
+                    sectionHTML = `
+                        <div class="flex justify-between items-center mb-2">
+                            <label class="form-label text-sm flex items-center">
+                                <i data-lucide="heading-6" class="w-4 h-4 mr-2"></i>H6 Header
+                            </label>
+                            <button type="button" class="remove-section" data-section-id="${sectionId}">
+                                <i data-lucide="x" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                        <div class="text-formatting-toolbar mb-2 flex flex-wrap gap-1">
+                            <button type="button" class="format-btn" data-format="bold" title="Bold"><i data-lucide="bold" class="w-4 h-4"></i></button>
+                            <button type="button" class="format-btn" data-format="italic" title="Italic"><i data-lucide="italic" class="w-4 h-4"></i></button>
+                            <button type="button" class="format-btn" data-format="underline" title="Underline"><i data-lucide="underline" class="w-4 h-4"></i></button>
+                        </div>
+                        <input type="text" name="dynamic_h6_${sectionId}" class="form-input" placeholder="Enter H6 header text..." value="${content}">
                     `;
                     break;
                 case 'subheader-text':
@@ -1610,6 +1847,20 @@
                 input.addEventListener('input', updatePreviewIfVisible);
             });
             
+            // Add formatting toolbar functionality
+            const formatBtns = section.querySelectorAll('.format-btn');
+            formatBtns.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const format = this.dataset.format;
+                    const textInput = section.querySelector('input[type="text"], textarea');
+                    
+                    if (textInput) {
+                        applyFormatting(textInput, format);
+                    }
+                });
+            });
+            
            
             setTimeout(() => {
                 section.scrollIntoView({
@@ -1619,6 +1870,62 @@
             }, 100);
             
             updatePreviewIfVisible();
+        }
+        
+        function applyFormatting(textInput, format) {
+            const start = textInput.selectionStart;
+            const end = textInput.selectionEnd;
+            const selectedText = textInput.value.substring(start, end);
+            const beforeText = textInput.value.substring(0, start);
+            const afterText = textInput.value.substring(end);
+            
+            let formattedText = '';
+            
+            switch(format) {
+                case 'bold':
+                    formattedText = selectedText ? `<strong>${selectedText}</strong>` : '<strong></strong>';
+                    break;
+                case 'italic':
+                    formattedText = selectedText ? `<em>${selectedText}</em>` : '<em></em>';
+                    break;
+                case 'underline':
+                    formattedText = selectedText ? `<u>${selectedText}</u>` : '<u></u>';
+                    break;
+                case 'link':
+                    const url = prompt('Enter URL:');
+                    if (url) {
+                        formattedText = selectedText ? `<a href="${url}">${selectedText}</a>` : `<a href="${url}">Link text</a>`;
+                    } else {
+                        return;
+                    }
+                    break;
+                case 'list':
+                    if (selectedText) {
+                        // Split by lines and create list items
+                        const lines = selectedText.split('\n').filter(line => line.trim());
+                        if (lines.length > 1) {
+                            // Multiple lines - create a list with multiple items
+                            const listItems = lines.map(line => `<li>${line.trim()}</li>`);
+                            formattedText = `<ul>\n${listItems.join('\n')}\n</ul>`;
+                        } else {
+                            // Single line or single item
+                            formattedText = `<ul>\n<li>${selectedText.trim()}</li>\n</ul>`;
+                        }
+                    } else {
+                        // No selection - create an empty list item with placeholder
+                        formattedText = '<ul>\n<li>List item 1</li>\n<li>List item 2</li>\n</ul>';
+                    }
+                    break;
+                default:
+                    return;
+            }
+            
+            textInput.value = beforeText + formattedText + afterText;
+            
+            // Set cursor position after the inserted text
+            const newCursorPos = start + formattedText.length;
+            textInput.setSelectionRange(newCursorPos, newCursorPos);
+            textInput.focus();
         }
         
         function updatePreviewIfVisible() {
@@ -1639,6 +1946,24 @@
                 switch(type) {
                     case 'text':
                         sectionData.content = section.querySelector(`[name="dynamic_text_${sectionId}"]`).value;
+                        break;
+                    case 'h1':
+                        sectionData.content = section.querySelector(`[name="dynamic_h1_${sectionId}"]`).value;
+                        break;
+                    case 'h2':
+                        sectionData.content = section.querySelector(`[name="dynamic_h2_${sectionId}"]`).value;
+                        break;
+                    case 'h3':
+                        sectionData.content = section.querySelector(`[name="dynamic_h3_${sectionId}"]`).value;
+                        break;
+                    case 'h4':
+                        sectionData.content = section.querySelector(`[name="dynamic_h4_${sectionId}"]`).value;
+                        break;
+                    case 'h5':
+                        sectionData.content = section.querySelector(`[name="dynamic_h5_${sectionId}"]`).value;
+                        break;
+                    case 'h6':
+                        sectionData.content = section.querySelector(`[name="dynamic_h6_${sectionId}"]`).value;
                         break;
                     case 'header':
                         sectionData.content = section.querySelector(`[name="dynamic_header_${sectionId}"]`).value;
@@ -2114,9 +2439,12 @@
             
            
             document.getElementById('addTextBtn').addEventListener('click', () => addDynamicSection('text'));
-            document.getElementById('addHeaderBtn').addEventListener('click', () => addDynamicSection('header'));
-            document.getElementById('addSubHeaderBtn').addEventListener('click', () => addDynamicSection('subheader'));
-            document.getElementById('addSubHeaderTextBtn').addEventListener('click', () => addDynamicSection('subheader-text'));
+            document.getElementById('addH1Btn').addEventListener('click', () => addDynamicSection('h1'));
+            document.getElementById('addH2Btn').addEventListener('click', () => addDynamicSection('h2'));
+            document.getElementById('addH3Btn').addEventListener('click', () => addDynamicSection('h3'));
+            document.getElementById('addH4Btn').addEventListener('click', () => addDynamicSection('h4'));
+            document.getElementById('addH5Btn').addEventListener('click', () => addDynamicSection('h5'));
+            document.getElementById('addH6Btn').addEventListener('click', () => addDynamicSection('h6'));
             document.getElementById('addImageBtn').addEventListener('click', () => addDynamicSection('image'));
             
             // Search functionality for Edit/Delete section
