@@ -339,7 +339,36 @@ def get_blog_html(demo_json_data):
     for check in checks:
         if check not in demo_json_data:
             raise ValueError(f"Missing required field: {check} in demo_json_data")
-    base_blog = BLOGS_TEMPLATE.replace('[[main_page_image]]', demo_json_data['mainImageUrl'])
+    
+    # Generate SEO meta tags
+    seo_title = demo_json_data.get('seoTitle', '') or demo_json_data['blogTitle']
+    seo_description = demo_json_data.get('seoMetaDescription', '') or demo_json_data['blogSummary']
+    seo_canonical = demo_json_data.get('seoCanonicalUrl', '') or f"{demo_json_data.get('base_url', '')}/blog/{demo_json_data.get('blogTitle', '').replace(' ', '_').lower()}"
+    
+    # Create meta tags HTML
+    meta_tags = f'''<title>{seo_title}</title>
+    <meta name="description" content="{seo_description}">
+    <meta property="og:title" content="{seo_title}">
+    <meta property="og:description" content="{seo_description}">
+    <meta property="og:image" content="{demo_json_data['mainImageUrl']}">
+    <meta property="og:url" content="{seo_canonical}">
+    <meta property="og:type" content="article">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{seo_title}">
+    <meta name="twitter:description" content="{seo_description}">
+    <meta name="twitter:image" content="{demo_json_data['mainImageUrl']}">
+    <link rel="canonical" href="{seo_canonical}">'''
+    
+    base_blog = BLOGS_TEMPLATE.replace('[[seo_meta_tags]]', meta_tags)
+    
+    # Add breadcrumb data
+    blog_category = demo_json_data.get('blogCategory', 'Uncategorized')
+    # Sub-category commented out as requested
+    # blog_sub_category = demo_json_data.get('blogSubCategory', 'General')
+    base_blog = base_blog.replace('[[blog_category]]', blog_category)
+    # base_blog = base_blog.replace('[[blog_sub_category]]', blog_sub_category)
+    
+    base_blog = base_blog.replace('[[main_page_image]]', demo_json_data['mainImageUrl'])
     base_blog = base_blog.replace('[[main_page_image_alt]]', demo_json_data['mainImageAlt'])
     base_blog = base_blog.replace('[[main_page_title]]', demo_json_data['blogTitle'])
     base_blog = base_blog.replace('[[author_name]]', demo_json_data['blogAuthor'])

@@ -103,7 +103,7 @@ def admin_save_blog():
 
     minimum_required_keys = [
         "mainImageUrl", "mainImageAlt", "blogTitle", "blogAuthor",
-        "blogDate", "blogSummary", "dynamicSections"
+        "blogDate", "blogSummary", "dynamicSections", "blogCategory"  # "blogSubCategory" commented out
     ]
 
     error_identifiers = {
@@ -113,8 +113,15 @@ def admin_save_blog():
         "blogAuthor": "Blog Author",
         "blogDate": "Blog Date",
         "blogSummary": "Blog Summary",
-        "dynamicSections": "Dynamic Sections"
+        "dynamicSections": "Dynamic Sections",
+        "blogCategory": "Category"
+        # "blogSubCategory": "Sub-Category"  # commented out
     }
+
+    # Optional fields that will be stored if provided
+    optional_fields = [
+        "seoTitle", "seoMetaDescription", "seoCanonicalUrl"  # "blogSubCategory" moved here if needed
+    ]
 
     for i in minimum_required_keys:
         if isinstance(data.get(i), str):
