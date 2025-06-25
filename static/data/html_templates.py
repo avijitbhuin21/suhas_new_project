@@ -4,7 +4,7 @@ BLOGS_TEMPLATE = r"""
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>News Page Dev</title>
+    [[seo_meta_tags]]
     <link rel="icon" type="image/png" href="/static/icon/website_icon.png" />
     
     <script src="https://cdn.tailwindcss.com"></script>
@@ -377,6 +377,20 @@ BLOGS_TEMPLATE = r"""
             </div>
 
             <div class="relative bg-white md:w-full w-[420px] md:ml-[6.85rem] ml-[-1.5rem] max-w-[1175px] h-auto mx-auto -mt-[40px] sm:-mt-[60px] md:-mt-[76px] p-4 sm:p-6 md:p-8 z-10">
+                <!-- Breadcrumbs -->
+                <nav class="mb-4 text-center" aria-label="Breadcrumb">
+                    <div class="flex items-center justify-center text-sm text-gray-600">
+                        <span class="font-jakarta font-medium">[[blog_category]]</span>
+                        <!-- Sub-category commented out as requested -->
+                        <!--
+                        <svg class="mx-2 w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="font-jakarta font-medium">[[blog_sub_category]]</span>
+                        -->
+                    </div>
+                </nav>
+                
                 <h1 class="font-jakarta font-medium text-[28px] sm:text-[34px] md:text-[42px] lg:text-[50px] leading-[1.2] md:leading-[1.25] capitalize text-black mb-3 md:mb-4 text-center hero-text">
                     [[main_page_title]]
                 </h1>
