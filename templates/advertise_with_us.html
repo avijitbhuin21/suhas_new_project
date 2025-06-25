@@ -149,109 +149,144 @@
 </head>
 <body class="bg-white font-jakarta text-base">
   <!-- Header -->
-  <header class="w-full bg-black relative">
-      <!-- Desktop Header -->
-      <div class="hidden lg:flex flex-row justify-center items-center px-6 md:px-20 py-[10px] gap-4 md:gap-[70px] h-[113px]">
-          <img src="static/images/header_logo.png" alt="Brands Out Loud Logo" class="w-16 md:w-20 h-16 md:h-20 flex-shrink-0">
-          <nav class="flex flex-col items-stretch w-full md:w-[700px] h-[93px] py-2 md:py-[14px] px-2 md:px-[18px] gap-[10px]">
-              <div class="flex flex-row justify-end items-center w-full gap-4 md:gap-[60px] px-2 md:px-[30px]">
-                  <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Careers</a>
-                  <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Podcast</a>
-                  <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Register</a>
-                  <a href="#" class="bg-[#CDA7FF] rounded-[2px] px-2.5 py-0.5 text-[#0D0D0D] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Login</a>
-              </div>
-              <div class="w-full h-[1px] bg-gradient-to-r from-black to-[#9747FF]"></div>
-              <div class="flex flex-row justify-end items-center w-full gap-3 md:gap-[60px] px-2">
-                  <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Newsletters</a>
-                  <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Magazine</a>
-                  <!-- <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Entrepreneurship</a> -->
-                  <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Startups</a>
-                  <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Business</a>
-              </div>
-          </nav>
-      </div>
+            <header class="w-full bg-black relative">
+        <!-- Desktop Header -->
+        <div class="hidden lg:flex flex-row justify-center items-center px-20 py-[10px] gap-[70px] h-[113px]">
+            <img src="static/images/header_logo.png" alt="Brands Out Loud Logo" class="w-20 h-20 flex-shrink-0">
+            <nav class="flex flex-col items-stretch w-[700px] h-[93px] py-[14px] px-[18px] gap-[10px]">
+                <div class="flex flex-row justify-end items-center w-full gap-[60px] px-[30px]">
+                    <!-- <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Careers </a>
+                    <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Podcast </a> -->
+                    <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Magazine </a>
+                    <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Newsletters </a>
+                    <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Register </a>
+                    <a href="#" class="bg-[#CDA7FF] rounded-[2px] px-2.5 py-0.5 text-[#0D0D0D] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Login </a>
+                </div>
+                <div class="w-full h-[1px] bg-gradient-to-r from-black to-[#9747FF]"></div>
+                <div class="flex flex-row justify-end items-center w-full gap-[60px] px-2">
+                    <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Business </a>
+                    <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Technology </a>
+                    <!-- <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Entrepreneurship </a> -->
+                    <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">GCC </a>
+                    <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Sustainability </a>
+                    <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Semiconductor </a>
+                </div>
+            </nav>
+        </div>
 
-      <!-- Mobile Header -->
-      <div class="flex lg:hidden items-center h-[68px] w-full bg-[#0D0D0D]">
-          <button id="mobile-menu-button" aria-label="Toggle Menu" class="h-full px-4 flex flex-col justify-center items-center space-y-[5px] bg-transparent focus:outline-none transition-colors duration-200 ease-in-out">
-              <span class="hamburger-line block w-6 h-[2px] bg-white rounded-full"></span>
-              <span class="hamburger-line block w-6 h-[2px] bg-white rounded-full"></span>
-              <span class="hamburger-line block w-6 h-[2px] bg-white rounded-full"></span>
-          </button>
+        <!-- Mobile Header -->
+        <div class="flex lg:hidden items-center h-[68px] w-full bg-[#0D0D0D]">
+            <button id="mobile-menu-button" aria-label="Toggle Menu" class="h-full px-4 flex flex-col justify-center items-center space-y-[5px] bg-transparent focus:outline-none transition-colors duration-200 ease-in-out">
+                <span class="hamburger-line block w-6 h-[2px] bg-white rounded-full"></span>
+                <span class="hamburger-line block w-6 h-[2px] bg-white rounded-full"></span>
+                <span class="hamburger-line block w-6 h-[2px] bg-white rounded-full"></span>
+            </button>
+            
+            <div class="h-full flex items-center px-3 flex-shrink-0">
+                <img src="static/icon/website_icon.png" alt="Brands Out Loud Logo" class="h-10 w-auto">
+            </div>
+            
+            <div class="flex-grow px-3">
+                <div class="relative">
+                    <input type="text" placeholder="Search..." class="search-input w-full bg-[#1e1e1e] text-white text-sm rounded-full pl-10 pr-4 py-2.5 border border-[#2a2a2a] focus:outline-none focus:border-[#9747FF] transition-all">
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
+                        <i class="ph ph-magnifying-glass text-gray-400 text-lg"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Login button removed from here -->
+        </div>
 
-          <div class="h-full flex items-center px-3 flex-shrink-0">
-              <img src="static/icon/website_icon.png" alt="Brands Out Loud Logo" class="h-10 w-auto">
-          </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden lg:hidden absolute top-[68px] left-0 w-full bg-[#121212] z-50 shadow-lg border-t border-[#2a2a2a] overflow-hidden">
+            <div class="">
+                <!-- Login button -->
+                <div class="px-4 py-3">
+                    <a href="#" class="login-btn block w-full text-center bg-gradient-to-r from-[#9747FF] to-[#CDA7FF] rounded-full px-4 py-2.5 text-white font-medium text-sm shadow-lg hover:-translate-y-0.5 transition-all duration-300 relative overflow-hidden">
+                        <span class="relative z-10 flex items-center justify-center gap-2">
+                            <i class="ph ph-sign-in text-lg"></i>
+                            <span>Login</span>
+                        </span>
+                        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full animate-[shine_2s_infinite]"></div>
+                    </a>
+                </div>
 
-          <div class="flex-grow px-3">
-              <div class="relative">
-                  <input type="text" placeholder="Search..." class="w-full bg-[#1e1e1e] text-white text-sm rounded-full pl-10 pr-4 py-2.5 border border-[#2a2a2a] focus:outline-none focus:border-[#9747FF] transition-all">
-                  <div class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
-                      <i class="ph ph-magnifying-glass text-gray-400 text-lg"></i>
-                  </div>
-              </div>
-          </div>
-      </div>
+                <div class="mobile-menu-item">
+                    <i class="ph ph-book-open text-white text-lg"></i>
+                    <span class="item-title">Magazine</span>
+                    <i class="ph ph-caret-right"></i>
+                </div>
 
-      <!-- Mobile Menu -->
-      <div id="mobile-menu" class="hidden lg:hidden absolute top-[68px] left-0 w-full bg-[#121212] z-50 shadow-lg border-t border-[#2a2a2a] overflow-hidden">
-          <div>
-              <!-- Login button -->
-              <div class="px-4 py-3">
-                  <a href="#" class="login-btn block w-full text-center bg-gradient-to-r from-[#9747FF] to-[#CDA7FF] rounded-full px-4 py-2.5 text-white font-medium text-sm shadow-lg hover:-translate-y-0.5 transition-all duration-300 relative overflow-hidden">
-                      <span class="relative z-10 flex items-center justify-center gap-2">
-                          <i class="ph ph-sign-in text-lg"></i>
-                          <span>Login</span>
-                      </span>
-                      <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full animate-shine"></div>
-                  </a>
-              </div>
+                <!-- <div class="mobile-menu-item">
+                    <i class="ph ph-rocket text-white text-lg"></i>
+                    <span class="item-title">Entrepreneurship</span>
+                    <i class="ph ph-caret-right"></i>
+                </div> -->
 
-              <div class="p-4 bg-[#121212] border-b border-[#2a2a2a] flex items-center">
-                  <i class="ph ph-book-open text-white text-lg"></i>
-                  <span class="ml-3 text-white font-medium">Magazine</span>
-                  <i class="ph ph-caret-right text-white ml-auto"></i>
-              </div>
+                <!-- <div class="mobile-menu-item">
+                    <i class="ph ph-lightning text-white text-lg"></i>
+                    <span class="item-title">Startups</span>
+                    <i class="ph ph-caret-right"></i>
+                </div> -->
 
-              <div class="p-4 bg-[#121212] border-b border-[#2a2a2a] flex items-center">
-                  <i class="ph ph-lightning text-white text-lg"></i>
-                  <span class="ml-3 text-white font-medium">Startups</span>
-                  <i class="ph ph-caret-right text-white ml-auto"></i>
-              </div>
+                <div class="mobile-menu-item">
+                    <i class="ph ph-envelope-open text-white text-lg"></i>
+                    <span class="item-title">Newsletters</span>
+                    <i class="ph ph-caret-right"></i>
+                </div>
 
-              <!-- <div class="p-4 bg-[#121212] border-b border-[#2a2a2a] flex items-center">
-                  <i class="ph ph-rocket text-white text-lg"></i>
-                  <span class="ml-3 text-white font-medium">Entrepreneurship</span>
-                  <i class="ph ph-caret-right text-white ml-auto"></i>
-              </div> -->
+                <!-- <div class="mobile-menu-item">
+                    <i class="ph ph-newspaper text-white text-lg"></i>
+                    <span class="item-title">Podcast</span>
+                    <i class="ph ph-caret-right"></i>
+                </div> -->                <div class="mobile-menu-item">
+                    <i class="ph ph-buildings text-white text-lg"></i>
+                    <span class="item-title">Business</span>
+                    <i class="ph ph-caret-right"></i>
+                </div>
 
-              <div class="p-4 bg-[#121212] border-b border-[#2a2a2a] flex items-center">
-                  <i class="ph ph-envelope-open text-white text-lg"></i>
-                  <span class="ml-3 text-white font-medium">Newsletters</span>
-                  <i class="ph ph-caret-right text-white ml-auto"></i>
-              </div>
+                <div class="mobile-menu-item">
+                    <i class="ph ph-gear text-white text-lg"></i>
+                    <span class="item-title">Technology</span>
+                    <i class="ph ph-caret-right"></i>
+                </div>
 
-              <div class="p-4 bg-[#121212] border-b border-[#2a2a2a] flex items-center">
-                  <i class="ph ph-newspaper text-white text-lg"></i>
-                  <span class="ml-3 text-white font-medium">Podcast</span>
-                  <i class="ph ph-caret-right text-white ml-auto"></i>
-              </div>
+                <!-- <div class="mobile-menu-item">
+                    <i class="ph ph-rocket text-white text-lg"></i>
+                    <span class="item-title">Entrepreneurship</span>
+                    <i class="ph ph-caret-right"></i>
+                </div> -->
 
-              <div class="p-4 bg-[#121212] border-b border-[#2a2a2a] flex items-center">
-                  <i class="ph ph-buildings text-white text-lg"></i>
-                  <span class="ml-3 text-white font-medium">Business</span>
-                  <i class="ph ph-caret-right text-white ml-auto"></i>
-              </div>
+                <div class="mobile-menu-item">
+                    <i class="ph ph-globe text-white text-lg"></i>
+                    <span class="item-title">GCC</span>
+                    <i class="ph ph-caret-right"></i>
+                </div>
 
-              <div class="p-4 bg-[#121212] border-b border-[#2a2a2a] flex items-center">
-                  <i class="ph ph-briefcase text-white text-lg"></i>
-                  <span class="ml-3 text-white font-medium">Careers</span>
-                  <i class="ph ph-caret-right text-white ml-auto"></i>
-              </div>
-          </div>
-      </div>
-  </header>
+                <div class="mobile-menu-item">
+                    <i class="ph ph-leaf text-white text-lg"></i>
+                    <span class="item-title">Sustainability</span>
+                    <i class="ph ph-caret-right"></i>
+                </div>
 
+                <div class="mobile-menu-item">
+                    <i class="ph ph-cpu text-white text-lg"></i>
+                    <span class="item-title">Semiconductor</span>
+                    <i class="ph ph-caret-right"></i>
+                </div>
+
+                <!-- <div class="mobile-menu-item">
+                    <i class="ph ph-briefcase text-white text-lg"></i>
+                    <span class="item-title">Careers</span>
+                    <i class="ph ph-caret-right"></i>
+                </div> -->
+                
+            </div>
+                
+        </div>
+    </header>
+    
   <!-- Hero Section -->
   <section class="bg-gradient-primary relative">
     <div class="w-full flex flex-col lg:flex-row">

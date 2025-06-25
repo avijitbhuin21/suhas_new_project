@@ -737,9 +737,9 @@
                         
                         <div class="form-row">
                             <div class="form-item">
-                                <label class="form-label" for="blogCategory">
+                                <!-- <label class="form-label" for="blogCategory">
                                     <i data-lucide="folder" class="w-4 h-4 inline mr-2"></i>Category <span class="text-red-400">*</span>
-                                </label>
+                                </label> -->
                                 <input
                                     type="text"
                                     id="blogCategory"
@@ -1045,12 +1045,16 @@
                                 Preview
                             </button>
                             <button type="button" id="deleteBlogBtn" class="form-button bg-red-600 hover:bg-red-700 text-white">
-                                <i data-lucide="trash-2" class="w-4 h-4 mr-2"></i>
-                                Delete
+                                <div class="flex items-center gap-2">
+                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                    <p>Delete</p>
+                                </div>
                             </button>
-                            <button type="button" id="updateBlogBtn" class="form-button bg-green-600 hover:bg-green-700 text-white">
-                                <i data-lucide="save" class="w-4 h-4 mr-2"></i>
-                                Update
+                            <button type="button" id="updateBlogBtn" class="form-button bg-white/10 hover:bg-white/20 border border-white/20 text-white">
+                                <div class="flex items-center gap-2">
+                                    <i data-lucide="save" class="w-4 h-4"></i>
+                                    <p>Update</p>
+                                </div>
                             </button>
                         </div>
                     </div>
@@ -1101,16 +1105,20 @@
 
                     <!-- Pagination Controls -->
                     <div id="paginationControls" class="flex justify-center items-center gap-4 mt-6 hidden">
-                        <button id="prevPage" class="form-button bg-gray-600 hover:bg-gray-700 text-xs px-3 py-2 disabled:opacity-50 disabled:cursor-not-allowed">
-                            <i data-lucide="chevron-left" class="w-3 h-3 mr-1"></i>
-                            Previous
+                        <button id="prevPage" class="form-button bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs px-3 py-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                            <div class="flex items-center gap-2">
+                                <i data-lucide="chevron-left" class="w-3 h-3"></i>
+                                <p>Previous</p>
+                            </div>
                         </button>
                         <span id="pageInfo" class="text-sm text-white/60 px-4">
                             Page 1 of 1
                         </span>
-                        <button id="nextPage" class="form-button bg-gray-600 hover:bg-gray-700 text-xs px-3 py-2 disabled:opacity-50 disabled:cursor-not-allowed">
-                            Next
-                            <i data-lucide="chevron-right" class="w-3 h-3 ml-1"></i>
+                        <button id="nextPage" class="form-button bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs px-3 py-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                            <div class="flex items-center gap-2">
+                                <p>Next</p>
+                                <i data-lucide="chevron-right" class="w-3 h-3"></i>
+                            </div>
                         </button>
                     </div>
                 </div>
@@ -1246,11 +1254,15 @@
                 </div>
                 <div class="flex justify-end gap-3 mt-6">
                     <button type="button" class="modal-button modal-button-secondary" onclick="closeLinkModal()">
-                        Cancel
+                        <div class="flex items-center gap-2">
+                            <p>Cancel</p>
+                        </div>
                     </button>
                     <button type="button" class="modal-button modal-button-primary" onclick="insertLink()">
-                        <i data-lucide="plus" class="w-4 h-4 mr-2"></i>
-                        Add Link
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="plus" class="w-4 h-4"></i>
+                            <p>Add Link</p>
+                        </div>
                     </button>
                 </div>
             </div>
@@ -1295,11 +1307,15 @@
                 </div>
                 <div class="flex justify-end gap-3 mt-6">
                     <button type="button" class="modal-button modal-button-secondary" onclick="closeBulletModal()">
-                        Cancel
+                        <div class="flex items-center gap-2">
+                            <p>Cancel</p>
+                        </div>
                     </button>
                     <button type="button" class="modal-button modal-button-primary" onclick="insertBulletList()">
-                        <i data-lucide="list" class="w-4 h-4 mr-2"></i>
-                        Add Bullet List
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="list" class="w-4 h-4"></i>
+                            <p>Add Bullet List</p>
+                        </div>
                     </button>
                 </div>
             </div>
@@ -1356,11 +1372,15 @@
                 
                 <div class="flex justify-end gap-3 mt-6">
                     <button type="button" class="modal-button modal-button-secondary" onclick="closeDeleteConfirmModal()">
-                        Cancel
+                        <div class="flex items-center gap-2">
+                            <p>Cancel</p>
+                        </div>
                     </button>
                     <button type="button" id="confirmDeleteBtn" class="modal-button bg-red-600 hover:bg-red-700 text-white" onclick="confirmDeleteBlog()" disabled>
-                        <i data-lucide="trash-2" class="w-4 h-4 mr-2"></i>
-                        Delete Blog
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="trash-2" class="w-4 h-4"></i>
+                            <p>Delete Blog</p>
+                        </div>
                     </button>
                 </div>
             </div>
@@ -1399,11 +1419,13 @@
                             <button
                                 type="button"
                                 id="copyUrlBtn"
-                                class="form-button bg-blue-600 hover:bg-blue-700 text-white px-3 py-2"
+                                class="form-button bg-white/10 hover:bg-white/20 border border-white/20 text-white px-3 py-2"
                                 onclick="copyBlogUrl()"
                                 title="Copy URL to clipboard"
                             >
-                                <i data-lucide="copy" class="w-4 h-4"></i>
+                                <div class="flex items-center gap-2">
+                                    <i data-lucide="copy" class="w-4 h-4"></i>
+                                </div>
                             </button>
                         </div>
                         <p class="text-xs text-white/50 mt-1">
@@ -1414,11 +1436,15 @@
                 
                 <div class="flex justify-end gap-3 mt-6">
                     <button type="button" class="modal-button modal-button-secondary" onclick="closeBlogUrlModal()">
-                        Close
+                        <div class="flex items-center gap-2">
+                            <p>Close</p>
+                        </div>
                     </button>
                     <button type="button" id="openBlogBtn" class="modal-button modal-button-primary" onclick="openBlogInNewTab()">
-                        <i data-lucide="external-link" class="w-4 h-4 mr-2"></i>
-                        Open Blog
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="external-link" class="w-4 h-4"></i>
+                            <p>Open Blog</p>
+                        </div>
                     </button>
                 </div>
             </div>
@@ -2895,17 +2921,23 @@
                             ` : ''}
                         </div>
                         <div class="flex gap-2 flex-wrap">
-                            <button class="form-button text-xs px-4 py-2 min-w-[70px] bg-white/10 hover:bg-white/20 border border-white/20 text-white inline-flex items-center justify-center whitespace-nowrap" onclick="editBlog('${blog.id.replace("'","[quotetation_here]")}')">
-                                <i data-lucide="edit" class="w-3 h-3 mr-1.5 flex-shrink-0"></i>
-                                <span>Edit</span>
+                            <button class="form-button text-xs px-4 py-2 min-w-[70px] bg-white/10 hover:bg-white/20 border border-white/20 text-white" onclick="editBlog('${blog.id.replace("'","[quotetation_here]")}')">
+                                <div class="flex items-center gap-2">
+                                    <i data-lucide="edit" class="w-3 h-3"></i>
+                                    <p>Edit</p>
+                                </div>
                             </button>
-                            <button class="form-button text-xs px-4 py-2 min-w-[60px] bg-blue-600/20 hover:bg-blue-600/30 border border-blue-600/30 text-blue-400 inline-flex items-center justify-center whitespace-nowrap" onclick="showBlogUrl('${blog.id.replace("'","[quotetation_here]")}', '${title.replace("'", "[quotetation_here]")}')">
-                                <i data-lucide="external-link" class="w-3 h-3 mr-1.5 flex-shrink-0"></i>
-                                <span>URL</span>
+                            <button class="form-button text-xs px-4 py-2 min-w-[60px] bg-white/10 hover:bg-white/20 border border-white/20 text-white" onclick="showBlogUrl('${blog.id.replace("'","[quotetation_here]")}', '${title.replace("'", "[quotetation_here]")}')">
+                                <div class="flex items-center gap-2">
+                                    <i data-lucide="external-link" class="w-3 h-3"></i>
+                                    <p>URL</p>
+                                </div>
                             </button>
-                            <button class="form-button text-xs px-4 py-2 min-w-[75px] bg-white/10 hover:bg-white/20 border border-white/20 text-white inline-flex items-center justify-center whitespace-nowrap" onclick="deleteBlog('${blog.id.replace("'","[quotetation_here]")}', '${title.replace("'", "[quotetation_here]")}')">
-                                <i data-lucide="trash-2" class="w-3 h-3 mr-1.5 flex-shrink-0"></i>
-                                <span>Delete</span>
+                            <button class="form-button text-xs px-4 py-2 min-w-[75px] bg-red-600 hover:bg-red-700 text-white" onclick="deleteBlog('${blog.id.replace("'","[quotetation_here]")}', '${title.replace("'", "[quotetation_here]")}')">
+                                <div class="flex items-center gap-2">
+                                    <i data-lucide="trash-2" class="w-3 h-3"></i>
+                                    <p>Delete</p>
+                                </div>
                             </button>
                         </div>
                     </div>
