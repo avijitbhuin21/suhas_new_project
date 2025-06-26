@@ -6,64 +6,12 @@ BLOGS_TEMPLATE = r"""
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     [[seo_meta_tags]]
     <link rel="icon" type="image/png" href="/static/icon/website_icon.png" />
-    
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=typography,line-clamp"></script>
     <script src="https://unpkg.com/@phosphor-icons/web@2.0.3"></script>
-    
-    <link
-    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-    rel="stylesheet"
-    />
-    <link
-    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@600&family=Inter:wght@500&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,700&display=swap"
-    rel="stylesheet"
-    />
-    
-    <script>
-    /* Define custom fonts in Tailwind (optional, better in tailwind.config.js) */
-    tailwind.config = {
-        theme: {
-        extend: {
-            fontFamily: {
-            jakarta: ['"Plus Jakarta Sans"', "sans-serif"],
-            "helvetica-now": ['"Helvetica Now Display"', "sans-serif"],
-            helvetica: ['"Helvetica"', "sans-serif"],
-            "ibm-plex": ['"IBM Plex Sans"', "sans-serif"],
-            inter: ['"Inter"', "sans-serif"],
-            },
-            backgroundImage: {
-            "header-banner":
-                "url('digital-marketing-agency-website-banner-ad-template-lzytv.png')",
-            "hero-gradient":
-                "linear-gradient(0deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6))", // Placeholder image used for gradient bg
-            "podcast-bg":
-                "linear-gradient(360deg, rgba(255, 255, 255, 0) 74.02%, #FFFFFF 100%), linear-gradient(180deg, rgba(255, 255, 255, 0) 61.61%, #FFFFFF 100%), url('Your paragraph text (8).png')",
-            "cta-bg":
-                "linear-gradient(0deg, rgba(0, 0, 0, 0.69), rgba(0, 0, 0, 0.69)), url('Screenshot 2024-09-18 at 9.57.41\u202FPM.png')",
-            "gradient-line":
-                "linear-gradient(90deg, #000000 0%, #9747FF 100%)",
-            },
-        },
-        },
-    };
-    </script>
-    <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const mobileMenuButton = document.getElementById("mobile-menu-button");
-        const mobileMenu = document.getElementById("mobile-menu");
-
-        mobileMenuButton.addEventListener("click", function () {
-        mobileMenu.classList.toggle("hidden");
-        mobileMenuButton.classList.toggle("hamburger-active");
-
-        if (!mobileMenu.classList.contains("hidden")) {
-            mobileMenu.classList.add("slide-down");
-        } else {
-            mobileMenu.classList.remove("slide-down");
-        }
-        });
-    });
-    </script>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=IBM+Plex+Sans:wght@600&family=Inter:wght@500&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&family=Roboto:wght@500&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="icon" type="image/png" href="static/icon/website_icon.png">
     <style>
     @media screen and (max-width: 768px) {
         .hero-text {
@@ -271,104 +219,593 @@ BLOGS_TEMPLATE = r"""
         }
     }
     </style>
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const mobileMenuButton = document.getElementById("mobile-menu-button");
+        const mobileMenu = document.getElementById("mobile-menu");
+
+        mobileMenuButton.addEventListener("click", function () {
+        mobileMenu.classList.toggle("hidden");
+        mobileMenuButton.classList.toggle("hamburger-active");
+
+        if (!mobileMenu.classList.contains("hidden")) {
+            mobileMenu.classList.add("slide-down");
+        } else {
+            mobileMenu.classList.remove("slide-down");
+        }
+        });
+    });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+                mobileMenuButton.classList.toggle('hamburger-active');
+                
+                if (!mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('slide-down');
+                } else {
+                    mobileMenu.classList.remove('slide-down');
+                }
+            });
+
+            // Function to fetch blogs from backend (placeholder)
+            async function fetchCategoryBlogs(category) {
+                try {
+                    // Replace with actual API endpoint
+                    // const response = await fetch(`/api/blogs/${category}`);
+                    // const blogs = await response.json();
+                    
+                    // Placeholder data structure for now
+                    const placeholderBlogs = {
+                        business: [
+                            { id: 1, title: 'Market Analysis Report Shows Strong Growth', image: 'https://picsum.photos/seed/biz1/60/60' },
+                            { id: 2, title: 'Corporate Strategy Insights for Modern Business', image: 'https://picsum.photos/seed/biz2/60/60' },
+                            { id: 3, title: 'Financial Trends Update and Market Outlook', image: 'https://picsum.photos/seed/biz3/60/60' }
+                        ],
+                        technology: [
+                            { id: 1, title: 'AI Breakthroughs Transform Industries', image: 'https://picsum.photos/seed/tech1/60/60' },
+                            { id: 2, title: 'Cloud Computing Trends and Future Outlook', image: 'https://picsum.photos/seed/tech2/60/60' },
+                            { id: 3, title: 'Cybersecurity Updates and Best Practices', image: 'https://picsum.photos/seed/tech3/60/60' }
+                        ],
+                        gcc: [
+                            { id: 1, title: 'UAE Economic Growth Reaches New Heights', image: 'https://picsum.photos/seed/gcc1/60/60' },
+                            { id: 2, title: 'Saudi Vision 2030 Progress Update', image: 'https://picsum.photos/seed/gcc2/60/60' },
+                            { id: 3, title: 'Qatar Innovation Hub Expansion Plans', image: 'https://picsum.photos/seed/gcc3/60/60' }
+                        ],
+                        sustainability: [
+                            { id: 1, title: 'Renewable Energy Progress in 2025', image: 'https://picsum.photos/seed/sus1/60/60' },
+                            { id: 2, title: 'Carbon Neutrality Plans and Implementation', image: 'https://picsum.photos/seed/sus2/60/60' },
+                            { id: 3, title: 'Circular Economy Solutions for Business', image: 'https://picsum.photos/seed/sus3/60/60' }
+                        ],
+                        semiconductor: [
+                            { id: 1, title: 'Advanced Chip Manufacturing Technologies', image: 'https://picsum.photos/seed/semi1/60/60' },
+                            { id: 2, title: 'Supply Chain Recovery and Global Impact', image: 'https://picsum.photos/seed/semi2/60/60' },
+                            { id: 3, title: 'Next-Gen Processors and AI Chips', image: 'https://picsum.photos/seed/semi3/60/60' }
+                        ]
+                    };
+                    
+                    return placeholderBlogs[category] || [];
+                } catch (error) {
+                    console.error('Error fetching blogs:', error);
+                    return [];
+                }
+            }
+
+            // Function to populate dropdown with dynamic content
+            function populateDropdown(container, blogs) {
+                const blogsList = container.querySelector('.space-y-3');
+                const existingBlogs = blogsList.querySelectorAll('.dropdown-item:not(.know-more-item)');
+                
+                // Remove existing blog items (keep Know More)
+                existingBlogs.forEach(item => item.remove());
+                
+                // Add new blog items
+                blogs.forEach((blog, index) => {
+                    const blogElement = document.createElement('div');
+                    blogElement.className = 'dropdown-item flex items-center space-x-3 p-2 rounded-lg cursor-pointer';
+                    blogElement.setAttribute('data-category', container.getAttribute('data-category'));
+                    blogElement.setAttribute('data-id', blog.id);
+                    
+                    blogElement.innerHTML = `
+                        <img src="${blog.image}" alt="${blog.title}" class="w-12 h-12 object-cover rounded">
+                        <div class="flex-1">
+                            <h4 class="text-gray-800 text-xs font-medium line-clamp-2">${blog.title}</h4>
+                        </div>
+                    `;
+                    
+                    // Insert before the "Know More" section
+                    const knowMoreSection = blogsList.querySelector('.border-t');
+                    blogsList.insertBefore(blogElement, knowMoreSection);
+                });
+            }
+
+            // Desktop dropdown functionality
+            const dropdownContainers = document.querySelectorAll('.dropdown-container');
+            dropdownContainers.forEach(container => {
+                const trigger = container.querySelector('a');
+                const category = trigger.textContent.trim().toLowerCase();
+                
+                container.setAttribute('data-category', category);
+                
+                container.addEventListener('mouseenter', async function() {
+                    const blogs = await fetchCategoryBlogs(category);
+                    populateDropdown(this, blogs);
+                });
+            });
+
+            // Blog item click handlers
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.dropdown-item:not(.know-more-item)')) {
+                    const item = e.target.closest('.dropdown-item');
+                    const category = item.getAttribute('data-category');
+                    const blogId = item.getAttribute('data-id');
+                    
+                    console.log('Clicked blog:', { category, blogId });
+                    // Replace with actual navigation
+                    // window.location.href = `/blog/${category}/${blogId}`;
+                }
+            });
+
+            // Know More click handlers
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.know-more-item')) {
+                    const item = e.target.closest('.dropdown-container');
+                    const category = item.getAttribute('data-category');
+                    
+                    console.log('Know More clicked for:', category);
+                    // Replace with actual navigation
+                    // window.location.href = `/category/${category}`;
+                }
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                const dropdowns = document.querySelectorAll('.dropdown-container');
+                dropdowns.forEach(dropdown => {
+                    if (!dropdown.contains(e.target)) {
+                        const content = dropdown.querySelector('.dropdown-content');
+                        if (content) {
+                            content.style.opacity = '0';
+                            content.style.visibility = 'hidden';
+                            content.style.pointerEvents = 'none';
+                        }
+                    }
+                });
+            });
+
+            // Prevent dropdown from closing when clicking inside
+            const dropdownContents = document.querySelectorAll('.dropdown-content');
+            dropdownContents.forEach(content => {
+                content.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                });
+            });
+
+            // Mobile dropdown functionality
+            function createMobileDropdown(category, blogs) {
+                const dropdown = document.createElement('div');
+                dropdown.className = 'mobile-category-dropdown bg-[#1a1a1a] border-t border-[#2a2a2a] overflow-hidden transition-all duration-300 max-h-0';
+                dropdown.style.maxHeight = '0px';
+                
+                let content = '';
+                blogs.forEach(blog => {
+                    content += `
+                        <div class="mobile-dropdown-item flex items-center space-x-3 p-3 border-b border-[#2a2a2a] cursor-pointer hover:bg-[#252525]" data-category="${category}" data-id="${blog.id}">
+                            <img src="${blog.image}" alt="${blog.title}" class="w-10 h-10 object-cover rounded">
+                            <div class="flex-1">
+                                <h4 class="text-white text-xs font-medium line-clamp-2">${blog.title}</h4>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                content += `
+                    <div class="mobile-dropdown-item flex items-center justify-center p-3 bg-[#2a2a2a] cursor-pointer hover:bg-[#353535]" data-category="${category}">
+                        <span class="text-[#C4C3FF] text-xs font-medium mr-1">Know More</span>
+                        <i class="ph ph-arrow-right text-[#C4C3FF] text-xs"></i>
+                    </div>
+                `;
+                
+                dropdown.innerHTML = content;
+                return dropdown;
+            }
+
+            // Add mobile dropdown functionality to existing mobile menu items
+            const mobileMenuItems = document.querySelectorAll('.mobile-menu-item');
+            const categoryItems = ['Business', 'Technology', 'GCC', 'Sustainability', 'Semiconductor'];
+            
+            mobileMenuItems.forEach(item => {
+                const title = item.querySelector('.item-title').textContent;
+                if (categoryItems.includes(title)) {
+                    const category = title.toLowerCase();
+                    let isExpanded = false;
+                    let dropdown = null;
+                    
+                    item.addEventListener('click', async function(e) {
+                        e.preventDefault();
+                        
+                        if (!isExpanded) {
+                            // Close other dropdowns
+                            document.querySelectorAll('.mobile-category-dropdown').forEach(d => {
+                                d.style.maxHeight = '0px';
+                                setTimeout(() => d.remove(), 300);
+                            });
+                            
+                            // Fetch and create dropdown
+                            const blogs = await fetchCategoryBlogs(category);
+                            dropdown = createMobileDropdown(category, blogs);
+                            item.parentNode.insertBefore(dropdown, item.nextSibling);
+                            
+                            // Animate open
+                            setTimeout(() => {
+                                dropdown.style.maxHeight = dropdown.scrollHeight + 'px';
+                            }, 10);
+                            
+                            isExpanded = true;
+                        } else {
+                            // Close dropdown
+                            dropdown.style.maxHeight = '0px';
+                            setTimeout(() => {
+                                dropdown.remove();
+                                dropdown = null;
+                            }, 300);
+                            isExpanded = false;
+                        }
+                    });
+                }
+            });
+
+            // Auto-close mobile dropdowns on scroll
+            let scrollTimeout;
+            window.addEventListener('scroll', function() {
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(() => {
+                    document.querySelectorAll('.mobile-category-dropdown').forEach(dropdown => {
+                        dropdown.style.maxHeight = '0px';
+                        setTimeout(() => dropdown.remove(), 300);
+                    });
+                }, 100);
+            });
+
+            // Mobile dropdown item clicks
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.mobile-dropdown-item')) {
+                    const item = e.target.closest('.mobile-dropdown-item');
+                    const category = item.getAttribute('data-category');
+                    const blogId = item.getAttribute('data-id');
+                    
+                    if (blogId) {
+                        console.log('Mobile blog clicked:', { category, blogId });
+                        // Replace with actual navigation
+                        // window.location.href = `/blog/${category}/${blogId}`;
+                    } else {
+                        console.log('Mobile Know More clicked for:', category);
+                        // Replace with actual navigation
+                        // window.location.href = `/category/${category}`;
+                    }
+                }
+            });
+        });
+    </script>
 </head>
-<body class="font-poppins bg-white text-gray-800">
+<body class="font-jakarta bg-white text-bol-black">
+<div class="flex flex-col items-center w-full max-w-[1440px] mx-auto bg-white overflow-x-hidden relative">
     <header class="w-full bg-black relative">
-    
+        <!-- Desktop Header -->
         <div class="hidden lg:flex flex-row justify-center items-center px-20 py-[10px] gap-[70px] h-[113px]">
-            <img src="/static/images/header_logo.png" alt="Brands Out Loud Logo" class="w-20 h-20 flex-shrink-0">
-            <nav class="flex flex-col items-stretch w-[700px] h-[93px] py-[14px] px-[18px] gap-[10px]">
+            <img src="static/images/header_logo.png" alt="Brands Out Loud Logo" class="w-20 h-20 flex-shrink-0">
+            <nav class="flex flex-col items-stretch w-[700px] h-[93px] py-[14px] px-[18px] gap-[10px] relative">
                 <div class="flex flex-row justify-end items-center w-full gap-[60px] px-[30px]">
-                    <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Careers </a>
-                    <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Podcast </a>
+                    <!-- <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Careers </a>
+                    <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Podcast </a> -->
+                    
+                    <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Magazine </a>
+                    <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Newsletters </a>
                     <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Register </a>
                     <a href="#" class="bg-[#CDA7FF] rounded-[2px] px-2.5 py-0.5 text-[#0D0D0D] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Login </a>
                 </div>
                 <div class="w-full h-[1px] bg-gradient-to-r from-black to-[#9747FF]"></div>
                 <div class="flex flex-row justify-end items-center w-full gap-[60px] px-2">
-                    <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Newsletters </a>
-                    <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Magazine </a>
-                    
-                    <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Startups </a>
-                    <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Business </a>
+                    <!-- Business Dropdown -->
+                    <div class="relative dropdown-container">
+                        <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Business </a>
+                        <div class="dropdown-content absolute top-full left-1/2 transform -translate-x-1/2 mt-2 w-80 bg-white rounded-lg shadow-xl border border-gray-200 opacity-0 invisible transition-all duration-300 z-50">
+                            <div class="p-4">
+                                <h3 class="text-gray-800 font-semibold text-sm mb-3">Latest Business Stories</h3>
+                                <div class="space-y-3">
+                                    <div class="dropdown-item flex items-center space-x-3 p-2 rounded-lg cursor-pointer" data-category="business" data-id="1">
+                                        <img src="https://picsum.photos/seed/biz1/60/60" alt="Business Story 1" class="w-12 h-12 object-cover rounded">
+                                        <div class="flex-1">
+                                            <h4 class="text-gray-800 text-xs font-medium line-clamp-2">Market Analysis Report Shows Strong Growth</h4>
+                                        </div>
+                                    </div>
+                                    <div class="dropdown-item flex items-center space-x-3 p-2 rounded-lg cursor-pointer" data-category="business" data-id="2">
+                                        <img src="https://picsum.photos/seed/biz2/60/60" alt="Business Story 2" class="w-12 h-12 object-cover rounded">
+                                        <div class="flex-1">
+                                            <h4 class="text-gray-800 text-xs font-medium line-clamp-2">Corporate Strategy Insights for Modern Business</h4>
+                                        </div>
+                                    </div>
+                                    <div class="dropdown-item flex items-center space-x-3 p-2 rounded-lg cursor-pointer" data-category="business" data-id="3">
+                                        <img src="https://picsum.photos/seed/biz3/60/60" alt="Business Story 3" class="w-12 h-12 object-cover rounded">
+                                        <div class="flex-1">
+                                            <h4 class="text-gray-800 text-xs font-medium line-clamp-2">Financial Trends Update and Market Outlook</h4>
+                                        </div>
+                                    </div>
+                                    <div class="border-t border-gray-200 pt-3 mt-3">
+                                        <div class="dropdown-item know-more-item flex items-center justify-center p-2 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
+                                            <span class="text-[#3533CD] text-xs font-medium mr-1">Know More</span>
+                                            <i class="ph ph-arrow-right text-[#3533CD] text-xs transition-all duration-200"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Technology Dropdown -->
+                    <div class="relative dropdown-container">
+                        <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Technology </a>
+                        <div class="dropdown-content absolute top-full left-1/2 transform -translate-x-1/2 mt-2 w-80 bg-white rounded-lg shadow-xl border border-gray-200 opacity-0 invisible transition-all duration-300 z-50">
+                            <div class="p-4">
+                                <h3 class="text-gray-800 font-semibold text-sm mb-3">Tech Innovations</h3>
+                                <div class="space-y-3">
+                                    <div class="dropdown-item flex items-center space-x-3 p-2 rounded-lg cursor-pointer" data-category="technology" data-id="1">
+                                        <img src="https://picsum.photos/seed/tech1/60/60" alt="Tech Story 1" class="w-12 h-12 object-cover rounded">
+                                        <div class="flex-1">
+                                            <h4 class="text-gray-800 text-xs font-medium line-clamp-2">AI Breakthroughs Transform Industries</h4>
+                                        </div>
+                                    </div>
+                                    <div class="dropdown-item flex items-center space-x-3 p-2 rounded-lg cursor-pointer" data-category="technology" data-id="2">
+                                        <img src="https://picsum.photos/seed/tech2/60/60" alt="Tech Story 2" class="w-12 h-12 object-cover rounded">
+                                        <div class="flex-1">
+                                            <h4 class="text-gray-800 text-xs font-medium line-clamp-2">Cloud Computing Trends and Future Outlook</h4>
+                                        </div>
+                                    </div>
+                                    <div class="dropdown-item flex items-center space-x-3 p-2 rounded-lg cursor-pointer" data-category="technology" data-id="3">
+                                        <img src="https://picsum.photos/seed/tech3/60/60" alt="Tech Story 3" class="w-12 h-12 object-cover rounded">
+                                        <div class="flex-1">
+                                            <h4 class="text-gray-800 text-xs font-medium line-clamp-2">Cybersecurity Updates and Best Practices</h4>
+                                        </div>
+                                    </div>
+                                    <div class="border-t border-gray-200 pt-3 mt-3">
+                                        <div class="dropdown-item know-more-item flex items-center justify-center p-2 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
+                                            <span class="text-[#3533CD] text-xs font-medium mr-1">Know More</span>
+                                            <i class="ph ph-arrow-right text-[#3533CD] text-xs transition-all duration-200"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- GCC Dropdown -->
+                    <div class="relative dropdown-container">
+                        <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">GCC </a>
+                        <div class="dropdown-content absolute top-full left-1/2 transform -translate-x-1/2 mt-2 w-80 bg-white rounded-lg shadow-xl border border-gray-200 opacity-0 invisible transition-all duration-300 z-50">
+                            <div class="p-4">
+                                <h3 class="text-gray-800 font-semibold text-sm mb-3">GCC Regional News</h3>
+                                <div class="space-y-3">
+                                    <div class="dropdown-item flex items-center space-x-3 p-2 rounded-lg cursor-pointer" data-category="gcc" data-id="1">
+                                        <img src="https://picsum.photos/seed/gcc1/60/60" alt="GCC Story 1" class="w-12 h-12 object-cover rounded">
+                                        <div class="flex-1">
+                                            <h4 class="text-gray-800 text-xs font-medium line-clamp-2">UAE Economic Growth Reaches New Heights</h4>
+                                        </div>
+                                    </div>
+                                    <div class="dropdown-item flex items-center space-x-3 p-2 rounded-lg cursor-pointer" data-category="gcc" data-id="2">
+                                        <img src="https://picsum.photos/seed/gcc2/60/60" alt="GCC Story 2" class="w-12 h-12 object-cover rounded">
+                                        <div class="flex-1">
+                                            <h4 class="text-gray-800 text-xs font-medium line-clamp-2">Saudi Vision 2030 Progress Update</h4>
+                                        </div>
+                                    </div>
+                                    <div class="dropdown-item flex items-center space-x-3 p-2 rounded-lg cursor-pointer" data-category="gcc" data-id="3">
+                                        <img src="https://picsum.photos/seed/gcc3/60/60" alt="GCC Story 3" class="w-12 h-12 object-cover rounded">
+                                        <div class="flex-1">
+                                            <h4 class="text-gray-800 text-xs font-medium line-clamp-2">Qatar Innovation Hub Expansion Plans</h4>
+                                        </div>
+                                    </div>
+                                    <div class="border-t border-gray-200 pt-3 mt-3">
+                                        <div class="dropdown-item know-more-item flex items-center justify-center p-2 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
+                                            <span class="text-[#3533CD] text-xs font-medium mr-1">Know More</span>
+                                            <i class="ph ph-arrow-right text-[#3533CD] text-xs transition-all duration-200"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sustainability Dropdown -->
+                    <div class="relative dropdown-container">
+                        <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Sustainability </a>
+                        <div class="dropdown-content absolute top-full left-1/2 transform -translate-x-1/2 mt-2 w-80 bg-white rounded-lg shadow-xl border border-gray-200 opacity-0 invisible transition-all duration-300 z-50">
+                            <div class="p-4">
+                                <h3 class="text-gray-800 font-semibold text-sm mb-3">Green Initiatives</h3>
+                                <div class="space-y-3">
+                                    <div class="dropdown-item flex items-center space-x-3 p-2 rounded-lg cursor-pointer" data-category="sustainability" data-id="1">
+                                        <img src="https://picsum.photos/seed/sus1/60/60" alt="Sustainability Story 1" class="w-12 h-12 object-cover rounded">
+                                        <div class="flex-1">
+                                            <h4 class="text-gray-800 text-xs font-medium line-clamp-2">Renewable Energy Progress in 2025</h4>
+                                        </div>
+                                    </div>
+                                    <div class="dropdown-item flex items-center space-x-3 p-2 rounded-lg cursor-pointer" data-category="sustainability" data-id="2">
+                                        <img src="https://picsum.photos/seed/sus2/60/60" alt="Sustainability Story 2" class="w-12 h-12 object-cover rounded">
+                                        <div class="flex-1">
+                                            <h4 class="text-gray-800 text-xs font-medium line-clamp-2">Carbon Neutrality Plans and Implementation</h4>
+                                        </div>
+                                    </div>
+                                    <div class="dropdown-item flex items-center space-x-3 p-2 rounded-lg cursor-pointer" data-category="sustainability" data-id="3">
+                                        <img src="https://picsum.photos/seed/sus3/60/60" alt="Sustainability Story 3" class="w-12 h-12 object-cover rounded">
+                                        <div class="flex-1">
+                                            <h4 class="text-gray-800 text-xs font-medium line-clamp-2">Circular Economy Solutions for Business</h4>
+                                        </div>
+                                    </div>
+                                    <div class="border-t border-gray-200 pt-3 mt-3">
+                                        <div class="dropdown-item know-more-item flex items-center justify-center p-2 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
+                                            <span class="text-[#3533CD] text-xs font-medium mr-1">Know More</span>
+                                            <i class="ph ph-arrow-right text-[#3533CD] text-xs transition-all duration-200"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Semiconductor Dropdown -->
+                    <div class="relative dropdown-container">
+                        <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Semiconductor </a>
+                        <div class="dropdown-content absolute top-full left-1/2 transform -translate-x-1/2 mt-2 w-80 bg-white rounded-lg shadow-xl border border-gray-200 opacity-0 invisible transition-all duration-300 z-50">
+                            <div class="p-4">
+                                <h3 class="text-gray-800 font-semibold text-sm mb-3">Chip Industry Updates</h3>
+                                <div class="space-y-3">
+                                    <div class="dropdown-item flex items-center space-x-3 p-2 rounded-lg cursor-pointer" data-category="semiconductor" data-id="1">
+                                        <img src="https://picsum.photos/seed/semi1/60/60" alt="Semiconductor Story 1" class="w-12 h-12 object-cover rounded">
+                                        <div class="flex-1">
+                                            <h4 class="text-gray-800 text-xs font-medium line-clamp-2">Advanced Chip Manufacturing Technologies</h4>
+                                        </div>
+                                    </div>
+                                    <div class="dropdown-item flex items-center space-x-3 p-2 rounded-lg cursor-pointer" data-category="semiconductor" data-id="2">
+                                        <img src="https://picsum.photos/seed/semi2/60/60" alt="Semiconductor Story 2" class="w-12 h-12 object-cover rounded">
+                                        <div class="flex-1">
+                                            <h4 class="text-gray-800 text-xs font-medium line-clamp-2">Supply Chain Recovery and Global Impact</h4>
+                                        </div>
+                                    </div>
+                                    <div class="dropdown-item flex items-center space-x-3 p-2 rounded-lg cursor-pointer" data-category="semiconductor" data-id="3">
+                                        <img src="https://picsum.photos/seed/semi3/60/60" alt="Semiconductor Story 3" class="w-12 h-12 object-cover rounded">
+                                        <div class="flex-1">
+                                            <h4 class="text-gray-800 text-xs font-medium line-clamp-2">Next-Gen Processors and AI Chips</h4>
+                                        </div>
+                                    </div>
+                                    <div class="border-t border-gray-200 pt-3 mt-3">
+                                        <div class="dropdown-item know-more-item flex items-center justify-center p-2 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
+                                            <span class="text-[#3533CD] text-xs font-medium mr-1">Know More</span>
+                                            <i class="ph ph-arrow-right text-[#3533CD] text-xs transition-all duration-200"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </nav>
         </div>
 
-    
-    <div class="flex lg:hidden items-center h-[68px] w-full bg-[#0D0D0D]">
-
-        <button id="mobile-menu-button" aria-label="Toggle Menu" class="h-full px-4 flex flex-col justify-center items-center space-y-[5px] bg-transparent focus:outline-none transition-colors duration-200 ease-in-out">
-        <span class="hamburger-line block w-6 h-[2px] bg-white rounded-full"></span>
-        <span class="hamburger-line block w-6 h-[2px] bg-white rounded-full"></span>
-        <span class="hamburger-line block w-6 h-[2px] bg-white rounded-full"></span>
-        </button>
-
-        <div class="h-full flex items-center px-3 flex-shrink-0">
-        <img src="/static/icon/website_icon.png" alt="Brands Out Loud Logo" class="h-10 w-auto"/>
-        </div>
-
-        <div class="flex-grow px-3">
-        <div class="relative">
-            <input type="text" placeholder="Search..." class="search-input w-full bg-[#1e1e1e] text-white text-sm rounded-full pl-10 pr-4 py-2.5 border border-[#2a2a2a] focus:outline-none focus:border-[#9747FF] transition-all"/>
-            <div class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
-            <i class="ph ph-magnifying-glass text-gray-400 text-lg"></i>
+        <!-- Mobile Header -->
+        <div class="flex lg:hidden items-center h-[68px] w-full bg-[#0D0D0D]">
+            <button id="mobile-menu-button" aria-label="Toggle Menu" class="h-full px-4 flex flex-col justify-center items-center space-y-[5px] bg-transparent focus:outline-none transition-colors duration-200 ease-in-out">
+                <span class="hamburger-line block w-6 h-[2px] bg-white rounded-full"></span>
+                <span class="hamburger-line block w-6 h-[2px] bg-white rounded-full"></span>
+                <span class="hamburger-line block w-6 h-[2px] bg-white rounded-full"></span>
+            </button>
+            
+            <div class="h-full flex items-center px-3 flex-shrink-0">
+                <img src="static/icon/website_icon.png" alt="Brands Out Loud Logo" class="h-10 w-auto">
             </div>
-        </div>
-        </div>
-    </div>
-
-    
-    <div id="mobile-menu" class="hidden lg:hidden absolute top-[68px] left-0 w-full bg-[#121212] z-50 shadow-lg border-t border-[#2a2a2a] overflow-hidden">
-        <div class="">
-        <div class="px-4 py-3">
-            <a href="#" class="login-btn block w-full text-center bg-gradient-to-r from-[#9747FF] to-[#CDA7FF] rounded-full px-4 py-2.5 text-white font-medium text-sm shadow-lg hover:-translate-y-0.5 transition-all duration-300 relative overflow-hidden">
-            <span class="relative z-10 flex items-center justify-center gap-2">
-                <i class="ph ph-sign-in text-lg"></i>
-                <span>Login</span>
-            </span>
-            <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full animate-[shine_2s_infinite]"></div>
-            </a>
+            
+            <div class="flex-grow px-3">
+                <div class="relative">
+                    <input type="text" placeholder="Search..." class="search-input w-full bg-[#1e1e1e] text-white text-sm rounded-full pl-10 pr-4 py-2.5 border border-[#2a2a2a] focus:outline-none focus:border-[#9747FF] transition-all">
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
+                        <i class="ph ph-magnifying-glass text-gray-400 text-lg"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Login button removed from here -->
         </div>
 
-        <div class="mobile-menu-item">
-            <i class="ph ph-book-open text-white text-lg"></i>
-            <span class="item-title">Magazine</span>
-            <i class="ph ph-caret-right"></i>
-        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden lg:hidden absolute top-[68px] left-0 w-full bg-[#121212] z-50 shadow-lg border-t border-[#2a2a2a] overflow-hidden">
+            <div class="">
+                <!-- Login button -->
+                <div class="px-4 py-3">
+                    <a href="#" class="login-btn block w-full text-center bg-gradient-to-r from-[#9747FF] to-[#CDA7FF] rounded-full px-4 py-2.5 text-white font-medium text-sm shadow-lg hover:-translate-y-0.5 transition-all duration-300 relative overflow-hidden">
+                        <span class="relative z-10 flex items-center justify-center gap-2">
+                            <i class="ph ph-sign-in text-lg"></i>
+                            <span>Login</span>
+                        </span>
+                        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full animate-[shine_2s_infinite]"></div>
+                    </a>
+                </div>
 
-        <div class="mobile-menu-item">
-            <i class="ph ph-lightning text-white text-lg"></i>
-            <span class="item-title">Startups</span>
-            <i class="ph ph-caret-right"></i>
-        </div>
+                <div class="mobile-menu-item">
+                    <i class="ph ph-book-open text-white text-lg"></i>
+                    <span class="item-title">Magazine</span>
+                    <i class="ph ph-caret-right"></i>
+                </div>
 
-        <div class="mobile-menu-item">
-            <i class="ph ph-envelope-open text-white text-lg"></i>
-            <span class="item-title">Newsletters</span>
-            <i class="ph ph-caret-right"></i>
-        </div>
+                <!-- <div class="mobile-menu-item">
+                    <i class="ph ph-rocket text-white text-lg"></i>
+                    <span class="item-title">Entrepreneurship</span>
+                    <i class="ph ph-caret-right"></i>
+                </div> -->
 
-        <div class="mobile-menu-item">
-            <i class="ph ph-newspaper text-white text-lg"></i>
-            <span class="item-title">Podcast</span>
-            <i class="ph ph-caret-right"></i>
-        </div>
+                <!-- <div class="mobile-menu-item">
+                    <i class="ph ph-lightning text-white text-lg"></i>
+                    <span class="item-title">Startups</span>
+                    <i class="ph ph-caret-right"></i>
+                </div> -->
 
-        <div class="mobile-menu-item">
-            <i class="ph ph-buildings text-white text-lg"></i>
-            <span class="item-title">Business</span>f
-            <i class="ph ph-caret-right"></i>
-        </div>
+                <div class="mobile-menu-item">
+                    <i class="ph ph-envelope-open text-white text-lg"></i>
+                    <span class="item-title">Newsletters</span>
+                    <i class="ph ph-caret-right"></i>
+                </div>
 
-        <div class="mobile-menu-item">
-            <i class="ph ph-briefcase text-white text-lg"></i>
-            <span class="item-title">Careers</span>
-            <i class="ph ph-caret-right"></i>
+                <!-- <div class="mobile-menu-item">
+                    <i class="ph ph-newspaper text-white text-lg"></i>
+                    <span class="item-title">Podcast</span>
+                    <i class="ph ph-caret-right"></i>
+                </div> -->                <div class="mobile-menu-item">
+                    <i class="ph ph-buildings text-white text-lg"></i>
+                    <span class="item-title">Business</span>
+                    <i class="ph ph-caret-right"></i>
+                </div>
+
+                <div class="mobile-menu-item">
+                    <i class="ph ph-gear text-white text-lg"></i>
+                    <span class="item-title">Technology</span>
+                    <i class="ph ph-caret-right"></i>
+                </div>
+
+                <!-- <div class="mobile-menu-item">
+                    <i class="ph ph-rocket text-white text-lg"></i>
+                    <span class="item-title">Entrepreneurship</span>
+                    <i class="ph ph-caret-right"></i>
+                </div> -->
+
+                <div class="mobile-menu-item">
+                    <i class="ph ph-globe text-white text-lg"></i>
+                    <span class="item-title">GCC</span>
+                    <i class="ph ph-caret-right"></i>
+                </div>
+
+                <div class="mobile-menu-item">
+                    <i class="ph ph-leaf text-white text-lg"></i>
+                    <span class="item-title">Sustainability</span>
+                    <i class="ph ph-caret-right"></i>
+                </div>
+
+                <div class="mobile-menu-item">
+                    <i class="ph ph-cpu text-white text-lg"></i>
+                    <span class="item-title">Semiconductor</span>
+                    <i class="ph ph-caret-right"></i>
+                </div>
+
+                <!-- <div class="mobile-menu-item">
+                    <i class="ph ph-briefcase text-white text-lg"></i>
+                    <span class="item-title">Careers</span>
+                    <i class="ph ph-caret-right"></i>
+                </div> -->
+                
+            </div>
+                
         </div>
-        </div>
-    </div>
     </header>
+
     
     <main class="w-full px-4 sm:px-8 md:px-[65px] py-[21px] relative article-container">
         <article class="mb-8 md:mb-12 relative">
@@ -495,11 +932,7 @@ BLOGS_TEMPLATE = r"""
         [[more_in_business_posts]]
 
     </main>
-    <section class="w-full aspect-[120/47] relative bg-contain bg-no-repeat bg-center bg-[url(/static/images/9_out_of_10.png)]" style="margin-bottom: -1%">
-        <a href="#" class="absolute bottom-[15%] left-[9%] w-[15%] max-w-[250px] hover:opacity-90 transition-opacity">
-            <img src="/static/images/checkot_button.png" alt="Checkout Podcast Button" class="block w-full h-auto"/>
-        </a>
-    </section>
+    
     <section class="w-full aspect-[120/47] relative bg-contain bg-no-repeat bg-center bg-[url(/static/images/fuel_ambition.png)]" style="margin-bottom: -1%">
         <a href="#" class="absolute bottom-[18%] left-[50%] -translate-x-1/2 w-[20%] max-w-[300px] hover:opacity-90 transition-opacity">
             <img src="/static/images/checkout_magazine_button.png" alt="Checkout Magazine Button" class="block w-full h-auto"/>
