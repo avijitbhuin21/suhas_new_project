@@ -44,6 +44,14 @@ def magazine_page():
 def magazine_page_read_only():
     return render_template('magazine_page_read_only.html')
 
+@app.route('/magazine_page_read_only_2')
+def magazine_page_read_only_2():
+    return render_template('magazine_page_read_only_2.html')
+
+@app.route('/testing-mag')
+def testing_mag():
+    return render_template('testing-mag.html')
+
 @app.route('/category_homepage')
 def category_homepage():
     return render_template('category_homepage.html')
