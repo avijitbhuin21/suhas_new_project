@@ -36,22 +36,6 @@ def news_waiting_page():
 def news_page():
     return render_template('news_page.html')
 
-@app.route('/magazine_page')
-def magazine_page():
-    return render_template('magazine_page.html')
-
-@app.route('/magazine_page_read_only')
-def magazine_page_read_only():
-    return render_template('magazine_page_read_only.html')
-
-@app.route('/magazine_page_read_only_2')
-def magazine_page_read_only_2():
-    return render_template('magazine_page_read_only_2.html')
-
-@app.route('/testing-mag')
-def testing_mag():
-    return render_template('testing-mag.html')
-
 @app.route('/category_homepage')
 def category_homepage():
     return render_template('category_homepage.html')
@@ -347,6 +331,60 @@ def delete_file():
         return jsonify({"status": "success", "message": result.get('message', 'File deleted successfully')}), 200
     else:
         return jsonify({"status": "error", "message": result.get('message', 'Failed to delete file')}), 500
+    
+
+
+
+#--------------------------------------------------------------------------------#
+#                            MAGAZINE PAGE FUNCTIONS                             #
+#--------------------------------------------------------------------------------#
+
+@app.route('/magazine_page')
+def magazine_page():
+    return render_template('magazine_page.html')
+
+@app.route('/magazine/<magazine_id>')
+def magazine_page_read_only(magazine_id):
+    data = get_magazine_details_db(magazine_id)
+    magazine_html = open('templates/magazine_page_read_only.html').read()
+
+    updated_html = magazine_html.replace('[[pdf_url]]', data.get('pdf_url', ''))
+    updated_html = updated_html.replace('[[magazine_id]]', magazine_id)
+
+    if not data:
+        return render_template('404.html'), 404
+    
+    return updated_html
+
+
+@app.route('/flipbook/<magazine_id>')
+@app.route('/flipbook')
+def magazine_page_flipbook_view(magazine_id=None):
+    if magazine_id is None:
+        magazine_id = request.args.get('magazine_id')
+        
+    if not magazine_id:
+        return render_template('404.html'), 404
+        
+    print(f"Received request for magazine_id: {magazine_id}")
+    page_number = request.args.get('page_number', '1')
+    data = get_magazine_details_db(magazine_id)
+    
+    if not data:
+        return render_template('404.html'), 404
+    
+    magazine_html = open('templates/magazine_page_flipbook.html').read()
+    updated_html = magazine_html.replace('[[pdf_url]]', data.get('pdf_url', ''))
+    updated_html = updated_html.replace('[[page_number]]', page_number)
+    
+    return updated_html
+
+
+
+
+
+
+
 
 #--------------------------------------------------------------------------------#
 #                                 TRIAL ROUTE                                    #

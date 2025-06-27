@@ -425,3 +425,19 @@ def admin_login_db_check(email, password):
         "success": False,
         "email": email
     }
+
+#--------------------------------------------------------------------------------#
+#                            MAGAZINE PAGE FUNCTIONS                             #
+#--------------------------------------------------------------------------------#
+
+def get_magazine_details_db(magazine_id):
+    print(f"Fetching magazine details for ID: {magazine_id}")
+    response = (
+        supabase.table("magazine_details")
+        .select("*")
+        .eq("id", magazine_id)
+        .execute()
+    )
+    if response.data:
+        return response.data[0]
+    return None

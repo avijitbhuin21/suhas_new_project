@@ -309,7 +309,7 @@
     <script src="https://cdn.jsdelivr.net/npm/page-flip/dist/js/page-flip.browser.min.js"></script>
     <script>
       // Get page number from server-side template
-      const INITIAL_PAGE_NUMBER = parseInt('{{ page_number }}') || 1;
+      const INITIAL_PAGE_NUMBER = [[page_number]] || 1;
       
       (function () {
         "use strict";
@@ -412,7 +412,7 @@
 
           // Initialize app components
           const pdfUrl =
-            "https://iwyjssxhrcucnrkzkvmt.supabase.co/storage/v1/object/public/magazine-pdfs//CXO%20TechBOT%20October%202024-1-10.pdf"; // Public sample PDF
+            "[[pdf_url]]"; // Public sample PDF
           loadPDF(pdfUrl);
 
           setTimeout(() => {
@@ -1313,7 +1313,7 @@
 
             try {
               const pdfUrl =
-                "https://iwyjssxhrcucnrkzkvmt.supabase.co/storage/v1/object/public/magazine-pdfs//CXO%20TechBOT%20October%202024-1-10.pdf";
+                "[[pdf_url]]";
               const link = document.createElement("a");
               link.href = pdfUrl;
               const filename =
