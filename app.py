@@ -26,7 +26,19 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template('homepage.html')
+    categories = ["Business", "Technology", "GCC", "Sustainability", "Semiconductor"]
+    blogs_by_category = {}
+    for category in categories:
+        blogs = get_blogs_list_db(search_keyword=category)
+        blogs_by_category[category.lower()] = [
+            {
+                "id": blog.get("id"),
+                "title": blog.get("json_data", {}).get("blogTitle"),
+                "image": blog.get("json_data", {}).get("mainImageUrl"),
+            }
+            for blog in blogs[:3]
+        ]
+    return render_template('homepage.html', blogs_by_category=blogs_by_category)
 
 @app.route('/news_waiting_page')
 def news_waiting_page():

@@ -14,8 +14,6 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=IBM+Plex+Sans:wght@600&family=Inter:wght@500&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&family=Roboto:wght@500&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="static/icon/website_icon.png">
      
-     
-
 <style>
     @media screen and (min-width: 1024px) {
         body {
@@ -89,157 +87,108 @@
         -ms-overflow-style: none;  
         scrollbar-width: none;  
     }
-        @keyframes slideDown {
-            from { transform: translateY(-10px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        
-        .slide-down {
-            animation: slideDown 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
+    @keyframes slideDown {
+        from { transform: translateY(-10px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+    
+    .slide-down {
+        animation: slideDown 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
 
-        :root {
-            --clr-dark-black: #121212;
-            --clr-bdr-gray: #2a2a2a;
-            --clr-white: #fff;
-            --clr-primary: #9747FF;
-            --clr-primary-light: #CDA7FF;
-            --clr-gray-800: #1e1e1e;
-        }
+    :root {
+        --clr-dark-black: #121212;
+        --clr-bdr-gray: #2a2a2a;
+        --clr-white: #fff;
+        --clr-primary: #9747FF;
+        --clr-primary-light: #CDA7FF;
+        --clr-gray-800: #1e1e1e;
+    }
 
-        .mobile-menu-item {
-            padding: 0.875rem 1rem;
-            background: var(--clr-dark-black);
-            border-bottom: solid 1px var(--clr-bdr-gray);
-            color: var(--clr-white);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            transition: background-color 0.2s ease;
-        }
-        
-        .mobile-menu-item:hover {
-            background-color: #1a1a1a;
-        }
-        
-        .mobile-menu-item:active {
-            background-color: #252525;
-        }
+    .mobile-menu-item {
+        padding: 0.875rem 1rem;
+        background: var(--clr-dark-black);
+        border-bottom: solid 1px var(--clr-bdr-gray);
+        color: var(--clr-white);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        transition: background-color 0.2s ease;
+    }
+    
+    .mobile-menu-item:hover { background-color: #1a1a1a; }
+    .mobile-menu-item:active { background-color: #252525; }
+    .item-title { flex-grow: 1; margin-left: 0.75rem; font-weight: 500; }
+    .hamburger-line { transition: all 0.3s ease; }
+    .hamburger-active .hamburger-line:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger-active .hamburger-line:nth-child(2) { opacity: 0; }
+    .hamburger-active .hamburger-line:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .search-input { transition: all 0.2s ease; }
+    .search-input:focus { box-shadow: 0 0 0 2px rgba(151, 71, 255, 0.5); }
 
-        .item-title {
-            flex-grow: 1;
-            margin-left: 0.75rem;
-            font-weight: 500;
-        }
+    @keyframes shine {
+        from { transform: translateX(-100%); }
+        to { transform: translateX(100%); }
+    }
 
-        .hamburger-line {
-            transition: all 0.3s ease;
-        }
+    .login-btn { transition: all 0.2s ease; }
+    .login-btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 2px 8px rgba(205, 167, 255, 0.4);
+    }
 
-        .hamburger-active .hamburger-line:nth-child(1) {
-            transform: translateY(7px) rotate(45deg);
-        }
+    /* --- UPDATED DROPDOWN STYLES --- */
+    .dropdown-container {
+        position: relative;
+        padding-bottom: 20px; /* Creates an invisible area below the link for the cursor to travel over */
+        margin-bottom: -20px;  /* Negative margin to pull layout back up */
+    }
 
-        .hamburger-active .hamburger-line:nth-child(2) {
-            opacity: 0;
-        }
+    .dropdown-content {
+        position: absolute;
+        top: 100%; /* Positions the dropdown right below the parent's padding area */
+        left: 50%;
+        transform: translateX(-50%);
+        width: 320px;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        border: 1px solid #e5e7eb;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.2s ease, visibility 0.2s;
+        z-index: 50;
+        pointer-events: none;
+        padding: 1rem;
+    }
 
-        .hamburger-active .hamburger-line:nth-child(3) {
-            transform: translateY(-7px) rotate(-45deg);
-        }
+    .dropdown-container:hover .dropdown-content {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+    }
+    
+    .line-clamp-2 {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
 
-        .search-input {
-            transition: all 0.2s ease;
-        }
-        
-        .search-input:focus {
-            box-shadow: 0 0 0 2px rgba(151, 71, 255, 0.5);
-        }
+    .dropdown-item {
+        transition: all 0.2s ease;
+    }
 
-        @keyframes shine {
-            from {
-                transform: translateX(-100%);
-            }
-            to {
-                transform: translateX(100%);
-            }
-        }
+    .dropdown-item:hover {
+        background-color: #f9fafb;
+        transform: translateX(2px);
+    }
 
-        .login-btn {
-            transition: all 0.2s ease;
-        }
-        
-        .login-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 2px 8px rgba(205, 167, 255, 0.4);
-        }
-
-        /* Dropdown Styles */
-        .dropdown-container {
-            position: relative;
-        }
-
-        .dropdown-content {
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            margin-top: 8px;
-            width: 320px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-            border: 1px solid #e5e7eb;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 50;
-            pointer-events: none;
-        }
-
-        .dropdown-container:hover .dropdown-content {
-            opacity: 1;
-            visibility: visible;
-            pointer-events: auto;
-            transform: translateX(-50%) translateY(0);
-        }
-
-        .dropdown-content::before {
-            content: '';
-            position: absolute;
-            top: -6px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 12px;
-            height: 12px;
-            background: white;
-            border-left: 1px solid #e5e7eb;
-            border-top: 1px solid #e5e7eb;
-            transform: translateX(-50%) rotate(45deg);
-        }
-
-        .line-clamp-2 {
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        .dropdown-item {
-            transition: all 0.2s ease;
-        }
-
-        .dropdown-item:hover {
-            background-color: #f9fafb;
-            transform: translateX(2px);
-        }
-
-        .dropdown-item:hover .ph-arrow-right {
-            transform: translateX(2px);
-            color: #3533CD;
-        }
+    .dropdown-item:hover .ph-arrow-right {
+        transform: translateX(2px);
+        color: #3533CD;
+    }
 </style>
-
 <script>
   tailwind.config = {
     theme: {
@@ -300,91 +249,6 @@
                 }
             });
 
-            // Function to fetch blogs from backend (placeholder)
-            async function fetchCategoryBlogs(category) {
-                try {
-                    // Replace with actual API endpoint
-                    // const response = await fetch(`/api/blogs/${category}`);
-                    // const blogs = await response.json();
-                    
-                    // Placeholder data structure for now
-                    const placeholderBlogs = {
-                        business: [
-                            { id: 1, title: 'Market Analysis Report Shows Strong Growth', image: 'https://picsum.photos/seed/biz1/60/60' },
-                            { id: 2, title: 'Corporate Strategy Insights for Modern Business', image: 'https://picsum.photos/seed/biz2/60/60' },
-                            { id: 3, title: 'Financial Trends Update and Market Outlook', image: 'https://picsum.photos/seed/biz3/60/60' }
-                        ],
-                        technology: [
-                            { id: 1, title: 'AI Breakthroughs Transform Industries', image: 'https://picsum.photos/seed/tech1/60/60' },
-                            { id: 2, title: 'Cloud Computing Trends and Future Outlook', image: 'https://picsum.photos/seed/tech2/60/60' },
-                            { id: 3, title: 'Cybersecurity Updates and Best Practices', image: 'https://picsum.photos/seed/tech3/60/60' }
-                        ],
-                        gcc: [
-                            { id: 1, title: 'UAE Economic Growth Reaches New Heights', image: 'https://picsum.photos/seed/gcc1/60/60' },
-                            { id: 2, title: 'Saudi Vision 2030 Progress Update', image: 'https://picsum.photos/seed/gcc2/60/60' },
-                            { id: 3, title: 'Qatar Innovation Hub Expansion Plans', image: 'https://picsum.photos/seed/gcc3/60/60' }
-                        ],
-                        sustainability: [
-                            { id: 1, title: 'Renewable Energy Progress in 2025', image: 'https://picsum.photos/seed/sus1/60/60' },
-                            { id: 2, title: 'Carbon Neutrality Plans and Implementation', image: 'https://picsum.photos/seed/sus2/60/60' },
-                            { id: 3, title: 'Circular Economy Solutions for Business', image: 'https://picsum.photos/seed/sus3/60/60' }
-                        ],
-                        semiconductor: [
-                            { id: 1, title: 'Advanced Chip Manufacturing Technologies', image: 'https://picsum.photos/seed/semi1/60/60' },
-                            { id: 2, title: 'Supply Chain Recovery and Global Impact', image: 'https://picsum.photos/seed/semi2/60/60' },
-                            { id: 3, title: 'Next-Gen Processors and AI Chips', image: 'https://picsum.photos/seed/semi3/60/60' }
-                        ]
-                    };
-                    
-                    return placeholderBlogs[category] || [];
-                } catch (error) {
-                    console.error('Error fetching blogs:', error);
-                    return [];
-                }
-            }
-
-            // Function to populate dropdown with dynamic content
-            function populateDropdown(container, blogs) {
-                const blogsList = container.querySelector('.space-y-3');
-                const existingBlogs = blogsList.querySelectorAll('.dropdown-item:not(.know-more-item)');
-                
-                // Remove existing blog items (keep Know More)
-                existingBlogs.forEach(item => item.remove());
-                
-                // Add new blog items
-                blogs.forEach((blog, index) => {
-                    const blogElement = document.createElement('div');
-                    blogElement.className = 'dropdown-item flex items-center space-x-3 p-2 rounded-lg cursor-pointer';
-                    blogElement.setAttribute('data-category', container.getAttribute('data-category'));
-                    blogElement.setAttribute('data-id', blog.id);
-                    
-                    blogElement.innerHTML = `
-                        <img src="${blog.image}" alt="${blog.title}" class="w-12 h-12 object-cover rounded">
-                        <div class="flex-1">
-                            <h4 class="text-gray-800 text-xs font-medium line-clamp-2">${blog.title}</h4>
-                        </div>
-                    `;
-                    
-                    // Insert before the "Know More" section
-                    const knowMoreSection = blogsList.querySelector('.border-t');
-                    blogsList.insertBefore(blogElement, knowMoreSection);
-                });
-            }
-
-            // Desktop dropdown functionality
-            const dropdownContainers = document.querySelectorAll('.dropdown-container');
-            dropdownContainers.forEach(container => {
-                const trigger = container.querySelector('a');
-                const category = trigger.textContent.trim().toLowerCase();
-                
-                container.setAttribute('data-category', category);
-                
-                container.addEventListener('mouseenter', async function() {
-                    const blogs = await fetchCategoryBlogs(category);
-                    populateDropdown(this, blogs);
-                });
-            });
-
             // Blog item click handlers
             document.addEventListener('click', function(e) {
                 if (e.target.closest('.dropdown-item:not(.know-more-item)')) {
@@ -409,144 +273,11 @@
                     // window.location.href = `/category/${category}`;
                 }
             });
-
-            // Close dropdown when clicking outside
-            document.addEventListener('click', function(e) {
-                const dropdowns = document.querySelectorAll('.dropdown-container');
-                dropdowns.forEach(dropdown => {
-                    if (!dropdown.contains(e.target)) {
-                        const content = dropdown.querySelector('.dropdown-content');
-                        if (content) {
-                            content.style.opacity = '0';
-                            content.style.visibility = 'hidden';
-                            content.style.pointerEvents = 'none';
-                        }
-                    }
-                });
-            });
-
-            // Prevent dropdown from closing when clicking inside
-            const dropdownContents = document.querySelectorAll('.dropdown-content');
-            dropdownContents.forEach(content => {
-                content.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                });
-            });
-
-            // Mobile dropdown functionality
-            function createMobileDropdown(category, blogs) {
-                const dropdown = document.createElement('div');
-                dropdown.className = 'mobile-category-dropdown bg-[#1a1a1a] border-t border-[#2a2a2a] overflow-hidden transition-all duration-300 max-h-0';
-                dropdown.style.maxHeight = '0px';
-                
-                let content = '';
-                blogs.forEach(blog => {
-                    content += `
-                        <div class="mobile-dropdown-item flex items-center space-x-3 p-3 border-b border-[#2a2a2a] cursor-pointer hover:bg-[#252525]" data-category="${category}" data-id="${blog.id}">
-                            <img src="${blog.image}" alt="${blog.title}" class="w-10 h-10 object-cover rounded">
-                            <div class="flex-1">
-                                <h4 class="text-white text-xs font-medium line-clamp-2">${blog.title}</h4>
-                            </div>
-                        </div>
-                    `;
-                });
-                
-                content += `
-                    <div class="mobile-dropdown-item flex items-center justify-center p-3 bg-[#2a2a2a] cursor-pointer hover:bg-[#353535]" data-category="${category}">
-                        <span class="text-[#C4C3FF] text-xs font-medium mr-1">Know More</span>
-                        <i class="ph ph-arrow-right text-[#C4C3FF] text-xs"></i>
-                    </div>
-                `;
-                
-                dropdown.innerHTML = content;
-                return dropdown;
-            }
-
-            // Add mobile dropdown functionality to existing mobile menu items
-            const mobileMenuItems = document.querySelectorAll('.mobile-menu-item');
-            const categoryItems = ['Business', 'Technology', 'GCC', 'Sustainability', 'Semiconductor'];
-            
-            mobileMenuItems.forEach(item => {
-                const title = item.querySelector('.item-title').textContent;
-                if (categoryItems.includes(title)) {
-                    const category = title.toLowerCase();
-                    let isExpanded = false;
-                    let dropdown = null;
-                    
-                    item.addEventListener('click', async function(e) {
-                        e.preventDefault();
-                        
-                        if (!isExpanded) {
-                            // Close other dropdowns
-                            document.querySelectorAll('.mobile-category-dropdown').forEach(d => {
-                                d.style.maxHeight = '0px';
-                                setTimeout(() => d.remove(), 300);
-                            });
-                            
-                            // Fetch and create dropdown
-                            const blogs = await fetchCategoryBlogs(category);
-                            dropdown = createMobileDropdown(category, blogs);
-                            item.parentNode.insertBefore(dropdown, item.nextSibling);
-                            
-                            // Animate open
-                            setTimeout(() => {
-                                dropdown.style.maxHeight = dropdown.scrollHeight + 'px';
-                            }, 10);
-                            
-                            isExpanded = true;
-                        } else {
-                            // Close dropdown
-                            dropdown.style.maxHeight = '0px';
-                            setTimeout(() => {
-                                dropdown.remove();
-                                dropdown = null;
-                            }, 300);
-                            isExpanded = false;
-                        }
-                    });
-                }
-            });
-
-            // Auto-close mobile dropdowns on scroll
-            let scrollTimeout;
-            window.addEventListener('scroll', function() {
-                clearTimeout(scrollTimeout);
-                scrollTimeout = setTimeout(() => {
-                    document.querySelectorAll('.mobile-category-dropdown').forEach(dropdown => {
-                        dropdown.style.maxHeight = '0px';
-                        setTimeout(() => dropdown.remove(), 300);
-                    });
-                }, 100);
-            });
-
-            // Mobile dropdown item clicks
-            document.addEventListener('click', function(e) {
-                if (e.target.closest('.mobile-dropdown-item')) {
-                    const item = e.target.closest('.mobile-dropdown-item');
-                    const category = item.getAttribute('data-category');
-                    const blogId = item.getAttribute('data-id');
-                    
-                    if (blogId) {
-                        console.log('Mobile blog clicked:', { category, blogId });
-                        // Replace with actual navigation
-                        // window.location.href = `/blog/${category}/${blogId}`;
-                    } else {
-                        console.log('Mobile Know More clicked for:', category);
-                        // Replace with actual navigation
-                        // window.location.href = `/category/${category}`;
-                    }
-                }
-            });
         });
     </script>
 </head>
 <body class="font-jakarta bg-white text-bol-black">
 <div class="flex flex-col items-center w-full max-w-[1440px] mx-auto bg-white overflow-x-hidden relative">
-
-    
-    <!-- <section class="flex flex-col justify-center items-center px-[30px] sm:px-[100px] lg:px-[200px] py-[10px] gap-[13px] w-full h-[157px] bg-cover bg-center bg-[url(static/images/header.png)]">
-    </section> -->
-
     
     <header class="w-full bg-black relative">
         <!-- Desktop Header -->
@@ -554,9 +285,6 @@
             <img src="static/images/header_logo.png" alt="Brands Out Loud Logo" class="w-20 h-20 flex-shrink-0">
             <nav class="flex flex-col items-stretch w-[700px] h-[93px] py-[14px] px-[18px] gap-[10px] relative">
                 <div class="flex flex-row justify-end items-center w-full gap-[60px] px-[30px]">
-                    <!-- <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Careers </a>
-                    <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Podcast </a> -->
-                    
                     <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Magazine </a>
                     <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Newsletters </a>
                     <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Register </a>
@@ -565,35 +293,25 @@
                 <div class="w-full h-[1px] bg-gradient-to-r from-black to-[#9747FF]"></div>
                 <div class="flex flex-row justify-end items-center w-full gap-[60px] px-2">
                     <!-- Business Dropdown -->
-                    <div class="relative dropdown-container">
+                    <div class="dropdown-container" data-category="business">
                         <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Business </a>
-                        <div class="dropdown-content absolute top-full left-1/2 transform -translate-x-1/2 mt-2 w-80 bg-white rounded-lg shadow-xl border border-gray-200 opacity-0 invisible transition-all duration-300 z-50">
-                            <div class="p-4">
-                                <h3 class="text-gray-800 font-semibold text-sm mb-3">Latest Business Stories</h3>
-                                <div class="space-y-3">
-                                    <div class="dropdown-item flex items-center space-x-3 p-2 rounded-lg cursor-pointer" data-category="business" data-id="1">
-                                        <img src="https://picsum.photos/seed/biz1/60/60" alt="Business Story 1" class="w-12 h-12 object-cover rounded">
-                                        <div class="flex-1">
-                                            <h4 class="text-gray-800 text-xs font-medium line-clamp-2">Market Analysis Report Shows Strong Growth</h4>
+                        <div class="dropdown-content">
+                            <h3 class="text-gray-800 font-semibold text-sm mb-3">Latest Business Stories</h3>
+                            <div class="space-y-3">
+                                {% if blogs_by_category.business %}
+                                    {% for blog in blogs_by_category.business %}
+                                        <div class="dropdown-item flex items-center space-x-3 p-2 rounded-lg cursor-pointer" data-category="business" data-id="{{ blog.id }}">
+                                            <img src="{{ blog.image }}" alt="{{ blog.title }}" class="w-12 h-12 object-cover rounded">
+                                            <div class="flex-1">
+                                                <h4 class="text-gray-800 text-xs font-medium line-clamp-2">{{ blog.title }}</h4>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="dropdown-item flex items-center space-x-3 p-2 rounded-lg cursor-pointer" data-category="business" data-id="2">
-                                        <img src="https://picsum.photos/seed/biz2/60/60" alt="Business Story 2" class="w-12 h-12 object-cover rounded">
-                                        <div class="flex-1">
-                                            <h4 class="text-gray-800 text-xs font-medium line-clamp-2">Corporate Strategy Insights for Modern Business</h4>
-                                        </div>
-                                    </div>
-                                    <div class="dropdown-item flex items-center space-x-3 p-2 rounded-lg cursor-pointer" data-category="business" data-id="3">
-                                        <img src="https://picsum.photos/seed/biz3/60/60" alt="Business Story 3" class="w-12 h-12 object-cover rounded">
-                                        <div class="flex-1">
-                                            <h4 class="text-gray-800 text-xs font-medium line-clamp-2">Financial Trends Update and Market Outlook</h4>
-                                        </div>
-                                    </div>
-                                    <div class="border-t border-gray-200 pt-3 mt-3">
-                                        <div class="dropdown-item know-more-item flex items-center justify-center p-2 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
-                                            <span class="text-[#3533CD] text-xs font-medium mr-1">Know More</span>
-                                            <i class="ph ph-arrow-right text-[#3533CD] text-xs transition-all duration-200"></i>
-                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+                                <div class="border-t border-gray-200 pt-3 mt-3">
+                                    <div class="dropdown-item know-more-item flex items-center justify-center p-2 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
+                                        <span class="text-[#3533CD] text-xs font-medium mr-1">Know More</span>
+                                        <i class="ph ph-arrow-right text-[#3533CD] text-xs transition-all duration-200"></i>
                                     </div>
                                 </div>
                             </div>
@@ -601,35 +319,25 @@
                     </div>
 
                     <!-- Technology Dropdown -->
-                    <div class="relative dropdown-container">
+                    <div class="dropdown-container" data-category="technology">
                         <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Technology </a>
-                        <div class="dropdown-content absolute top-full left-1/2 transform -translate-x-1/2 mt-2 w-80 bg-white rounded-lg shadow-xl border border-gray-200 opacity-0 invisible transition-all duration-300 z-50">
-                            <div class="p-4">
-                                <h3 class="text-gray-800 font-semibold text-sm mb-3">Tech Innovations</h3>
-                                <div class="space-y-3">
-                                    <div class="dropdown-item flex items-center space-x-3 p-2 rounded-lg cursor-pointer" data-category="technology" data-id="1">
-                                        <img src="https://picsum.photos/seed/tech1/60/60" alt="Tech Story 1" class="w-12 h-12 object-cover rounded">
-                                        <div class="flex-1">
-                                            <h4 class="text-gray-800 text-xs font-medium line-clamp-2">AI Breakthroughs Transform Industries</h4>
+                        <div class="dropdown-content">
+                            <h3 class="text-gray-800 font-semibold text-sm mb-3">Tech Innovations</h3>
+                            <div class="space-y-3">
+                                {% if blogs_by_category.technology %}
+                                    {% for blog in blogs_by_category.technology %}
+                                        <div class="dropdown-item flex items-center space-x-3 p-2 rounded-lg cursor-pointer" data-category="technology" data-id="{{ blog.id }}">
+                                            <img src="{{ blog.image }}" alt="{{ blog.title }}" class="w-12 h-12 object-cover rounded">
+                                            <div class="flex-1">
+                                                <h4 class="text-gray-800 text-xs font-medium line-clamp-2">{{ blog.title }}</h4>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="dropdown-item flex items-center space-x-3 p-2 rounded-lg cursor-pointer" data-category="technology" data-id="2">
-                                        <img src="https://picsum.photos/seed/tech2/60/60" alt="Tech Story 2" class="w-12 h-12 object-cover rounded">
-                                        <div class="flex-1">
-                                            <h4 class="text-gray-800 text-xs font-medium line-clamp-2">Cloud Computing Trends and Future Outlook</h4>
-                                        </div>
-                                    </div>
-                                    <div class="dropdown-item flex items-center space-x-3 p-2 rounded-lg cursor-pointer" data-category="technology" data-id="3">
-                                        <img src="https://picsum.photos/seed/tech3/60/60" alt="Tech Story 3" class="w-12 h-12 object-cover rounded">
-                                        <div class="flex-1">
-                                            <h4 class="text-gray-800 text-xs font-medium line-clamp-2">Cybersecurity Updates and Best Practices</h4>
-                                        </div>
-                                    </div>
-                                    <div class="border-t border-gray-200 pt-3 mt-3">
-                                        <div class="dropdown-item know-more-item flex items-center justify-center p-2 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
-                                            <span class="text-[#3533CD] text-xs font-medium mr-1">Know More</span>
-                                            <i class="ph ph-arrow-right text-[#3533CD] text-xs transition-all duration-200"></i>
-                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+                                <div class="border-t border-gray-200 pt-3 mt-3">
+                                    <div class="dropdown-item know-more-item flex items-center justify-center p-2 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
+                                        <span class="text-[#3533CD] text-xs font-medium mr-1">Know More</span>
+                                        <i class="ph ph-arrow-right text-[#3533CD] text-xs transition-all duration-200"></i>
                                     </div>
                                 </div>
                             </div>
@@ -637,35 +345,25 @@
                     </div>
 
                     <!-- GCC Dropdown -->
-                    <div class="relative dropdown-container">
+                    <div class="dropdown-container" data-category="gcc">
                         <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">GCC </a>
-                        <div class="dropdown-content absolute top-full left-1/2 transform -translate-x-1/2 mt-2 w-80 bg-white rounded-lg shadow-xl border border-gray-200 opacity-0 invisible transition-all duration-300 z-50">
-                            <div class="p-4">
-                                <h3 class="text-gray-800 font-semibold text-sm mb-3">GCC Regional News</h3>
-                                <div class="space-y-3">
-                                    <div class="dropdown-item flex items-center space-x-3 p-2 rounded-lg cursor-pointer" data-category="gcc" data-id="1">
-                                        <img src="https://picsum.photos/seed/gcc1/60/60" alt="GCC Story 1" class="w-12 h-12 object-cover rounded">
-                                        <div class="flex-1">
-                                            <h4 class="text-gray-800 text-xs font-medium line-clamp-2">UAE Economic Growth Reaches New Heights</h4>
+                        <div class="dropdown-content">
+                            <h3 class="text-gray-800 font-semibold text-sm mb-3">GCC Regional News</h3>
+                            <div class="space-y-3">
+                                {% if blogs_by_category.gcc %}
+                                    {% for blog in blogs_by_category.gcc %}
+                                        <div class="dropdown-item flex items-center space-x-3 p-2 rounded-lg cursor-pointer" data-category="gcc" data-id="{{ blog.id }}">
+                                            <img src="{{ blog.image }}" alt="{{ blog.title }}" class="w-12 h-12 object-cover rounded">
+                                            <div class="flex-1">
+                                                <h4 class="text-gray-800 text-xs font-medium line-clamp-2">{{ blog.title }}</h4>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="dropdown-item flex items-center space-x-3 p-2 rounded-lg cursor-pointer" data-category="gcc" data-id="2">
-                                        <img src="https://picsum.photos/seed/gcc2/60/60" alt="GCC Story 2" class="w-12 h-12 object-cover rounded">
-                                        <div class="flex-1">
-                                            <h4 class="text-gray-800 text-xs font-medium line-clamp-2">Saudi Vision 2030 Progress Update</h4>
-                                        </div>
-                                    </div>
-                                    <div class="dropdown-item flex items-center space-x-3 p-2 rounded-lg cursor-pointer" data-category="gcc" data-id="3">
-                                        <img src="https://picsum.photos/seed/gcc3/60/60" alt="GCC Story 3" class="w-12 h-12 object-cover rounded">
-                                        <div class="flex-1">
-                                            <h4 class="text-gray-800 text-xs font-medium line-clamp-2">Qatar Innovation Hub Expansion Plans</h4>
-                                        </div>
-                                    </div>
-                                    <div class="border-t border-gray-200 pt-3 mt-3">
-                                        <div class="dropdown-item know-more-item flex items-center justify-center p-2 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
-                                            <span class="text-[#3533CD] text-xs font-medium mr-1">Know More</span>
-                                            <i class="ph ph-arrow-right text-[#3533CD] text-xs transition-all duration-200"></i>
-                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+                                <div class="border-t border-gray-200 pt-3 mt-3">
+                                    <div class="dropdown-item know-more-item flex items-center justify-center p-2 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
+                                        <span class="text-[#3533CD] text-xs font-medium mr-1">Know More</span>
+                                        <i class="ph ph-arrow-right text-[#3533CD] text-xs transition-all duration-200"></i>
                                     </div>
                                 </div>
                             </div>
@@ -673,35 +371,25 @@
                     </div>
 
                     <!-- Sustainability Dropdown -->
-                    <div class="relative dropdown-container">
+                    <div class="dropdown-container" data-category="sustainability">
                         <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Sustainability </a>
-                        <div class="dropdown-content absolute top-full left-1/2 transform -translate-x-1/2 mt-2 w-80 bg-white rounded-lg shadow-xl border border-gray-200 opacity-0 invisible transition-all duration-300 z-50">
-                            <div class="p-4">
-                                <h3 class="text-gray-800 font-semibold text-sm mb-3">Green Initiatives</h3>
-                                <div class="space-y-3">
-                                    <div class="dropdown-item flex items-center space-x-3 p-2 rounded-lg cursor-pointer" data-category="sustainability" data-id="1">
-                                        <img src="https://picsum.photos/seed/sus1/60/60" alt="Sustainability Story 1" class="w-12 h-12 object-cover rounded">
-                                        <div class="flex-1">
-                                            <h4 class="text-gray-800 text-xs font-medium line-clamp-2">Renewable Energy Progress in 2025</h4>
+                        <div class="dropdown-content">
+                            <h3 class="text-gray-800 font-semibold text-sm mb-3">Green Initiatives</h3>
+                            <div class="space-y-3">
+                                {% if blogs_by_category.sustainability %}
+                                    {% for blog in blogs_by_category.sustainability %}
+                                        <div class="dropdown-item flex items-center space-x-3 p-2 rounded-lg cursor-pointer" data-category="sustainability" data-id="{{ blog.id }}">
+                                            <img src="{{ blog.image }}" alt="{{ blog.title }}" class="w-12 h-12 object-cover rounded">
+                                            <div class="flex-1">
+                                                <h4 class="text-gray-800 text-xs font-medium line-clamp-2">{{ blog.title }}</h4>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="dropdown-item flex items-center space-x-3 p-2 rounded-lg cursor-pointer" data-category="sustainability" data-id="2">
-                                        <img src="https://picsum.photos/seed/sus2/60/60" alt="Sustainability Story 2" class="w-12 h-12 object-cover rounded">
-                                        <div class="flex-1">
-                                            <h4 class="text-gray-800 text-xs font-medium line-clamp-2">Carbon Neutrality Plans and Implementation</h4>
-                                        </div>
-                                    </div>
-                                    <div class="dropdown-item flex items-center space-x-3 p-2 rounded-lg cursor-pointer" data-category="sustainability" data-id="3">
-                                        <img src="https://picsum.photos/seed/sus3/60/60" alt="Sustainability Story 3" class="w-12 h-12 object-cover rounded">
-                                        <div class="flex-1">
-                                            <h4 class="text-gray-800 text-xs font-medium line-clamp-2">Circular Economy Solutions for Business</h4>
-                                        </div>
-                                    </div>
-                                    <div class="border-t border-gray-200 pt-3 mt-3">
-                                        <div class="dropdown-item know-more-item flex items-center justify-center p-2 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
-                                            <span class="text-[#3533CD] text-xs font-medium mr-1">Know More</span>
-                                            <i class="ph ph-arrow-right text-[#3533CD] text-xs transition-all duration-200"></i>
-                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+                                <div class="border-t border-gray-200 pt-3 mt-3">
+                                    <div class="dropdown-item know-more-item flex items-center justify-center p-2 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
+                                        <span class="text-[#3533CD] text-xs font-medium mr-1">Know More</span>
+                                        <i class="ph ph-arrow-right text-[#3533CD] text-xs transition-all duration-200"></i>
                                     </div>
                                 </div>
                             </div>
@@ -709,35 +397,25 @@
                     </div>
 
                     <!-- Semiconductor Dropdown -->
-                    <div class="relative dropdown-container">
+                    <div class="dropdown-container" data-category="semiconductor">
                         <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Semiconductor </a>
-                        <div class="dropdown-content absolute top-full left-1/2 transform -translate-x-1/2 mt-2 w-80 bg-white rounded-lg shadow-xl border border-gray-200 opacity-0 invisible transition-all duration-300 z-50">
-                            <div class="p-4">
-                                <h3 class="text-gray-800 font-semibold text-sm mb-3">Chip Industry Updates</h3>
-                                <div class="space-y-3">
-                                    <div class="dropdown-item flex items-center space-x-3 p-2 rounded-lg cursor-pointer" data-category="semiconductor" data-id="1">
-                                        <img src="https://picsum.photos/seed/semi1/60/60" alt="Semiconductor Story 1" class="w-12 h-12 object-cover rounded">
-                                        <div class="flex-1">
-                                            <h4 class="text-gray-800 text-xs font-medium line-clamp-2">Advanced Chip Manufacturing Technologies</h4>
+                        <div class="dropdown-content">
+                            <h3 class="text-gray-800 font-semibold text-sm mb-3">Chip Industry Updates</h3>
+                            <div class="space-y-3">
+                                {% if blogs_by_category.semiconductor %}
+                                    {% for blog in blogs_by_category.semiconductor %}
+                                        <div class="dropdown-item flex items-center space-x-3 p-2 rounded-lg cursor-pointer" data-category="semiconductor" data-id="{{ blog.id }}">
+                                            <img src="{{ blog.image }}" alt="{{ blog.title }}" class="w-12 h-12 object-cover rounded">
+                                            <div class="flex-1">
+                                                <h4 class="text-gray-800 text-xs font-medium line-clamp-2">{{ blog.title }}</h4>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="dropdown-item flex items-center space-x-3 p-2 rounded-lg cursor-pointer" data-category="semiconductor" data-id="2">
-                                        <img src="https://picsum.photos/seed/semi2/60/60" alt="Semiconductor Story 2" class="w-12 h-12 object-cover rounded">
-                                        <div class="flex-1">
-                                            <h4 class="text-gray-800 text-xs font-medium line-clamp-2">Supply Chain Recovery and Global Impact</h4>
-                                        </div>
-                                    </div>
-                                    <div class="dropdown-item flex items-center space-x-3 p-2 rounded-lg cursor-pointer" data-category="semiconductor" data-id="3">
-                                        <img src="https://picsum.photos/seed/semi3/60/60" alt="Semiconductor Story 3" class="w-12 h-12 object-cover rounded">
-                                        <div class="flex-1">
-                                            <h4 class="text-gray-800 text-xs font-medium line-clamp-2">Next-Gen Processors and AI Chips</h4>
-                                        </div>
-                                    </div>
-                                    <div class="border-t border-gray-200 pt-3 mt-3">
-                                        <div class="dropdown-item know-more-item flex items-center justify-center p-2 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
-                                            <span class="text-[#3533CD] text-xs font-medium mr-1">Know More</span>
-                                            <i class="ph ph-arrow-right text-[#3533CD] text-xs transition-all duration-200"></i>
-                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+                                <div class="border-t border-gray-200 pt-3 mt-3">
+                                    <div class="dropdown-item know-more-item flex items-center justify-center p-2 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
+                                        <span class="text-[#3533CD] text-xs font-medium mr-1">Know More</span>
+                                        <i class="ph ph-arrow-right text-[#3533CD] text-xs transition-all duration-200"></i>
                                     </div>
                                 </div>
                             </div>
@@ -767,14 +445,11 @@
                     </div>
                 </div>
             </div>
-            
-            <!-- Login button removed from here -->
         </div>
 
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden lg:hidden absolute top-[68px] left-0 w-full bg-[#121212] z-50 shadow-lg border-t border-[#2a2a2a] overflow-hidden">
             <div class="">
-                <!-- Login button -->
                 <div class="px-4 py-3">
                     <a href="#" class="login-btn block w-full text-center bg-gradient-to-r from-[#9747FF] to-[#CDA7FF] rounded-full px-4 py-2.5 text-white font-medium text-sm shadow-lg hover:-translate-y-0.5 transition-all duration-300 relative overflow-hidden">
                         <span class="relative z-10 flex items-center justify-center gap-2">
@@ -784,79 +459,14 @@
                         <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full animate-[shine_2s_infinite]"></div>
                     </a>
                 </div>
-
-                <div class="mobile-menu-item">
-                    <i class="ph ph-book-open text-white text-lg"></i>
-                    <span class="item-title">Magazine</span>
-                    <i class="ph ph-caret-right"></i>
-                </div>
-
-                <!-- <div class="mobile-menu-item">
-                    <i class="ph ph-rocket text-white text-lg"></i>
-                    <span class="item-title">Entrepreneurship</span>
-                    <i class="ph ph-caret-right"></i>
-                </div> -->
-
-                <!-- <div class="mobile-menu-item">
-                    <i class="ph ph-lightning text-white text-lg"></i>
-                    <span class="item-title">Startups</span>
-                    <i class="ph ph-caret-right"></i>
-                </div> -->
-
-                <div class="mobile-menu-item">
-                    <i class="ph ph-envelope-open text-white text-lg"></i>
-                    <span class="item-title">Newsletters</span>
-                    <i class="ph ph-caret-right"></i>
-                </div>
-
-                <!-- <div class="mobile-menu-item">
-                    <i class="ph ph-newspaper text-white text-lg"></i>
-                    <span class="item-title">Podcast</span>
-                    <i class="ph ph-caret-right"></i>
-                </div> -->                <div class="mobile-menu-item">
-                    <i class="ph ph-buildings text-white text-lg"></i>
-                    <span class="item-title">Business</span>
-                    <i class="ph ph-caret-right"></i>
-                </div>
-
-                <div class="mobile-menu-item">
-                    <i class="ph ph-gear text-white text-lg"></i>
-                    <span class="item-title">Technology</span>
-                    <i class="ph ph-caret-right"></i>
-                </div>
-
-                <!-- <div class="mobile-menu-item">
-                    <i class="ph ph-rocket text-white text-lg"></i>
-                    <span class="item-title">Entrepreneurship</span>
-                    <i class="ph ph-caret-right"></i>
-                </div> -->
-
-                <div class="mobile-menu-item">
-                    <i class="ph ph-globe text-white text-lg"></i>
-                    <span class="item-title">GCC</span>
-                    <i class="ph ph-caret-right"></i>
-                </div>
-
-                <div class="mobile-menu-item">
-                    <i class="ph ph-leaf text-white text-lg"></i>
-                    <span class="item-title">Sustainability</span>
-                    <i class="ph ph-caret-right"></i>
-                </div>
-
-                <div class="mobile-menu-item">
-                    <i class="ph ph-cpu text-white text-lg"></i>
-                    <span class="item-title">Semiconductor</span>
-                    <i class="ph ph-caret-right"></i>
-                </div>
-
-                <!-- <div class="mobile-menu-item">
-                    <i class="ph ph-briefcase text-white text-lg"></i>
-                    <span class="item-title">Careers</span>
-                    <i class="ph ph-caret-right"></i>
-                </div> -->
-                
+                <div class="mobile-menu-item"> <i class="ph ph-book-open text-white text-lg"></i> <span class="item-title">Magazine</span> <i class="ph ph-caret-right"></i> </div>
+                <div class="mobile-menu-item"> <i class="ph ph-envelope-open text-white text-lg"></i> <span class="item-title">Newsletters</span> <i class="ph ph-caret-right"></i> </div>
+                <div class="mobile-menu-item"> <i class="ph ph-buildings text-white text-lg"></i> <span class="item-title">Business</span> <i class="ph ph-caret-right"></i> </div>
+                <div class="mobile-menu-item"> <i class="ph ph-gear text-white text-lg"></i> <span class="item-title">Technology</span> <i class="ph ph-caret-right"></i> </div>
+                <div class="mobile-menu-item"> <i class="ph ph-globe text-white text-lg"></i> <span class="item-title">GCC</span> <i class="ph ph-caret-right"></i> </div>
+                <div class="mobile-menu-item"> <i class="ph ph-leaf text-white text-lg"></i> <span class="item-title">Sustainability</span> <i class="ph ph-caret-right"></i> </div>
+                <div class="mobile-menu-item"> <i class="ph ph-cpu text-white text-lg"></i> <span class="item-title">Semiconductor</span> <i class="ph ph-caret-right"></i> </div>
             </div>
-                
         </div>
     </header>
 
@@ -1157,7 +767,7 @@
     <section class="w-full aspect-[120/47] relative bg-contain bg-no-repeat bg-center bg-[url(static/images/fuel_ambition.png)]">
         
         <a href="#" class="absolute bottom-[18%] left-[50%] -translate-x-1/2 w-[20%] max-w-[300px] hover:opacity-90 transition-opacity">
-            <img src="static/images/checkout_magazine_button.png" alt="Checkout Magazine Button" class="block w-full h-auto">
+            <img src="static/images/checkout_magazine_button.png" alt="Footer Action Button" class="block w-full h-auto">
         </a>
     </section>
     
@@ -1168,34 +778,26 @@
             <h2 class="font-jakarta font-bold text-3xl text-[#0D0D0D]"><!-- <section_5_header> -->AI<!-- <section_5_header> --></h2>
             <div class="absolute h-1 w-16 bg-[#3533CD] bottom-0 left-0"></div>
           </div>
-          <!-- <a href="#" class="font-jakarta text-sm text-[#3533CD] hover:underline flex items-center">
-            View All Articles
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-            </svg>
-          </a> -->
         </div>
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
           <div class="lg:col-span-2 h-[500px]">
             <article class="group relative h-full">
               <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10"></div>
-              <!-- <section_5_image> -->
               <img 
                 src="https://picsum.photos/seed/ailifestyle1/800/450" 
                 alt="Institutional delivery article" 
                 class="w-full h-full object-cover"
               >
-              <!-- <section_5_image> -->
               <div class="absolute left-0 top-6 z-20 flex items-center">
-                <span class="inline-block px-3 py-1 ml-6 text-xs font-medium bg-[#3533CD] text-white"><!-- <section_5_category> -->Health<!-- <section_5_category> --></span>
-                <span class="ml-2 text-white/80 text-xs"><!-- <section_5_publisher> -->Craig Bator<!-- <section_5_publisher> --> • <!-- <section_5_date> -->May 12<!-- <section_5_date> --></span>
+                <span class="inline-block px-3 py-1 ml-6 text-xs font-medium bg-[#3533CD] text-white">Health</span>
+                <span class="ml-2 text-white/80 text-xs">Craig Bator • May 12</span>
               </div>
               <div class="absolute inset-x-0 bottom-0 p-6 z-20">
                 <h3 class="font-jakarta font-bold text-2xl text-white mb-2 truncate">
-                  <!-- <section_5_title> -->Institutional delivery vital for reducing maternal and neonatal deaths<!-- <section_5_title> -->
+                  Institutional delivery vital for reducing maternal and neonatal deaths
                 </h3>
                 <div class="flex items-center text-white/80 text-sm">
-                  <span><!-- <section_5_time> -->5<!-- <section_5_time> --> min read</span>
+                  <span>5 min read</span>
                 </div>
               </div>
             </article>
@@ -1203,102 +805,92 @@
           <div class="lg:col-span-1 flex flex-col gap-6 h-[500px]">
             <article class="bg-gray-50 flex-1">
               <div class="mb-2 flex items-center">
-                <span class="inline-block px-2 py-0.5 text-xs font-medium bg-[#3533CD] text-white"><!-- <section_5_left_section_category1> -->Psychology<!-- <section_5_left_section_category1> --></span>
+                <span class="inline-block px-2 py-0.5 text-xs font-medium bg-[#3533CD] text-white">Psychology</span>
                 <span class="ml-2 text-gray-500 text-xs flex items-center">
-                  <span><!-- <section_5_left_section_publisher1> -->Craig Bator<!-- <section_5_left_section_publisher1> --></span>
+                  <span>Craig Bator</span>
                   <span class="mx-1">•</span>
-                  <span><!-- <section_5_left_section_date1> -->May 10, 2025<!-- <section_5_left_section_date1> --></span>
+                  <span>May 10, 2025</span>
                 </span>
               </div>
               <h3 class="font-jakarta font-semibold text-lg text-gray-900 mb-2 truncate">
-                <!-- <section_5_left_section_title1> -->Being self-controlled child may lead to healthier middle-age<!-- <section_5_left_section_title1> -->
+                Being self-controlled child may lead to healthier middle-age
               </h3>
-              <!-- <section_5_left_section_image1> -->
               <img 
                 src="https://picsum.photos/seed/ailifestyle2/800/380" 
                 alt="Self-controlled child article" 
                 class="w-full h-[10.5rem] object-cover"
               >
-              <!-- <section_5_left_section_image1> -->
             </article>
             
             <article class="bg-gray-50 flex-1">
               <div class="mb-2 flex items-center">
-                <span class="inline-block px-2 py-0.5 text-xs font-medium bg-[#3533CD] text-white"><!-- <section_5_left_section_category2> -->Adventure<!-- <section_5_left_section_category2> --></span>
+                <span class="inline-block px-2 py-0.5 text-xs font-medium bg-[#3533CD] text-white">Adventure</span>
                 <span class="ml-2 text-gray-500 text-xs flex items-center">
-                  <span><!-- <section_5_left_section_publisher2> -->Craig Bator<!-- <section_5_left_section_publisher2> --></span>
+                  <span>Craig Bator</span>
                   <span class="mx-1">•</span>
-                  <span><!-- <section_5_left_section_date2> -->May 8, 2025<!-- <section_5_left_section_date2> --></span>
+                  <span>May 8, 2025</span>
                 </span>
               </div>
               <h3 class="font-jakarta font-semibold text-lg text-gray-900 mb-2 truncate">
-                <!-- <section_5_left_section_title2> -->Best things you can do on a solo mountain climb<!-- <section_5_left_section_title2> -->
+                Best things you can do on a solo mountain climb
               </h3>
-              <!-- <section_5_left_section_image2> -->
               <img 
                 src="https://picsum.photos/seed/ailifestyle3/400/240" 
                 alt="Solo mountain climb" 
                 class="w-full h-[10.5rem] object-cover"
               >
-              <!-- <section_5_left_section_image2> -->
             </article>
           </div>
         </div>
         
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           <article class="flex gap-4 items-start">
-            <!-- <section_5_bottom_section_image1> -->
               <img
               src="https://picsum.photos/seed/ailifestyle45/400/240"
               alt="Home design principles"
               class="w-16 h-16 object-cover flex-shrink-0"
             >
-              <!-- <section_5_bottom_section_image1> -->
             <div>
               <div class="flex items-center">
-                <span class="text-xs font-medium text-[#3533CD]"><!-- <section_5_bottom_section_category1> -->Interior<!-- <section_5_bottom_section_category1> --></span>
-                <span class="ml-2 text-gray-500 text-xs"><!-- <section_5_bottom_section_publisher1> -->Craig Bator<!-- <section_5_bottom_section_publisher1> --> • <!-- <section_5_bottom_section_date1> -->May 5<!-- <section_5_bottom_section_date1> --></span>
+                <span class="text-xs font-medium text-[#3533CD]">Interior</span>
+                <span class="ml-2 text-gray-500 text-xs">Craig Bator • May 5</span>
               </div>
               <h4 class="font-jakarta font-semibold text-base mt-1 mb-1 text-gray-900 overflow-hidden" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
-                <!-- <section_5_bottom_section_title1> -->How to use basic design principles in your home<!-- <section_5_bottom_section_title1> -->
+                How to use basic design principles in your home
               </h4>
             </div>
           </article>
           
             <article class="flex gap-4 items-start">
-            <!-- <section_5_bottom_section_image2> -->
             <img
               src="https://picsum.photos/seed/ailifestyle5/400/240"
               alt="Decorating with houseplants"
               class="w-16 h-16 object-cover flex-shrink-0"
             >
-            <!-- <section_5_bottom_section_image2> -->
             <div>
               <div class="flex items-center">
-              <span class="text-xs font-medium text-[#3533CD]"><!-- <section_5_bottom_section_category2> -->Home<!-- <section_5_bottom_section_category2> --></span>
-              <span class="ml-2 text-gray-500 text-xs"><!-- <section_5_bottom_section_publisher2> -->Craig Bator<!-- <section_5_bottom_section_publisher2> --> • <!-- <section_5_bottom_section_date2> -->May 3<!-- <section_5_bottom_section_date2> --></span>
+              <span class="text-xs font-medium text-[#3533CD]">Home</span>
+              <span class="ml-2 text-gray-500 text-xs">Craig Bator • May 3</span>
               </div>
               <h4 class="font-jakarta font-semibold text-base mt-1 mb-1 text-gray-900 overflow-hidden" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
-              <!-- <section_5_bottom_section_title2> -->Creative decorating with houseplants, from floor to ceiling<!-- <section_5_bottom_section_title2> -->
+                Creative decorating with houseplants, from floor to ceiling
               </h4>
             </div>
             </article>
 
             <article class="flex gap-4 items-start">
-            <!-- <section_5_bottom_section_image4> -->
             <img
               src="https://picsum.photos/seed/ailifestyle7/400/240"
               alt="Healthy cooking tips"
               class="w-16 h-16 object-cover flex-shrink-0"
             >
-            <!-- <section_5_bottom_section_image4> -->
             <div>
               <div class="flex items-center">
-              <span class="text-xs font-medium text-[#3533CD]"><!-- <section_5_bottom_section_category4> -->Food<!-- <section_5_bottom_section_category4> --></span>
-              <span class="ml-2 text-gray-500 text-xs"><!-- <section_5_bottom_section_publisher4> -->Craig Bator<!-- <section_5_bottom_section_publisher4> --> • <!-- <section_5_bottom_section_date4> -->Apr 25<!-- <section_5_bottom_section_date4> --></span>
+              <span class="text-xs font-medium text-[#3533CD]">Food</span>
+              <span class="ml-2 text-gray-500 text-xs">Craig Bator • Apr 25</span>
               </div>
               <h4 class="font-jakarta font-semibold text-base mt-1 mb-1 text-gray-900 overflow-hidden" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
-              <!-- <section_5_bottom_section_title4> -->Healthy cooking tips that will transform your kitchen experience<!-- <section_5_bottom_section_title4> -->
+                Healthy cooking tips that will transform your kitchen experience
               </h4>
             </div>
             </article>
@@ -1307,310 +899,58 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <article class="flex gap-4 items-start">
-            <!-- <section_5_bottom_section_image1> -->
               <img
               src="https://picsum.photos/seed/ailifestyle45/400/240"
               alt="Home design principles"
               class="w-16 h-16 object-cover flex-shrink-0"
             >
-              <!-- <section_5_bottom_section_image1> -->
             <div>
               <div class="flex items-center">
-                <span class="text-xs font-medium text-[#3533CD]"><!-- <section_5_bottom_section_category1> -->Interior<!-- <section_5_bottom_section_category1> --></span>
-                <span class="ml-2 text-gray-500 text-xs"><!-- <section_5_bottom_section_publisher1> -->Craig Bator<!-- <section_5_bottom_section_publisher1> --> • <!-- <section_5_bottom_section_date1> -->May 5<!-- <section_5_bottom_section_date1> --></span>
+                <span class="text-xs font-medium text-[#3533CD]">Interior</span>
+                <span class="ml-2 text-gray-500 text-xs">Craig Bator • May 5</span>
               </div>
               <h4 class="font-jakarta font-semibold text-base mt-1 mb-1 text-gray-900 overflow-hidden" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
-                <!-- <section_5_bottom_section_title1> -->How to use basic design principles in your home<!-- <section_5_bottom_section_title1> -->
+                How to use basic design principles in your home
               </h4>
             </div>
           </article>
           
             <article class="flex gap-4 items-start">
-            <!-- <section_5_bottom_section_image2> -->
             <img
               src="https://picsum.photos/seed/ailifestyle5/400/240"
               alt="Decorating with houseplants"
               class="w-16 h-16 object-cover flex-shrink-0"
             >
-            <!-- <section_5_bottom_section_image2> -->
             <div>
               <div class="flex items-center">
-              <span class="text-xs font-medium text-[#3533CD]"><!-- <section_5_bottom_section_category2> -->Home<!-- <section_5_bottom_section_category2> --></span>
-              <span class="ml-2 text-gray-500 text-xs"><!-- <section_5_bottom_section_publisher2> -->Craig Bator<!-- <section_5_bottom_section_publisher2> --> • <!-- <section_5_bottom_section_date2> -->May 3<!-- <section_5_bottom_section_date2> --></span>
+              <span class="text-xs font-medium text-[#3533CD]">Home</span>
+              <span class="ml-2 text-gray-500 text-xs">Craig Bator • May 3</span>
               </div>
               <h4 class="font-jakarta font-semibold text-base mt-1 mb-1 text-gray-900 overflow-hidden" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
-              <!-- <section_5_bottom_section_title2> -->Creative decorating with houseplants, from floor to ceiling<!-- <section_5_bottom_section_title2> -->
+                Creative decorating with houseplants, from floor to ceiling
               </h4>
             </div>
             </article>
             
             <article class="flex gap-4 items-start">
-            <!-- <section_5_bottom_section_image4> -->
             <img
               src="https://picsum.photos/seed/ailifestyle7/400/240"
               alt="Healthy cooking tips"
               class="w-16 h-16 object-cover flex-shrink-0"
             > 
-            <!-- <section_5_bottom_section_image4> -->
             <div>
               <div class="flex items-center">
-              <span class="text-xs font-medium text-[#3533CD]"><!-- <section_5_bottom_section_category4> -->Food<!-- <section_5_bottom_section_category4> --></span>
-              <span class="ml-2 text-gray-500 text-xs"><!-- <section_5_bottom_section_publisher4> -->Craig Bator<!-- <section_5_bottom_section_publisher4> --> • <!-- <section_5_bottom_section_date4> -->Apr 25<!-- <section_5_bottom_section_date4> --></span>
+              <span class="text-xs font-medium text-[#3533CD]">Food</span>
+              <span class="ml-2 text-gray-500 text-xs">Craig Bator • Apr 25</span>
               </div>
               <h4 class="font-jakarta font-semibold text-base mt-1 mb-1 text-gray-900 overflow-hidden" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
-              <!-- <section_5_bottom_section_title4> -->Healthy cooking tips that will transform your kitchen experience<!-- <section_5_bottom_section_title4> -->
+                Healthy cooking tips that will transform your kitchen experience
               </h4>
             </div>
             </article>
-        </div>  
+        </div>
       </div>
       <div class="md:mt-[1rem] md:ml-[38rem] md:mb-[-1rem]">
-        <a href="#" class="font-jakarta text-sm text-[#3533CD] hover:underline flex items-center">
-      View All Articles
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-      </svg>
-      </a>
-    </div>
-</section>
-
-    
-    <section class="w-full max-w-7xl mx-auto px-4 md:px-8 py-9">
-        <div class="flex flex-col md:flex-row items-stretch gap-8">
-            
-             <div class="w-full md:w-1/2 bg-gradient-to-r from-[#3533CD] to-[#0A0A24] rounded-[15px] p-8 flex flex-col text-white">
-                 <h2 class="font-jakarta font-bold text-3xl md:text-4xl leading-tight mb-4">Get Weekly WhatsApp Newsletters</h2>
-                 <p class="font-jakarta font-semibold text-lg md:text-xl leading-relaxed mb-6">on Latest Funding, Tech News and Business News?</p>
-                 <form class="flex flex-col gap-5"> 
-                     <div class="flex flex-col sm:flex-row gap-4">
-                         <input type="text" placeholder="First Name" required class="w-full sm:w-1/2 h-10 rounded-md border-none bg-white px-4 py-2 font-jakarta text-base text-gray-900 placeholder:text-gray-400 placeholder:font-normal focus:ring-2 focus:ring-bol-purple">
-                         <input type="text" placeholder="Last Name" required class="w-full sm:w-1/2 h-10 rounded-md border-none bg-white px-4 py-2 font-jakarta text-base text-gray-900 placeholder:text-gray-400 placeholder:font-normal focus:ring-2 focus:ring-bol-purple">
-                     </div>
-                     <div>
-                         <input type="text" placeholder="Company Name" required class="w-full h-10 rounded-md border-none bg-white px-4 py-2 font-jakarta text-base text-gray-900 placeholder:text-gray-400 placeholder:font-normal focus:ring-2 focus:ring-bol-purple">
-                     </div>
-                     <div class="flex flex-col sm:flex-row gap-4">
-                         <input type="text" placeholder="Your Designation" required class="flex-grow h-10 rounded-md border-none bg-white px-4 py-2 font-jakarta text-base text-gray-900 placeholder:text-gray-400 placeholder:font-normal focus:ring-2 focus:ring-bol-purple">
-                         <div class="flex-grow relative location-input-wrapper">
-                             <input type="text" placeholder="Location" id="location" required class="w-full h-10 rounded-md border-none bg-white px-4 py-2 font-jakarta text-base text-gray-900 placeholder:text-gray-400 placeholder:font-normal focus:ring-2 focus:ring-bol-purple appearance-none">
-                             
-                         </div>
-                     </div>
-                     <div class="flex flex-col gap-3">
-                         <div class="font-jakarta font-normal text-base">Choose Categories</div>
-                         <div class="flex flex-wrap gap-x-5 gap-y-3 items-center">
-                             <div class="flex items-center gap-2">
-                                 <input type="checkbox" id="cat-ai" class="appearance-none w-5 h-5 bg-white border border-[#B1B1B3] rounded-sm cursor-pointer relative checked:bg-bol-purple checked:border-bol-purple focus:ring-bol-purple">
-                                 <label for="cat-ai" class="font-jakarta font-bold text-base cursor-pointer select-none">AI</label>
-                             </div>
-                             <div class="flex items-center gap-2">
-                                 <input type="checkbox" id="cat-business" class="appearance-none w-5 h-5 bg-white border border-[#B1B1B3] rounded-sm cursor-pointer relative checked:bg-bol-purple checked:border-bol-purple focus:ring-bol-purple">
-                                 <label for="cat-business" class="font-jakarta font-bold text-base cursor-pointer select-none">Business</label>
-                             </div>
-                              <div class="flex items-center gap-2">
-                                 <input type="checkbox" id="cat-startups" class="appearance-none w-5 h-5 bg-white border border-[#B1B1B3] rounded-sm cursor-pointer relative checked:bg-bol-purple checked:border-bol-purple focus:ring-bol-purple">
-                                 <label for="cat-startups" class="font-jakarta font-bold text-base cursor-pointer select-none">Startups</label>
-                             </div>
-                             <div class="flex items-center gap-2">
-                                 <input type="checkbox" id="cat-entrep" class="appearance-none w-5 h-5 bg-white border border-[#B1B1B3] rounded-sm cursor-pointer relative checked:bg-bol-purple checked:border-bol-purple focus:ring-bol-purple">
-                                 <label for="cat-entrep" class="font-jakarta font-bold text-base cursor-pointer select-none">Entrepreneurship</label>
-                             </div>
-                         </div>
-                     </div>
-                     <div class="relative flex items-center w-full"> 
-                         <span class="absolute left-3 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center pointer-events-none">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" fill="#25D366" width="20" height="20">
-                                <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
-                            </svg>
-                         </span>
-                         <input type="tel" placeholder="Whatsapp No." required class="w-full h-10 rounded-md border-none bg-white pl-12 pr-4 py-2 font-jakarta text-base text-gray-900 placeholder:text-gray-400 placeholder:font-normal focus:ring-2 focus:ring-bol-purple">
-                     </div>
-                     <div class="mt-4"> 
-                         <button type="submit" class="px-6 py-2 bg-gradient-to-r from-black to-[#3533CD] rounded-full border-none font-jakarta font-semibold text-base text-center text-white cursor-pointer hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-black focus:ring-white transition duration-150 ease-in-out w-auto">Subscribe</button> 
-                     </div>
-                 </form>
-            </div>
-            
-            <div class="w-full md:w-1/2 h-80 md:h-auto bg-cover bg-center rounded-[15px] mt-4 md:mt-0 <section_6_image> bg-[url(https://picsum.photos/seed/whatsappvisual/716/625)] <section_6_image>"></div> 
-        </div>
-    </section>
-
-    
-    <section class="w-full px-6 md:px-8 bg-white" style="padding-top: 1rem; padding-bottom: 2rem;">
-    <div class="max-w-7xl mx-auto"></div>
-    <div class="flex justify-between items-center mb-8">
-      <div class="relative">
-      <h2 class="font-jakarta font-bold text-3xl text-[#0D0D0D]"><!-- <section_7_header> -->Lifestyle<!-- <section_7_header> --></h2>
-      <div class="absolute h-1 w-16 bg-[#3533CD] bottom-0 left-0"></div>
-      </div>
-      <!-- <a href="#" class="font-jakarta text-sm text-[#3533CD] hover:underline flex items-center">
-      View All Articles
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-      </svg>
-      </a> -->
-    </div>
-    
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-      <div class="lg:col-span-2 h-[500px]">
-      <article class="group relative h-full">
-        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10"></div>
-        <!-- <section_7_image> --><img 
-        src="https://picsum.photos/seed/ailifestyle1/800/450" 
-        alt="Institutional delivery article" 
-        class="w-full h-full object-cover"
-        ><!-- <section_7_image> -->
-        <div class="absolute left-0 top-6 z-20 flex items-center">
-        <span class="inline-block px-3 py-1 ml-6 text-xs font-medium bg-[#3533CD] text-white"><!-- <section_7_category> -->Health<!-- <section_7_category> --></span>
-        <span class="ml-2 text-white/80 text-xs"><!-- <section_7_publisher> -->Craig Bator<!-- <section_7_publisher> --> • <!-- <section_7_date> -->May 12<!-- <section_7_date> --></span>
-        </div>
-        <div class="absolute inset-x-0 bottom-0 p-6 z-20">
-        <h3 class="font-jakarta font-bold text-2xl text-white mb-2 truncate">
-          <!-- <section_7_title> -->'Institutional delivery vital for reducing maternal and neonatal deaths'<!-- <section_7_title> -->
-        </h3>
-        <div class="flex items-center text-white/80 text-sm">
-          <span><!-- <section_7_time> -->5 min read<!-- <section_7_time> --></span>
-        </div>
-        </div>
-      </article>
-      </div>
-      
-      <div class="lg:col-span-1 flex flex-col gap-6 h-[500px]">
-      <article class="bg-gray-50 flex-1">
-        <div class="mb-2 flex items-center">
-        <span class="inline-block px-2 py-0.5 text-xs font-medium bg-[#3533CD] text-white"><!-- <section_7_left_section_category1> -->Psychology<!-- <section_7_left_section_category1> --></span>
-        <span class="ml-2 text-gray-500 text-xs flex items-center">
-          <span><!-- <section_7_left_section_publisher1> -->Craig Bator<!-- <section_7_left_section_publisher1> --></span>
-          <span class="mx-1">•</span>
-          <span><!-- <section_7_left_section_date1> -->May 10, 2025<!-- <section_7_left_section_date1> --></span>
-        </span>
-        </div>
-        <h3 class="font-jakarta font-semibold text-lg text-gray-900 mb-2 truncate">
-        <!-- <section_7_left_section_title1> -->Being self-controlled child may lead to healthier middle-age<!-- <section_7_left_section_title1> -->
-        </h3>
-        <!-- <section_7_left_section_image1> --><img 
-        src="https://picsum.photos/seed/ailifestyle2/800/380" 
-        alt="Self-controlled child article" 
-        class="w-full h-[10.5rem] object-cover"
-        ><!-- <section_7_left_section_image1> -->
-      </article>
-      
-      <article class="bg-gray-50 flex-1 pt-[1rem]">
-        <div class="mb-2 flex items-center">
-        <span class="inline-block px-2 py-0.5 text-xs font-medium bg-[#3533CD] text-white"><!-- <section_7_left_section_category2> -->Adventure<!-- <section_7_left_section_category2> --></span>
-        <span class="ml-2 text-gray-500 text-xs flex items-center">
-          <span><!-- <section_7_left_section_publisher2> -->Craig Bator<!-- <section_7_left_section_publisher2> --></span>
-          <span class="mx-1">•</span>
-          <span><!-- <section_7_left_section_date2> -->May 8, 2025<!-- <section_7_left_section_date2> --></span>
-        </span>
-        </div>
-        <h3 class="font-jakarta font-semibold text-lg text-gray-900 mb-2 truncate">
-        <!-- <section_7_left_section_title2> -->Best things you can do on a solo mountain climb<!-- <section_7_left_section_title2> -->
-        </h3>
-        <!-- <section_7_left_section_image2> --><img 
-        src="https://picsum.photos/seed/ailifestyle3/400/240" 
-        alt="Solo mountain climb" 
-        class="w-full h-[10.5rem] object-cover"
-        ><!-- <section_7_left_section_image2> -->
-      </article>
-      </div>
-    </div>
-    
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-    <article class="flex gap-4 items-start">
-        <!-- <section_7_bottom_section_image1> -->
-        <img src="https://picsum.photos/seed/ailifestyle45/400/240" alt="Home design principles" class="w-16 h-16 object-cover flex-shrink-0">
-        <!-- <section_7_bottom_section_image1> -->
-        <div>
-            <div class="flex items-center">
-                <span class="text-xs font-medium text-[#3533CD]"><!-- <section_7_bottom_section_category1> -->Interior<!-- <section_7_bottom_section_category1> --></span>
-                <span class="ml-2 text-gray-500 text-xs"><!-- <section_7_bottom_section_publisher1> -->Craig Bator<!-- <section_7_bottom_section_publisher1> --> • <!-- <section_7_bottom_section_date1> -->May 5<!-- <section_7_bottom_section_date1> --></span>
-            </div>
-            <h4 class="font-jakarta font-semibold text-base mt-1 mb-1 text-gray-900 overflow-hidden" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
-                <!-- <section_7_bottom_section_title1> -->How to use basic design principles in your home<!-- <section_7_bottom_section_title1> -->
-            </h4>
-        </div>
-    </article>
-
-    <article class="flex gap-4 items-start">
-        <!-- <section_7_bottom_section_image2> -->
-        <img src="https://picsum.photos/seed/ailifestyle5/400/240" alt="Decorating with houseplants" class="w-16 h-16 object-cover flex-shrink-0">
-        <!-- <section_7_bottom_section_image2> -->
-        <div>
-            <div class="flex items-center">
-                <span class="text-xs font-medium text-[#3533CD]"><!-- <section_7_bottom_section_category2> -->Home<!-- <section_7_bottom_section_category2> --></span>
-                <span class="ml-2 text-gray-500 text-xs"><!-- <section_7_bottom_section_publisher2> -->Craig Bator<!-- <section_7_bottom_section_publisher2> --> • <!-- <section_7_bottom_section_date2> -->May 3<!-- <section_7_bottom_section_date2> --></span>
-            </div>
-            <h4 class="font-jakarta font-semibold text-base mt-1 mb-1 text-gray-900 overflow-hidden" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
-                <!-- <section_7_bottom_section_title2> -->Creative decorating with houseplants, from floor to ceiling<!-- <section_7_bottom_section_title2> -->
-            </h4>
-        </div>
-    </article>
-
-    <article class="flex gap-4 items-start">
-        <!-- <section_7_bottom_section_image4> -->
-        <img src="https://picsum.photos/seed/ailifestyle7/400/240" alt="Healthy cooking tips" class="w-16 h-16 object-cover flex-shrink-0">
-        <!-- <section_7_bottom_section_image4> -->
-        <div>
-            <div class="flex items-center">
-                <span class="text-xs font-medium text-[#3533CD]"><!-- <section_7_bottom_section_category4> -->Food<!-- <section_7_bottom_section_category4> --></span>
-                <span class="ml-2 text-gray-500 text-xs"><!-- <section_7_bottom_section_publisher4> -->Craig Bator<!-- <section_7_bottom_section_publisher4> --> • <!-- <section_7_bottom_section_date4> -->Apr 25<!-- <section_7_bottom_section_date4> --></span>
-            </div>
-            <h4 class="font-jakarta font-semibold text-base mt-1 mb-1 text-gray-900 overflow-hidden" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
-                <!-- <section_7_bottom_section_title4> -->Healthy cooking tips that will transform your kitchen experience<!-- <section_7_bottom_section_title4> -->
-            </h4>
-        </div>
-    </article>
-
-</div>
-
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    <article class="flex gap-4 items-start">
-        <!-- <section_7_bottom_section_image1> -->
-        <img src="https://picsum.photos/seed/ailifestyle45/400/240" alt="Home design principles" class="w-16 h-16 object-cover flex-shrink-0">
-        <!-- <section_7_bottom_section_image1> -->
-        <div>
-            <div class="flex items-center">
-                <span class="text-xs font-medium text-[#3533CD]"><!-- <section_7_bottom_section_category1> -->Interior<!-- <section_7_bottom_section_category1> --></span>
-                <span class="ml-2 text-gray-500 text-xs"><!-- <section_7_bottom_section_publisher1> -->Craig Bator<!-- <section_7_bottom_section_publisher1> --> • <!-- <section_7_bottom_section_date1> -->May 5<!-- <section_7_bottom_section_date1> --></span>
-            </div>
-            <h4 class="font-jakarta font-semibold text-base mt-1 mb-1 text-gray-900 overflow-hidden" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
-                <!-- <section_7_bottom_section_title1> -->How to use basic design principles in your home<!-- <section_7_bottom_section_title1> -->
-            </h4>
-        </div>
-    </article>
-
-    <article class="flex gap-4 items-start">
-        <!-- <section_7_bottom_section_image2> -->
-        <img src="https://picsum.photos/seed/ailifestyle5/400/240" alt="Decorating with houseplants" class="w-16 h-16 object-cover flex-shrink-0">
-        <!-- <section_7_bottom_section_image2> -->
-        <div>
-            <div class="flex items-center">
-                <span class="text-xs font-medium text-[#3533CD]"><!-- <section_7_bottom_section_category2> -->Home<!-- <section_7_bottom_section_category2> --></span>
-                <span class="ml-2 text-gray-500 text-xs"><!-- <section_7_bottom_section_publisher2> -->Craig Bator<!-- <section_7_bottom_section_publisher2> --> • <!-- <section_7_bottom_section_date2> -->May 3<!-- <section_7_bottom_section_date2> --></span>
-            </div>
-            <h4 class="font-jakarta font-semibold text-base mt-1 mb-1 text-gray-900 overflow-hidden" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
-                <!-- <section_7_bottom_section_title2> -->Creative decorating with houseplants, from floor to ceiling<!-- <section_7_bottom_section_title2> -->
-            </h4>
-        </div>
-    </article>
-
-    <article class="flex gap-4 items-start">
-        <!-- <section_7_bottom_section_image4> -->
-        <img src="https://picsum.photos/seed/ailifestyle7/400/240" alt="Healthy cooking tips" class="w-16 h-16 object-cover flex-shrink-0">
-        <!-- <section_7_bottom_section_image4> -->
-        <div>
-            <div class="flex items-center">
-                <span class="text-xs font-medium text-[#3533CD]"><!-- <section_7_bottom_section_category4> -->Food<!-- <section_7_bottom_section_category4> --></span>
-                <span class="ml-2 text-gray-500 text-xs"><!-- <section_7_bottom_section_publisher4> -->Craig Bator<!-- <section_7_bottom_section_publisher4> --> • <!-- <section_7_bottom_section_date4> -->Apr 25<!-- <section_7_bottom_section_date4> --></span>
-            </div>
-            <h4 class="font-jakarta font-semibold text-base mt-1 mb-1 text-gray-900 overflow-hidden" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
-                <!-- <section_7_bottom_section_title4> -->Healthy cooking tips that will transform your kitchen experience<!-- <section_7_bottom_section_title4> -->
-            </h4>
-        </div>
-    </article>
-    </div>
-    <div class="md:mt-[1rem] md:ml-[38rem] md:mb-[-1rem]">
         <a href="#" class="font-jakarta text-sm text-[#3533CD] hover:underline flex items-center">
       View All Articles
       <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -1775,5 +1115,4 @@
 
 </script>
 </body>
-</html>
 </html>
