@@ -17,7 +17,7 @@
 <style>
     @media screen and (min-width: 1024px) {
         body {
-            zoom:1.1;
+            zoom:1.2;
         }
     }
 
@@ -113,6 +113,7 @@
         cursor: pointer;
         display: flex;
         align-items: center;
+        justify-content: space-between;
         transition: background-color 0.2s ease;
     }
     
@@ -187,6 +188,36 @@
     .dropdown-item:hover .ph-arrow-right {
         transform: translateX(2px);
         color: #3533CD;
+    }
+
+    /* --- MOBILE ACCORDION STYLES --- */
+    .accordion-toggle .item-title {
+        flex-grow: 1;
+    }
+    .accordion-icon {
+        transition: transform 0.3s ease, color 0.3s ease;
+    }
+    .accordion-toggle[aria-expanded="true"] .accordion-icon {
+        transform: rotate(180deg);
+        color: white;
+    }
+    .accordion-content {
+        background-color: #1a1a1a;
+        overflow: hidden;
+        max-height: 0;
+        transition: max-height 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    .sub-menu-item {
+        display: flex;
+        align-items: center;
+        padding: 0.5rem;
+        border-radius: 0.375rem;
+        transition: background-color 0.2s ease;
+        color: white;
+        text-decoration: none;
+    }
+    .sub-menu-item:hover {
+        background-color: #252525;
     }
 </style>
 <script>
@@ -273,6 +304,38 @@
                     // window.location.href = `/category/${category}`;
                 }
             });
+
+            // --- Mobile Accordion Menu Logic ---
+            const mobileMenuContainer = document.getElementById('mobile-menu');
+            if (mobileMenuContainer) {
+                mobileMenuContainer.addEventListener('click', function(e) {
+                    const toggle = e.target.closest('.accordion-toggle');
+                    if (!toggle) return;
+
+                    e.preventDefault();
+                    const content = toggle.nextElementSibling;
+                    const isCurrentlyOpen = toggle.getAttribute('aria-expanded') === 'true';
+
+                    // Close all other accordions before opening a new one
+                    mobileMenuContainer.querySelectorAll('.accordion-toggle').forEach(otherToggle => {
+                        if (otherToggle !== toggle) {
+                            otherToggle.setAttribute('aria-expanded', 'false');
+                            const otherContent = otherToggle.nextElementSibling;
+                            if (otherContent) otherContent.style.maxHeight = '0px';
+                        }
+                    });
+
+                    // Toggle the clicked accordion
+                    if (isCurrentlyOpen) {
+                        toggle.setAttribute('aria-expanded', 'false');
+                        content.style.maxHeight = '0px';
+                    } else {
+                        toggle.setAttribute('aria-expanded', 'true');
+                        content.style.maxHeight = content.scrollHeight + 'px';
+                    }
+                });
+            }
+
         });
     </script>
 </head>
@@ -292,135 +355,7 @@
                 </div>
                 <div class="w-full h-[1px] bg-gradient-to-r from-black to-[#9747FF]"></div>
                 <div class="flex flex-row justify-end items-center w-full gap-[60px] px-2">
-                    <!-- Business Dropdown -->
-                    <div class="dropdown-container" data-category="business">
-                        <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Business </a>
-                        <div class="dropdown-content">
-                            <h3 class="text-gray-800 font-semibold text-sm mb-3">Latest Business Stories</h3>
-                            <div class="space-y-3">
-                                {% if blogs_by_category.business %}
-                                    {% for blog in blogs_by_category.business %}
-                                        <div class="dropdown-item flex items-center space-x-3 p-2 rounded-lg cursor-pointer" data-category="business" data-id="{{ blog.id }}">
-                                            <img src="{{ blog.image }}" alt="{{ blog.title }}" class="w-12 h-12 object-cover rounded">
-                                            <div class="flex-1">
-                                                <h4 class="text-gray-800 text-xs font-medium line-clamp-2">{{ blog.title }}</h4>
-                                            </div>
-                                        </div>
-                                    {% endfor %}
-                                {% endif %}
-                                <div class="border-t border-gray-200 pt-3 mt-3">
-                                    <div class="dropdown-item know-more-item flex items-center justify-center p-2 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
-                                        <span class="text-[#3533CD] text-xs font-medium mr-1">Know More</span>
-                                        <i class="ph ph-arrow-right text-[#3533CD] text-xs transition-all duration-200"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Technology Dropdown -->
-                    <div class="dropdown-container" data-category="technology">
-                        <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Technology </a>
-                        <div class="dropdown-content">
-                            <h3 class="text-gray-800 font-semibold text-sm mb-3">Tech Innovations</h3>
-                            <div class="space-y-3">
-                                {% if blogs_by_category.technology %}
-                                    {% for blog in blogs_by_category.technology %}
-                                        <div class="dropdown-item flex items-center space-x-3 p-2 rounded-lg cursor-pointer" data-category="technology" data-id="{{ blog.id }}">
-                                            <img src="{{ blog.image }}" alt="{{ blog.title }}" class="w-12 h-12 object-cover rounded">
-                                            <div class="flex-1">
-                                                <h4 class="text-gray-800 text-xs font-medium line-clamp-2">{{ blog.title }}</h4>
-                                            </div>
-                                        </div>
-                                    {% endfor %}
-                                {% endif %}
-                                <div class="border-t border-gray-200 pt-3 mt-3">
-                                    <div class="dropdown-item know-more-item flex items-center justify-center p-2 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
-                                        <span class="text-[#3533CD] text-xs font-medium mr-1">Know More</span>
-                                        <i class="ph ph-arrow-right text-[#3533CD] text-xs transition-all duration-200"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- GCC Dropdown -->
-                    <div class="dropdown-container" data-category="gcc">
-                        <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">GCC </a>
-                        <div class="dropdown-content">
-                            <h3 class="text-gray-800 font-semibold text-sm mb-3">GCC Regional News</h3>
-                            <div class="space-y-3">
-                                {% if blogs_by_category.gcc %}
-                                    {% for blog in blogs_by_category.gcc %}
-                                        <div class="dropdown-item flex items-center space-x-3 p-2 rounded-lg cursor-pointer" data-category="gcc" data-id="{{ blog.id }}">
-                                            <img src="{{ blog.image }}" alt="{{ blog.title }}" class="w-12 h-12 object-cover rounded">
-                                            <div class="flex-1">
-                                                <h4 class="text-gray-800 text-xs font-medium line-clamp-2">{{ blog.title }}</h4>
-                                            </div>
-                                        </div>
-                                    {% endfor %}
-                                {% endif %}
-                                <div class="border-t border-gray-200 pt-3 mt-3">
-                                    <div class="dropdown-item know-more-item flex items-center justify-center p-2 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
-                                        <span class="text-[#3533CD] text-xs font-medium mr-1">Know More</span>
-                                        <i class="ph ph-arrow-right text-[#3533CD] text-xs transition-all duration-200"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Sustainability Dropdown -->
-                    <div class="dropdown-container" data-category="sustainability">
-                        <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Sustainability </a>
-                        <div class="dropdown-content">
-                            <h3 class="text-gray-800 font-semibold text-sm mb-3">Green Initiatives</h3>
-                            <div class="space-y-3">
-                                {% if blogs_by_category.sustainability %}
-                                    {% for blog in blogs_by_category.sustainability %}
-                                        <div class="dropdown-item flex items-center space-x-3 p-2 rounded-lg cursor-pointer" data-category="sustainability" data-id="{{ blog.id }}">
-                                            <img src="{{ blog.image }}" alt="{{ blog.title }}" class="w-12 h-12 object-cover rounded">
-                                            <div class="flex-1">
-                                                <h4 class="text-gray-800 text-xs font-medium line-clamp-2">{{ blog.title }}</h4>
-                                            </div>
-                                        </div>
-                                    {% endfor %}
-                                {% endif %}
-                                <div class="border-t border-gray-200 pt-3 mt-3">
-                                    <div class="dropdown-item know-more-item flex items-center justify-center p-2 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
-                                        <span class="text-[#3533CD] text-xs font-medium mr-1">Know More</span>
-                                        <i class="ph ph-arrow-right text-[#3533CD] text-xs transition-all duration-200"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Semiconductor Dropdown -->
-                    <div class="dropdown-container" data-category="semiconductor">
-                        <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Semiconductor </a>
-                        <div class="dropdown-content">
-                            <h3 class="text-gray-800 font-semibold text-sm mb-3">Chip Industry Updates</h3>
-                            <div class="space-y-3">
-                                {% if blogs_by_category.semiconductor %}
-                                    {% for blog in blogs_by_category.semiconductor %}
-                                        <div class="dropdown-item flex items-center space-x-3 p-2 rounded-lg cursor-pointer" data-category="semiconductor" data-id="{{ blog.id }}">
-                                            <img src="{{ blog.image }}" alt="{{ blog.title }}" class="w-12 h-12 object-cover rounded">
-                                            <div class="flex-1">
-                                                <h4 class="text-gray-800 text-xs font-medium line-clamp-2">{{ blog.title }}</h4>
-                                            </div>
-                                        </div>
-                                    {% endfor %}
-                                {% endif %}
-                                <div class="border-t border-gray-200 pt-3 mt-3">
-                                    <div class="dropdown-item know-more-item flex items-center justify-center p-2 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
-                                        <span class="text-[#3533CD] text-xs font-medium mr-1">Know More</span>
-                                        <i class="ph ph-arrow-right text-[#3533CD] text-xs transition-all duration-200"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {{desktop_nav_links|safe}}
                 </div>
             </nav>
         </div>
@@ -432,40 +367,29 @@
                 <span class="hamburger-line block w-6 h-[2px] bg-white rounded-full"></span>
                 <span class="hamburger-line block w-6 h-[2px] bg-white rounded-full"></span>
             </button>
-            
-            <div class="h-full flex items-center px-3 flex-shrink-0">
-                <img src="static/icon/website_icon.png" alt="Brands Out Loud Logo" class="h-10 w-auto">
-            </div>
-            
+            <div class="h-full flex items-center px-3 flex-shrink-0"> <img src="/static/icon/website_icon.png" alt="Brands Out Loud Logo" class="h-10 w-auto"> </div>
             <div class="flex-grow px-3">
                 <div class="relative">
                     <input type="text" placeholder="Search..." class="search-input w-full bg-[#1e1e1e] text-white text-sm rounded-full pl-10 pr-4 py-2.5 border border-[#2a2a2a] focus:outline-none focus:border-[#9747FF] transition-all">
-                    <div class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
-                        <i class="ph ph-magnifying-glass text-gray-400 text-lg"></i>
-                    </div>
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none"> <i class="ph ph-magnifying-glass text-gray-400 text-lg"></i> </div>
                 </div>
             </div>
         </div>
 
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden lg:hidden absolute top-[68px] left-0 w-full bg-[#121212] z-50 shadow-lg border-t border-[#2a2a2a] overflow-hidden">
-            <div class="">
+        <div id="mobile-menu" class="hidden lg:hidden absolute top-[68px] left-0 w-full bg-[#121212] z-50 shadow-lg border-t border-[#2a2a2a] overflow-y-auto max-h-[calc(100vh-68px)]">
+            <div class="pb-4">
                 <div class="px-4 py-3">
                     <a href="#" class="login-btn block w-full text-center bg-gradient-to-r from-[#9747FF] to-[#CDA7FF] rounded-full px-4 py-2.5 text-white font-medium text-sm shadow-lg hover:-translate-y-0.5 transition-all duration-300 relative overflow-hidden">
-                        <span class="relative z-10 flex items-center justify-center gap-2">
-                            <i class="ph ph-sign-in text-lg"></i>
-                            <span>Login</span>
-                        </span>
+                        <span class="relative z-10 flex items-center justify-center gap-2"> <i class="ph ph-sign-in text-lg"></i> <span>Login</span> </span>
                         <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full animate-[shine_2s_infinite]"></div>
                     </a>
                 </div>
-                <div class="mobile-menu-item"> <i class="ph ph-book-open text-white text-lg"></i> <span class="item-title">Magazine</span> <i class="ph ph-caret-right"></i> </div>
-                <div class="mobile-menu-item"> <i class="ph ph-envelope-open text-white text-lg"></i> <span class="item-title">Newsletters</span> <i class="ph ph-caret-right"></i> </div>
-                <div class="mobile-menu-item"> <i class="ph ph-buildings text-white text-lg"></i> <span class="item-title">Business</span> <i class="ph ph-caret-right"></i> </div>
-                <div class="mobile-menu-item"> <i class="ph ph-gear text-white text-lg"></i> <span class="item-title">Technology</span> <i class="ph ph-caret-right"></i> </div>
-                <div class="mobile-menu-item"> <i class="ph ph-globe text-white text-lg"></i> <span class="item-title">GCC</span> <i class="ph ph-caret-right"></i> </div>
-                <div class="mobile-menu-item"> <i class="ph ph-leaf text-white text-lg"></i> <span class="item-title">Sustainability</span> <i class="ph ph-caret-right"></i> </div>
-                <div class="mobile-menu-item"> <i class="ph ph-cpu text-white text-lg"></i> <span class="item-title">Semiconductor</span> <i class="ph ph-caret-right"></i> </div>
+                <a class="mobile-menu-item"><div class="flex items-center"><i class="ph ph-book-open text-white text-lg"></i><span class="item-title">Magazine</span></div></a>
+                <a class="mobile-menu-item"><div class="flex items-center"><i class="ph ph-envelope-open text-white text-lg"></i><span class="item-title">Newsletters</span></div></a>
+                
+                {{mobile_nav_links|safe}}
+
             </div>
         </div>
     </header>
