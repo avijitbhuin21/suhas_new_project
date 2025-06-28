@@ -256,6 +256,7 @@ def get_blogs_list_db(search_keyword):
             supabase.table("blogs")
             .select("*")
             .order("created_at", desc=True)
+            .limit(3)
             .execute()
         )
     else:
