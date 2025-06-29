@@ -3,7 +3,7 @@ import json
 import re
 # Assuming these are in the same directory or accessible
 from static.data.html_templates import BLOGS_TEMPLATE
-from static.data.db_handler import get_blogs_list_db, get_leadership_details
+from static.data.db_handler import get_leadership_details
 from static.data.global_functions import *
 
 def slugify(text):

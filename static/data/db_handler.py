@@ -247,32 +247,36 @@ def update_blogs_to_db(blog_data):
         return {"status": "error", "message": str(e)}
 
 
+def get_blogs_list_db(search_keyword, page=1, per_page=100):
+    print(f"Searching blogs with keyword: {search_keyword}, page: {page}, per_page: {per_page}")
+    
+    offset = (page - 1) * per_page
 
-def get_blogs_list_db(search_keyword):
-    print(f"Searching blogs with keyword: {search_keyword}")
+    # Use count='exact' to get the total number of rows matching the query
+    query = supabase.table("blogs").select("*", count='exact')
+    
     if not search_keyword or search_keyword.strip() == "":
-        # Return all blogs if no search keyword
         response = (
-            supabase.table("blogs")
-            .select("*")
+            query
             .order("created_at", desc=True)
-            .limit(3)
+            .range(offset, offset + per_page - 1)
             .execute()
         )
     else:
-        # Search in multiple fields: id, category, and blog title within json_data
         search_term = f'%{search_keyword.replace(" ", "_").lower()}%'
         response = (
-            supabase.table("blogs")
-            .select("*")
-            .or_(f"id.ilike.{search_term},category.ilike.{search_term}")  # sub_category.ilike.{search_term} commented out
+            query
+            .or_(f"id.ilike.{search_term},category.ilike.{search_term}")
             .order("created_at", desc=True)
+            .range(offset, offset + per_page - 1)
             .execute()
         )
     
+    # The response object now contains 'data' and 'count'
     if response.data:
-        return response.data
-    return []
+        return response.data, response.count
+    return [], 0
+
 
 def delete_blog_from_db(blog_id):
     print(f"Deleting blog with ID: {blog_id}")

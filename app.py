@@ -153,11 +153,33 @@ def display_blog(blog_id):
 @app.route('/get_blog_list')
 def get_blog_list():
     search_keyword = request.args.get('search_keyword')
-    list_of_blogs = get_blogs_list_db(search_keyword=search_keyword)
+    list_of_blogs, _ = get_blogs_list_db(search_keyword=search_keyword, page=1, per_page=1000) # Assuming we get all for this admin search
     return jsonify({
         "status": "success",
         "blogs": list_of_blogs
     })
+
+@app.route('/get_paginated_business_cards')
+def get_paginated_business_cards():
+    """
+    API endpoint to fetch paginated business blog cards.
+    Accepts a 'page' query parameter.
+    """
+    try:
+        # Get page number from query params, default to 1 if not present or invalid
+        page = int(request.args.get('page', 1))
+    except (ValueError, TypeError):
+        page = 1
+
+    # Ensure page is a positive integer
+    if page < 1:
+        page = 1
+
+    # Call the helper function from global_functions.py to get the data
+    data = get_paginated_business_cards_data(page=page)
+    
+    # Return the data as a JSON response
+    return jsonify(data)
 
 
 #--------------------------------------------------------------------------------#

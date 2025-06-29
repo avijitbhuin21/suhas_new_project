@@ -1741,7 +1741,7 @@
             }
             
             // Create HTML list
-            const listItems = bulletPoints.map(point => `<li>${point}</li>`);
+            const listItems = bulletPoints.map(point => `<li> • ${point}</li>`);
             const formattedText = `<ul>\n${listItems.join('\n')}\n</ul>`;
             
             if (currentBulletTextInput) {
