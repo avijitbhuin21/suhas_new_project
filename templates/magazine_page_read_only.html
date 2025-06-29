@@ -1537,20 +1537,24 @@
                     app.pageFlip
                 ) {
                     try {
-                    app.isResizing = true; 
-                    const currentPageIndex = app.pageFlip.getCurrentPageIndex();
-                    
-                    const containerForFlipInstance = app.elements.flipBook;
-                    // Ensure container has valid dimensions before proceeding
-                    if (containerForFlipInstance.clientWidth > 0 && containerForFlipInstance.clientHeight > 0) {
-                        const pageW = Math.floor(containerForFlipInstance.clientWidth / 2);
-                        const pageH = containerForFlipInstance.clientHeight;
+                        app.isResizing = true; 
+                        const currentPageIndex = app.pageFlip.getCurrentPageIndex();
+                        
+                        const containerForFlipInstance = app.elements.flipBook;
+                        // Ensure container has valid dimensions before proceeding
+                        if (containerForFlipInstance.clientWidth > 0 && containerForFlipInstance.clientHeight > 0) {
+                            // --- START CHANGE: Responsive Logic ---
+                            const mobileBreakpoint = 768;
+                            const isMobile = window.innerWidth < mobileBreakpoint;
+                            
+                            const pageW = isMobile ? containerForFlipInstance.clientWidth : Math.floor(containerForFlipInstance.clientWidth / 2);
+                            const pageH = containerForFlipInstance.clientHeight;
 
-                        await initFlipbookInstance(currentPageIndex, pageW, pageH);
-                        // forcePageUpdateAfterResize will be called by initFlipbookInstance or its 'changeState' handler
-                    } else {
-                        console.warn("ResizeObserver: flipBook container has zero dimensions. Skipping reinitialization.");
-                    }
+                            await initFlipbookInstance(currentPageIndex, pageW, pageH, isMobile);
+                            // --- END CHANGE ---
+                        } else {
+                            console.warn("ResizeObserver: flipBook container has zero dimensions. Skipping reinitialization.");
+                        }
                     } catch (error) {
                      console.error("Error handling resize observer event:", error);
                     } finally {
@@ -1938,16 +1942,19 @@
             
             if (containerWidth <= 0 || containerHeight <= 0) {
                 console.error("Flipbook container has zero dimensions before initial init.");
-                // Fallback or error display
                 app.elements.flipBook.innerHTML = `<div class="p-5 text-red-500 text-center">Error: Flipbook container has invalid dimensions. Cannot display content.</div>`;
                 app.elements.loadingOverlay.style.display = "none";
                 return;
             }
 
-            const pageWidth = Math.floor(containerWidth / 2);
+            // --- START CHANGE: Responsive Logic ---
+            const mobileBreakpoint = 768;
+            const isMobile = window.innerWidth < mobileBreakpoint;
+            const pageWidth = isMobile ? containerWidth : Math.floor(containerWidth / 2);
             const pageHeight = containerHeight;
 
-            await initFlipbookInstance(0, pageWidth, pageHeight); 
+            await initFlipbookInstance(0, pageWidth, pageHeight, isMobile); 
+            // --- END CHANGE ---
 
             const initialPages = new Set([
               1, 
@@ -1968,8 +1975,7 @@
             await waitForReflow(); 
             initializeProgressBar();
             updateProgressBar(0, totalPages); 
-          } catch (error)
- {
+          } catch (error) {
             console.error("Error loading PDF:", error);
             app.elements.flipBook.innerHTML = `
                     <div class="p-5 text-red-500 flex flex-col items-center justify-center">
@@ -1983,9 +1989,10 @@
           }
         }
 
-        async function initFlipbookInstance(startPageIdx, pageW, pageH) {
-          if (app.isResizing && app.pageFlip) { // Check global resizing flag
-             // console.warn("Attempted to re-init flipbook while already resizing. Aborting.");
+        // --- START CHANGE: Update function to accept `isMobile` flag ---
+        async function initFlipbookInstance(startPageIdx, pageW, pageH, isMobile) {
+        // --- END CHANGE ---
+          if (app.isResizing && app.pageFlip) {
              return;
           }
 
@@ -2011,15 +2018,17 @@
               width: pageW, 
               height: pageH, 
               size: "fixed", 
-              minWidth: Math.min(300, pageW), // Adjusted minWidth
+              minWidth: Math.min(300, pageW),
               maxWidth: pageW,
-              minHeight: Math.min(400, pageH), // Adjusted minHeight
+              minHeight: Math.min(400, pageH),
               maxHeight: pageH,
               maxShadowOpacity: 0.5,
               showCover: true,
               mobileScrollSupport: true,
               flippingTime: 800,
-              usePortrait: false, 
+              // --- START CHANGE: Set usePortrait based on mobile state ---
+              usePortrait: isMobile, 
+              // --- END CHANGE ---
               startPage: startPageIdx, 
               startZIndex: 20,
               autoSize: false, 
@@ -2042,18 +2051,15 @@
               ),
             ]);
 
-            app.pageFlip.off("flip"); // Remove previous listener if any
-            app.pageFlip.off("changeState"); // Remove previous listener if any
+            app.pageFlip.off("flip");
+            app.pageFlip.off("changeState");
             
             app.pageFlip.on("flip", handlePageFlipEvent); 
             app.pageFlip.on("changeState", (e) => { 
-                if (e.data === "read") { 
-                    // Trigger page render for current view when state changes to read
-                    // This helps ensure pages are updated after resize/re-init
+                if (e.data === "read") {
                     handlePageFlipEvent({ data: app.pageFlip.getCurrentPageIndex() });
                 }
             });
-            // Initial trigger after loading/re-init
             handlePageFlipEvent({ data: startPageIdx });
 
             return app.pageFlip;
