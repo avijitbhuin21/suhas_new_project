@@ -101,7 +101,7 @@ def generate_mobile_accordion_html(blogs_by_category):
     return accordion_html
 
 
-def get_blogs_list_db(search_keyword,limit):
+def get_blogs_list_db(search_keyword,limit=100):
     print(f"Searching blogs with keyword: {search_keyword}")
     if not search_keyword or search_keyword.strip() == "":
         # Return all blogs if no search keyword
