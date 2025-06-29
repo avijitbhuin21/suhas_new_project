@@ -732,7 +732,7 @@
                     <!-- Category Section -->
                     <div class="category-section-wrapper p-4 rounded-lg bg-white/[0.01] border border-white/[0.03] mb-6">
                         <h3 class="text-lg font-medium text-white/90 mb-4 flex items-center">
-                            <i data-lucide="tag" class="w-5 h-5 mr-2"></i>Category
+                            <i data-lucide="tag" class="w-5 h-5 mr-2"></i>Category<span class="text-red-400">*</span>
                         </h3>
                         
                         <div class="form-row">
@@ -883,7 +883,7 @@
                         </div>
                         <div class="form-item">
                             <label class="form-label" for="blogDate">
-                                <i data-lucide="calendar" class="w-4 h-4 inline mr-2"></i>Blog Publish Date (Optional)
+                                <i data-lucide="calendar" class="w-4 h-4 inline mr-2"></i>Blog Publish Date
                             </label>
                             <input
                                 type="date"
@@ -928,15 +928,13 @@
 
                     <!-- Ad Banner One (Beside Leadership Spotlight) -->
                     <div class="form-item">
-                        <label class="form-label text-sm flex items-center mb-2">
-                            <i data-lucide="image" class="w-4 h-4 mr-2"></i>Ad Banner (Beside Leadership Spotlight)
-                        
-                        <div class="flex items-center gap-2">
-                                <span class="text-white/40 text-xs">Width: 576</span>
-                                <span class="text-white/40 text-xs">×</span>
-                                <span class="text-white/40 text-xs">Height: 512</span>
-                        </div>
+                        <div class="form-item">
+                        <div class="flex items-center justify-between mb-2">
+                        <label class="form-label text-sm flex items-center">
+                            <i data-lucide="image" class="w-4 h-4 mr-2"></i>Ad Banner 
                         </label>
+                        <span class="text-white/40 text-xs">W:512 X H:512</span>
+                        </div>
                         <div class="space-y-2">
                             <input type="url" name="adBannerBesideUrl" class="form-input" placeholder="Image URL..." value="">
                             <input type="url" name="adBannerBesideHref" class="form-input" placeholder="Href for ad banner..." value="">
@@ -945,15 +943,12 @@
 
                     <!-- Ad Banner Two (Below Leadership Spotlight) -->
                     <div class="form-item">
-                        <label class="form-label text-sm flex items-center mb-2">
-                            <i data-lucide="image" class="w-4 h-4 mr-2"></i>Ad Banner (Below Leadership Spotlight)
-                        
-                        <div class="flex items-center gap-2">
-                                <span class="text-white/40 text-xs">Width: 1406</span>
-                                <span class="text-white/40 text-xs">×</span>
-                                <span class="text-white/40 text-xs">Height: 236</span>
-                        </div>
+                        <div class="flex items-center justify-between mb-2">
+                        <label class="form-label text-sm flex items-center">
+                            <i data-lucide="image" class="w-4 h-4 mr-2"></i>Ad Banner 
                         </label>
+                        <span class="text-white/40 text-xs">W:1400 X H:200</span>
+                        </div>
                         <div class="space-y-2">
                             <input type="url" name="adBannerBelowUrl" class="form-input" placeholder="Image URL..." value="">
                             <input type="url" name="adBannerBelowHref" class="form-input" placeholder="Href for ad banner..." value="">

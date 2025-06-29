@@ -444,16 +444,20 @@
                       containerForFlipInstance.clientWidth > 0 &&
                       containerForFlipInstance.clientHeight > 0
                     ) {
-                      const pageW = Math.floor(
-                        containerForFlipInstance.clientWidth / 2
-                      );
+                      // --- START CHANGE: Responsive Logic ---
+                      const mobileBreakpoint = 768;
+                      const isMobile = window.innerWidth < mobileBreakpoint;
+                      
+                      const pageW = isMobile ? containerForFlipInstance.clientWidth : Math.floor(containerForFlipInstance.clientWidth / 2);
                       const pageH = containerForFlipInstance.clientHeight;
-
+                      
                       await initFlipbookInstance(
                         currentPageIndex,
                         pageW,
-                        pageH
+                        pageH,
+                        isMobile // Pass mobile state
                       );
+                      // --- END CHANGE ---
                     } else {
                       console.warn(
                         "ResizeObserver: flipBook container has zero dimensions. Skipping reinitialization."
@@ -886,12 +890,22 @@
               return;
             }
 
-            const pageWidth = Math.floor(containerWidth / 2);
+            // --- START CHANGE: Responsive Logic ---
+            const mobileBreakpoint = 768; // Mobile breakpoint in pixels
+            const isMobile = window.innerWidth < mobileBreakpoint;
+
+            // For mobile, page width is the full container width. For desktop, it's half.
+            const pageWidth = isMobile ? containerWidth : Math.floor(containerWidth / 2);
             const pageHeight = containerHeight;
+            // --- END CHANGE ---
 
             // Convert page number to zero-based index for flipbook
             const initialPageIndex = Math.max(0, INITIAL_PAGE_NUMBER - 1);
-            await initFlipbookInstance(initialPageIndex, pageWidth, pageHeight);
+            
+            // --- START CHANGE: Pass `isMobile` flag ---
+            await initFlipbookInstance(initialPageIndex, pageWidth, pageHeight, isMobile);
+            // --- END CHANGE ---
+
 
             // Calculate initial pages to render around the starting page
             const startPage = INITIAL_PAGE_NUMBER;
@@ -936,7 +950,9 @@
           }
         }
 
-        async function initFlipbookInstance(startPageIdx, pageW, pageH) {
+        // --- START CHANGE: Update function to accept `isMobile` flag ---
+        async function initFlipbookInstance(startPageIdx, pageW, pageH, isMobile) {
+        // --- END CHANGE ---
           if (app.isResizing && app.pageFlip) {
             return;
           }
@@ -978,7 +994,9 @@
               showCover: true,
               mobileScrollSupport: true,
               flippingTime: 800,
-              usePortrait: false,
+              // --- START CHANGE: Set usePortrait based on mobile state ---
+              usePortrait: isMobile,
+              // --- END CHANGE ---
               startPage: startPageIdx,
               startZIndex: 20,
               autoSize: false,
