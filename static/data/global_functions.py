@@ -7,116 +7,15 @@ def sha256_hash(input_string):
     sha256_hash = hashlib.sha256(encoded_string)
     return sha256_hash.hexdigest()
 
-def generate_header_dropdowns_html(blogs_by_category):
-    """Generates the HTML for the header navigation dropdowns."""
-    nav_links_html = []
-    
-    category_map = {
-        "business": "Latest Business Stories",
-        "technology": "Tech Innovations",
-        "gcc": "GCC Regional News",
-        "sustainability": "Green Initiatives",
-        "semiconductor": "Chip Industry Updates"
-    }
-
-    for category, blogs in blogs_by_category.items():
-        category_title = category_map.get(category, f"Latest in {category.capitalize()}")
-        
-        items_html = ""
-        for blog in blogs:
-            items_html += f'''
-            <a href="/blog/{blog.get('id')}" class="dropdown-item" data-category="{category}" data-id="{blog.get('id')}">
-            <div class="dropdown-item flex items-center space-x-3 p-2 rounded-lg cursor-pointer" data-category="{category}" data-id="{blog.get('id')}">
-                <img src="{blog.get('image')}" alt="{blog.get('title')}" class="w-12 h-12 object-cover rounded">
-                <div class="flex-1">
-                    <h4 class="text-gray-800 text-xs font-medium line-clamp-2">{blog.get('title')}</h4>
-                </div>
-            </div>
-            </a>
-            '''
-
-        dropdown_html = f'''
-        <div class="dropdown-container" data-category="{category}">
-            <a href="/{category}" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">{category.capitalize()}</a>
-            <div class="dropdown-content">
-                <h3 class="text-gray-800 font-semibold text-sm mb-3">{category_title}</h3>
-                <div class="space-y-3">
-                    {items_html}
-                    <div class="border-t border-gray-200 pt-3 mt-3">
-                        <div class="dropdown-item know-more-item flex items-center justify-center p-2 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
-                            <a href="/{category}"><span class="text-[#3533CD] text-xs font-medium mr-1">Know More</span></a>
-                            <i class="ph ph-arrow-right text-[#3533CD] text-xs transition-all duration-200"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        '''
-        nav_links_html.append(dropdown_html)
-        
-    return "\n".join(nav_links_html)
-
-def generate_mobile_accordion_html(blogs_by_category):
-    """Generates the HTML for the mobile accordion menu."""
-    
-    icon_map = {
-        "business": "ph-buildings",
-        "technology": "ph-gear",
-        "gcc": "ph-globe",
-        "sustainability": "ph-leaf",
-        "semiconductor": "ph-cpu"
-    }
-    accordion_html = ""
-    for category, blogs in blogs_by_category.items():
-        icon_class = icon_map.get(category, "ph-article")
-        blog_items_html = ""
-        for blog in blogs:
-            blog_items_html += f'''
-            <a href="/blog/{blog.get('id')}" class="sub-menu-item" data-category="{category}" data-id="{blog.get('id')}">
-                <img src="{blog.get('image')}" alt="{blog.get('title')}" class="w-10 h-10 object-cover rounded-md flex-shrink-0">
-                <div class="flex-1 ml-3"><h4 class="text-white text-xs font-medium line-clamp-2">{blog.get('title')}</h4></div>
-            </a>
-            '''
-        accordion_html += f'''
-        <div>
-            <a href="#" class="accordion-toggle mobile-menu-item" aria-expanded="false">
-                <div class="flex items-center">
-                    <i class="ph {icon_class} text-white text-lg"></i>
-                    <span class="item-title">{category.capitalize()}</span>
-                </div>
-                <i class="ph ph-caret-down accordion-icon text-lg text-gray-400"></i>
-            </a>
-            <div class="accordion-content">
-                <div class="p-3 space-y-2">
-                    {blog_items_html}
-                    <div class="pt-2 mt-2 border-t border-gray-700/50">
-                        <a href="/{category}" class="sub-menu-item know-more-item-mobile justify-center bg-gray-700/50 hover:bg-gray-600/50">
-                            <span class="text-bol-purple-light text-xs font-medium mr-1">Know More</span>
-                            <i class="ph ph-arrow-right text-bol-purple-light text-xs"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        '''
-    return accordion_html
+#--------------------------------------------------------------------------------#
+#                               HOMEPAGE HELPERS                                 #
+#--------------------------------------------------------------------------------#
 
 
-def get_blogs_for_header(limit):
-    """Helper function to fetch blog data for header dropdowns."""
-    categories = ["Business", "Technology", "GCC", "Sustainability", "Semiconductor"]
-    blogs_by_category = {}
-    for category in categories:
-        blogs, _ = get_blogs_list_db(search_keyword=category, page=1, per_page=limit)
-        blogs_by_category[category.lower()] = [
-            {
-                "id": blog.get("id"),
-                "title": blog.get("json_data", {}).get("blogTitle"),
-                "image": blog.get("json_data", {}).get("mainImageUrl"),
-            }
-            for blog in blogs
-        ]
-    return blogs_by_category
+
+
+
+
 
 def _generate_business_card_items_html(blogs):
     """Helper to generate just the HTML for the blog cards."""
