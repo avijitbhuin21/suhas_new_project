@@ -258,7 +258,7 @@ def get_paginated_business_cards():
 
 @app.route("/manage_files")
 def manage_files():
-    return render_template("manage_files.html")
+    return render_template("admin_pages/manage_files.html")
 
 
 @app.route("/upload_file", methods=["POST"])
