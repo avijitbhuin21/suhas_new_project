@@ -6,6 +6,8 @@ from static.data.html_templates import BLOGS_TEMPLATE
 from static.data.db_handler import get_leadership_details
 from static.data.global_functions import *
 
+from static.data.page_handlers.general_elements.header import *
+
 def slugify(text):
     s = str(text).lower().strip()
     s = re.sub(r'[\s.&]+', '-', s)
@@ -211,10 +213,10 @@ def get_blog_html(demo_json_data):
     
     base_blog = BLOGS_TEMPLATE.replace('[[seo_meta_tags]]', meta_tags)
 
-    nav_links_html = generate_header_dropdowns_html(blogs_by_category)
+    nav_links_html = desktop_menu_header_elements(blogs_by_category)
     base_blog = base_blog.replace('[[desktop_nav_links]]', nav_links_html)
 
-    mobile_nav_links_html = generate_mobile_accordion_html(blogs_by_category)
+    mobile_nav_links_html = mobile_menu_header_elements(blogs_by_category)
     base_blog = base_blog.replace('[[mobile_nav_links]]', mobile_nav_links_html)
     
     blog_category = demo_json_data.get('blogCategory', 'Uncategorized')
