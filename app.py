@@ -396,7 +396,7 @@ def delete_file():
 
 @app.route("/magazine_page")
 def magazine_page():
-    return render_template("magazine_page.html")
+    return render_template("magazine_page/magazine_page.html")
 
 
 @app.route("/magazine/<magazine_id>")
@@ -405,7 +405,7 @@ def magazine_page_read_only(magazine_id):
     if not data:
         return render_template("not_found/404.html"), 404
 
-    magazine_html = open("templates/magazine_page_read_only.html").read()
+    magazine_html = open("templates/magazine_page/magazine_page_read_only.html").read()
 
     updated_html = magazine_html.replace("[[pdf_url]]", data.get("pdf_url", ""))
     updated_html = updated_html.replace("[[magazine_id]]", magazine_id)
@@ -429,7 +429,7 @@ def magazine_page_flipbook_view(magazine_id=None):
     if not data:
         return render_template("not_found/404.html"), 404
 
-    magazine_html = open("templates/magazine_page_flipbook.html").read()
+    magazine_html = open("templates/magazine_page/magazine_page_flipbook.html").read()
     updated_html = magazine_html.replace("[[pdf_url]]", data.get("pdf_url", ""))
     updated_html = updated_html.replace("[[page_number]]", page_number)
 
@@ -515,3 +515,23 @@ if __name__ == "__main__":
 
 if __name__ == "__main__":
     app.run(port=5000, debug=True)
+
+
+
+
+# add a keyword input to the blogs when editing /adding a blog. 
+# add another field as volume that is being returned with this.
+
+# you can add multiple keywords and volumes. (one keyword can have one volume)
+
+# also add a tickbos saying this blog does not need a keyword to be publish.
+
+# add multiple search for each author, title, keyword, category and subcategory.
+
+# re structure the admin panle.
+# track only h2 nd h3 tags in the blog for TOC.
+
+# add the login functionality in main page. and every other page.
+# add the loading screen to the blogs.
+
+# add the ads manager and upload magazines to admin panel.
