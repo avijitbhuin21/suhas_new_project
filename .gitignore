@@ -5,3 +5,5 @@ temp.py
 venv/
 
 .env
+
+static/data/__pycache__/

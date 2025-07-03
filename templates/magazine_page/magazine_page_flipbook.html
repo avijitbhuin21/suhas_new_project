@@ -187,35 +187,13 @@
       >
         <div
           id="flipbook-wrapper"
-          class="relative w-full max-w-[1100px] h-[72vh] sm:h-[720px] mt-5 mx-auto book-container"
+          class="relative w-full max-w-[1100px] h-[72vh] sm:h-[720px] mx-auto book-container"
         >
           <!-- Loading overlay -->
           <div
             id="loading-overlay"
-            class="absolute inset-0 bg-black bg-opacity-80 flex flex-col justify-center items-center z-50"
-          >
-            <svg
-              class="spinner w-16 h-16 text-blue-500"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <circle
-                class="opacity-25"
-                cx="12"
-                cy="12"
-                r="10"
-                stroke="currentColor"
-                stroke-width="4"
-              ></circle>
-              <path
-                class="opacity-75"
-                fill="currentColor"
-                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-              ></path>
-            </svg>
-            <p class="mt-4 text-white">Loading your PDF...</p>
-          </div>
+            class="absolute inset-0 flex flex-col justify-center items-center z-50"
+          ></div>
           <div
             id="my-flipbook-container"
             class="w-full h-full max-w-[1100px] max-h-[720px]"
@@ -444,16 +422,20 @@
                       containerForFlipInstance.clientWidth > 0 &&
                       containerForFlipInstance.clientHeight > 0
                     ) {
-                      const pageW = Math.floor(
-                        containerForFlipInstance.clientWidth / 2
-                      );
+                      // --- START CHANGE: Responsive Logic ---
+                      const mobileBreakpoint = 768;
+                      const isMobile = window.innerWidth < mobileBreakpoint;
+                      
+                      const pageW = isMobile ? containerForFlipInstance.clientWidth : Math.floor(containerForFlipInstance.clientWidth / 2);
                       const pageH = containerForFlipInstance.clientHeight;
-
+                      
                       await initFlipbookInstance(
                         currentPageIndex,
                         pageW,
-                        pageH
+                        pageH,
+                        isMobile // Pass mobile state
                       );
+                      // --- END CHANGE ---
                     } else {
                       console.warn(
                         "ResizeObserver: flipBook container has zero dimensions. Skipping reinitialization."
@@ -886,12 +868,22 @@
               return;
             }
 
-            const pageWidth = Math.floor(containerWidth / 2);
+            // --- START CHANGE: Responsive Logic ---
+            const mobileBreakpoint = 768; // Mobile breakpoint in pixels
+            const isMobile = window.innerWidth < mobileBreakpoint;
+
+            // For mobile, page width is the full container width. For desktop, it's half.
+            const pageWidth = isMobile ? containerWidth : Math.floor(containerWidth / 2);
             const pageHeight = containerHeight;
+            // --- END CHANGE ---
 
             // Convert page number to zero-based index for flipbook
             const initialPageIndex = Math.max(0, INITIAL_PAGE_NUMBER - 1);
-            await initFlipbookInstance(initialPageIndex, pageWidth, pageHeight);
+            
+            // --- START CHANGE: Pass `isMobile` flag ---
+            await initFlipbookInstance(initialPageIndex, pageWidth, pageHeight, isMobile);
+            // --- END CHANGE ---
+
 
             // Calculate initial pages to render around the starting page
             const startPage = INITIAL_PAGE_NUMBER;
@@ -936,7 +928,9 @@
           }
         }
 
-        async function initFlipbookInstance(startPageIdx, pageW, pageH) {
+        // --- START CHANGE: Update function to accept `isMobile` flag ---
+        async function initFlipbookInstance(startPageIdx, pageW, pageH, isMobile) {
+        // --- END CHANGE ---
           if (app.isResizing && app.pageFlip) {
             return;
           }
@@ -978,7 +972,9 @@
               showCover: true,
               mobileScrollSupport: true,
               flippingTime: 800,
-              usePortrait: false,
+              // --- START CHANGE: Set usePortrait based on mobile state ---
+              usePortrait: isMobile,
+              // --- END CHANGE ---
               startPage: startPageIdx,
               startZIndex: 20,
               autoSize: false,

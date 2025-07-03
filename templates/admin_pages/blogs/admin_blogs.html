@@ -604,6 +604,30 @@
             color: rgba(255, 255, 255, 0.5);
         }
         
+        /* Storage sub-tabs styles */
+        .storage-sub-tab {
+            transition: all 0.2s ease;
+        }
+        
+        .storage-sub-tab:hover {
+            background: rgba(255, 255, 255, 0.15) !important;
+            color: rgba(255, 255, 255, 0.9) !important;
+        }
+        
+        .storage-sub-tab.active {
+            background: rgba(59, 130, 246, 0.2) !important;
+            color: white !important;
+            border-color: rgba(59, 130, 246, 0.4) !important;
+        }
+        
+        .storage-sub-content {
+            display: none;
+        }
+        
+        .storage-sub-content.active {
+            display: block;
+        }
+        
         /* Text formatting toolbar styles */
         .text-formatting-toolbar {
             background: rgba(255, 255, 255, 0.05);
@@ -654,69 +678,138 @@
             <div class="left-section">
                 <!-- Left Section Header -->
                 <div class="left-section-header">
-                    <div class="expandable-tabs flex items-center gap-4">
-                        <button class="left-tab-button active" data-left-tab="upload">
-                            <div class="flex-shrink-0">
-                                <i data-lucide="upload" class="w-4 h-4"></i>
-                            </div>
-                            <span>Upload Image</span>
-                        </button>
-                        <button class="left-tab-button" data-left-tab="gallery">
+                    <div class="expandable-tabs flex items-center gap-2">
+                        <button class="left-tab-button active" data-left-tab="upload-image">
                             <div class="flex-shrink-0">
                                 <i data-lucide="image" class="w-4 h-4"></i>
                             </div>
-                            <span>Gallery</span>
+                            <span>Upload Image</span>
+                        </button>
+                        <button class="left-tab-button" data-left-tab="upload-magazine">
+                            <div class="flex-shrink-0">
+                                <i data-lucide="file-text" class="w-4 h-4"></i>
+                            </div>
+                            <span>Upload Magazine</span>
+                        </button>
+                        <button class="left-tab-button" data-left-tab="storage">
+                            <div class="flex-shrink-0">
+                                <i data-lucide="archive" class="w-4 h-4"></i>
+                            </div>
+                            <span>Storage</span>
                         </button>
                     </div>
                 </div>
 
                 <!-- Left Section Content -->
-                <div id="uploadContent" class="left-content-section active">
+                <div id="upload-imageContent" class="left-content-section active">
                     <h3 class="text-lg font-semibold mb-4 text-white" style="font-family: 'Playfair Display', serif;">Upload Images</h3>
                     <div class="bg-black/20 border-white/10 rounded-[20px] p-6">
                         <!-- Dropzone -->
-                        <div id="leftDropzone" class="dropzone flex flex-col items-center justify-center space-y-3" style="border: 2px dashed rgba(255, 255, 255, 0.2); border-radius: 20px; padding: 2.5rem; text-align: center; cursor: pointer; transition: all 0.2s ease; background-color: rgba(255, 255, 255, 0.02);">
-                            <i id="leftDropzoneIcon" data-lucide="upload-cloud" class="w-12 h-12 text-white/40"></i>
+                        <div id="imageDropzone" class="dropzone flex flex-col items-center justify-center space-y-3" style="border: 2px dashed rgba(255, 255, 255, 0.2); border-radius: 20px; padding: 2.5rem; text-align: center; cursor: pointer; transition: all 0.2s ease; background-color: rgba(255, 255, 255, 0.02);">
+                            <i id="imageDropzoneIcon" data-lucide="upload-cloud" class="w-12 h-12 text-white/40"></i>
                             <p class="font-semibold">Drag & drop images here</p>
-                            <p id="leftDropzoneText" class="text-sm text-white/60">Upload JPG, PNG, WEBP. Max 10MB.</p>
+                            <p id="imageDropzoneText" class="text-sm text-white/60">Upload JPG, PNG, WEBP, etc. Max 10MB.</p>
                             <p class="text-xs text-white/50">or</p>
-                            <button type="button" onclick="document.getElementById('leftFileInput').click()" class="form-button bg-white/10 hover:bg-white/20 text-white/90 !px-4 !py-2">Browse Files</button>
+                            <button type="button" onclick="document.getElementById('imageFileInput').click()" class="form-button bg-white/10 hover:bg-white/20 text-white/90 !px-4 !py-2">Browse Files</button>
                         </div>
-                        <input type="file" id="leftFileInput" multiple accept="image/*" class="hidden">
+                        <input type="file" id="imageFileInput" multiple accept="image/*" class="hidden">
                         
                         <!-- File Queue -->
-                        <div id="leftFileQueue" class="mt-6 space-y-3"></div>
+                        <div id="imageFileQueue" class="mt-6 space-y-3"></div>
                         
                         <!-- Upload Button -->
                         <div class="mt-8 flex justify-center">
-                            <button id="leftUploadBtn" class="form-button bg-white text-black hover:bg-gray-100" disabled>
+                            <button id="imageUploadBtn" class="form-button bg-white text-black hover:bg-gray-100" disabled>
                                 <i data-lucide="upload" class="w-4 h-4 mr-2"></i>
-                                <span id="leftUploadBtnText">Upload 0 Files</span>
+                                <span id="imageUploadBtnText">Upload 0 Files</span>
                             </button>
                         </div>
                     </div>
                 </div>
 
-                <div id="galleryContent" class="left-content-section">
-                    <h3 class="text-lg font-semibold mb-4 text-white" style="font-family: 'Playfair Display', serif;">Image Gallery</h3>
-                    
-                    <!-- Search Bar -->
-                    <div class="relative mb-6">
-                        <div class="search-input-container" style="position: relative;">
-                            <i data-lucide="search" class="w-4 h-4 absolute left-4 top-1/2 -translate-y-1/2 text-white/40 z-10"></i>
-                            <input type="text" placeholder="Search images..." class="search-input w-full py-2 pl-11 pr-4 text-sm rounded-[20px] focus:ring-0 focus:outline-none transition bg-transparent border-none color-white" id="leftSearchInput" style="background-color: transparent; border: none; color: white;">
+                <div id="upload-magazineContent" class="left-content-section">
+                    <h3 class="text-lg font-semibold mb-4 text-white" style="font-family: 'Playfair Display', serif;">Upload Magazines</h3>
+                    <div class="bg-black/20 border-white/10 rounded-[20px] p-6">
+                        <!-- Dropzone -->
+                        <div id="magazineDropzone" class="dropzone flex flex-col items-center justify-center space-y-3" style="border: 2px dashed rgba(255, 255, 255, 0.2); border-radius: 20px; padding: 2.5rem; text-align: center; cursor: pointer; transition: all 0.2s ease; background-color: rgba(255, 255, 255, 0.02);">
+                            <i id="magazineDropzoneIcon" data-lucide="file-plus" class="w-12 h-12 text-white/40"></i>
+                            <p class="font-semibold">Drag & drop PDF magazines here</p>
+                            <p id="magazineDropzoneText" class="text-sm text-white/60">Upload PDF files only. Max 50MB.</p>
+                            <p class="text-xs text-white/50">or</p>
+                            <button type="button" onclick="document.getElementById('magazineFileInput').click()" class="form-button bg-white/10 hover:bg-white/20 text-white/90 !px-4 !py-2">Browse Files</button>
+                        </div>
+                        <input type="file" id="magazineFileInput" multiple accept="application/pdf,.pdf" class="hidden">
+                        
+                        <!-- File Queue -->
+                        <div id="magazineFileQueue" class="mt-6 space-y-3"></div>
+                        
+                        <!-- Upload Button -->
+                        <div class="mt-8 flex justify-center">
+                            <button id="magazineUploadBtn" class="form-button bg-white text-black hover:bg-gray-100" disabled>
+                                <i data-lucide="upload" class="w-4 h-4 mr-2"></i>
+                                <span id="magazineUploadBtnText">Upload 0 Files</span>
+                            </button>
                         </div>
                     </div>
+                </div>
+
+                <div id="storageContent" class="left-content-section">
+                    <h3 class="text-lg font-semibold mb-4 text-white" style="font-family: 'Playfair Display', serif;">Storage</h3>
                     
-                    <!-- Gallery Grid -->
-                    <div id="leftGalleryGrid" class="grid grid-cols-4 gap-4">
-                        <!-- Dynamic gallery items will be inserted here -->
+                    <!-- Storage Sub-tabs -->
+                    <div class="mb-6">
+                        <div class="flex gap-2">
+                            <button class="storage-sub-tab active" data-storage-tab="gallery" style="padding: 0.5rem 1rem; border-radius: 0.5rem; background: rgba(255, 255, 255, 0.1); color: white; border: 1px solid rgba(255, 255, 255, 0.2); transition: all 0.2s ease;">
+                                <i data-lucide="image" class="w-4 h-4 inline mr-2"></i>Gallery
+                            </button>
+                            <button class="storage-sub-tab" data-storage-tab="magazines" style="padding: 0.5rem 1rem; border-radius: 0.5rem; background: rgba(255, 255, 255, 0.05); color: rgba(255, 255, 255, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); transition: all 0.2s ease;">
+                                <i data-lucide="file-text" class="w-4 h-4 inline mr-2"></i>Magazines
+                            </button>
+                        </div>
                     </div>
-                    
-                    <div id="leftNoGalleryItems" class="text-center py-8 hidden">
-                        <i data-lucide="folder-x" class="w-12 h-12 mx-auto text-white/20 mb-4"></i>
-                        <h4 class="text-lg font-medium text-white/80">No Images Found</h4>
-                        <p class="text-white/50 mt-2">Try uploading some images or changing your search.</p>
+
+                    <!-- Gallery Sub-section -->
+                    <div id="gallerySubContent" class="storage-sub-content active">
+                        <!-- Search Bar -->
+                        <div class="relative mb-6">
+                            <div class="search-input-container" style="position: relative;">
+                                <i data-lucide="search" class="w-4 h-4 absolute left-4 top-1/2 -translate-y-1/2 text-white/40 z-10"></i>
+                                <input type="text" placeholder="Search images..." class="search-input w-full py-2 pl-11 pr-4 text-sm rounded-[20px] focus:ring-0 focus:outline-none transition bg-transparent border-none color-white" id="gallerySearchInput" style="background-color: transparent; border: none; color: white;">
+                            </div>
+                        </div>
+                        
+                        <!-- Gallery Grid -->
+                        <div id="galleryGrid" class="grid grid-cols-4 gap-4">
+                            <!-- Dynamic gallery items will be inserted here -->
+                        </div>
+                        
+                        <div id="noGalleryItems" class="text-center py-8 hidden">
+                            <i data-lucide="folder-x" class="w-12 h-12 mx-auto text-white/20 mb-4"></i>
+                            <h4 class="text-lg font-medium text-white/80">No Images Found</h4>
+                            <p class="text-white/50 mt-2">Try uploading some images or changing your search.</p>
+                        </div>
+                    </div>
+
+                    <!-- Magazines Sub-section -->
+                    <div id="magazinesSubContent" class="storage-sub-content">
+                        <!-- Search Bar -->
+                        <div class="relative mb-6">
+                            <div class="search-input-container" style="position: relative;">
+                                <i data-lucide="search" class="w-4 h-4 absolute left-4 top-1/2 -translate-y-1/2 text-white/40 z-10"></i>
+                                <input type="text" placeholder="Search magazines..." class="search-input w-full py-2 pl-11 pr-4 text-sm rounded-[20px] focus:ring-0 focus:outline-none transition bg-transparent border-none color-white" id="magazinesSearchInput" style="background-color: transparent; border: none; color: white;">
+                            </div>
+                        </div>
+                        
+                        <!-- Magazines Grid -->
+                        <div id="magazinesGrid" class="grid grid-cols-3 gap-4">
+                            <!-- Dynamic magazine items will be inserted here -->
+                        </div>
+                        
+                        <div id="noMagazineItems" class="text-center py-8 hidden">
+                            <i data-lucide="folder-x" class="w-12 h-12 mx-auto text-white/20 mb-4"></i>
+                            <h4 class="text-lg font-medium text-white/80">No Magazines Found</h4>
+                            <p class="text-white/50 mt-2">Try uploading some magazines or changing your search.</p>
+                        </div>
                     </div>
                 </div>
 
@@ -729,6 +822,41 @@
                     <div class="form-container">
                         <h2 class="section-title text-center">Add New Blog</h2>
                 <form id="addBlogForm">
+                    <!-- Labels Section -->
+                    <div class="labels-section-wrapper p-4 rounded-lg bg-white/[0.01] border border-white/[0.03] mb-6">
+                        <h3 class="text-lg font-medium text-white/90 mb-4 flex items-center">
+                            <i data-lucide="tags" class="w-5 h-5 mr-2"></i>Labels<span class="text-red-400">*</span>
+                        </h3>
+                        
+                        <!-- Label Not Mandatory Checkbox -->
+                        <div class="form-item mb-4">
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" id="labelsNotMandatory" class="w-4 h-4 text-blue-600 bg-gray-800 border-gray-600 rounded focus:ring-blue-500">
+                                <span class="text-sm text-white/80">Labels are not mandatory for this blog</span>
+                            </label>
+                        </div>
+                        
+                        <!-- Dynamic Labels Container -->
+                        <div id="labelsContainer" class="space-y-3 mb-4">
+                            <div class="label-item flex items-center gap-3">
+                                <div class="flex-1">
+                                    <input type="text" class="label-input form-input" placeholder="Enter label name..." />
+                                </div>
+                                <div class="w-24">
+                                    <input type="number" class="weight-input form-input" placeholder="Weight" min="1" max="100" />
+                                </div>
+                                <button type="button" class="remove-label-btn text-white/50 hover:text-red-500 transition-colors p-2 rounded-lg hover:bg-white/[0.05]" title="Remove">
+                                    <i data-lucide="x" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <button type="button" id="addLabelBtn" class="form-button bg-white/10 hover:bg-white/20 border border-white/20 text-white text-sm px-3 py-2">
+                            <i data-lucide="plus" class="w-4 h-4 mr-2"></i>
+                            Add Label
+                        </button>
+                    </div>
+
                     <!-- Category Section -->
                     <div class="category-section-wrapper p-4 rounded-lg bg-white/[0.01] border border-white/[0.03] mb-6">
                         <h3 class="text-lg font-medium text-white/90 mb-4 flex items-center">
@@ -737,34 +865,21 @@
                         
                         <div class="form-row">
                             <div class="form-item">
-                                <!-- <label class="form-label" for="blogCategory">
-                                    <i data-lucide="folder" class="w-4 h-4 inline mr-2"></i>Category <span class="text-red-400">*</span>
-                                </label> -->
-                                <input
-                                    type="text"
+                                <select
                                     id="blogCategory"
                                     name="blogCategory"
                                     class="form-input"
-                                    placeholder="Enter blog category..."
+                                    style="background-color: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.2); color: white;"
                                     required
-                                />
+                                >
+                                    <option value="" style="background-color: #1a1a1a; color: white;">Select blog category...</option>
+                                    <option value="BUSINESS" style="background-color: #1a1a1a; color: white;">BUSINESS</option>
+                                    <option value="TECHNOLOGY" style="background-color: #1a1a1a; color: white;">TECHNOLOGY</option>
+                                    <option value="GCC" style="background-color: #1a1a1a; color: white;">GCC</option>
+                                    <option value="SUSTAINABILITY" style="background-color: #1a1a1a; color: white;">SUSTAINABILITY</option>
+                                    <option value="SEMICONDUCTOR" style="background-color: #1a1a1a; color: white;">SEMICONDUCTOR</option>
+                                </select>
                             </div>
-                            <!-- Sub-Category field commented out as requested -->
-                            <!--
-                            <div class="form-item">
-                                <label class="form-label" for="blogSubCategory">
-                                    <i data-lucide="folder-open" class="w-4 h-4 inline mr-2"></i>Sub-Category <span class="text-red-400">*</span>
-                                </label>
-                                <input
-                                    type="text"
-                                    id="blogSubCategory"
-                                    name="blogSubCategory"
-                                    class="form-input"
-                                    placeholder="Enter blog sub-category..."
-                                    required
-                                />
-                            </div>
-                            -->
                         </div>
                     </div>
 
@@ -1332,9 +1447,10 @@
                         <div class="flex items-start gap-3">
                             <i data-lucide="alert-triangle" class="w-5 h-5 text-red-400 mt-0.5 flex-shrink-0"></i>
                             <div>
-                                <h4 class="text-red-400 font-medium mb-1">Warning: This action cannot be undone</h4>
-                                <p class="text-white/80 text-sm">You are about to permanently delete the blog:</p>
+                                <h4 class="text-red-400 font-medium mb-1">Warning: This action will mark the blog as deleted</h4>
+                                <p class="text-white/80 text-sm">You are about to mark the following blog as deleted:</p>
                                 <p id="deleteBlogTitle" class="text-white font-medium mt-2 break-words"></p>
+                                <p class="text-white/60 text-xs mt-2">Note: The blog will be marked as deleted but not permanently removed from the database.</p>
                             </div>
                         </div>
                     </div>
@@ -1351,7 +1467,7 @@
                         />
                         <p class="text-xs text-white/50 mt-1">
                             If provided, visitors to the deleted blog will be redirected to this URL.
-                            If left blank, a default 403 page will be shown.
+                            If left blank, a 403 Forbidden page will be shown.
                         </p>
                     </div>
                     
@@ -1359,7 +1475,7 @@
                         <label class="flex items-start gap-2 cursor-pointer">
                             <input type="checkbox" id="confirmDeleteCheckbox" class="mt-1 w-4 h-4 text-red-600 bg-gray-100 border-gray-300 rounded focus:ring-red-500">
                             <span class="text-sm text-white/80">
-                                I understand that this blog will be permanently deleted and this action cannot be undone.
+                                I understand that this blog will be marked as deleted and will no longer be accessible to visitors.
                             </span>
                         </label>
                     </div>
@@ -1374,7 +1490,7 @@
                     <button type="button" id="confirmDeleteBtn" class="modal-button bg-red-600 hover:bg-red-700 text-white" onclick="confirmDeleteBlog()" disabled>
                         <div class="flex items-center gap-2">
                             <i data-lucide="trash-2" class="w-4 h-4"></i>
-                            <p>Delete Blog</p>
+                            <p>Mark as Deleted</p>
                         </div>
                     </button>
                 </div>
@@ -1893,11 +2009,11 @@
                 const result = await response.json();
                 
                 if (result.status === 'success') {
-                    let message = `Blog "${currentDeleteBlogTitle}" has been deleted successfully.`;
+                    let message = `Blog "${currentDeleteBlogTitle}" has been marked as deleted successfully.`;
                     if (redirectUrl) {
                         message += `\n\nVisitors will be redirected to: ${redirectUrl}`;
                     } else {
-                        message += `\n\nVisitors will see a 403 page when trying to access the deleted blog.`;
+                        message += `\n\nVisitors will see a 403 Forbidden page when trying to access this blog.`;
                     }
                     
                     showModal('Success', message, 'success');
@@ -1909,7 +2025,7 @@
                     const searchKeyword = document.getElementById('searchBlog').value.trim();
                     searchAndLoadBlogs(searchKeyword, currentPage);
                 } else {
-                    showModal('Error', result.message || 'Failed to delete blog', 'error');
+                    showModal('Error', result.message || 'Failed to mark blog as deleted', 'error');
                 }
                 
             } catch (error) {
@@ -2210,14 +2326,134 @@
             }
         }
         
+        // Labels functionality
+        function initializeLabelsSection() {
+            const addLabelBtn = document.getElementById('addLabelBtn');
+            const labelsContainer = document.getElementById('labelsContainer');
+            const labelsNotMandatory = document.getElementById('labelsNotMandatory');
+            
+            // Add label button functionality
+            addLabelBtn.addEventListener('click', function() {
+                addLabelRow();
+            });
+            
+            // Remove label functionality using event delegation
+            labelsContainer.addEventListener('click', function(e) {
+                if (e.target.closest('.remove-label-btn')) {
+                    const labelItem = e.target.closest('.label-item');
+                    const allLabels = labelsContainer.querySelectorAll('.label-item');
+                    
+                    // Don't allow removing if only one label remains
+                    if (allLabels.length > 1) {
+                        labelItem.remove();
+                    } else {
+                        // Just clear the inputs instead of removing the row
+                        labelItem.querySelector('.label-input').value = '';
+                        labelItem.querySelector('.weight-input').value = '';
+                    }
+                }
+            });
+        }
+        
+        function addLabelRow() {
+            const labelsContainer = document.getElementById('labelsContainer');
+            const labelItem = document.createElement('div');
+            labelItem.className = 'label-item flex items-center gap-3';
+            labelItem.innerHTML = `
+                <div class="flex-1">
+                    <input type="text" class="label-input form-input" placeholder="Enter label name..." />
+                </div>
+                <div class="w-24">
+                    <input type="number" class="weight-input form-input" placeholder="Weight" min="1" max="100" />
+                </div>
+                <button type="button" class="remove-label-btn text-white/50 hover:text-red-500 transition-colors p-2 rounded-lg hover:bg-white/[0.05]" title="Remove">
+                    <i data-lucide="x" class="w-4 h-4"></i>
+                </button>
+            `;
+            labelsContainer.appendChild(labelItem);
+            lucide.createIcons();
+        }
+        
+        function populateLabelsFromData(labelsData) {
+            const labelsContainer = document.getElementById('labelsContainer');
+            const labelsNotMandatory = document.getElementById('labelsNotMandatory');
+            
+            // Clear existing labels
+            labelsContainer.innerHTML = '';
+            
+            // Check if labels data exists and is not empty
+            if (labelsData && typeof labelsData === 'object' && Object.keys(labelsData).length > 0) {
+                // Populate with existing labels
+                Object.entries(labelsData).forEach(([label, weight]) => {
+                    const labelItem = document.createElement('div');
+                    labelItem.className = 'label-item flex items-center gap-3';
+                    labelItem.innerHTML = `
+                        <div class="flex-1">
+                            <input type="text" class="label-input form-input" placeholder="Enter label name..." value="${label}" />
+                        </div>
+                        <div class="w-24">
+                            <input type="number" class="weight-input form-input" placeholder="Weight" min="1" max="100" value="${weight}" />
+                        </div>
+                        <button type="button" class="remove-label-btn text-white/50 hover:text-red-500 transition-colors p-2 rounded-lg hover:bg-white/[0.05]" title="Remove">
+                            <i data-lucide="x" class="w-4 h-4"></i>
+                        </button>
+                    `;
+                    labelsContainer.appendChild(labelItem);
+                });
+                labelsNotMandatory.checked = false;
+            } else {
+                // Add default empty label row
+                addLabelRow();
+                labelsNotMandatory.checked = true;
+            }
+            
+            lucide.createIcons();
+        }
+        
+        function collectLabelsData() {
+            const labelsNotMandatory = document.getElementById('labelsNotMandatory').checked;
+            const labelItems = document.querySelectorAll('.label-item');
+            const labelsObj = {};
+            let hasLabels = false;
+            
+            labelItems.forEach(item => {
+                const labelInput = item.querySelector('.label-input').value.trim();
+                const weightInput = item.querySelector('.weight-input').value.trim();
+                
+                if (labelInput && weightInput) {
+                    labelsObj[labelInput] = parseInt(weightInput);
+                    hasLabels = true;
+                }
+            });
+            
+            // Check if labels are required but not provided
+            if (!labelsNotMandatory && !hasLabels) {
+                showModal('Labels Required', 'Please add at least one label or check the "Labels are not mandatory" option.', 'error');
+                return null;
+            }
+            
+            return { labels: labelsObj, labelsNotMandatory: labelsNotMandatory };
+        }
+        
        
         function handleFormSubmit(event) {
             event.preventDefault();
+            
+            // Validate and collect labels data first
+            const labelsResult = collectLabelsData();
+            if (labelsResult === null) {
+                return; // Labels validation failed
+            }
+            
             const formData = new FormData(event.target);
             const data = {};
             for (let [key, value] of formData.entries()) {
                 data[key] = value;
             }
+            
+            // Add labels data
+            data.labels = labelsResult.labels;
+            data.labelsNotMandatory = labelsResult.labelsNotMandatory;
             
            
             if (!data.blogDate) {
@@ -2301,6 +2537,12 @@
         
        
         async function handleSaveDraft() {
+            // Validate and collect labels data first
+            const labelsResult = collectLabelsData();
+            if (labelsResult === null) {
+                return; // Labels validation failed
+            }
+            
             const form = document.getElementById('addBlogForm');
             const formData = new FormData(form);
             const data = {};
@@ -2310,6 +2552,10 @@
                     data[key] = value;
                 }
             }
+            
+            // Add labels data
+            data.labels = labelsResult.labels;
+            data.labelsNotMandatory = labelsResult.labelsNotMandatory;
             
            
             if (!data.blogDate) {
@@ -2387,6 +2633,12 @@
         
        
         async function handleSavePublish() {
+            // Validate and collect labels data first
+            const labelsResult = collectLabelsData();
+            if (labelsResult === null) {
+                return; // Labels validation failed
+            }
+            
             const form = document.getElementById('addBlogForm');
             const formData = new FormData(form);
             const data = {};
@@ -2396,6 +2648,10 @@
                     data[key] = value;
                 }
             }
+            
+            // Add labels data
+            data.labels = labelsResult.labels;
+            data.labelsNotMandatory = labelsResult.labelsNotMandatory;
             
            
             if (!data.blogDate) {
@@ -3033,6 +3289,9 @@
             // Sub-category commented out as requested
             // document.getElementById('blogSubCategory').value = jsonData.blogSubCategory || '';
             
+            // Populate labels from database
+            populateLabelsFromData(blog.labels || {});
+            
             // Populate SEO fields
             document.getElementById('seoTitle').value = jsonData.seoTitle || '';
             document.getElementById('seoMetaDescription').value = jsonData.seoMetaDescription || '';
@@ -3103,6 +3362,24 @@
             document.getElementById('seoTitle').value = '';
             document.getElementById('seoMetaDescription').value = '';
             document.getElementById('seoCanonicalUrl').value = '';
+            
+            // Reset labels section to default state
+            const labelsContainer = document.getElementById('labelsContainer');
+            labelsContainer.innerHTML = `
+                <div class="label-item flex items-center gap-3">
+                    <div class="flex-1">
+                        <input type="text" class="label-input form-input" placeholder="Enter label name..." />
+                    </div>
+                    <div class="w-24">
+                        <input type="number" class="weight-input form-input" placeholder="Weight" min="1" max="100" />
+                    </div>
+                    <button type="button" class="remove-label-btn text-white/50 hover:text-red-500 transition-colors p-2 rounded-lg hover:bg-white/[0.05]" title="Remove">
+                        <i data-lucide="x" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            `;
+            document.getElementById('labelsNotMandatory').checked = false;
+            lucide.createIcons();
         }
         
         // Handle update blog functionality
@@ -3110,6 +3387,12 @@
             if (!currentEditingBlog) {
                 showModal('Error', 'No blog selected for editing', 'error');
                 return;
+            }
+            
+            // Validate and collect labels data first
+            const labelsResult = collectLabelsData();
+            if (labelsResult === null) {
+                return; // Labels validation failed
             }
             
             const form = document.getElementById('addBlogForm');
@@ -3120,6 +3403,10 @@
                     data[key] = value;
                 }
             }
+            
+            // Add labels data
+            data.labels = labelsResult.labels;
+            data.labelsNotMandatory = labelsResult.labelsNotMandatory;
             
             // Get status from radio buttons
             const statusRadio = document.querySelector('input[name="blogStatus"]:checked');
@@ -3213,6 +3500,9 @@
         
         document.addEventListener('DOMContentLoaded', function() {
             lucide.createIcons();
+            
+            // Initialize labels functionality
+            initializeLabelsSection();
             
            
             const addBlogForm = document.getElementById('addBlogForm');
@@ -3369,109 +3659,124 @@
                     if (targetSection) {
                         targetSection.classList.add('active');
                     }
+                    
+                    // Load content when needed
+                    if (tabName === 'storage') {
+                        setTimeout(() => {
+                            loadGallery();
+                            loadMagazines();
+                        }, 100);
+                    }
                 });
             });
             
-            // Left sidebar upload and gallery functionality
-            let leftFilesToUpload = [];
-            let leftImageFiles = [];
+            // Storage sub-tabs functionality
+            const storageSubTabs = document.querySelectorAll('.storage-sub-tab');
+            const storageSubContents = document.querySelectorAll('.storage-sub-content');
             
-            // Initialize left sidebar upload functionality
-            const leftDropzone = document.getElementById('leftDropzone');
-            const leftFileInput = document.getElementById('leftFileInput');
-            const leftFileQueue = document.getElementById('leftFileQueue');
-            const leftUploadBtn = document.getElementById('leftUploadBtn');
-            const leftUploadBtnText = document.getElementById('leftUploadBtnText');
+            storageSubTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const subTabName = this.getAttribute('data-storage-tab');
+                    
+                    // Remove active class from all sub-tabs
+                    storageSubTabs.forEach(subTab => {
+                        subTab.classList.remove('active');
+                        subTab.style.background = 'rgba(255, 255, 255, 0.05)';
+                        subTab.style.color = 'rgba(255, 255, 255, 0.6)';
+                        subTab.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+                    });
+                    
+                    // Add active class to clicked sub-tab
+                    this.classList.add('active');
+                    this.style.background = 'rgba(59, 130, 246, 0.2)';
+                    this.style.color = 'white';
+                    this.style.borderColor = 'rgba(59, 130, 246, 0.4)';
+                    
+                    // Hide all sub-content sections
+                    storageSubContents.forEach(content => content.classList.remove('active'));
+                    
+                    // Show corresponding sub-content
+                    const targetSubContent = document.getElementById(subTabName + 'SubContent');
+                    if (targetSubContent) {
+                        targetSubContent.classList.add('active');
+                    }
+                    
+                    // Load content when needed
+                    if (subTabName === 'gallery') {
+                        setTimeout(() => loadGallery(), 100);
+                    } else if (subTabName === 'magazines') {
+                        setTimeout(() => loadMagazines(), 100);
+                    }
+                });
+            });
             
-            if (leftDropzone && leftFileInput) {
+            // Upload and gallery functionality
+            let imageFilesToUpload = [];
+            let magazineFilesToUpload = [];
+            let imageFiles = [];
+            let magazineFiles = [];
+            
+            // Initialize image upload functionality
+            const imageDropzone = document.getElementById('imageDropzone');
+            const imageFileInput = document.getElementById('imageFileInput');
+            const imageFileQueue = document.getElementById('imageFileQueue');
+            const imageUploadBtn = document.getElementById('imageUploadBtn');
+            const imageUploadBtnText = document.getElementById('imageUploadBtnText');
+            
+            // Initialize magazine upload functionality
+            const magazineDropzone = document.getElementById('magazineDropzone');
+            const magazineFileInput = document.getElementById('magazineFileInput');
+            const magazineFileQueue = document.getElementById('magazineFileQueue');
+            const magazineUploadBtn = document.getElementById('magazineUploadBtn');
+            const magazineUploadBtnText = document.getElementById('magazineUploadBtnText');
+            
+            // Image upload functionality
+            if (imageDropzone && imageFileInput) {
+                setupFileUpload(
+                    imageDropzone, imageFileInput, imageFileQueue, imageUploadBtn, imageUploadBtnText,
+                    imageFilesToUpload, 'image', 'images'
+                );
+            }
+            
+            // Magazine upload functionality
+            if (magazineDropzone && magazineFileInput) {
+                setupFileUpload(
+                    magazineDropzone, magazineFileInput, magazineFileQueue, magazineUploadBtn, magazineUploadBtnText,
+                    magazineFilesToUpload, 'pdf', 'magazines'
+                );
+            }
+            
+            function setupFileUpload(dropzone, fileInput, fileQueue, uploadBtn, uploadBtnText, filesToUpload, fileType, displayType) {
                 // Drag and drop functionality
                 ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-                    leftDropzone.addEventListener(eventName, e => { e.preventDefault(); e.stopPropagation(); });
+                    dropzone.addEventListener(eventName, e => { e.preventDefault(); e.stopPropagation(); });
                 });
                 
                 ['dragenter', 'dragover'].forEach(eventName => {
-                    leftDropzone.addEventListener(eventName, () => leftDropzone.classList.add('dragover'));
+                    dropzone.addEventListener(eventName, () => dropzone.classList.add('dragover'));
                 });
                 
                 ['dragleave', 'drop'].forEach(eventName => {
-                    leftDropzone.addEventListener(eventName, () => leftDropzone.classList.remove('dragover'));
+                    dropzone.addEventListener(eventName, () => dropzone.classList.remove('dragover'));
                 });
                 
-                leftDropzone.addEventListener('drop', (e) => handleLeftFiles(e.dataTransfer.files));
-                leftFileInput.addEventListener('change', (e) => handleLeftFiles(e.target.files));
+                dropzone.addEventListener('drop', (e) => handleFiles(e.dataTransfer.files, fileType, filesToUpload, fileQueue, uploadBtn, uploadBtnText));
+                fileInput.addEventListener('change', (e) => handleFiles(e.target.files, fileType, filesToUpload, fileQueue, uploadBtn, uploadBtnText));
                 
-                function handleLeftFiles(files) {
-                    const validFiles = [];
-                    const invalidFiles = [];
-                    
-                    Array.from(files).forEach(file => {
-                        if (file.type.startsWith('image/') &&
-                            ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp', 'image/bmp', 'image/svg+xml'].includes(file.type.toLowerCase())) {
-                            validFiles.push(file);
-                        } else {
-                            invalidFiles.push(file);
-                        }
-                    });
-                    
-                    if (invalidFiles.length > 0) {
-                        const fileNames = invalidFiles.map(f => f.name).join(', ');
-                        showToast(`Invalid file type(s): ${fileNames}. Expected: PNG, JPG, JPEG, GIF, WEBP, BMP, SVG`, 'error');
-                    }
-                    
-                    if (validFiles.length > 0) {
-                        leftFilesToUpload.push(...validFiles);
-                        updateLeftFileQueueUI();
-                    }
-                }
-                
-                function updateLeftFileQueueUI() {
-                    leftFileQueue.innerHTML = '';
-                    if (leftFilesToUpload.length > 0) {
-                        leftFilesToUpload.forEach((file, index) => {
-                            const fileItem = document.createElement('div');
-                            fileItem.className = 'file-queue-item';
-                            fileItem.innerHTML = `
-                                <div class="flex-shrink-0 mr-3">
-                                    <i data-lucide="image" class="w-5 h-5 text-white/70"></i>
-                                </div>
-                                <div class="flex-1 min-w-0">
-                                    <p class="text-sm font-medium truncate">${file.name}</p>
-                                    <p class="text-xs text-white/50">${(file.size / 1024 / 1024).toFixed(2)} MB</p>
-                                </div>
-                                <button data-index="${index}" class="remove-left-file-btn ml-4 text-white/50 hover:text-red-500 transition-colors p-1">
-                                    <i data-lucide="x" class="w-5 h-5"></i>
-                                </button>
-                            `;
-                            leftFileQueue.appendChild(fileItem);
-                        });
-                        lucide.createIcons();
-                    }
-                    leftUploadBtn.disabled = leftFilesToUpload.length === 0;
-                    leftUploadBtnText.textContent = `Upload ${leftFilesToUpload.length} File${leftFilesToUpload.length !== 1 ? 's' : ''}`;
-                }
-                
-                leftFileQueue.addEventListener('click', (e) => {
-                    const removeBtn = e.target.closest('.remove-left-file-btn');
-                    if (removeBtn) {
-                        leftFilesToUpload.splice(parseInt(removeBtn.dataset.index), 1);
-                        updateLeftFileQueueUI();
-                    }
-                });
-                
-                leftUploadBtn.addEventListener('click', async () => {
-                    if (leftFilesToUpload.length === 0) {
-                        showToast('No files selected for upload', 'error');
+                uploadBtn.addEventListener('click', async () => {
+                    if (filesToUpload.length === 0) {
+                        showToast(`No ${displayType} selected for upload`, 'error');
                         return;
                     }
                     
-                    leftUploadBtn.disabled = true;
-                    leftUploadBtnText.textContent = 'Uploading...';
+                    uploadBtn.disabled = true;
+                    uploadBtnText.textContent = 'Uploading...';
                     
                     let successCount = 0;
                     let errorCount = 0;
                     
-                    for (let i = 0; i < leftFilesToUpload.length; i++) {
-                        const file = leftFilesToUpload[i];
+                    for (let i = 0; i < filesToUpload.length; i++) {
+                        const file = filesToUpload[i];
                         try {
                             const formData = new FormData();
                             formData.append('file', file);
@@ -3494,57 +3799,151 @@
                             console.error(`Network error uploading ${file.name}:`, error);
                         }
                         
-                        leftUploadBtnText.textContent = `Uploading... (${i + 1}/${leftFilesToUpload.length})`;
+                        uploadBtnText.textContent = `Uploading... (${i + 1}/${filesToUpload.length})`;
                     }
                     
                     if (successCount > 0 && errorCount === 0) {
-                        showToast(`Successfully uploaded ${successCount} file${successCount !== 1 ? 's' : ''}!`, 'success');
+                        showToast(`Successfully uploaded ${successCount} ${displayType.slice(0, -1)}${successCount !== 1 ? 's' : ''}!`, 'success');
                     } else if (successCount > 0 && errorCount > 0) {
-                        showToast(`Uploaded ${successCount} files successfully, but ${errorCount} failed`, 'warning');
+                        showToast(`Uploaded ${successCount} ${displayType} successfully, but ${errorCount} failed`, 'warning');
                     } else {
                         showToast('All uploads failed', 'error');
                     }
                     
                     if (successCount > 0) {
-                        await loadLeftGallery();
+                        if (fileType === 'image') {
+                            await loadGallery();
+                        } else if (fileType === 'pdf') {
+                            await loadMagazines();
+                        }
                     }
                     
-                    leftFilesToUpload = [];
-                    updateLeftFileQueueUI();
-                    leftUploadBtn.disabled = false;
-                    leftUploadBtnText.textContent = 'Upload 0 Files';
+                    filesToUpload.length = 0;
+                    updateFileQueueUI(filesToUpload, fileQueue, uploadBtn, uploadBtnText);
+                });
+                
+                fileQueue.addEventListener('click', (e) => {
+                    const removeBtn = e.target.closest('.remove-file-btn');
+                    if (removeBtn) {
+                        filesToUpload.splice(parseInt(removeBtn.dataset.index), 1);
+                        updateFileQueueUI(filesToUpload, fileQueue, uploadBtn, uploadBtnText);
+                    }
                 });
             }
             
+            function handleFiles(files, fileType, filesToUpload, fileQueue, uploadBtn, uploadBtnText) {
+                const validFiles = [];
+                const invalidFiles = [];
+                
+                Array.from(files).forEach(file => {
+                    if (fileType === 'image') {
+                        if (file.type.startsWith('image/') &&
+                            ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp', 'image/bmp', 'image/svg+xml'].includes(file.type.toLowerCase())) {
+                            validFiles.push(file);
+                        } else {
+                            invalidFiles.push(file);
+                        }
+                    } else if (fileType === 'pdf') {
+                        // More strict PDF validation - must have .pdf extension AND proper MIME type
+                        if (file.name.toLowerCase().endsWith('.pdf') &&
+                            (file.type === 'application/pdf' || file.type === '')) {
+                            validFiles.push(file);
+                        } else {
+                            invalidFiles.push(file);
+                        }
+                    }
+                });
+                
+                if (invalidFiles.length > 0) {
+                    const fileNames = invalidFiles.map(f => f.name).join(', ');
+                    const expectedTypes = fileType === 'image' ? 'PNG, JPG, JPEG, GIF, WEBP, BMP, SVG' : 'PDF';
+                    showToast(`Invalid file type(s): ${fileNames}. Expected: ${expectedTypes}`, 'error');
+                }
+                
+                if (validFiles.length > 0) {
+                    filesToUpload.push(...validFiles);
+                    updateFileQueueUI(filesToUpload, fileQueue, uploadBtn, uploadBtnText);
+                }
+            }
+            
+            function updateFileQueueUI(filesToUpload, fileQueue, uploadBtn, uploadBtnText) {
+                fileQueue.innerHTML = '';
+                if (filesToUpload.length > 0) {
+                    filesToUpload.forEach((file, index) => {
+                        const fileItem = document.createElement('div');
+                        fileItem.className = 'file-queue-item';
+                        const iconName = file.type.startsWith('image/') ? 'image' : 'file-text';
+                        fileItem.innerHTML = `
+                            <div class="flex-shrink-0 mr-3">
+                                <i data-lucide="${iconName}" class="w-5 h-5 text-white/70"></i>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <p class="text-sm font-medium truncate">${file.name}</p>
+                                <p class="text-xs text-white/50">${(file.size / 1024 / 1024).toFixed(2)} MB</p>
+                            </div>
+                            <button data-index="${index}" class="remove-file-btn ml-4 text-white/50 hover:text-red-500 transition-colors p-1">
+                                <i data-lucide="x" class="w-5 h-5"></i>
+                            </button>
+                        `;
+                        fileQueue.appendChild(fileItem);
+                    });
+                    lucide.createIcons();
+                }
+                uploadBtn.disabled = filesToUpload.length === 0;
+                uploadBtnText.textContent = `Upload ${filesToUpload.length} File${filesToUpload.length !== 1 ? 's' : ''}`;
+            }
+            
             // Gallery functionality
-            async function loadLeftGallery() {
+            async function loadGallery() {
                 try {
                     const response = await fetch('/get_file_details?bucket_name=blog-images');
                     const result = await response.json();
                     
                     if (result.status === 'success' && result.data) {
-                        leftImageFiles = result.data.map(file => ({
+                        imageFiles = result.data.map(file => ({
                             id: file.id,
                             name: file.name,
                             url: file.public_url,
                             size: file.size
                         }));
-                        renderLeftGallery();
+                        renderGallery();
                     }
                 } catch (error) {
                     console.error('Error loading gallery:', error);
                 }
             }
             
-            function renderLeftGallery(searchTerm = '') {
-                const galleryGrid = document.getElementById('leftGalleryGrid');
-                const noItemsDiv = document.getElementById('leftNoGalleryItems');
+            async function loadMagazines() {
+                try {
+                    const response = await fetch('/get_file_details?bucket_name=magazine-pdfs');
+                    const result = await response.json();
+                    
+                    if (result.status === 'success' && result.data) {
+                        // Filter only PDF files
+                        magazineFiles = result.data
+                            .filter(file => file.name.toLowerCase().endsWith('.pdf'))
+                            .map(file => ({
+                                id: file.id,
+                                name: file.name,
+                                url: file.public_url,
+                                size: file.size
+                            }));
+                        renderMagazines();
+                    }
+                } catch (error) {
+                    console.error('Error loading magazines:', error);
+                }
+            }
+            
+            function renderGallery(searchTerm = '') {
+                const galleryGrid = document.getElementById('galleryGrid');
+                const noItemsDiv = document.getElementById('noGalleryItems');
                 
                 if (!galleryGrid) return;
                 
-                let filteredImages = leftImageFiles;
+                let filteredImages = imageFiles;
                 if (searchTerm) {
-                    filteredImages = leftImageFiles.filter(item =>
+                    filteredImages = imageFiles.filter(item =>
                         item.name.toLowerCase().includes(searchTerm.toLowerCase())
                     );
                 }
@@ -3582,10 +3981,257 @@
                 lucide.createIcons();
             }
             
+            function renderMagazines(searchTerm = '') {
+                const magazinesGrid = document.getElementById('magazinesGrid');
+                const noItemsDiv = document.getElementById('noMagazineItems');
+                
+                if (!magazinesGrid) return;
+                
+                let filteredMagazines = magazineFiles;
+                if (searchTerm) {
+                    filteredMagazines = magazineFiles.filter(item =>
+                        item.name.toLowerCase().includes(searchTerm.toLowerCase())
+                    );
+                }
+                
+                magazinesGrid.innerHTML = '';
+                
+                if (filteredMagazines.length === 0) {
+                    noItemsDiv.classList.remove('hidden');
+                } else {
+                    noItemsDiv.classList.add('hidden');
+                    filteredMagazines.forEach(item => {
+                        const itemEl = document.createElement('div');
+                        itemEl.className = 'gallery-item group aspect-[3/4]';
+                        itemEl.innerHTML = `
+                            <div class="absolute inset-0 w-full h-full bg-white/5 border border-white/20 rounded-lg flex flex-col items-center justify-center">
+                                <i data-lucide="file-text" class="w-12 h-12 text-white/60 mb-2"></i>
+                                <p class="text-xs text-white/80 text-center px-2">${item.name}</p>
+                                <p class="text-xs text-white/50 mt-1">${item.size}</p>
+                            </div>
+                            <div class="overlay"></div>
+                            <div class="actions">
+                                <button class="action-btn" data-action="copy" data-url="${item.url}" title="Copy URL">
+                                    <i data-lucide="link" class="w-3 h-3 text-white"></i>
+                                </button>
+                                <button class="action-btn" data-action="view" data-url="${item.url}" title="View">
+                                    <i data-lucide="external-link" class="w-3 h-3 text-white"></i>
+                                </button>
+                                <button class="action-btn delete" data-action="delete" data-id="${item.id}" data-name="${item.name}" title="Delete">
+                                    <i data-lucide="trash-2" class="w-3 h-3 text-white"></i>
+                                </button>
+                            </div>
+                        `;
+                        magazinesGrid.appendChild(itemEl);
+                    });
+                }
+                lucide.createIcons();
+            }
+            
             // Gallery actions
-            const leftGalleryGrid = document.getElementById('leftGalleryGrid');
-            if (leftGalleryGrid) {
-                leftGalleryGrid.addEventListener('click', (e) => {
+            const galleryGrid = document.getElementById('galleryGrid');
+            const magazinesGrid = document.getElementById('magazinesGrid');
+            
+            if (galleryGrid) {
+                galleryGrid.addEventListener('click', (e) => {
+                    const actionBtn = e.target.closest('.action-btn');
+                    if (!actionBtn) return;
+                    
+                    const action = actionBtn.dataset.action;
+                    const itemUrl = actionBtn.dataset.url;
+                    const itemId = actionBtn.dataset.id;
+                    const itemName = actionBtn.dataset.name;
+                    
+                    if (action === 'copy') {
+                        if (navigator.clipboard && window.isSecureContext) {
+                            navigator.clipboard.writeText(itemUrl).then(() => {
+                                showToast('URL copied to clipboard!', 'success');
+                            }).catch(() => {
+                                fallbackCopyTextToClipboard(itemUrl);
+                            });
+                        } else {
+                            fallbackCopyTextToClipboard(itemUrl);
+                        }
+                    } else if (action === 'view') {
+                        window.open(itemUrl, '_blank');
+                    } else if (action === 'delete') {
+                        handleGalleryDelete(itemId, itemName, 'image');
+                    }
+                });
+            }
+            
+            if (magazinesGrid) {
+                magazinesGrid.addEventListener('click', (e) => {
+                    const actionBtn = e.target.closest('.action-btn');
+                    if (!actionBtn) return;
+                    
+                    const action = actionBtn.dataset.action;
+                    const itemUrl = actionBtn.dataset.url;
+                    const itemId = actionBtn.dataset.id;
+                    const itemName = actionBtn.dataset.name;
+                    
+                    if (action === 'copy') {
+                        if (navigator.clipboard && window.isSecureContext) {
+                            navigator.clipboard.writeText(itemUrl).then(() => {
+                                showToast('URL copied to clipboard!', 'success');
+                            }).catch(() => {
+                                fallbackCopyTextToClipboard(itemUrl);
+                            });
+                        } else {
+                            fallbackCopyTextToClipboard(itemUrl);
+                        }
+                    } else if (action === 'view') {
+                        window.open(itemUrl, '_blank');
+                    } else if (action === 'delete') {
+                        handleGalleryDelete(itemId, itemName, 'magazine');
+                    }
+                });
+            }
+            
+            // Search functionality
+            const gallerySearchInput = document.getElementById('gallerySearchInput');
+            const magazinesSearchInput = document.getElementById('magazinesSearchInput');
+            
+            if (gallerySearchInput) {
+                const gallerySearchContainer = gallerySearchInput.parentElement;
+                
+                gallerySearchInput.addEventListener('focus', () => {
+                    gallerySearchContainer.classList.add('focused');
+                });
+                
+                gallerySearchInput.addEventListener('blur', () => {
+                    gallerySearchContainer.classList.remove('focused');
+                });
+                
+                gallerySearchInput.addEventListener('input', (e) => {
+                    const searchTerm = e.target.value.trim();
+                    renderGallery(searchTerm);
+                });
+            }
+            
+            if (magazinesSearchInput) {
+                const magazinesSearchContainer = magazinesSearchInput.parentElement;
+                
+                magazinesSearchInput.addEventListener('focus', () => {
+                    magazinesSearchContainer.classList.add('focused');
+                });
+                
+                magazinesSearchInput.addEventListener('blur', () => {
+                    magazinesSearchContainer.classList.remove('focused');
+                });
+                
+                magazinesSearchInput.addEventListener('input', (e) => {
+                    const searchTerm = e.target.value.trim();
+                    renderMagazines(searchTerm);
+                });
+            }
+            
+            function fallbackCopyTextToClipboard(text) {
+                const textArea = document.createElement("textarea");
+                textArea.value = text;
+                textArea.style.position = "fixed";
+                textArea.style.top = "0";
+                textArea.style.left = "0";
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    showToast('URL copied to clipboard!', 'success');
+                } catch (err) {
+                    console.error('Failed to copy', err);
+                    showToast('Failed to copy URL', 'error');
+                }
+                document.body.removeChild(textArea);
+            }
+            
+            // Toast notification function
+            function showToast(message, type = 'success') {
+                const toast = document.createElement('div');
+                let bgColor = 'bg-green-600';
+                if (type === 'error') {
+                    bgColor = 'bg-red-600';
+                } else if (type === 'warning') {
+                    bgColor = 'bg-yellow-600';
+                }
+                toast.className = `fixed top-4 right-4 ${bgColor} text-white px-4 py-2 rounded-lg shadow-lg z-50 transition-all duration-300`;
+                toast.textContent = message;
+                document.body.appendChild(toast);
+                setTimeout(() => {
+                    toast.style.opacity = '0';
+                    toast.style.transform = 'translateY(-20px)';
+                    setTimeout(() => {
+                        if (toast.parentElement) {
+                            document.body.removeChild(toast);
+                        }
+                    }, 300);
+                }, 3000);
+            }
+            
+            // Delete function for gallery and magazines
+            async function handleGalleryDelete(itemId, itemName, type) {
+                if (!itemName) {
+                    console.error('No file name provided to handleGalleryDelete');
+                    showToast('Error: File name is missing', 'error');
+                    return;
+                }
+                
+                const displayType = type === 'image' ? 'image' : 'magazine';
+                
+                if (confirm(`Are you sure you want to delete "${itemName}"? This action cannot be undone.`)) {
+                    showToast('Deleting file...', 'success');
+                    
+                    try {
+                        const response = await fetch('/delete_file', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                file_name: itemName
+                            })
+                        });
+                        
+                        const result = await response.json();
+                        
+                        if (response.ok && result.status === 'success') {
+                            if (type === 'image') {
+                                const itemIndex = imageFiles.findIndex(item => item.id == itemId);
+                                if (itemIndex > -1) {
+                                    imageFiles.splice(itemIndex, 1);
+                                    renderGallery();
+                                } else {
+                                    await loadGallery();
+                                }
+                            } else {
+                                const itemIndex = magazineFiles.findIndex(item => item.id == itemId);
+                                if (itemIndex > -1) {
+                                    magazineFiles.splice(itemIndex, 1);
+                                    renderMagazines();
+                                } else {
+                                    await loadMagazines();
+                                }
+                            }
+                            showToast(`${displayType.charAt(0).toUpperCase() + displayType.slice(1)} "${itemName}" deleted successfully!`, 'success');
+                        } else {
+                            console.error('Delete failed:', result.message);
+                            showToast(`Failed to delete ${displayType}: ${result.message || 'Unknown error'}`, 'error');
+                        }
+                    } catch (error) {
+                        console.error('Error deleting file:', error);
+                        showToast(`Error deleting ${displayType}: ${error.message}`, 'error');
+                    }
+                }
+            }
+            
+            setTimeout(() => {
+                lucide.createIcons();
+            }, 100);
+        });
+    </script>
+</body>
+</html>
+                <!-- leftGalleryGrid.addEventListener('click', (e) => {
                     const actionBtn = e.target.closest('.action-btn');
                     if (!actionBtn) return;
                     
@@ -3737,4 +4383,4 @@
         });
     </script>
 </body>
-</html>
+</html> -->
