@@ -172,6 +172,17 @@ def admin_save_blog():
                 jsonify({"status": "error", "message": f"{key} cannot be empty"}),
                 400,
             )
+    
+    # Check if labels are provided or if they are marked as not mandatory
+    labels_data = data.get("labels", {})
+    labels_not_mandatory = data.get("labelsNotMandatory", False)
+    
+    # If labels are not marked as optional and no labels are provided, return error
+    if not labels_not_mandatory and (not labels_data or not isinstance(labels_data, dict) or len(labels_data) == 0):
+        return (
+            jsonify({"status": "error", "message": "Labels are required. Please add at least one label or mark labels as not mandatory."}),
+            400,
+        )
 
     verification_status = admin_login_db_check(
         email=data.get("enc_email", ""), password=data.get("enc_pwd", "")
@@ -209,6 +220,17 @@ def display_blog(blog_id):
     blog_data = get_blog(blog_id=blog_id)
     if not blog_data:
         return render_template("not_found/404.html"), 404
+
+    # Check if blog is deleted and handle redirect
+    if blog_data.get("status") == "deleted":
+        redirect_url = blog_data.get("redirect_url")
+        if redirect_url:
+            # Redirect to the specified URL
+            from flask import redirect
+            return redirect(redirect_url, code=301)
+        else:
+            # Show 403 page if no redirect URL is provided
+            return render_template("not_found/404.html"), 403
 
     json_data = blog_data.get("json_data", {})
     html_template = get_blog_html(demo_json_data=json_data)
@@ -249,6 +271,31 @@ def get_paginated_business_cards():
 
     # Return the data as a JSON response
     return jsonify(data)
+
+
+@app.route("/delete_blog", methods=["POST"])
+def delete_blog():
+    data = request.json
+    blog_id = data.get("blog_id")
+    redirect_url = data.get("redirect_url")
+    
+    if not blog_id:
+        return jsonify({"status": "error", "message": "Blog ID is required"}), 400
+    
+    # Mark blog as deleted with optional redirect URL
+    result = delete_blog_from_db(blog_id, redirect_url)
+    
+    if result.get("status") == "success":
+        return jsonify({
+            "status": "success",
+            "message": "Blog marked as deleted successfully",
+            "redirect_url": redirect_url
+        }), 200
+    else:
+        return jsonify({
+            "status": "error",
+            "message": result.get("message", "Failed to mark blog as deleted")
+        }), 500
 
 
 # --------------------------------------------------------------------------------#
