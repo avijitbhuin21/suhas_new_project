@@ -433,20 +433,18 @@
             display: flex;
             align-items: center;
             gap: 0.75rem;
-            padding: 1rem 1.5rem;
-            /* background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1); */
+            padding: 1.25rem 2rem;
             border-radius: 12px;
             color: rgba(255, 255, 255, 0.5);
             text-decoration: none;
             transition: all 0.3s ease;
             cursor: pointer;
-            font-size: 0.875rem;
+            font-size: 1rem;
             font-weight: 500;
         }
         
         .left-tab-button:hover {
-            /* background: rgba(255, 255, 255, 0.1); */
+            background: rgba(255, 255, 255, 0.05);
             color: rgba(255, 255, 255, 0.9);
             transform: translateY(-2px);
         }
@@ -685,17 +683,11 @@
                             </div>
                             <span>Upload Image</span>
                         </button>
-                        <button class="left-tab-button" data-left-tab="upload-magazine">
-                            <div class="flex-shrink-0">
-                                <i data-lucide="file-text" class="w-4 h-4"></i>
-                            </div>
-                            <span>Upload Magazine</span>
-                        </button>
                         <button class="left-tab-button" data-left-tab="storage">
                             <div class="flex-shrink-0">
-                                <i data-lucide="archive" class="w-4 h-4"></i>
+                                <i data-lucide="image" class="w-4 h-4"></i>
                             </div>
-                            <span>Storage</span>
+                            <span>Gallery</span>
                         </button>
                     </div>
                 </div>
@@ -727,47 +719,9 @@
                     </div>
                 </div>
 
-                <div id="upload-magazineContent" class="left-content-section">
-                    <h3 class="text-lg font-semibold mb-4 text-white" style="font-family: 'Playfair Display', serif;">Upload Magazines</h3>
-                    <div class="bg-black/20 border-white/10 rounded-[20px] p-6">
-                        <!-- Dropzone -->
-                        <div id="magazineDropzone" class="dropzone flex flex-col items-center justify-center space-y-3" style="border: 2px dashed rgba(255, 255, 255, 0.2); border-radius: 20px; padding: 2.5rem; text-align: center; cursor: pointer; transition: all 0.2s ease; background-color: rgba(255, 255, 255, 0.02);">
-                            <i id="magazineDropzoneIcon" data-lucide="file-plus" class="w-12 h-12 text-white/40"></i>
-                            <p class="font-semibold">Drag & drop PDF magazines here</p>
-                            <p id="magazineDropzoneText" class="text-sm text-white/60">Upload PDF files only. Max 50MB.</p>
-                            <p class="text-xs text-white/50">or</p>
-                            <button type="button" onclick="document.getElementById('magazineFileInput').click()" class="form-button bg-white/10 hover:bg-white/20 text-white/90 !px-4 !py-2">Browse Files</button>
-                        </div>
-                        <input type="file" id="magazineFileInput" multiple accept="application/pdf,.pdf" class="hidden">
-                        
-                        <!-- File Queue -->
-                        <div id="magazineFileQueue" class="mt-6 space-y-3"></div>
-                        
-                        <!-- Upload Button -->
-                        <div class="mt-8 flex justify-center">
-                            <button id="magazineUploadBtn" class="form-button bg-white text-black hover:bg-gray-100" disabled>
-                                <i data-lucide="upload" class="w-4 h-4 mr-2"></i>
-                                <span id="magazineUploadBtnText">Upload 0 Files</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
                 <div id="storageContent" class="left-content-section">
-                    <h3 class="text-lg font-semibold mb-4 text-white" style="font-family: 'Playfair Display', serif;">Storage</h3>
                     
-                    <!-- Storage Sub-tabs -->
-                    <div class="mb-6">
-                        <div class="flex gap-2">
-                            <button class="storage-sub-tab active" data-storage-tab="gallery" style="padding: 0.5rem 1rem; border-radius: 0.5rem; background: rgba(255, 255, 255, 0.1); color: white; border: 1px solid rgba(255, 255, 255, 0.2); transition: all 0.2s ease;">
-                                <i data-lucide="image" class="w-4 h-4 inline mr-2"></i>Gallery
-                            </button>
-                            <button class="storage-sub-tab" data-storage-tab="magazines" style="padding: 0.5rem 1rem; border-radius: 0.5rem; background: rgba(255, 255, 255, 0.05); color: rgba(255, 255, 255, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); transition: all 0.2s ease;">
-                                <i data-lucide="file-text" class="w-4 h-4 inline mr-2"></i>Magazines
-                            </button>
-                        </div>
-                    </div>
-
+                    
                     <!-- Gallery Sub-section -->
                     <div id="gallerySubContent" class="storage-sub-content active">
                         <!-- Search Bar -->
@@ -801,7 +755,7 @@
                         </div>
                         
                         <!-- Magazines Grid -->
-                        <div id="magazinesGrid" class="grid grid-cols-3 gap-4">
+                        <div id="magazinesGrid" class="grid grid-cols-4 gap-4">
                             <!-- Dynamic magazine items will be inserted here -->
                         </div>
                         
@@ -822,41 +776,7 @@
                     <div class="form-container">
                         <h2 class="section-title text-center">Add New Blog</h2>
                 <form id="addBlogForm">
-                    <!-- Labels Section -->
-                    <div class="labels-section-wrapper p-4 rounded-lg bg-white/[0.01] border border-white/[0.03] mb-6">
-                        <h3 class="text-lg font-medium text-white/90 mb-4 flex items-center">
-                            <i data-lucide="tags" class="w-5 h-5 mr-2"></i>Labels<span class="text-red-400">*</span>
-                        </h3>
-                        
-                        <!-- Label Not Mandatory Checkbox -->
-                        <div class="form-item mb-4">
-                            <label class="flex items-center gap-2 cursor-pointer">
-                                <input type="checkbox" id="labelsNotMandatory" class="w-4 h-4 text-blue-600 bg-gray-800 border-gray-600 rounded focus:ring-blue-500">
-                                <span class="text-sm text-white/80">Labels are not mandatory for this blog</span>
-                            </label>
-                        </div>
-                        
-                        <!-- Dynamic Labels Container -->
-                        <div id="labelsContainer" class="space-y-3 mb-4">
-                            <div class="label-item flex items-center gap-3">
-                                <div class="flex-1">
-                                    <input type="text" class="label-input form-input" placeholder="Enter label name..." />
-                                </div>
-                                <div class="w-24">
-                                    <input type="number" class="weight-input form-input" placeholder="Weight" min="1" max="100" />
-                                </div>
-                                <button type="button" class="remove-label-btn text-white/50 hover:text-red-500 transition-colors p-2 rounded-lg hover:bg-white/[0.05]" title="Remove">
-                                    <i data-lucide="x" class="w-4 h-4"></i>
-                                </button>
-                            </div>
-                        </div>
-                        
-                        <button type="button" id="addLabelBtn" class="form-button bg-white/10 hover:bg-white/20 border border-white/20 text-white text-sm px-3 py-2">
-                            <i data-lucide="plus" class="w-4 h-4 mr-2"></i>
-                            Add Label
-                        </button>
-                    </div>
-
+                    
                     <!-- Category Section -->
                     <div class="category-section-wrapper p-4 rounded-lg bg-white/[0.01] border border-white/[0.03] mb-6">
                         <h3 class="text-lg font-medium text-white/90 mb-4 flex items-center">
@@ -1055,6 +975,7 @@
                             <input type="url" name="adBannerBesideHref" class="form-input" placeholder="Href for ad banner..." value="">
                         </div>
                     </div>
+                    </div>
 
                     <!-- Ad Banner Two (Below Leadership Spotlight) -->
                     <div class="form-item">
@@ -1126,9 +1047,46 @@
                                     </button>
                                 </div>
                             </div>
+
+                            
                         </div>
                     </div>
-                    </div> <!-- End Content Section -->
+                    </div>
+                     <!-- End Content Section -->
+                    <!-- Labels Section -->
+                    <div class="labels-section-wrapper p-4 rounded-lg bg-white/[0.01] border border-white/[0.03] mb-6">
+                        <h3 class="text-lg font-medium text-white/90 mb-4 flex items-center">
+                            <i data-lucide="tags" class="w-5 h-5 mr-2"></i>Keywords<span class="text-red-400">*</span>
+                        </h3>
+                        
+                        <!-- Label Not Mandatory Checkbox -->
+                        <div class="form-item mb-4">
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" id="labelsNotMandatory" class="w-4 h-4 text-blue-600 bg-gray-800 border-gray-600 rounded focus:ring-blue-500">
+                                <span class="text-sm text-white/80">Keywords are not mandatory for this blog</span>
+                            </label>
+                        </div>
+                        
+                        <!-- Dynamic Labels Container -->
+                        <div id="labelsContainer" class="space-y-3 mb-4">
+                            <div class="label-item flex items-center gap-3">
+                                <div class="flex-1">
+                                    <input type="text" class="label-input form-input" placeholder="Enter Keyword..." />
+                                </div>
+                                <div class="w-24">
+                                    <input type="number" class="weight-input form-input" placeholder="Volume" min="1" max="100" />
+                                </div>
+                                <button type="button" class="remove-label-btn text-white/50 hover:text-red-500 transition-colors p-2 rounded-lg hover:bg-white/[0.05]" title="Remove">
+                                    <i data-lucide="x" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <button type="button" id="addLabelBtn" class="form-button bg-white/10 hover:bg-white/20 border border-white/20 text-white text-sm px-3 py-2">
+                            <i data-lucide="plus" class="w-4 h-4 mr-2"></i>
+                            Add Keywords
+                        </button>
+                    </div>
 
                     <!-- Action Buttons -->
                     <div class="flex justify-end gap-3">
@@ -1168,6 +1126,7 @@
                             </button>
                         </div>
                     </div>
+                    
                 </form>
             </div>
         </section>
@@ -1177,21 +1136,30 @@
             <div class="form-container">
                 <h2 class="section-title text-center">Edit/Delete Blog</h2>
                 <div class="section-content">
-                    <!-- Search Bar -->
+                    
+
+                    <!-- Filters -->
+                    <div class="form-row mb-4">
+                        <div class="form-item">
+                            <label class="form-label" for="filterTitle"><i data-lucide="type" class="w-4 h-4 inline mr-2"></i>Filter by Title</label>
+                            <input type="text" id="filterTitle" class="form-input" placeholder="Enter title...">
+                        </div>
+                        <div class="form-item">
+                            <label class="form-label" for="filterAuthor"><i data-lucide="user" class="w-4 h-4 inline mr-2"></i>Filter by Author</label>
+                            <input type="text" id="filterAuthor" class="form-input" placeholder="Enter author name...">
+                        </div>
+                    </div>
                     <div class="mb-6">
-                        <label class="form-label" for="searchBlog">
-                            <i data-lucide="search" class="w-4 h-4 inline mr-2"></i>Search Blog to Edit
-                        </label>
-                        <div class="relative">
-                            <input
-                                type="text"
-                                id="searchBlog"
-                                class="form-input pr-10"
-                                placeholder="Search by title, author, or content..."
-                            />
-                            <div class="absolute inset-y-0 right-0 flex items-center pr-3">
-                                <i data-lucide="search" class="w-4 h-4 text-white/40"></i>
-                            </div>
+                        <div class="form-item">
+                            <label class="form-label" for="filterCategory"><i data-lucide="tag" class="w-4 h-4 inline mr-2"></i>Filter by Category</label>
+                            <select id="filterCategory" class="form-input" style="background-color: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.2); color: white;">
+                                <option value="ALL" style="background-color: #1a1a1a; color: white;">ALL</option>
+                                <option value="BUSINESS" style="background-color: #1a1a1a; color: white;">BUSINESS</option>
+                                <option value="TECHNOLOGY" style="background-color: #1a1a1a; color: white;">TECHNOLOGY</option>
+                                <option value="GCC" style="background-color: #1a1a1a; color: white;">GCC</option>
+                                <option value="SUSTAINABILITY" style="background-color: #1a1a1a; color: white;">SUSTAINABILITY</option>
+                                <option value="SEMICONDUCTOR" style="background-color: #1a1a1a; color: white;">SEMICONDUCTOR</option>
+                            </select>
                         </div>
                     </div>
 
@@ -1562,6 +1530,7 @@
         </div>
     </div>
     
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.9.359/pdf.min.js"></script>
     <script>
        
         function showModal(title, message, type = 'info') {
@@ -1575,7 +1544,7 @@
             modalMessage.style.whiteSpace = 'pre-line';
             
            
-            const urlRegex = /(https?:\/\/[^\s]+)/g;
+            const urlRegex = /(https?:\/\/[^\\s]+)/g;
             if (urlRegex.test(message)) {
                 modalMessage.innerHTML = message.replace(urlRegex, '<a href="$1" target="_blank" rel="noopener noreferrer" class="modal-url-link">$1</a>');
             } else {
@@ -1603,6 +1572,9 @@
             const modal = document.getElementById('messageModal');
             modal.classList.remove('show');
         }
+
+        // Blog filtering is handled by the searchAndLoadBlogs function
+        // which already includes search functionality for blogs
         
        
         document.addEventListener('click', function(event) {
@@ -1690,7 +1662,7 @@
             try {
                 new URL(linkUrl);
             } catch (e) {
-                alert('Please enter a valid URL (including http:// or https://)');
+                alert('Please enter a valid URL (including http:// or https://)//');
                 document.getElementById('linkUrl').focus();
                 return;
             }
@@ -2022,7 +1994,8 @@
                     closeDeleteConfirmModal();
                     
                     // Refresh the blog list
-                    const searchKeyword = document.getElementById('searchBlog').value.trim();
+                    const searchBlogElement = document.getElementById('searchBlog');
+                    const searchKeyword = searchBlogElement ? searchBlogElement.value.trim() : '';
                     searchAndLoadBlogs(searchKeyword, currentPage);
                 } else {
                     showModal('Error', result.message || 'Failed to mark blog as deleted', 'error');
@@ -3204,9 +3177,15 @@
             const nextBtn = document.getElementById('nextPage');
             const pageInfo = document.getElementById('pageInfo');
             
-            prevBtn.disabled = currentPage <= 1;
-            nextBtn.disabled = currentPage >= totalPages;
-            pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
+            if (prevBtn) {
+                prevBtn.disabled = currentPage <= 1;
+            }
+            if (nextBtn) {
+                nextBtn.disabled = currentPage >= totalPages;
+            }
+            if (pageInfo) {
+                pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
+            }
         }
         
         // Utility functions
@@ -3243,7 +3222,8 @@
             
             try {
                 // Find the blog data from the current blogs list
-                const searchKeyword = document.getElementById('searchBlog').value.trim();
+                const searchBlogElement = document.getElementById('searchBlog');
+                const searchKeyword = searchBlogElement ? searchBlogElement.value.trim() : '';
                 const response = await fetch(`/get_blog_list?search_keyword=${encodeURIComponent(searchKeyword)}`);
                 const result = await response.json();
                 
@@ -3577,7 +3557,8 @@
             if (prevPage) {
                 prevPage.addEventListener('click', () => {
                     if (currentPage > 1) {
-                        const searchKeyword = document.getElementById('searchBlog').value.trim();
+                        const searchBlogElement = document.getElementById('searchBlog');
+                        const searchKeyword = searchBlogElement ? searchBlogElement.value.trim() : '';
                         searchAndLoadBlogs(searchKeyword, currentPage - 1);
                     }
                 });
@@ -3586,7 +3567,8 @@
             if (nextPage) {
                 nextPage.addEventListener('click', () => {
                     if (currentPage < totalPages) {
-                        const searchKeyword = document.getElementById('searchBlog').value.trim();
+                        const searchBlogElement = document.getElementById('searchBlog');
+                        const searchKeyword = searchBlogElement ? searchBlogElement.value.trim() : '';
                         searchAndLoadBlogs(searchKeyword, currentPage + 1);
                     }
                 });
@@ -4231,156 +4213,3 @@
     </script>
 </body>
 </html>
-                <!-- leftGalleryGrid.addEventListener('click', (e) => {
-                    const actionBtn = e.target.closest('.action-btn');
-                    if (!actionBtn) return;
-                    
-                    const action = actionBtn.dataset.action;
-                    const itemUrl = actionBtn.dataset.url;
-                    const itemId = actionBtn.dataset.id;
-                    const itemName = actionBtn.dataset.name;
-                    
-                    if (action === 'copy') {
-                        if (navigator.clipboard && window.isSecureContext) {
-                            navigator.clipboard.writeText(itemUrl).then(() => {
-                                showToast('URL copied to clipboard!', 'success');
-                            }).catch(() => {
-                                fallbackCopyTextToClipboard(itemUrl);
-                            });
-                        } else {
-                            fallbackCopyTextToClipboard(itemUrl);
-                        }
-                    } else if (action === 'view') {
-                        window.open(itemUrl, '_blank');
-                    } else if (action === 'delete') {
-                        handleLeftGalleryDelete(itemId, itemName);
-                    }
-                });
-            }
-            
-            function fallbackCopyTextToClipboard(text) {
-                const textArea = document.createElement("textarea");
-                textArea.value = text;
-                textArea.style.position = "fixed";
-                textArea.style.top = "0";
-                textArea.style.left = "0";
-                document.body.appendChild(textArea);
-                textArea.focus();
-                textArea.select();
-                try {
-                    document.execCommand('copy');
-                    showToast('URL copied to clipboard!', 'success');
-                } catch (err) {
-                    console.error('Failed to copy', err);
-                    showToast('Failed to copy URL', 'error');
-                }
-                document.body.removeChild(textArea);
-            }
-            
-            // Search functionality
-            const leftSearchInput = document.getElementById('leftSearchInput');
-            if (leftSearchInput) {
-                const leftSearchContainer = leftSearchInput.parentElement;
-                
-                leftSearchInput.addEventListener('focus', () => {
-                    leftSearchContainer.classList.add('focused');
-                });
-                
-                leftSearchInput.addEventListener('blur', () => {
-                    leftSearchContainer.classList.remove('focused');
-                });
-                
-                leftSearchInput.addEventListener('input', (e) => {
-                    const searchTerm = e.target.value.trim();
-                    renderLeftGallery(searchTerm);
-                });
-            }
-            
-            // Toast notification function
-            function showToast(message, type = 'success') {
-                const toast = document.createElement('div');
-                let bgColor = 'bg-green-600';
-                if (type === 'error') {
-                    bgColor = 'bg-red-600';
-                } else if (type === 'warning') {
-                    bgColor = 'bg-yellow-600';
-                }
-                toast.className = `fixed top-4 right-4 ${bgColor} text-white px-4 py-2 rounded-lg shadow-lg z-50 transition-all duration-300`;
-                toast.textContent = message;
-                document.body.appendChild(toast);
-                setTimeout(() => {
-                    toast.style.opacity = '0';
-                    toast.style.transform = 'translateY(-20px)';
-                    setTimeout(() => {
-                        if (toast.parentElement) {
-                            document.body.removeChild(toast);
-                        }
-                    }, 300);
-                }, 3000);
-            }
-            
-            // Delete function for left gallery
-            async function handleLeftGalleryDelete(itemId, itemName) {
-                if (!itemName) {
-                    console.error('No file name provided to handleLeftGalleryDelete');
-                    showToast('Error: File name is missing', 'error');
-                    return;
-                }
-                
-                if (confirm(`Are you sure you want to delete "${itemName}"? This action cannot be undone.`)) {
-                    showToast('Deleting file...', 'success');
-                    
-                    try {
-                        const response = await fetch('/delete_file', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify({
-                                file_name: itemName
-                            })
-                        });
-                        
-                        const result = await response.json();
-                        
-                        if (response.ok && result.status === 'success') {
-                            // Remove from local array
-                            const itemIndex = leftImageFiles.findIndex(item => item.id == itemId);
-                            if (itemIndex > -1) {
-                                leftImageFiles.splice(itemIndex, 1);
-                                renderLeftGallery();
-                                showToast(`File "${itemName}" deleted successfully!`, 'success');
-                            } else {
-                                await loadLeftGallery();
-                                showToast(`File "${itemName}" deleted successfully!`, 'success');
-                            }
-                        } else {
-                            console.error('Delete failed:', result.message);
-                            showToast(`Failed to delete file: ${result.message || 'Unknown error'}`, 'error');
-                        }
-                    } catch (error) {
-                        console.error('Error deleting file:', error);
-                        showToast(`Error deleting file: ${error.message}`, 'error');
-                    }
-                }
-            }
-            
-            // Load gallery when gallery tab is clicked
-            leftTabButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const tabName = this.getAttribute('data-left-tab');
-                    if (tabName === 'gallery') {
-                        setTimeout(() => {
-                            loadLeftGallery();
-                        }, 100);
-                    }
-                });
-            });
-            
-            setTimeout(() => {
-                lucide.createIcons();
-            }, 100);
-        });
-    </script>
-</body>
-</html> -->

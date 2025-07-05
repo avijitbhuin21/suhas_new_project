@@ -357,7 +357,7 @@
             title2 = "Crafting Exceptional Websites",
         }) {
             const componentRoot = document.createElement('div');
-            componentRoot.className = "relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-[#030303]";
+            componentRoot.className = "relative min-h-screen w-full flex items-start justify-center overflow-hidden bg-[#030303]";
             
             const bgBlurGradient = document.createElement('div');
             bgBlurGradient.className = "absolute inset-0 bg-gradient-to-br from-indigo-500/[0.05] via-transparent to-rose-500/[0.05] blur-3xl";
@@ -380,7 +380,7 @@
             componentRoot.appendChild(shapesContainer);
             
             const contentOuterContainer = document.createElement('div');
-            contentOuterContainer.className = "relative z-10 container mx-auto px-4 md:px-6";
+            contentOuterContainer.className = "relative z-10 container mx-auto px-4 md:px-6 pt-32 md:pt-40";
             
             const contentInnerContainer = document.createElement('div');
             contentInnerContainer.className = "max-w-none mx-auto text-center";
@@ -394,7 +394,7 @@
             };
             
             const titleDiv = createAnimatedTextElement('div', "",
-                `<h1 class="text-4xl sm:text-6xl md:text-8xl font-bold mb-6 md:mb-8 tracking-tight">
+                `<h1 class="text-4xl sm:text-6xl md:text-8xl font-bold mb-6 md:mb-12 tracking-tight">
                     <span class="bg-clip-text text-transparent bg-gradient-to-b from-white to-white/80">
                         ${title1}
                     </span>
@@ -407,27 +407,44 @@
             );
             contentInnerContainer.appendChild(titleDiv);
             
-            // const instructionText = createAnimatedTextElement('p',
-            //     "text-base text-white/70 mb-3 font-extralight tracking-wide",
-            //     "ADMIN OPTIONS",
-            //     1.5
-            // );
-            // contentInnerContainer.appendChild(instructionText);
-            
             const buttonsContainer = createAnimatedTextElement('div',
-                "flex flex-wrap items-center justify-center gap-4 mb-8",
+                "flex flex-wrap items-center justify-center gap-6 md:gap-8 mb-8",
                 `
-                <button id="analytics-btn" class="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.12] hover:border-white/[0.2] hover:scale-105 hover:shadow-lg hover:shadow-emerald-500/10 transition-all duration-300 ease-out">
-                    ${CircleSVG} <span class="text-base text-white/70 hover:text-white/90 tracking-wide font-medium transition-colors duration-300">Analytics</span>
+                <button id="analytics-btn" class="w-60 h-40 flex flex-col items-center p-4 rounded-2xl bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.1] hover:border-white/[0.15] hover:scale-105 hover:shadow-lg hover:shadow-emerald-500/10 transition-all duration-300 ease-out text-center">
+                    <div class="flex-grow w-full flex flex-col justify-end items-center">
+                        <span class="text-lg font-medium text-white/90">Analytics</span>
+                    </div>
+                    <div class="w-10/12 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent my-2 flex-shrink-0"></div>
+                    <div class="flex-grow w-full flex flex-col justify-start items-center">
+                        <p class="text-xs text-white/60 leading-tight">View website traffic and user engagement metrics.</p>
+                    </div>
                 </button>
-                <button id="update-btn" class="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.12] hover:border-white/[0.2] hover:scale-105 hover:shadow-lg hover:shadow-blue-500/10 transition-all duration-300 ease-out">
-                    ${CircleSVG} <span class="text-base text-white/70 hover:text-white/90 tracking-wide font-medium transition-colors duration-300">Update Page</span>
+                <button id="update-btn" class="w-60 h-40 flex flex-col items-center p-4 rounded-2xl bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.1] hover:border-white/[0.15] hover:scale-105 hover:shadow-lg hover:shadow-blue-500/10 transition-all duration-300 ease-out text-center">
+                    <div class="flex-grow w-full flex flex-col justify-end items-center">
+                        <span class="text-lg font-medium text-white/90">Update Page</span>
+                    </div>
+                    <div class="w-10/12 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent my-2 flex-shrink-0"></div>
+                    <div class="flex-grow w-full flex flex-col justify-start items-center">
+                        <p class="text-xs text-white/60 leading-tight">Modify content on various pages of the site.</p>
+                    </div>
                 </button>
-                <button id="blogs-btn" class="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.12] hover:border-white/[0.2] hover:scale-105 hover:shadow-lg hover:shadow-purple-500/10 transition-all duration-300 ease-out" onclick="window.location.href='/admin_blogs'">
-                    ${CircleSVG} <span class="text-base text-white/70 hover:text-white/90 tracking-wide font-medium transition-colors duration-300">Blogs</span>
+                <button id="blogs-btn" onclick="window.location.href='/admin_blogs'" class="w-60 h-40 flex flex-col items-center p-4 rounded-2xl bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.1] hover:border-white/[0.15] hover:scale-105 hover:shadow-lg hover:shadow-purple-500/10 transition-all duration-300 ease-out text-center">
+                    <div class="flex-grow w-full flex flex-col justify-end items-center">
+                        <span class="text-lg font-medium text-white/90">Blogs</span>
+                    </div>
+                    <div class="w-10/12 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent my-2 flex-shrink-0"></div>
+                    <div class="flex-grow w-full flex flex-col justify-start items-center">
+                        <p class="text-xs text-white/60 leading-tight">Create, edit, and manage blog posts and upload images to gallery.</p>
+                    </div>
                 </button>
-                <button id="upload-btn" class="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.12] hover:border-white/[0.2] hover:scale-105 hover:shadow-lg hover:shadow-orange-500/10 transition-all duration-300 ease-out" onclick="window.location.href='/manage_files'">
-                    ${CircleSVG} <span class="text-base text-white/70 hover:text-white/90 tracking-wide font-medium transition-colors duration-300">Upload Files</span>
+                <button id="upload-btn" onclick="window.location.href='/manage_files'" class="w-60 h-40 flex flex-col items-center p-4 rounded-2xl bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.1] hover:border-white/[0.15] hover:scale-105 hover:shadow-lg hover:shadow-orange-500/10 transition-all duration-300 ease-out text-center">
+                    <div class="flex-grow w-full flex flex-col justify-end items-center">
+                        <span class="text-lg font-medium text-white/90">Upload Magazines</span>
+                    </div>
+                    <div class="w-10/12 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent my-2 flex-shrink-0"></div>
+                    <div class="flex-grow w-full flex flex-col justify-start items-center">
+                        <p class="text-xs text-white/60 leading-tight">Upload magazines and access them from gallery.</p>
+                    </div>
                 </button>
                 `,
                 2
