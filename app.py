@@ -566,19 +566,19 @@ if __name__ == "__main__":
 
 
 
-# add a keyword input to the blogs when editing /adding a blog. 
-# add another field as volume that is being returned with this.
+# add a keyword input to the blogs when editing /adding a blog. --> DONE
+# add another field as volume that is being returned with this. --> DONE
 
-# you can add multiple keywords and volumes. (one keyword can have one volume)
+# you can add multiple keywords and volumes. (one keyword can have one volume) --> DONE
 
-# also add a tickbos saying this blog does not need a keyword to be publish.
+# also add a tickbos saying this blog does not need a keyword to be publish. --> DONE
 
-# add multiple search for each author, title, keyword, category and subcategory.
+# add multiple search for each author, title, keyword, category and subcategory. -->
 
-# re structure the admin panle.
-# track only h2 nd h3 tags in the blog for TOC.
+# re structure the admin panle. -->
+# track only h2 nd h3 tags in the blog for TOC. -->
 
-# add the login functionality in main page. and every other page.
-# add the loading screen to the blogs.
+# add the login functionality in main page. and every other page. -->
+# add the loading screen to the blogs. -->
 
-# add the ads manager and upload magazines to admin panel.
+# add the ads manager and upload magazines to admin panel. -->

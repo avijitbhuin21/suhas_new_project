@@ -340,26 +340,13 @@
         <!-- Upload Section -->
         <section id="uploadFiles" class="content-section active">
             <div class="container-box">
-                <h2 class="section-title text-center">Upload Media</h2>
+                <h2 class="section-title text-center">Upload Magazine</h2>
                 <div class="bg-black/20 border border-white/10 rounded-[20px] p-6 md:p-8" style="border-width: 0px;">
-                    <!-- UPDATED: Upload Type Toggle -->
-                    <div class="flex justify-center mb-6">
-                        <div class="glass-pill-container">
-                            <div class="toggle-group inline-flex items-center gap-1">
-                                <button id="imgToggle" data-type="image" class="active">
-                                    <i data-lucide="image" class="w-4 h-4 inline-block mr-2"></i>Images
-                                </button>
-                                <button id="pdfToggle" data-type="pdf">
-                                    <i data-lucide="file-text" class="w-4 h-4 inline-block mr-2"></i>Magazines
-                                </button>
-                            </div>
-                        </div>
-                    </div>
                     <!-- Dropzone -->
                     <div id="dropzone" class="dropzone flex flex-col items-center justify-center space-y-3">
                         <i id="dropzone-icon" data-lucide="upload-cloud" class="w-12 h-12 text-white/40"></i>
                         <p class="font-semibold">Drag & drop files here</p>
-                        <p id="dropzone-text" class="text-sm text-white/60">Upload JPG, PNG, GIF. Max 10MB.</p>
+                        <p id="dropzone-text" class="text-sm text-white/60">Upload PDF files. Max 50MB.</p>
                         <p class="text-xs text-white/50">or</p>
                         <button type="button" onclick="document.getElementById('fileInput').click()" class="form-button bg-white/10 hover:bg-white/20 text-white/90 !px-4 !py-2">Browse Files</button>
                     </div>
@@ -379,23 +366,13 @@
         <!-- Gallery Section -->
         <section id="gallery" class="content-section">
             <div class="container-box">
-                <h2 class="section-title text-center">Media Gallery</h2>
+                <h2 class="section-title text-center">Magazine Gallery</h2>
                  <!-- UPDATED: Filters -->
                  <div class="flex flex-col sm:flex-row justify-between items-center mb-8 gap-4">
                     <div class="relative w-full sm:w-auto sm:flex-1 max-w-xs">
                         <div class="search-input-container">
                             <i data-lucide="search" class="w-4 h-4 absolute left-4 top-1/2 -translate-y-1/2 text-white/40 z-10"></i>
-                            <input type="text" placeholder="Search media..." class="search-input w-full py-2 pl-11 pr-4 text-sm rounded-[20px] focus:ring-0 focus:outline-none transition" id="searchInput">
-                        </div>
-                    </div>
-                    <div class="glass-pill-container">
-                        <div class="toggle-group inline-flex items-center gap-1">
-                            <button data-filter="image" class="gallery-filter-btn active">
-                                <i data-lucide="image" class="w-4 h-4 inline-block sm:mr-2"></i><span class="hidden sm:inline">Images</span>
-                            </button>
-                            <button data-filter="pdf" class="gallery-filter-btn">
-                                <i data-lucide="file-text" class="w-4 h-4 inline-block sm:mr-2"></i><span class="hidden sm:inline">Magazines</span>
-                            </button>
+                            <input type="text" placeholder="Search magazines..." class="search-input w-full py-2 pl-11 pr-4 text-sm rounded-[20px] focus:ring-0 focus:outline-none transition" id="searchInput">
                         </div>
                     </div>
                 </div>
@@ -404,8 +381,8 @@
                 </div>
                  <div id="no-gallery-items" class="text-center py-16 hidden">
                     <i data-lucide="folder-x" class="w-16 h-16 mx-auto text-white/20 mb-4"></i>
-                    <h3 class="text-xl font-medium text-white/80">No Media Found</h3>
-                    <p class="text-white/50 mt-2">Try uploading some files or changing your filter.</p>
+                    <h3 class="text-xl font-medium text-white/80">No Magazines Found</h3>
+                    <p class="text-white/50 mt-2">Try uploading some magazines.</p>
                 </div>
             </div>
         </section>
@@ -431,12 +408,10 @@
         </div>
     </div>
     <script>
-        let imageFiles = [];
         let pdfFiles = [];
-        let currentGalleryFilter = 'image';
+        let currentGalleryFilter = 'pdf';
         let isLoadingFiles = false;
         const BUCKET_MAPPING = {
-            'image': 'blog-images',
             'pdf': 'magazine-pdfs'
         };
         async function fetchFilesFromAPI(fileType) {
@@ -472,12 +447,7 @@
             }
             isLoadingFiles = true;
             try {
-                const [images, pdfs] = await Promise.all([
-                    fetchFilesFromAPI('image'),
-                    fetchFilesFromAPI('pdf')
-                ]);
-                imageFiles = images;
-                pdfFiles = pdfs;
+                pdfFiles = await fetchFilesFromAPI('pdf');
                 renderGallery(currentGalleryFilter);
             } catch (error) {
                 console.error('Error loading files:', error);
@@ -487,7 +457,7 @@
             }
         }
         function getCurrentFiles() {
-            return currentGalleryFilter === 'image' ? imageFiles : pdfFiles;
+            return pdfFiles;
         }
         class ExpandableTabs {
             constructor(container, options = {}) {
@@ -549,8 +519,8 @@
             }
             document.querySelectorAll('.content-section').forEach(section => section.classList.remove('active'));
             let sectionId = '';
-            if (tabTitle === 'Upload') sectionId = 'uploadFiles';
-            if (tabTitle === 'Gallery') sectionId = 'gallery';
+            if (tabTitle === 'Upload Magazine') sectionId = 'uploadFiles';
+            if (tabTitle === 'Magazine Gallery') sectionId = 'gallery';
             if (sectionId) {
                 const section = document.getElementById(sectionId);
                 if (section) {
@@ -567,13 +537,6 @@
             return str.length > len ? str.substring(0, len) + "..." : str;
         }
         function updateFilterButtons(activeFilter) {
-            const filterButtons = document.querySelectorAll('.gallery-filter-btn');
-            filterButtons.forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.dataset.filter === activeFilter) {
-                    btn.classList.add('active');
-                }
-            });
             currentGalleryFilter = activeFilter;
         }
         function renderGallery(filter) {
@@ -589,30 +552,16 @@
                 filteredMedia.forEach(item => {
                     const itemEl = document.createElement('div');
                     itemEl.className = 'gallery-item group aspect-square';
-                    if (item.type === 'image') {
-                        itemEl.innerHTML = `
-                            <img data-src="${item.url}" alt="${item.name}" class="lazy-image absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-300" loading="lazy">
-                            <div class="image-placeholder absolute inset-0 bg-gray-800 flex items-center justify-center">
-                                <i data-lucide="image" class="w-8 h-8 text-white/20"></i>
-                            </div>
-                            <div class="overlay"></div>
-                            <div class="relative z-10 text-white p-3 flex flex-col justify-end h-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                <p class="text-xs font-semibold truncate">${item.name}</p>
-                                <p class="text-[10px] text-white/60">${item.size}</p>
-                            </div>
-                        `;
-                    } else {
-                        const nameWithoutExt = item.name.replace(/\.[^/.]+$/, "");
-                        const truncatedName = truncate(nameWithoutExt, 15);
-                        itemEl.classList.add('flex', 'flex-col', 'justify-center', 'items-center', 'text-center', 'p-4', 'bg-[#1C1C1E]');
-                        itemEl.innerHTML = `
-                            <i data-lucide="file-text" class="w-16 h-16 text-white/20 mb-4"></i>
-                            <div class="w-full">
-                                <p class="text-sm font-medium text-white">${truncatedName}</p>
-                                <p class="text-xs text-white/60 mt-1">${item.size}</p>
-                            </div>
-                        `;
-                    }
+                    const nameWithoutExt = item.name.replace(/\.[^/.]+$/, "");
+                    const truncatedName = truncate(nameWithoutExt, 15);
+                    itemEl.classList.add('flex', 'flex-col', 'justify-center', 'items-center', 'text-center', 'p-4', 'bg-[#1C1C1E]');
+                    itemEl.innerHTML = `
+                        <i data-lucide="file-text" class="w-16 h-16 text-white/20 mb-4"></i>
+                        <div class="w-full">
+                            <p class="text-sm font-medium text-white">${truncatedName}</p>
+                            <p class="text-xs text-white/60 mt-1">${item.size}</p>
+                        </div>
+                    `;
                     itemEl.innerHTML += `
                         <div class="actions">
                             <button class="action-btn" data-action="view" data-id="${item.id}" data-url="${item.url}" title="View"><i data-lucide="external-link" class="w-4 h-4 text-white"></i></button>
@@ -628,51 +577,14 @@
             lucide.createIcons();
         }
         function initializeLazyLoading() {
-            const lazyImages = document.querySelectorAll('.lazy-image');
-            if ('IntersectionObserver' in window) {
-                const imageObserver = new IntersectionObserver((entries, observer) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            const img = entry.target;
-                            const placeholder = img.nextElementSibling;
-                            img.src = img.dataset.src;
-                            img.onload = () => {
-                                img.classList.remove('opacity-0');
-                                img.classList.add('opacity-100');
-                                if (placeholder && placeholder.classList.contains('image-placeholder')) {
-                                    placeholder.style.display = 'none';
-                                }
-                            };
-                            img.onerror = () => {
-                                console.error('Failed to load image:', img.dataset.src);
-                                if (placeholder && placeholder.classList.contains('image-placeholder')) {
-                                    placeholder.innerHTML = '<i data-lucide="image-off" class="w-8 h-8 text-red-400/50"></i>';
-                                    lucide.createIcons();
-                                }
-                            };
-                            observer.unobserve(img);
-                        }
-                    });
-                });
-                lazyImages.forEach(img => imageObserver.observe(img));
-            } else {
-                lazyImages.forEach(img => {
-                    img.src = img.dataset.src;
-                    img.classList.remove('opacity-0');
-                    img.classList.add('opacity-100');
-                    const placeholder = img.nextElementSibling;
-                    if (placeholder && placeholder.classList.contains('image-placeholder')) {
-                        placeholder.style.display = 'none';
-                    }
-                });
-            }
+            // No-op: Lazy loading was for images, which have been removed.
         }
         document.addEventListener('DOMContentLoaded', function() {
             lucide.createIcons();
             const navbarTabsData = [
                 { title: "Home", icon: "home" },
-                { title: "Upload", icon: "upload-cloud" },
-                { title: "Gallery", icon: "grid" }
+                { title: "Upload Magazine", icon: "upload-cloud" },
+                { title: "Magazine Gallery", icon: "grid" }
             ];
             const expandableTabs = new ExpandableTabs(document.getElementById('navbarTabs'), {
                 tabs: navbarTabsData,
@@ -686,12 +598,10 @@
             loadAllFiles();
             const dropzone = document.getElementById('dropzone');
             const fileInput = document.getElementById('fileInput');
-            const imgToggle = document.getElementById('imgToggle');
-            const pdfToggle = document.getElementById('pdfToggle');
             const fileQueueContainer = document.getElementById('file-queue');
             const uploadBtn = document.getElementById('uploadBtn');
             const uploadBtnText = document.getElementById('uploadBtnText');
-            let uploadType = 'image';
+            let uploadType = 'pdf';
             let filesToUpload = [];
             function setUploadType(type) {
                 uploadType = type;
@@ -702,19 +612,9 @@
                 dropzoneIcon.style.opacity = '0';
                 dropzoneText.style.opacity = '0';
                 setTimeout(() => {
-                    if (type === 'image') {
-                        imgToggle.classList.add('active');
-                        pdfToggle.classList.remove('active');
-                        fileInput.accept = 'image/*';
-                        dropzoneIcon.dataset.lucide = 'image';
-                        dropzoneText.textContent = 'Upload JPG, PNG, GIF. Max 10MB.';
-                    } else {
-                        pdfToggle.classList.add('active');
-                        imgToggle.classList.remove('active');
-                        fileInput.accept = 'application/pdf';
-                        dropzoneIcon.dataset.lucide = 'file-text';
-                        dropzoneText.textContent = 'Upload PDF files. Max 50MB.';
-                    }
+                    fileInput.accept = 'application/pdf';
+                    dropzoneIcon.dataset.lucide = 'file-text';
+                    dropzoneText.textContent = 'Upload PDF files. Max 50MB.';
                     lucide.createIcons();
                     setTimeout(() => {
                         dropzoneIcon.style.opacity = '1';
@@ -722,11 +622,9 @@
                     }, 50);
                 }, 200);
             }
-            imgToggle.addEventListener('click', () => setUploadType('image'));
-            pdfToggle.addEventListener('click', () => setUploadType('pdf'));
             
-            // Initialize the upload type to 'image' on page load
-            setUploadType('image');
+            // Initialize the upload type to 'pdf' on page load
+            setUploadType('pdf');
             ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
                 dropzone.addEventListener(eventName, e => { e.preventDefault(); e.stopPropagation(); });
             });
@@ -755,7 +653,7 @@
                 });
                 if (invalidFiles.length > 0) {
                     const fileNames = invalidFiles.map(f => f.name).join(', ');
-                    const expectedTypes = uploadType === 'image' ? 'PNG, JPG, JPEG, GIF, WEBP, BMP, SVG' : 'PDF';
+                    const expectedTypes = 'PDF';
                     showToast(`Invalid file type(s): ${fileNames}. Expected: ${expectedTypes}`, 'error');
                 }
                 if (validFiles.length > 0) {
@@ -764,13 +662,7 @@
                 }
             }
             function isValidFileType(file) {
-                if (uploadType === 'image') {
-                    return file.type.startsWith('image/') &&
-                           ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp', 'image/bmp', 'image/svg+xml'].includes(file.type.toLowerCase());
-                } else if (uploadType === 'pdf') {
-                    return file.type === 'application/pdf';
-                }
-                return false;
+                return file.type === 'application/pdf';
             }
             function updateFileQueueUI() {
                 fileQueueContainer.innerHTML = '';
@@ -780,7 +672,7 @@
                         fileItem.className = 'file-queue-item';
                         fileItem.innerHTML = `
                             <div class="flex-shrink-0 mr-3">
-                                <i data-lucide="${file.type.startsWith('image/') ? 'image' : 'file-text'}" class="w-5 h-5 text-white/70"></i>
+                                <i data-lucide="file-text" class="w-5 h-5 text-white/70"></i>
                             </div>
                             <div class="flex-1 min-w-0">
                                 <p class="text-sm font-medium truncate">${file.name}</p>
@@ -868,13 +760,6 @@
                 updateFileQueueUI();
                 uploadBtn.disabled = false;
                 uploadBtnText.textContent = 'Upload 0 Files';
-            });
-            const filterButtons = document.querySelectorAll('.gallery-filter-btn');
-            filterButtons.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    currentGalleryFilter = btn.dataset.filter;
-                    renderGallery(currentGalleryFilter);
-                });
             });
             const galleryGrid = document.getElementById('galleryGrid');
             galleryGrid.addEventListener('click', (e) => {
@@ -1040,13 +925,8 @@
                         if (response.ok && result.status === 'success') {
                             let itemIndex = -1;
                             let targetArray = null;
-                            if (currentGalleryFilter === 'image') {
-                                itemIndex = imageFiles.findIndex(item => item.id == itemId);
-                                targetArray = imageFiles;
-                            } else {
-                                itemIndex = pdfFiles.findIndex(item => item.id == itemId);
-                                targetArray = pdfFiles;
-                            }
+                            itemIndex = pdfFiles.findIndex(item => item.id == itemId);
+                            targetArray = pdfFiles;
                             if (itemIndex > -1 && targetArray) {
                                 targetArray.splice(itemIndex, 1);
                                 renderGallery(currentGalleryFilter);
@@ -1176,7 +1056,7 @@
             const galleryGrid = document.getElementById('galleryGrid');
             if (!galleryGrid) return;
             updateFilterButtons(filter);
-            let filteredMedia = getCurrentFiles();
+            let filteredMedia = getCurrentFiles().filter(item => item.name.toLowerCase().endsWith('.pdf'));
             if (searchTerm) {
                 filteredMedia = filteredMedia.filter(item =>
                     item.name.toLowerCase().includes(searchTerm)
@@ -1190,30 +1070,16 @@
                 filteredMedia.forEach(item => {
                     const itemEl = document.createElement('div');
                     itemEl.className = 'gallery-item group aspect-square';
-                    if (item.type === 'image') {
-                        itemEl.innerHTML = `
-                            <img data-src="${item.url}" alt="${item.name}" class="lazy-image absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-300" loading="lazy">
-                            <div class="image-placeholder absolute inset-0 bg-gray-800 flex items-center justify-center">
-                                <i data-lucide="image" class="w-8 h-8 text-white/20"></i>
-                            </div>
-                            <div class="overlay"></div>
-                            <div class="relative z-10 text-white p-3 flex flex-col justify-end h-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                <p class="text-xs font-semibold truncate">${item.name}</p>
-                                <p class="text-[10px] text-white/60">${item.size}</p>
-                            </div>
-                        `;
-                    } else {
-                        const nameWithoutExt = item.name.replace(/\.[^/.]+$/, "");
-                        const truncatedName = truncate(nameWithoutExt, 15);
-                        itemEl.classList.add('flex', 'flex-col', 'justify-center', 'items-center', 'text-center', 'p-4', 'bg-[#1C1C1E]');
-                        itemEl.innerHTML = `
-                            <i data-lucide="file-text" class="w-16 h-16 text-white/20 mb-4"></i>
-                            <div class="w-full">
-                                <p class="text-sm font-medium text-white">${truncatedName}</p>
-                                <p class="text-xs text-white/60 mt-1">${item.size}</p>
-                            </div>
-                        `;
-                    }
+                    const nameWithoutExt = item.name.replace(/\.[^/.]+$/, "");
+                    const truncatedName = truncate(nameWithoutExt, 15);
+                    itemEl.classList.add('flex', 'flex-col', 'justify-center', 'items-center', 'text-center', 'p-4', 'bg-[#1C1C1E]');
+                    itemEl.innerHTML = `
+                        <i data-lucide="file-text" class="w-16 h-16 text-white/20 mb-4"></i>
+                        <div class="w-full">
+                            <p class="text-sm font-medium text-white">${truncatedName}</p>
+                            <p class="text-xs text-white/60 mt-1">${item.size}</p>
+                        </div>
+                    `;
                     itemEl.innerHTML += `
                         <div class="actions">
                             <button class="action-btn" data-action="view" data-id="${item.id}" data-url="${item.url}" title="View"><i data-lucide="external-link" class="w-4 h-4 text-white"></i></button>
