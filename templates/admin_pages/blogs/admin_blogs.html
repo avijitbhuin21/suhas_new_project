@@ -1149,7 +1149,7 @@
                             <input type="text" id="filterAuthor" class="form-input" placeholder="Enter author name...">
                         </div>
                     </div>
-                    <div class="mb-6">
+                    <div class="form-row mb-6">
                         <div class="form-item">
                             <label class="form-label" for="filterCategory"><i data-lucide="tag" class="w-4 h-4 inline mr-2"></i>Filter by Category</label>
                             <select id="filterCategory" class="form-input" style="background-color: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.2); color: white;">
@@ -1160,6 +1160,10 @@
                                 <option value="SUSTAINABILITY" style="background-color: #1a1a1a; color: white;">SUSTAINABILITY</option>
                                 <option value="SEMICONDUCTOR" style="background-color: #1a1a1a; color: white;">SEMICONDUCTOR</option>
                             </select>
+                        </div>
+                        <div class="form-item">
+                            <label class="form-label" for="filterKeywords"><i data-lucide="tags" class="w-4 h-4 inline mr-2"></i>Filter by Keywords</label>
+                            <input type="text" id="filterKeywords" class="form-input" placeholder="Enter keywords...">
                         </div>
                     </div>
 
@@ -1573,8 +1577,6 @@
             modal.classList.remove('show');
         }
 
-        // Blog filtering is handled by the searchAndLoadBlogs function
-        // which already includes search functionality for blogs
         
        
         document.addEventListener('click', function(event) {
@@ -1994,9 +1996,7 @@
                     closeDeleteConfirmModal();
                     
                     // Refresh the blog list
-                    const searchBlogElement = document.getElementById('searchBlog');
-                    const searchKeyword = searchBlogElement ? searchBlogElement.value.trim() : '';
-                    searchAndLoadBlogs(searchKeyword, currentPage);
+                    fetchBlogs();
                 } else {
                     showModal('Error', result.message || 'Failed to mark blog as deleted', 'error');
                 }
@@ -3032,66 +3032,88 @@
         let totalPages = 1;
         let searchTimeout = null;
         const blogsPerPage = 8;
-        
-        // Search and load blogs function
-        async function searchAndLoadBlogs(searchKeyword = '', page = 1) {
+        let allFetchedBlogs = [];
+
+        async function fetchBlogs() {
             const blogsLoading = document.getElementById('blogsLoading');
             const noBlogsFound = document.getElementById('noBlogsFound');
             const blogsList = document.getElementById('blogsList');
             const paginationControls = document.getElementById('paginationControls');
-            
-            // Show loading state
+        
             blogsLoading.classList.remove('hidden');
             noBlogsFound.classList.add('hidden');
             blogsList.innerHTML = '';
             paginationControls.classList.add('hidden');
-            
+        
             try {
-                const response = await fetch(`/get_blog_list?search_keyword=${encodeURIComponent(searchKeyword)}`);
-                
+                const response = await fetch('/get_blog_list');
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
-                
                 const result = await response.json();
-                
-                // Hide loading state
                 blogsLoading.classList.add('hidden');
-                
-                if (result.status === 'success' && result.blogs && result.blogs.length > 0) {
-                    // Calculate pagination
-                    const startIndex = (page - 1) * blogsPerPage;
-                    const endIndex = startIndex + blogsPerPage;
-                    const paginatedBlogs = result.blogs.slice(startIndex, endIndex);
-                    totalPages = Math.ceil(result.blogs.length / blogsPerPage);
-                    currentPage = page;
-                    
-                    // Display blogs
-                    displayBlogs(paginatedBlogs);
-                    
-                    // Show pagination if needed
-                    if (totalPages > 1) {
-                        updatePaginationControls();
-                        paginationControls.classList.remove('hidden');
-                    }
+                if (result.status === 'success' && result.blogs) {
+                    allFetchedBlogs = result.blogs;
+                    applyFiltersAndRender(1);
                 } else {
-                    // Show no results state
-                    noBlogsFound.classList.remove('hidden');
+                    allFetchedBlogs = [];
+                    applyFiltersAndRender(1);
                 }
-                
             } catch (error) {
                 console.error('Error fetching blogs:', error);
                 blogsLoading.classList.add('hidden');
+                blogsList.innerHTML = `<div class="text-center py-8"><p class="text-white/60">Error loading blogs. Please try again later.</p></div>`;
+            }
+        }
+
+        function applyFiltersAndRender(page = 1) {
+            const filterTitleValue = document.getElementById('filterTitle').value.trim().toLowerCase();
+            const filterAuthorValue = document.getElementById('filterAuthor').value.trim().toLowerCase();
+            const filterCategoryValue = document.getElementById('filterCategory').value;
+            const filterKeywordsValue = document.getElementById('filterKeywords').value.trim().toLowerCase();
+        
+            const filteredBlogs = allFetchedBlogs.filter(blog => {
+                const jsonData = blog.json_data || {};
+                const title = (jsonData.blogTitle || '').toLowerCase();
+                const author = (jsonData.blogAuthor || '').toLowerCase();
+                const category = blog.category || jsonData.blogCategory || '';
+                const labels = blog.labels ? Object.keys(blog.labels).map(k => k.toLowerCase()) : [];
+
+                const titleMatch = !filterTitleValue || title.includes(filterTitleValue);
+                const authorMatch = !filterAuthorValue || author.includes(filterAuthorValue);
+                const categoryMatch = filterCategoryValue === 'ALL' || category === filterCategoryValue;
+                const keywordsMatch = !filterKeywordsValue || labels.some(label => label.includes(filterKeywordsValue));
+        
+                return titleMatch && authorMatch && categoryMatch && keywordsMatch;
+            });
+        
+            const noBlogsFound = document.getElementById('noBlogsFound');
+            const blogsList = document.getElementById('blogsList');
+            const paginationControls = document.getElementById('paginationControls');
+        
+            if (filteredBlogs.length > 0) {
+                noBlogsFound.classList.add('hidden');
+                blogsList.classList.remove('hidden');
                 
-                // Show search to get started message
-                blogsList.innerHTML = `
-                    <div class="text-center py-8">
-                        <i data-lucide="search" class="w-12 h-12 mx-auto mb-4 text-white/40"></i>
-                        <h3 class="text-lg font-semibold mb-2 text-white/80">Search to get started</h3>
-                        <p class="text-white/60">Use the search bar above to find blogs to edit or delete.</p>
-                    </div>
-                `;
-                lucide.createIcons();
+                totalPages = Math.ceil(filteredBlogs.length / blogsPerPage);
+                currentPage = page;
+                const startIndex = (page - 1) * blogsPerPage;
+                const endIndex = startIndex + blogsPerPage;
+                const paginatedBlogs = filteredBlogs.slice(startIndex, endIndex);
+                
+                displayBlogs(paginatedBlogs);
+                
+                if (totalPages > 1) {
+                    updatePaginationControls();
+                    paginationControls.classList.remove('hidden');
+                } else {
+                    paginationControls.classList.add('hidden');
+                }
+            } else {
+                blogsList.innerHTML = '';
+                blogsList.classList.add('hidden');
+                noBlogsFound.classList.remove('hidden');
+                paginationControls.classList.add('hidden');
             }
         }
         
@@ -3220,29 +3242,17 @@
                 return;
             }
             
-            try {
-                // Find the blog data from the current blogs list
-                const searchBlogElement = document.getElementById('searchBlog');
-                const searchKeyword = searchBlogElement ? searchBlogElement.value.trim() : '';
-                const response = await fetch(`/get_blog_list?search_keyword=${encodeURIComponent(searchKeyword)}`);
-                const result = await response.json();
-                
-                if (result.status === 'success' && result.blogs) {
-                    const blog = result.blogs.find(b => b.id === blogId);
-                    if (blog) {
-                        populateEditForm(blog);
-                        switchToEditMode();
-                        // Switch to Add Blogs tab to show the form
-                        showContentSection('Add Blogs');
-                    } else {
-                        showModal('Error', 'Blog not found', 'error');
-                    }
-                } else {
-                    showModal('Error', 'Failed to load blog data', 'error');
+            const blog = allFetchedBlogs.find(b => b.id === blogId);
+            if (blog) {
+                populateEditForm(blog);
+                switchToEditMode();
+                // Switch to Add Blogs tab to show the form
+                const addBlogsTab = Array.from(document.querySelectorAll('#navbarTabs .tab-button')).find(btn => btn.textContent.includes('Add Blogs'));
+                if (addBlogsTab) {
+                    addBlogsTab.click();
                 }
-            } catch (error) {
-                console.error('Error loading blog for edit:', error);
-                showModal('Error', 'An error occurred while loading the blog. Please try again.', 'error');
+            } else {
+                showModal('Error', 'Blog not found in the list. Please refresh.', 'error');
             }
         }
         
@@ -3539,16 +3549,27 @@
             document.getElementById('addH6Btn').addEventListener('click', () => addDynamicSection('h6'));
             document.getElementById('addImageBtn').addEventListener('click', () => addDynamicSection('image'));
             
-            // Search functionality for Edit/Delete section
-            const searchBlog = document.getElementById('searchBlog');
-            if (searchBlog) {
-                searchBlog.addEventListener('input', function(e) {
+            // Filter functionality for Edit/Delete section
+            const filterTitleInput = document.getElementById('filterTitle');
+            const filterAuthorInput = document.getElementById('filterAuthor');
+            const filterCategoryInput = document.getElementById('filterCategory');
+            const filterKeywordsInput = document.getElementById('filterKeywords');
+
+            function setupFilterListeners() {
+                const applyFilters = () => applyFiltersAndRender(1);
+                
+                const debounce = (func, delay) => {
                     clearTimeout(searchTimeout);
-                    searchTimeout = setTimeout(() => {
-                        searchAndLoadBlogs(e.target.value.trim(), 1);
-                    }, 300); // Debounce search
-                });
+                    searchTimeout = setTimeout(func, delay);
+                };
+
+                filterTitleInput.addEventListener('input', () => debounce(applyFilters, 300));
+                filterAuthorInput.addEventListener('input', () => debounce(applyFilters, 300));
+                filterCategoryInput.addEventListener('change', applyFilters);
+                filterKeywordsInput.addEventListener('input', () => debounce(applyFilters, 300));
             }
+            
+            setupFilterListeners();
             
             // Pagination event listeners
             const prevPage = document.getElementById('prevPage');
@@ -3557,9 +3578,7 @@
             if (prevPage) {
                 prevPage.addEventListener('click', () => {
                     if (currentPage > 1) {
-                        const searchBlogElement = document.getElementById('searchBlog');
-                        const searchKeyword = searchBlogElement ? searchBlogElement.value.trim() : '';
-                        searchAndLoadBlogs(searchKeyword, currentPage - 1);
+                        applyFiltersAndRender(currentPage - 1);
                     }
                 });
             }
@@ -3567,9 +3586,7 @@
             if (nextPage) {
                 nextPage.addEventListener('click', () => {
                     if (currentPage < totalPages) {
-                        const searchBlogElement = document.getElementById('searchBlog');
-                        const searchKeyword = searchBlogElement ? searchBlogElement.value.trim() : '';
-                        searchAndLoadBlogs(searchKeyword, currentPage + 1);
+                        applyFiltersAndRender(currentPage + 1);
                     }
                 });
             }
@@ -3587,7 +3604,7 @@
                 if (tabTitle === 'Edit/Delete Blog') {
                     // Load blogs when the section is first shown
                     setTimeout(() => {
-                        searchAndLoadBlogs('', 1);
+                        fetchBlogs();
                     }, 100);
                 }
             };
@@ -3756,6 +3773,7 @@
                     
                     let successCount = 0;
                     let errorCount = 0;
+                    let errorMessages = [];
                     
                     for (let i = 0; i < filesToUpload.length; i++) {
                         const file = filesToUpload[i];
@@ -3774,10 +3792,12 @@
                                 successCount++;
                             } else {
                                 errorCount++;
+                                errorMessages.push(result.message || `Failed to upload ${file.name}`);
                                 console.error(`Failed to upload ${file.name}:`, result.message);
                             }
                         } catch (error) {
                             errorCount++;
+                            errorMessages.push(`Network error uploading ${file.name}`);
                             console.error(`Network error uploading ${file.name}:`, error);
                         }
                         
@@ -3787,9 +3807,9 @@
                     if (successCount > 0 && errorCount === 0) {
                         showToast(`Successfully uploaded ${successCount} ${displayType.slice(0, -1)}${successCount !== 1 ? 's' : ''}!`, 'success');
                     } else if (successCount > 0 && errorCount > 0) {
-                        showToast(`Uploaded ${successCount} ${displayType} successfully, but ${errorCount} failed`, 'warning');
+                        showToast(`Uploaded ${successCount} ${displayType} successfully, but ${errorCount} failed: ${errorMessages.join(', ')}`, 'warning');
                     } else {
-                        showToast('All uploads failed', 'error');
+                        showToast(`All uploads failed: ${errorMessages.join(', ')}`, 'error');
                     }
                     
                     if (successCount > 0) {

@@ -440,6 +440,57 @@ def delete_file():
 #                            MAGAZINE PAGE FUNCTIONS                             #
 # --------------------------------------------------------------------------------#
 
+@app.route("/create_magazine", methods=["POST"])
+def create_magazine():
+    try:
+        if 'title' not in request.form or 'pdf_file' not in request.files:
+            return jsonify({"status": "error", "message": "Title and PDF file are required fields."}), 400
+
+        title = request.form['title']
+        pdf_file = request.files['pdf_file']
+        thumbnail_file = request.files.get('thumbnail_file') # Optional
+
+        result = create_magazine_db(title=title, pdf_file=pdf_file, thumbnail_file=thumbnail_file)
+
+        if result.get("status") == "success":
+            return jsonify({
+                "status": "success",
+                "message": "Magazine created successfully.",
+                "data": result.get("data")
+            }), 201
+        else:
+            # Pass the specific error message from the handler
+            return jsonify({
+                "status": "error",
+                "message": result.get("message", "An unknown error occurred during magazine creation.")
+            }), 400 # Using 400 for client errors like duplicates
+    except Exception as e:
+        print(f"Server error in /create_magazine: {str(e)}")
+        return jsonify({"status": "error", "message": f"An internal server error occurred: {str(e)}"}), 500
+
+@app.route("/delete_magazine", methods=["POST"])
+def delete_magazine():
+    try:
+        data = request.get_json()
+        if not data or 'id' not in data:
+            return jsonify({"status": "error", "message": "Magazine ID is required."}), 400
+
+        magazine_id = data['id']
+        result = delete_magazine_from_db(magazine_id)
+
+        if result.get("status") == "success":
+            return jsonify({
+                "status": "success",
+                "message": result.get("message", "Magazine deleted successfully.")
+            }), 200
+        else:
+            return jsonify({
+                "status": "error",
+                "message": result.get("message", "Failed to delete magazine.")
+            }), 500
+    except Exception as e:
+        print(f"Server error in /delete_magazine: {str(e)}")
+        return jsonify({"status": "error", "message": f"An internal server error occurred: {str(e)}"}), 500
 
 @app.route("/magazine_page")
 def magazine_page():
