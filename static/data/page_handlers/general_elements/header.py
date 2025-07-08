@@ -107,14 +107,14 @@ def desktop_menu_header_elements(blogs_by_category):
 
         dropdown_html = f'''
         <div class="dropdown-container" data-category="{category}">
-            <a href="/category/{category.lower()}" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">{category.capitalize()}</a>
+            <a href="/{category.lower()}" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">{category.capitalize()}</a>
             <div class="dropdown-content">
                 <h3 class="text-gray-800 font-semibold text-sm mb-3">{category_title}</h3>
                 <div class="space-y-3">
                     {items_html}
                     <div class="border-t border-gray-200 pt-3 mt-3">
                         <div class="dropdown-item know-more-item flex items-center justify-center p-2 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
-                            <a href="/category/{category.lower()}"><span class="text-[#3533CD] text-xs font-medium mr-1">Know More</span></a>
+                            <a href="/{category.lower()}"><span class="text-[#3533CD] text-xs font-medium mr-1">Know More</span></a>
                             <i class="ph ph-arrow-right text-[#3533CD] text-xs transition-all duration-200"></i>
                         </div>
                     </div>
@@ -160,7 +160,7 @@ def mobile_menu_header_elements(blogs_by_category):
                 <div class="p-3 space-y-2">
                     {blog_items_html}
                     <div class="pt-2 mt-2 border-t border-gray-700/50">
-                        <a href="/category/{category.lower()}" class="sub-menu-item know-more-item-mobile justify-center bg-gray-700/50 hover:bg-gray-600/50">
+                        <a href="/{category.lower()}" class="sub-menu-item know-more-item-mobile justify-center bg-gray-700/50 hover:bg-gray-600/50">
                             <span class="text-bol-purple-light text-xs font-medium mr-1">Know More</span>
                             <i class="ph ph-arrow-right text-bol-purple-light text-xs"></i>
                         </a>
