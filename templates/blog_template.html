@@ -1,0 +1,18 @@
+<a href="{blog['blogUrl']}" class="block">
+    <div class="card bg-white rounded-xl shadow-md overflow-hidden flex-1 hover:shadow-lg transition-shadow duration-300">
+        <!-- Card image -->
+        <div class="h-48 overflow-hidden">
+            <img src="{blog['mainImageUrl']}" alt="{blog['mainImageAlt']}" class="w-full h-full object-cover">
+        </div>
+        <!-- Card content -->
+        <div class="p-6">
+            <h3 class="text-xl font-bold text-gray-800 mb-2">{blog['blogTitle']}</h3>
+            <p class="text-gray-600 mb-4">{blog['blogSummary']}</p>
+            <div class="flex items-center text-sm text-gray-500 mb-3">
+                <span>{blog['blogAuthor']}</span>
+                <span class="mx-2">•</span>
+                <span>{blog['blogDate']}</span>
+            </div>
+        </div>
+    </div>
+</a>

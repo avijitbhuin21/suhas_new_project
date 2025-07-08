@@ -1,6 +1,8 @@
 from .general_elements import *
 from .homepage_elements import *
 from .category_page_elements import *
+from .blog_page import *
+from ..db_handler import get_blog
 
 from ..db_handler import get_page_data
 import asyncio
@@ -84,17 +86,17 @@ def get_blog_page(blog_id):
     async def get_blog_page_async():
         start_time = time.time()
         try:
-            data = get_page_data(blog_id)
-            blog_data = data.get("page_data", {})
+            data = get_blog(blog_id)
+            blog_data = data.get("json_data", {})
 
             loop = asyncio.get_event_loop()
             
             # Execute all functions in parallel using thread pool
             tasks = [
                 loop.run_in_executor(None, get_header),
-                # loop.run_in_executor(None, get_blog_header_html, blog_data),
-                # loop.run_in_executor(None, get_blog_content_html, blog_data),
-                # loop.run_in_executor(None, get_horizontal_ad_banner, blog_data["horizontal_ad_banner"]),
+                loop.run_in_executor(None, get_blog_hero_section, blog_data),
+                loop.run_in_executor(None, get_more_blogs_section, blog_data),
+                loop.run_in_executor(None, get_faq_section),
                 loop.run_in_executor(None, get_footer)
             ]
             
@@ -104,7 +106,7 @@ def get_blog_page(blog_id):
             total_body = "\n".join(results)
             end_time = time.time()
             print(f"Blog page '{blog_id}' generated in {end_time - start_time:.2f} seconds")
-            # return BLOG_PAGE_TEMPLATE.replace("[[total_body]]", total_body)
+            return EMPTY_HOMEPAGE_TEMPLATE.replace("[[total_body]]", total_body)
 
         except Exception as e:
             print(f"Error fetching data for blog '{blog_id}': {e}")
