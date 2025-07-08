@@ -6,7 +6,7 @@ def get_footer():
 
             
             <div class="w-auto flex flex-col items-center sm:items-start order-1 mb-6 sm:mb-0 flex-shrink-0">
-                <div class="w-[80px] h-[80px] sm:w-[100px] sm:h-[100px] md:w-[161px] md:h-[161px] bg-contain bg-no-repeat bg-center sm:bg-left bg-[url(/static/images/header_logo.png)] mb-2 flex-shrink-0" loading="lazy"></div>
+                <a href="/"><div class="w-[80px] h-[80px] sm:w-[100px] sm:h-[100px] md:w-[161px] md:h-[161px] bg-contain bg-no-repeat bg-center sm:bg-left bg-[url(/static/images/header_logo.png)] mb-2 flex-shrink-0" loading="lazy"></div></a>
             </div>
 
             

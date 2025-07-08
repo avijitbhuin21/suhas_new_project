@@ -447,6 +447,147 @@
         display: none !important;
       }
     </style>
+      <style>
+        .dropdown-container {
+          position: relative;
+          padding-bottom: 20px; /* Creates an invisible area below the link for the cursor to travel over */
+          margin-bottom: -20px;  /* Negative margin to pull layout back up */
+        }
+        .dropdown-content {
+          position: absolute;
+          top: 100%; /* Positions the dropdown right below the parent's padding area */
+          left: 50%;
+          transform: translateX(-50%);
+          width: 320px;
+          background: white;
+          border-radius: 8px;
+          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+          border: 1px solid #e5e7eb;
+          opacity: 0;
+          visibility: hidden;
+          transition: opacity 0.2s ease, visibility 0.2s;
+          z-index: 50;
+          pointer-events: none;
+          padding: 1rem;
+        }
+        .dropdown-container:hover .dropdown-content {
+          opacity: 1;
+          visibility: visible;
+          pointer-events: auto;
+        }
+        
+        .line-clamp-2 {
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+        .dropdown-item {
+          transition: all 0.2s ease;
+        }
+        .dropdown-item:hover {
+          background-color: #f9fafb;
+          transform: translateX(2px);
+        }
+        .dropdown-item:hover .ph-arrow-right {
+          transform: translateX(2px);
+          color: #3533CD;
+        }
+        
+        /* --- MOBILE ACCORDION STYLES --- */
+        .accordion-toggle .item-title {
+          flex-grow: 1;
+        }
+        .accordion-icon {
+          transition: transform 0.3s ease, color 0.3s ease;
+        }
+        .accordion-toggle[aria-expanded="true"] .accordion-icon {
+          transform: rotate(180deg);
+          color: white;
+        }
+        .accordion-content {
+          background-color: #1a1a1a;
+          overflow: hidden;
+          max-height: 0;
+          transition: max-height 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .sub-menu-item {
+          display: flex;
+          align-items: center;
+          padding: 0.5rem;
+          border-radius: 0.375rem;
+          transition: background-color 0.2s ease;
+          color: white;
+          text-decoration: none;
+        }
+        .sub-menu-item:hover {
+          background-color: #252525;
+        }
+      </style>
+
+      <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          const mobileMenuButton = document.getElementById('mobile-menu-button');
+          const mobileMenu = document.getElementById('mobile-menu');
+          
+          if (mobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener('click', function() {
+              mobileMenu.classList.toggle('hidden');
+              mobileMenuButton.classList.toggle('hamburger-active');
+              
+              if (!mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.add('slide-down');
+              } else {
+                mobileMenu.classList.remove('slide-down');
+              }
+            });
+          }
+          
+          document.addEventListener('click', function(e) {
+            if (e.target.closest('.dropdown-item:not(.know-more-item)')) {
+              const item = e.target.closest('.dropdown-item');
+              const category = item.getAttribute('data-category');
+              const blogId = item.getAttribute('data-id');
+              
+              console.log('Clicked blog:', { category, blogId });
+            }
+          });
+          
+          document.addEventListener('click', function(e) {
+            if (e.target.closest('.know-more-item')) {
+              const item = e.target.closest('.dropdown-container');
+              const category = item.getAttribute('data-category');
+              
+              console.log('Know More clicked for:', category);
+            }
+          });
+          
+          const mobileMenuContainer = document.getElementById('mobile-menu');
+          if (mobileMenuContainer) {
+            mobileMenuContainer.addEventListener('click', function(e) {
+              const toggle = e.target.closest('.accordion-toggle');
+              if (!toggle) return;
+              e.preventDefault();
+              const content = toggle.nextElementSibling;
+              const isCurrentlyOpen = toggle.getAttribute('aria-expanded') === 'true';
+              mobileMenuContainer.querySelectorAll('.accordion-toggle').forEach(otherToggle => {
+                if (otherToggle !== toggle) {
+                  otherToggle.setAttribute('aria-expanded', 'false');
+                  const otherContent = otherToggle.nextElementSibling;
+                  if (otherContent) otherContent.style.maxHeight = '0px';
+                }
+              });
+              if (isCurrentlyOpen) {
+                toggle.setAttribute('aria-expanded', 'false');
+                content.style.maxHeight = '0px';
+              } else {
+                toggle.setAttribute('aria-expanded', 'true');
+                content.style.maxHeight = content.scrollHeight + 'px';
+              }
+            });
+          }
+        });
+      </script>
 
     <script>
       tailwind.config = {
@@ -495,173 +636,7 @@
   <body class="font-jakarta bg-white text-bol-black">
     <div class="flex flex-col w-full mx-auto bg-white overflow-x-hidden">
       <!-- Header HTML from trial.html -->
-      <header class="w-full bg-black relative">
-        <!-- Desktop Header -->
-        <div
-          class="hidden lg:flex flex-row justify-center items-center px-20 py-[10px] gap-[70px] h-[113px]"
-        >
-          <img
-            src="/static/images/header_logo.png"
-            alt="Brands Out Loud Logo"
-            class="w-20 h-20 flex-shrink-0"
-          />
-          <nav
-            class="flex flex-col items-stretch w-[700px] h-[93px] py-[14px] px-[18px] gap-[10px]"
-          >
-            <div
-              class="flex flex-row justify-end items-center w-full gap-[60px] px-[30px]"
-            >
-              <a
-                href="#"
-                class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1"
-                >Careers
-              </a>
-              <a
-                href="#"
-                class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1"
-                >Podcast
-              </a>
-              <a
-                href="#"
-                class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1"
-                >Register
-              </a>
-              <a
-                href="#"
-                class="bg-[#CDA7FF] rounded-[2px] px-2.5 py-0.5 text-[#0D0D0D] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1"
-                >Login
-              </a>
-            </div>
-            <div
-              class="w-full h-[1px] bg-gradient-to-r from-black to-[#9747FF]"
-            ></div>
-            <div
-              class="flex flex-row justify-end items-center w-full gap-[60px] px-2"
-            >
-              <a
-                href="#"
-                class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1"
-                >Newsletters
-              </a>
-              <a
-                href="#"
-                class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1"
-                >Magazine
-              </a>
-              <!-- <a href="#" class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Entrepreneurship </a> -->
-              <a
-                href="#"
-                class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1"
-                >Startups
-              </a>
-              <a
-                href="#"
-                class="text-[#C4C3FF] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1"
-                >Business
-              </a>
-            </div>
-          </nav>
-        </div>
-        <!-- Mobile Header -->
-        <div class="flex lg:hidden items-center h-[68px] w-full bg-[#0D0D0D]">
-          <button
-            id="mobile-menu-button"
-            aria-label="Toggle Menu"
-            class="h-full px-4 flex flex-col justify-center items-center space-y-[5px] bg-transparent focus:outline-none transition-colors duration-200 ease-in-out"
-          >
-            <span
-              class="hamburger-line block w-6 h-[2px] bg-white rounded-full"
-            ></span>
-            <span
-              class="hamburger-line block w-6 h-[2px] bg-white rounded-full"
-            ></span>
-            <span
-              class="hamburger-line block w-6 h-[2px] bg-white rounded-full"
-            ></span>
-          </button>
-          <div class="h-full flex items-center px-3 flex-shrink-0">
-            <img
-              src="/static/icon/website_icon.png"
-              alt="Brands Out Loud Logo"
-              class="h-10 w-auto"
-            />
-          </div>
-          <div class="flex-grow px-3">
-            <div class="relative">
-              <input
-                type="text"
-                placeholder="Search..."
-                class="search-input w-full bg-[#1e1e1e] text-white text-sm rounded-full pl-10 pr-4 py-2.5 border border-[#2a2a2a] focus:outline-none focus:border-[#9747FF] transition-all"
-              />
-              <div
-                class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none"
-              >
-                <i class="ph ph-magnifying-glass text-gray-400 text-lg"></i>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- Mobile Menu -->
-        <div
-          id="mobile-menu"
-          class="hidden lg:hidden absolute top-[68px] left-0 w-full bg-[#121212] z-50 shadow-lg border-t border-[#2a2a2a] overflow-hidden"
-        >
-          <div class="">
-            <!-- Login button -->
-            <div class="px-4 py-3">
-              <a
-                href="#"
-                class="login-btn block w-full text-center bg-gradient-to-r from-[#9747FF] to-[#CDA7FF] rounded-full px-4 py-2.5 text-white font-medium text-sm shadow-lg hover:-translate-y-0.5 transition-all duration-300 relative overflow-hidden"
-              >
-                <span
-                  class="relative z-10 flex items-center justify-center gap-2"
-                >
-                  <i class="ph ph-sign-in text-lg"></i>
-                  <span>Login</span>
-                </span>
-                <div
-                  class="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full animate-[shine_2s_infinite]"
-                ></div>
-              </a>
-            </div>
-            <div class="mobile-menu-item">
-              <i class="ph ph-book-open text-white text-lg"></i>
-              <span class="item-title">Magazine</span>
-              <i class="ph ph-caret-right"></i>
-            </div>
-            <div class="mobile-menu-item">
-              <i class="ph ph-lightning text-white text-lg"></i>
-              <span class="item-title">Startups</span>
-              <i class="ph ph-caret-right"></i>
-            </div>
-            <!-- <div class="mobile-menu-item">
-                        <i class="ph ph-rocket text-white text-lg"></i>
-                        <span class="item-title">Entrepreneurship</span>
-                        <i class="ph ph-caret-right"></i>
-                    </div> -->
-            <div class="mobile-menu-item">
-              <i class="ph ph-envelope-open text-white text-lg"></i>
-              <span class="item-title">Newsletters</span>
-              <i class="ph ph-caret-right"></i>
-            </div>
-            <div class="mobile-menu-item">
-              <i class="ph ph-newspaper text-white text-lg"></i>
-              <span class="item-title">Podcast</span>
-              <i class="ph ph-caret-right"></i>
-            </div>
-            <div class="mobile-menu-item">
-              <i class="ph ph-buildings text-white text-lg"></i>
-              <span class="item-title">Business</span>
-              <i class="ph ph-caret-right"></i>
-            </div>
-            <div class="mobile-menu-item">
-              <i class="ph ph-briefcase text-white text-lg"></i>
-              <span class="item-title">Careers</span>
-              <i class="ph ph-caret-right"></i>
-            </div>
-          </div>
-        </div>
-      </header>
+      {{ header | safe }}
 
       <!-- Modified Flipbook Section with Ads -->
       <div class="grid grid-cols-1 lg:grid-cols-5 w-full mx-auto px-2 sm:px-4 py-8 gap-4 lg:gap-8">
@@ -1387,7 +1362,7 @@
           }
 
           // Initialize app components
-          const pdfUrl = "[[pdf_url]]";
+          const pdfUrl = "{{pdf_url}}";
           loadPDF(pdfUrl);
 
           // Delay initialization of UI components that might depend on PDF loaded state or DOM readiness
@@ -2299,7 +2274,7 @@
                 
                 // Construct URL with page_number parameter
                 const baseUrl = '/flipbook';
-                const fullscreenUrl = `${baseUrl}?magazine_id=[[magazine_id]]&page_number=${currentPageNumber}`;
+                const fullscreenUrl = `${baseUrl}?magazine_id={{magazine_id}}&page_number=${currentPageNumber}`;
                 
                 console.log(`Opening fullscreen with page number: ${currentPageNumber}`);
                 fullscreenIframe.setAttribute('src', fullscreenUrl);
@@ -2402,7 +2377,7 @@
             isDownloading = true;
             
             try {
-              const pdfUrl = "[[pdf_url]]";
+              const pdfUrl = "{{pdf_url}}";
               const link = document.createElement('a');
               link.href = pdfUrl;
               const filename = pdfUrl.substring(pdfUrl.lastIndexOf('/') + 1) || "download.pdf";

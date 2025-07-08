@@ -4,13 +4,13 @@ from concurrent.futures import ThreadPoolExecutor
 HEADER_TEMPLATE = """<header class="w-full bg-black relative">
         <!-- Desktop Header -->
         <div class="hidden lg:flex flex-row justify-center items-center px-20 py-[10px] gap-[70px] h-[113px]">
-            <img src="/static/images/header_logo.png" alt="Brands Out Loud Logo" class="w-20 h-20 flex-shrink-0">
+            <a href="/"><img src="/static/images/header_logo.png" alt="Brands Out Loud Logo" class="w-20 h-20 flex-shrink-0"></a>
             <nav class="flex flex-col items-stretch w-[700px] h-[93px] py-[14px] px-[18px] gap-[10px] relative">
                 <div class="flex flex-row justify-end items-center w-full gap-[60px] px-[30px]">
                     <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Magazine </a>
                     <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Newsletters </a>
-                    <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Register </a>
-                    <a href="#" class="bg-[#CDA7FF] rounded-[2px] px-2.5 py-0.5 text-[#0D0D0D] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Login </a>
+                    <a href="/register" class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Register </a>
+                    <a href="/login" class="bg-[#CDA7FF] rounded-[2px] px-2.5 py-0.5 text-[#0D0D0D] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Login </a>
                 </div>
                 <div class="w-full h-[1px] bg-gradient-to-r from-black to-[#9747FF]"></div>
                 <div class="flex flex-row justify-end items-center w-full gap-[60px] px-2">
@@ -26,7 +26,7 @@ HEADER_TEMPLATE = """<header class="w-full bg-black relative">
                 <span class="hamburger-line block w-6 h-[2px] bg-white rounded-full"></span>
                 <span class="hamburger-line block w-6 h-[2px] bg-white rounded-full"></span>
             </button>
-            <div class="h-full flex items-center px-3 flex-shrink-0"> <img src="/static/icon/website_icon.png" alt="Brands Out Loud Logo" class="h-10 w-auto"> </div>
+            <div class="h-full flex items-center px-3 flex-shrink-0"> <a href="/"><img src="/static/icon/website_icon.png" alt="Brands Out Loud Logo" class="h-10 w-auto"></a> </div>
             <div class="flex-grow px-3">
                 <div class="relative">
                     <input type="text" placeholder="Search..." class="search-input w-full bg-[#1e1e1e] text-white text-sm rounded-full pl-10 pr-4 py-2.5 border border-[#2a2a2a] focus:outline-none focus:border-[#9747FF] transition-all">
@@ -39,7 +39,7 @@ HEADER_TEMPLATE = """<header class="w-full bg-black relative">
         <div id="mobile-menu" class="hidden lg:hidden absolute top-[68px] left-0 w-full bg-[#121212] z-50 shadow-lg border-t border-[#2a2a2a] overflow-y-auto max-h-[calc(100vh-68px)]">
             <div class="pb-4">
                 <div class="px-4 py-3">
-                    <a href="#" class="login-btn block w-full text-center bg-gradient-to-r from-[#9747FF] to-[#CDA7FF] rounded-full px-4 py-2.5 text-white font-medium text-sm shadow-lg hover:-translate-y-0.5 transition-all duration-300 relative overflow-hidden">
+                    <a href="/login" class="login-btn block w-full text-center bg-gradient-to-r from-[#9747FF] to-[#CDA7FF] rounded-full px-4 py-2.5 text-white font-medium text-sm shadow-lg hover:-translate-y-0.5 transition-all duration-300 relative overflow-hidden">
                         <span class="relative z-10 flex items-center justify-center gap-2"> <i class="ph ph-sign-in text-lg"></i> <span>Login</span> </span>
                         <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full animate-[shine_2s_infinite]"></div>
                     </a>

@@ -16,8 +16,8 @@ from static.data.blogs import *
 from static.data.global_functions import *
 
 from static.data.page_handlers.builder import get_homepage, get_category_page, get_blog_page
-from static.data.page_handlers.general_elements.header import get_blogs_for_header
-
+from static.data.page_handlers.general_elements.header import get_header, get_blogs_for_header
+from static.data.page_handlers.general_elements.footer import get_footer
 from flask_ngrok import run_with_ngrok
 
 load_dotenv()
@@ -132,6 +132,57 @@ def index():
     return get_homepage()
 
 
+
+
+# --------------------------------------------------------------------------------#
+#                                 USER AUTH ROUTES                                #
+# --------------------------------------------------------------------------------#
+
+@app.route("/login")
+def login():
+    header_content = get_header()
+    footer_content = get_footer()
+    return render_template("user_pages/login.html", header=header_content, footer=footer_content)
+
+@app.route("/register")
+def register():
+    header_content = get_header()
+    footer_content = get_footer()
+    return render_template("user_pages/register.html", header=header_content, footer=footer_content)
+
+@app.route("/user_register", methods=["POST"])
+def user_register():
+    data = request.json
+    username = data.get("username")
+    email = data.get("email")
+    password = data.get("password")
+    
+    if not all([username, email, password]):
+        return jsonify({"status": "error", "message": "All fields are required"}), 400
+
+    result = user_register_db(username, email, password)
+    
+    if result.get("status") == "success":
+        return jsonify(result), 201
+    else:
+        return jsonify(result), 400
+
+@app.route("/user_auth", methods=["POST"])
+def user_auth():
+    data = request.json
+    email = data.get("email")
+    password = data.get("password")
+
+    if not all([email, password]):
+        return jsonify({"status": "error", "message": "Email and password are required"}), 400
+
+    result = user_login_db_check(email, password)
+
+    if result.get("success"):
+        # Here you would typically create a session for the user
+        return jsonify({"status": "success", "message": "Login successful", "user": result}), 200
+    else:
+        return jsonify({"status": "error", "message": result.get("message", "Invalid credentials")}), 401
 
 
 # --------------------------------------------------------------------------------#
@@ -456,19 +507,67 @@ def delete_file():
 #                            MAGAZINE PAGE FUNCTIONS                             #
 # --------------------------------------------------------------------------------#
 
+@app.route("/create_magazine", methods=["POST"])
+def create_magazine():
+    try:
+        if 'title' not in request.form or 'pdf_file' not in request.files:
+            return jsonify({"status": "error", "message": "Title and PDF file are required fields."}), 400
+
+        title = request.form['title']
+        pdf_file = request.files['pdf_file']
+        thumbnail_file = request.files.get('thumbnail_file') # Optional
+
+        result = create_magazine_db(title=title, pdf_file=pdf_file, thumbnail_file=thumbnail_file)
+
+        if result.get("status") == "success":
+            return jsonify({
+                "status": "success",
+                "message": "Magazine created successfully.",
+                "data": result.get("data")
+            }), 201
+        else:
+            # Pass the specific error message from the handler
+            return jsonify({
+                "status": "error",
+                "message": result.get("message", "An unknown error occurred during magazine creation.")
+            }), 400 # Using 400 for client errors like duplicates
+    except Exception as e:
+        print(f"Server error in /create_magazine: {str(e)}")
+        return jsonify({"status": "error", "message": f"An internal server error occurred: {str(e)}"}), 500
+
+@app.route("/delete_magazine", methods=["POST"])
+def delete_magazine():
+    try:
+        data = request.get_json()
+        if not data or 'id' not in data:
+            return jsonify({"status": "error", "message": "Magazine ID is required."}), 400
+
+        magazine_id = data['id']
+        result = delete_magazine_from_db(magazine_id)
+
+        if result.get("status") == "success":
+            return jsonify({
+                "status": "success",
+                "message": result.get("message", "Magazine deleted successfully.")
+            }), 200
+        else:
+            return jsonify({
+                "status": "error",
+                "message": result.get("message", "Failed to delete magazine.")
+            }), 500
+    except Exception as e:
+        print(f"Server error in /delete_magazine: {str(e)}")
+        return jsonify({"status": "error", "message": f"An internal server error occurred: {str(e)}"}), 500
 
 @app.route("/magazine/<magazine_id>")
 def magazine_page_read_only(magazine_id):
+    header_content = get_header()
+    footer_content = get_footer()
     data = get_magazine_details_db(magazine_id)
     if not data:
         return render_template("not_found/404.html"), 404
 
-    magazine_html = open("templates/magazine_page/magazine_page_read_only.html").read()
-
-    updated_html = magazine_html.replace("[[pdf_url]]", data.get("pdf_url", ""))
-    updated_html = updated_html.replace("[[magazine_id]]", magazine_id)
-
-    return updated_html
+    return render_template("magazine_page/magazine_page_read_only.html", header=header_content, footer=footer_content, pdf_url=data.get("pdf_url", ""), magazine_id=magazine_id)
 
 
 @app.route("/flipbook/<magazine_id>")
@@ -479,7 +578,9 @@ def magazine_page_flipbook_view(magazine_id=None):
 
     if not magazine_id:
         return render_template("not_found/404.html"), 404
-
+    
+    header_content = get_header()
+    footer_content = get_footer()
     print(f"Received request for magazine_id: {magazine_id}")
     page_number = request.args.get("page_number", "1")
     data = get_magazine_details_db(magazine_id)
@@ -487,11 +588,7 @@ def magazine_page_flipbook_view(magazine_id=None):
     if not data:
         return render_template("not_found/404.html"), 404
 
-    magazine_html = open("templates/magazine_page/magazine_page_flipbook.html").read()
-    updated_html = magazine_html.replace("[[pdf_url]]", data.get("pdf_url", ""))
-    updated_html = updated_html.replace("[[page_number]]", page_number)
-
-    return updated_html
+    return render_template("magazine_page/magazine_page_flipbook.html", header=header_content, footer=footer_content, pdf_url=data.get("pdf_url", ""), page_number=page_number)
 
 
 # --------------------------------------------------------------------------------#
@@ -587,9 +684,9 @@ if __name__ == "__main__":
 
 # also add a tickbos saying this blog does not need a keyword to be publish. --> DONE
 
-# add multiple search for each author, title, keyword, category and subcategory. -->
+# add multiple search for each author, title, keyword, category and subcategory. --> DONE
 
-# re structure the admin panle. -->
+# re structure the admin panel. --> DONE
 # track only h2 nd h3 tags in the blog for TOC. -->
 
 # add the login functionality in main page. and every other page. -->

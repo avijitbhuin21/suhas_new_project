@@ -324,6 +324,37 @@
         .delete-modal-btn-delete:hover {
             background: rgb(220, 38, 38);
         }
+        /* NEW: Form input styles */
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        .form-input, .file-input-display {
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            color: white;
+            transition: all 0.2s ease;
+        }
+        .form-input:focus, .file-input-display:focus-within {
+            outline: none;
+            border-color: rgb(59, 130, 246);
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+        }
+        .file-input-display {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+        .file-input-placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
     </style>
 </head>
 <body>
@@ -342,24 +373,41 @@
             <div class="container-box">
                 <h2 class="section-title text-center">Upload Magazine</h2>
                 <div class="bg-black/20 border border-white/10 rounded-[20px] p-6 md:p-8" style="border-width: 0px;">
-                    <!-- Dropzone -->
-                    <div id="dropzone" class="dropzone flex flex-col items-center justify-center space-y-3">
-                        <i id="dropzone-icon" data-lucide="upload-cloud" class="w-12 h-12 text-white/40"></i>
-                        <p class="font-semibold">Drag & drop files here</p>
-                        <p id="dropzone-text" class="text-sm text-white/60">Upload PDF files. Max 50MB.</p>
-                        <p class="text-xs text-white/50">or</p>
-                        <button type="button" onclick="document.getElementById('fileInput').click()" class="form-button bg-white/10 hover:bg-white/20 text-white/90 !px-4 !py-2">Browse Files</button>
-                    </div>
-                    <input type="file" id="fileInput" multiple class="hidden">
-                    <!-- File Queue -->
-                    <div id="file-queue" class="mt-6 space-y-3"></div>
-                    <!-- Upload Button -->
-                    <div class="mt-8 flex justify-center">
-                        <button id="uploadBtn" class="form-button" disabled>
-                            <i data-lucide="upload" class="w-4 h-4 mr-2"></i>
-                            <span id="uploadBtnText">Upload 0 Files</span>
-                        </button>
-                    </div>
+                    <form id="magazineForm" class="space-y-6">
+                        <!-- Magazine Name -->
+                        <div>
+                            <label for="magazineTitle" class="form-label">Magazine Name</label>
+                            <input type="text" id="magazineTitle" name="title" class="form-input" placeholder="eg. BOL Magazine - July issue etc." required>
+                        </div>
+
+                        <!-- Magazine PDF -->
+                        <div>
+                            <label for="magazinePdf" class="form-label">Magazine PDF</label>
+                            <div id="pdf-dropzone" class="file-input-display">
+                                <span id="pdf-filename" class="file-input-placeholder truncate pr-4">Click or drop PDF here</span>
+                                <i data-lucide="file-text" class="w-5 h-5 text-white/50"></i>
+                            </div>
+                            <input type="file" id="magazinePdf" name="pdf_file" class="hidden" accept="application/pdf" required>
+                        </div>
+                        
+                        <!-- Magazine Thumbnail (Optional) -->
+                        <div>
+                            <label for="magazineThumbnail" class="form-label">Magazine Thumbnail (Optional)</label>
+                             <div id="thumbnail-dropzone" class="file-input-display">
+                                <span id="thumbnail-filename" class="file-input-placeholder truncate pr-4">Click or drop image here</span>
+                                <i data-lucide="image" class="w-5 h-5 text-white/50"></i>
+                            </div>
+                            <input type="file" id="magazineThumbnail" name="thumbnail_file" class="hidden" accept="image/jpeg, image/png, image/webp">
+                        </div>
+                        
+                        <!-- Upload Button -->
+                        <div class="pt-4 flex justify-center">
+                            <button id="saveMagazineBtn" type="submit" class="form-button" disabled>
+                                <i data-lucide="upload" class="w-4 h-4 mr-2"></i>
+                                <span id="saveMagazineBtnText">Save Magazine</span>
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </section>
@@ -382,7 +430,7 @@
                  <div id="no-gallery-items" class="text-center py-16 hidden">
                     <i data-lucide="folder-x" class="w-16 h-16 mx-auto text-white/20 mb-4"></i>
                     <h3 class="text-xl font-medium text-white/80">No Magazines Found</h3>
-                    <p class="text-white/50 mt-2">Try uploading some magazines.</p>
+                    <p class="text-white/50 mt-2">Try uploading a new magazine.</p>
                 </div>
             </div>
         </section>
@@ -393,9 +441,9 @@
             <div class="delete-modal-icon">
                 <i data-lucide="trash-2" class="w-8 h-8 text-red-400"></i>
             </div>
-            <h3 class="delete-modal-title">Delete File</h3>
+            <h3 class="delete-modal-title">Delete Magazine</h3>
             <p class="delete-modal-message" id="deleteModalMessage">
-                Are you sure you want to delete this file? This action cannot be undone.
+                Are you sure you want to delete this magazine? This action cannot be undone.
             </p>
             <div class="delete-modal-actions">
                 <button class="delete-modal-btn delete-modal-btn-cancel" id="deleteModalCancel">
@@ -408,47 +456,50 @@
         </div>
     </div>
     <script>
-        let pdfFiles = [];
-        let currentGalleryFilter = 'pdf';
+        let magazineData = [];
         let isLoadingFiles = false;
         const BUCKET_MAPPING = {
             'pdf': 'magazine-pdfs'
         };
-        async function fetchFilesFromAPI(fileType) {
-            const bucketName = BUCKET_MAPPING[fileType];
+
+        async function fetchMagazines() {
+            // This function now fetches structured data from the database via an API endpoint.
+            // The endpoint /get_file_details is reused, but its backend logic is changed.
+            const bucketName = BUCKET_MAPPING['pdf'];
             if (!bucketName) {
-                console.error(`No bucket mapping found for file type: ${fileType}`);
+                console.error(`No bucket mapping found for file type: pdf`);
                 return [];
             }
             try {
                 const response = await fetch(`/get_file_details?bucket_name=${encodeURIComponent(bucketName)}`);
                 const result = await response.json();
                 if (result.status === 'success' && result.data) {
-                    const transformedData = result.data.map(file => ({
+                     const transformedData = result.data.map(file => ({
                         id: file.id,
-                        type: fileType,
-                        name: file.name,
-                        url: file.public_url,
-                        size: file.size
+                        name: file.name, // This is now the magazine title
+                        url: file.public_url, // This is the PDF URL
+                        thumbnail_url: file.thumbnail_url,
+                        // Size is no longer available from the DB, so we omit it.
                     }));
                     return transformedData;
                 } else {
-                    console.error(`Failed to fetch ${fileType} files:`, result.message || 'Unknown error');
+                    console.error(`Failed to fetch magazines:`, result.message || 'Unknown error');
                     return [];
                 }
             } catch (error) {
-                console.error(`Error fetching ${fileType} files:`, error);
+                console.error(`Error fetching magazines:`, error);
                 return [];
             }
         }
+
         async function loadAllFiles() {
             if (isLoadingFiles) {
                 return;
             }
             isLoadingFiles = true;
             try {
-                pdfFiles = await fetchFilesFromAPI('pdf');
-                renderGallery(currentGalleryFilter);
+                magazineData = await fetchMagazines();
+                renderGallery();
             } catch (error) {
                 console.error('Error loading files:', error);
                 showToast('Failed to load files from server', 'error');
@@ -456,9 +507,7 @@
                 isLoadingFiles = false;
             }
         }
-        function getCurrentFiles() {
-            return pdfFiles;
-        }
+        
         class ExpandableTabs {
             constructor(container, options = {}) {
                 this.container = container;
@@ -536,33 +585,51 @@
         function truncate(str, len) {
             return str.length > len ? str.substring(0, len) + "..." : str;
         }
-        function updateFilterButtons(activeFilter) {
-            currentGalleryFilter = activeFilter;
+        
+        function renderGallery() {
+            const searchInput = document.getElementById('searchInput');
+            const searchTerm = searchInput ? searchInput.value.toLowerCase().trim() : '';
+            renderGalleryWithSearch(searchTerm);
         }
-        function renderGallery(filter) {
+
+        function renderGalleryWithSearch(searchTerm = '') {
             const galleryGrid = document.getElementById('galleryGrid');
             if (!galleryGrid) return;
-            updateFilterButtons(filter);
-            const filteredMedia = getCurrentFiles();
+
+            let filteredMedia = magazineData;
+            if (searchTerm) {
+                filteredMedia = magazineData.filter(item =>
+                    item.name.toLowerCase().includes(searchTerm)
+                );
+            }
+
             galleryGrid.innerHTML = '';
             if(filteredMedia.length === 0) {
                 document.getElementById('no-gallery-items').classList.remove('hidden');
+                galleryGrid.classList.add('hidden');
             } else {
                 document.getElementById('no-gallery-items').classList.add('hidden');
+                galleryGrid.classList.remove('hidden');
                 filteredMedia.forEach(item => {
                     const itemEl = document.createElement('div');
-                    itemEl.className = 'gallery-item group aspect-square';
-                    const nameWithoutExt = item.name.replace(/\.[^/.]+$/, "");
-                    const truncatedName = truncate(nameWithoutExt, 15);
-                    itemEl.classList.add('flex', 'flex-col', 'justify-center', 'items-center', 'text-center', 'p-4', 'bg-[#1C1C1E]');
-                    itemEl.innerHTML = `
-                        <i data-lucide="file-text" class="w-16 h-16 text-white/20 mb-4"></i>
-                        <div class="w-full">
-                            <p class="text-sm font-medium text-white">${truncatedName}</p>
-                            <p class="text-xs text-white/60 mt-1">${item.size}</p>
+                    itemEl.className = 'gallery-item group aspect-[4/5] flex flex-col justify-between text-center bg-[#1C1C1E] overflow-hidden';
+                    const truncatedName = truncate(item.name, 25);
+
+                    let thumbnailHTML;
+                    if (item.thumbnail_url) {
+                        thumbnailHTML = `<div class="flex-grow w-full bg-black flex items-center justify-center overflow-hidden"><img src="${item.thumbnail_url}" alt="${item.name}" class="w-full h-full object-cover"></div>`;
+                    } else {
+                        thumbnailHTML = `<div class="flex-grow w-full flex flex-col justify-center items-center"><i data-lucide="file-text" class="w-16 h-16 text-white/20"></i></div>`;
+                    }
+
+                    const content = `
+                        ${thumbnailHTML}
+                        <div class="w-full p-2">
+                            <p class="text-sm font-medium text-white" title="${item.name}">${truncatedName}</p>
                         </div>
                     `;
-                    itemEl.innerHTML += `
+
+                    itemEl.innerHTML = content + `
                         <div class="actions">
                             <button class="action-btn" data-action="view" data-id="${item.id}" data-url="${item.url}" title="View"><i data-lucide="external-link" class="w-4 h-4 text-white"></i></button>
                             <button class="action-btn" data-action="download" data-id="${item.id}" data-url="${item.url}" data-name="${item.name}" title="Download"><i data-lucide="download" class="w-4 h-4 text-white"></i></button>
@@ -572,13 +639,10 @@
                     `;
                     galleryGrid.appendChild(itemEl);
                 });
-                initializeLazyLoading();
             }
             lucide.createIcons();
         }
-        function initializeLazyLoading() {
-            // No-op: Lazy loading was for images, which have been removed.
-        }
+
         document.addEventListener('DOMContentLoaded', function() {
             lucide.createIcons();
             const navbarTabsData = [
@@ -594,173 +658,118 @@
                 }
             });
             expandableTabs.handleSelect(1);
-            lucide.createIcons();
-            loadAllFiles();
-            const dropzone = document.getElementById('dropzone');
-            const fileInput = document.getElementById('fileInput');
-            const fileQueueContainer = document.getElementById('file-queue');
-            const uploadBtn = document.getElementById('uploadBtn');
-            const uploadBtnText = document.getElementById('uploadBtnText');
-            let uploadType = 'pdf';
-            let filesToUpload = [];
-            function setUploadType(type) {
-                uploadType = type;
-                filesToUpload = [];
-                updateFileQueueUI();
-                const dropzoneIcon = document.getElementById('dropzone-icon');
-                const dropzoneText = document.getElementById('dropzone-text');
-                dropzoneIcon.style.opacity = '0';
-                dropzoneText.style.opacity = '0';
-                setTimeout(() => {
-                    fileInput.accept = 'application/pdf';
-                    dropzoneIcon.dataset.lucide = 'file-text';
-                    dropzoneText.textContent = 'Upload PDF files. Max 50MB.';
-                    lucide.createIcons();
-                    setTimeout(() => {
-                        dropzoneIcon.style.opacity = '1';
-                        dropzoneText.style.opacity = '1';
-                    }, 50);
-                }, 200);
-            }
             
-            // Initialize the upload type to 'pdf' on page load
-            setUploadType('pdf');
-            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-                dropzone.addEventListener(eventName, e => { e.preventDefault(); e.stopPropagation(); });
-            });
-            ['dragenter', 'dragover'].forEach(eventName => {
-                dropzone.addEventListener(eventName, () => dropzone.classList.add('dragover'));
-            });
-            ['dragleave', 'drop'].forEach(eventName => {
-                dropzone.addEventListener(eventName, () => dropzone.classList.remove('dragover'));
-            });
-            dropzone.addEventListener('click', (e) => {
-                if (!e.target.closest('button')) {
-                    fileInput.click();
-                }
-            });
-            dropzone.addEventListener('drop', (e) => handleFiles(e.dataTransfer.files));
-            fileInput.addEventListener('change', (e) => handleFiles(e.target.files));
-            function handleFiles(files) {
-                const validFiles = [];
-                const invalidFiles = [];
-                Array.from(files).forEach(file => {
-                    if (isValidFileType(file)) {
-                        validFiles.push(file);
-                    } else {
-                        invalidFiles.push(file);
-                    }
+            loadAllFiles();
+
+            // --- New Form Logic ---
+            const magazineForm = document.getElementById('magazineForm');
+            const saveMagazineBtn = document.getElementById('saveMagazineBtn');
+            const saveMagazineBtnText = document.getElementById('saveMagazineBtnText');
+            const titleInput = document.getElementById('magazineTitle');
+            const pdfInput = document.getElementById('magazinePdf');
+            const thumbnailInput = document.getElementById('magazineThumbnail');
+            const pdfDropzone = document.getElementById('pdf-dropzone');
+            const thumbnailDropzone = document.getElementById('thumbnail-dropzone');
+            const pdfFilenameSpan = document.getElementById('pdf-filename');
+            const thumbnailFilenameSpan = document.getElementById('thumbnail-filename');
+
+            function validateForm() {
+                const isTitleValid = titleInput.value.trim() !== '';
+                const isPdfSelected = pdfInput.files.length > 0;
+                saveMagazineBtn.disabled = !(isTitleValid && isPdfSelected);
+            }
+
+            titleInput.addEventListener('input', validateForm);
+            pdfInput.addEventListener('change', validateForm);
+
+            pdfDropzone.addEventListener('click', () => pdfInput.click());
+            thumbnailDropzone.addEventListener('click', () => thumbnailInput.click());
+
+            const setupDragDrop = (dropzone, input) => {
+                 ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                    dropzone.addEventListener(eventName, e => { e.preventDefault(); e.stopPropagation(); });
                 });
-                if (invalidFiles.length > 0) {
-                    const fileNames = invalidFiles.map(f => f.name).join(', ');
-                    const expectedTypes = 'PDF';
-                    showToast(`Invalid file type(s): ${fileNames}. Expected: ${expectedTypes}`, 'error');
-                }
-                if (validFiles.length > 0) {
-                    filesToUpload.push(...validFiles);
-                    updateFileQueueUI();
-                }
-            }
-            function isValidFileType(file) {
-                return file.type === 'application/pdf';
-            }
-            function updateFileQueueUI() {
-                fileQueueContainer.innerHTML = '';
-                if (filesToUpload.length > 0) {
-                     filesToUpload.forEach((file, index) => {
-                        const fileItem = document.createElement('div');
-                        fileItem.className = 'file-queue-item';
-                        fileItem.innerHTML = `
-                            <div class="flex-shrink-0 mr-3">
-                                <i data-lucide="file-text" class="w-5 h-5 text-white/70"></i>
-                            </div>
-                            <div class="flex-1 min-w-0">
-                                <p class="text-sm font-medium truncate">${file.name}</p>
-                                <p class="text-xs text-white/50">${(file.size / 1024 / 1024).toFixed(2)} MB</p>
-                            </div>
-                            <button data-index="${index}" class="remove-file-btn ml-4 text-white/50 hover:text-red-500 transition-colors p-1">
-                                <i data-lucide="x" class="w-5 h-5"></i>
-                            </button>
-                        `;
-                        fileQueueContainer.appendChild(fileItem);
-                    });
-                    lucide.createIcons();
-                }
-                uploadBtn.disabled = filesToUpload.length === 0;
-                uploadBtnText.textContent = `Upload ${filesToUpload.length} File${filesToUpload.length !== 1 ? 's' : ''}`;
-            }
-            fileQueueContainer.addEventListener('click', (e) => {
-                const removeBtn = e.target.closest('.remove-file-btn');
-                if (removeBtn) {
-                    filesToUpload.splice(parseInt(removeBtn.dataset.index), 1);
-                    updateFileQueueUI();
-                }
-            });
-            uploadBtn.addEventListener('click', async () => {
-                if (filesToUpload.length === 0) {
-                    showToast('No files selected for upload', 'error');
-                    return;
-                }
-                uploadBtn.disabled = true;
-                uploadBtnText.textContent = 'Uploading...';
-                let successCount = 0;
-                let errorCount = 0;
-                const uploadResults = [];
-                for (let i = 0; i < filesToUpload.length; i++) {
-                    const file = filesToUpload[i];
-                    try {
-                        const formData = new FormData();
-                        formData.append('file', file);
-                        const response = await fetch('/upload_file', {
-                            method: 'POST',
-                            body: formData
-                        });
-                        const result = await response.json();
-                        if (response.ok && result.status === 'success') {
-                            successCount++;
-                            uploadResults.push({
-                                filename: file.name,
-                                status: 'success',
-                                url: result.url
-                            });
-                        } else {
-                            errorCount++;
-                            uploadResults.push({
-                                filename: file.name,
-                                status: 'error',
-                                message: result.message || 'Upload failed'
-                            });
-                            console.error(`✗ Failed to upload ${file.name}:`, result.message);
-                        }
-                    } catch (error) {
-                        errorCount++;
-                        uploadResults.push({
-                            filename: file.name,
-                            status: 'error',
-                            message: error.message
-                        });
-                        console.error(`✗ Network error uploading ${file.name}:`, error);
-                    }
-                    uploadBtnText.textContent = `Uploading... (${i + 1}/${filesToUpload.length})`;
-                }
-                if (successCount > 0 && errorCount === 0) {
-                    showToast(`Successfully uploaded ${successCount} file${successCount !== 1 ? 's' : ''}!`, 'success');
-                } else if (successCount > 0 && errorCount > 0) {
-                    const failedFiles = uploadResults.filter(r => r.status === 'error');
-                    const errorDetails = failedFiles.map(f => `${f.filename}: ${f.message}`).join('\n');
-                    showDetailedToast(`Uploaded ${successCount} files successfully, but ${errorCount} failed:`, errorDetails, 'warning');
+                ['dragenter', 'dragover'].forEach(eventName => {
+                    dropzone.addEventListener(eventName, () => dropzone.classList.add('dragover'));
+                });
+                ['dragleave', 'drop'].forEach(eventName => {
+                    dropzone.addEventListener(eventName, () => dropzone.classList.remove('dragover'));
+                });
+                dropzone.addEventListener('drop', (e) => {
+                    input.files = e.dataTransfer.files;
+                    const event = new Event('change');
+                    input.dispatchEvent(event);
+                });
+            };
+
+            setupDragDrop(pdfDropzone, pdfInput);
+            setupDragDrop(thumbnailDropzone, thumbnailInput);
+
+            pdfInput.addEventListener('change', () => {
+                if (pdfInput.files.length > 0) {
+                    pdfFilenameSpan.textContent = pdfInput.files[0].name;
+                    pdfFilenameSpan.classList.remove('file-input-placeholder');
                 } else {
-                    const errorDetails = uploadResults.map(r => `${r.filename}: ${r.message}`).join('\n');
-                    showDetailedToast('All uploads failed:', errorDetails, 'error');
+                    pdfFilenameSpan.textContent = 'Click or drop PDF here';
+                    pdfFilenameSpan.classList.add('file-input-placeholder');
                 }
-                if (successCount > 0) {
-                    await loadAllFiles();
-                }
-                filesToUpload = [];
-                updateFileQueueUI();
-                uploadBtn.disabled = false;
-                uploadBtnText.textContent = 'Upload 0 Files';
             });
+
+            thumbnailInput.addEventListener('change', () => {
+                if (thumbnailInput.files.length > 0) {
+                    thumbnailFilenameSpan.textContent = thumbnailInput.files[0].name;
+                    thumbnailFilenameSpan.classList.remove('file-input-placeholder');
+                } else {
+                    thumbnailFilenameSpan.textContent = 'Click or drop image here';
+                    thumbnailFilenameSpan.classList.add('file-input-placeholder');
+                }
+            });
+
+            magazineForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                if (saveMagazineBtn.disabled) return;
+
+                saveMagazineBtn.disabled = true;
+                saveMagazineBtnText.textContent = 'Saving...';
+                
+                const formData = new FormData();
+                formData.append('title', titleInput.value);
+                formData.append('pdf_file', pdfInput.files[0]);
+                if (thumbnailInput.files.length > 0) {
+                    formData.append('thumbnail_file', thumbnailInput.files[0]);
+                }
+
+                try {
+                    const response = await fetch('/create_magazine', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    const result = await response.json();
+
+                    if (response.ok && result.status === 'success') {
+                        showToast('Magazine saved successfully!', 'success');
+                        magazineForm.reset();
+                        pdfFilenameSpan.textContent = 'Click or drop PDF here';
+                        pdfFilenameSpan.classList.add('file-input-placeholder');
+                        thumbnailFilenameSpan.textContent = 'Click or drop image here';
+                        thumbnailFilenameSpan.classList.add('file-input-placeholder');
+                        validateForm();
+                        await loadAllFiles(); // Refresh gallery
+                    } else {
+                        showToast(result.message || 'Failed to save magazine.', 'error');
+                    }
+                } catch (error) {
+                    showToast('An error occurred during upload.', 'error');
+                    console.error('Upload error:', error);
+                } finally {
+                    saveMagazineBtn.disabled = false;
+                    saveMagazineBtnText.textContent = 'Save Magazine';
+                    validateForm();
+                }
+            });
+
+            // --- End New Form Logic ---
+
             const galleryGrid = document.getElementById('galleryGrid');
             galleryGrid.addEventListener('click', (e) => {
                 const actionBtn = e.target.closest('.action-btn');
@@ -787,86 +796,43 @@
                 }
             });
             function handleViewAction(url, name) {
-                if (url === '#') {
-                    alert(`Cannot preview ${name} - PDF preview not available in this demo`);
-                } else {
+                if (url) {
                     window.open(url, '_blank');
                 }
             }
             async function handleDownloadAction(url, name) {
-                if (url === '#') {
-                    alert(`Download simulation for ${name}`);
-                    return;
-                }
+                if (!url) return;
                 showToast('Starting download...', 'success');
                 try {
                     const response = await fetch(url);
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
                     const blob = await response.blob();
                     const downloadUrl = window.URL.createObjectURL(blob);
                     const link = document.createElement('a');
                     link.href = downloadUrl;
-                    link.download = name || 'download';
-                    link.style.display = 'none';
+                    link.download = name || 'download.pdf';
                     document.body.appendChild(link);
                     link.click();
                     document.body.removeChild(link);
                     window.URL.revokeObjectURL(downloadUrl);
-                    showToast(`Downloaded ${name}`, 'success');
                 } catch (error) {
-                    console.error('Download failed, trying fallback method:', error);
-                    try {
-                        const link = document.createElement('a');
-                        link.href = url;
-                        link.download = name || 'download';
-                        link.style.display = 'none';
-                        document.body.appendChild(link);
-                        link.click();
-                        document.body.removeChild(link);
-                        showToast(`Download initiated for ${name}`, 'success');
-                    } catch (fallbackError) {
-                        console.error('Fallback download also failed:', fallbackError);
-                        const link = document.createElement('a');
-                        link.href = url;
-                        link.target = '_blank';
-                        link.rel = 'noopener noreferrer';
-                        link.click();
-                        showToast('Download may have opened in new tab', 'warning');
-                    }
+                    console.error('Download failed, using fallback:', error);
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.target = '_blank';
+                    link.download = name || 'download.pdf';
+                    link.click();
                 }
             }
             function handleCopyAction(url) {
-                if (navigator.clipboard && window.isSecureContext) {
-                    navigator.clipboard.writeText(url).then(() => {
-                        showToast('URL copied to clipboard!');
-                    }).catch(err => {
-                        console.error('Failed to copy: ', err);
-                        fallbackCopyTextToClipboard(url);
-                    });
-                } else {
-                    fallbackCopyTextToClipboard(url);
-                }
-            }
-            function fallbackCopyTextToClipboard(text) {
-                const textArea = document.createElement("textarea");
-                textArea.value = text;
-                textArea.style.top = "0";
-                textArea.style.left = "0";
-                textArea.style.position = "fixed";
-                document.body.appendChild(textArea);
-                textArea.focus();
-                textArea.select();
-                try {
-                    document.execCommand('copy');
+                navigator.clipboard.writeText(url).then(() => {
                     showToast('URL copied to clipboard!');
-                } catch (err) {
-                    console.error('Fallback: Oops, unable to copy', err);
-                    alert('Failed to copy URL to clipboard');
-                }
-                document.body.removeChild(textArea);
+                }).catch(err => {
+                    console.error('Failed to copy: ', err);
+                    showToast('Failed to copy URL.', 'error');
+                });
             }
+            
             function showDeleteModal(fileName, onConfirm) {
                 const modal = document.getElementById('deleteModal');
                 const message = document.getElementById('deleteModalMessage');
@@ -887,218 +853,57 @@
                 };
                 confirmBtn.addEventListener('click', handleConfirm);
                 cancelBtn.addEventListener('click', handleCancel);
-                modal.addEventListener('click', (e) => {
-                    if (e.target === modal) {
-                        handleCancel();
-                    }
-                });
-                const handleEscape = (e) => {
+                modal.addEventListener('click', (e) => { if (e.target === modal) handleCancel(); });
+                document.addEventListener('keydown', function onEscape(e) {
                     if (e.key === 'Escape') {
                         handleCancel();
-                        document.removeEventListener('keydown', handleEscape);
+                        document.removeEventListener('keydown', onEscape);
                     }
-                };
-                document.addEventListener('keydown', handleEscape);
+                });
             }
+
             function hideDeleteModal() {
-                const modal = document.getElementById('deleteModal');
-                modal.classList.remove('show');
+                document.getElementById('deleteModal').classList.remove('show');
             }
+
             async function handleDeleteAction(itemId, itemName) {
-                if (!itemName) {
-                    console.error('No file name provided to handleDeleteAction');
-                    showToast('Error: File name is missing', 'error');
-                    return;
-                }
                 showDeleteModal(itemName, async () => {
-                    showToast('Deleting file...', 'success');
-                    const requestData = { file_name: itemName };
+                    showToast('Deleting magazine...', 'success');
                     try {
-                        const response = await fetch('/delete_file', {
+                        const response = await fetch('/delete_magazine', {
                             method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify(requestData)
+                            headers: { 'Content-Type': 'application/json', },
+                            body: JSON.stringify({ id: itemId }) // Send database ID
                         });
                         const result = await response.json();
                         if (response.ok && result.status === 'success') {
-                            let itemIndex = -1;
-                            let targetArray = null;
-                            itemIndex = pdfFiles.findIndex(item => item.id == itemId);
-                            targetArray = pdfFiles;
-                            if (itemIndex > -1 && targetArray) {
-                                targetArray.splice(itemIndex, 1);
-                                renderGallery(currentGalleryFilter);
-                                showToast(`File "${itemName}" deleted successfully!`, 'success');
-                            } else {
-                                await loadAllFiles();
-                                showToast(`File "${itemName}" deleted successfully!`, 'success');
-                            }
+                            showToast(`Magazine "${itemName}" deleted successfully!`, 'success');
+                            await loadAllFiles(); // Refresh gallery from server
                         } else {
-                            console.error('Delete failed:', result.message);
-                            showToast(`Failed to delete file: ${result.message || 'Unknown error'}`, 'error');
+                            showToast(`Failed to delete magazine: ${result.message || 'Unknown error'}`, 'error');
                         }
                     } catch (error) {
-                        console.error('Error deleting file:', error);
-                        showToast(`Error deleting file: ${error.message}`, 'error');
+                        showToast(`Error deleting magazine: ${error.message}`, 'error');
                     }
                 });
             }
+
             function showToast(message, type = 'success') {
                 const toast = document.createElement('div');
-                let bgColor = 'bg-green-600';
-                if (type === 'error') {
-                    bgColor = 'bg-red-600';
-                } else if (type === 'warning') {
-                    bgColor = 'bg-yellow-600';
-                }
+                let bgColor = type === 'error' ? 'bg-red-600' : type === 'warning' ? 'bg-yellow-600' : 'bg-green-600';
                 toast.className = `fixed top-4 right-4 ${bgColor} text-white px-4 py-2 rounded-lg shadow-lg z-50 transition-all duration-300`;
                 toast.textContent = message;
                 document.body.appendChild(toast);
                 setTimeout(() => {
                     toast.style.opacity = '0';
                     toast.style.transform = 'translateY(-20px)';
-                    setTimeout(() => {
-                        document.body.removeChild(toast);
-                    }, 300);
+                    setTimeout(() => { document.body.removeChild(toast); }, 300);
                 }, 3000);
             }
-            function translateErrorMessage(errorMessage) {
-                const message = errorMessage.toLowerCase();
-                if (message.includes('409') ||
-                    message.includes('duplicate') ||
-                    message.includes('already exists') ||
-                    message.includes('resource already exists') ||
-                    message.includes('statuscode') ||
-                    errorMessage.includes('409') || 
-                    errorMessage.includes('Duplicate') ||
-                    errorMessage.includes('duplicate')) {
-                    return 'A file with this name already exists. Please rename your file or delete the existing one.';
-                } else if (message.includes('too large') || message.includes('file size') ||
-                          message.includes('413') || message.includes('payload too large')) {
-                    return 'File is too large. Please choose a smaller file.';
-                } else if (message.includes('network') || message.includes('connection') ||
-                          message.includes('failed to fetch')) {
-                    return 'Connection problem. Please check your internet and try again.';
-                } else if (message.includes('unauthorized') || message.includes('permission') ||
-                          message.includes('401') || message.includes('403')) {
-                    return 'You don\'t have permission to upload this file.';
-                } else if (message.includes('invalid') || message.includes('format') ||
-                          message.includes('unsupported') || message.includes('400')) {
-                    return 'Invalid file format. Please choose a different file.';
-                } else if (message.includes('server error') || message.includes('500') ||
-                          message.includes('internal server')) {
-                    return 'Server is having issues. Please try again later.';
-                } else if (message.includes('timeout') || message.includes('408')) {
-                    return 'Upload took too long. Please try again with a smaller file.';
-                } else if (message.includes('quota') || message.includes('storage') ||
-                          message.includes('insufficient space')) {
-                    return 'Not enough storage space available.';
-                } else {
-                    return 'Something went wrong while uploading. Please try again.';
-                }
-            }
-            function showDetailedToast(title, details, type = 'error') {
-                const toast = document.createElement('div');
-                let bgColor = 'bg-red-600';
-                if (type === 'warning') {
-                    bgColor = 'bg-yellow-600';
-                } else if (type === 'success') {
-                    bgColor = 'bg-green-600';
-                }
-                const friendlyDetails = details.split('\n').map(line => {
-                    if (line.includes(':')) {
-                        const [filename, errorMsg] = line.split(': ', 2);
-                        const friendlyError = translateErrorMessage(errorMsg);
-                        return `${filename}: ${friendlyError}`;
-                    }
-                    return line;
-                }).join('\n');
-                toast.className = `fixed top-4 right-4 ${bgColor} text-white p-4 rounded-lg shadow-lg z-50 transition-all duration-300 max-w-md`;
-                toast.innerHTML = `
-                    <div class="flex justify-between items-start mb-2">
-                        <h4 class="font-semibold text-sm">${title}</h4>
-                        <button onclick="this.parentElement.parentElement.remove()" class="text-white/80 hover:text-white ml-2">
-                            <i data-lucide="x" class="w-4 h-4"></i>
-                        </button>
-                    </div>
-                    <div class="text-xs text-white/90 whitespace-pre-line max-h-32 overflow-y-auto">${friendlyDetails}</div>
-                `;
-                document.body.appendChild(toast);
-                lucide.createIcons();
-                setTimeout(() => {
-                    if (toast.parentElement) {
-                        toast.style.opacity = '0';
-                        toast.style.transform = 'translateY(-20px)';
-                        setTimeout(() => {
-                            if (toast.parentElement) {
-                                document.body.removeChild(toast);
-                            }
-                        }, 300);
-                    }
-                }, 8000);
-            }
+            
             const searchInput = document.getElementById('searchInput');
-            const searchContainer = searchInput.parentElement;
-            searchInput.addEventListener('focus', () => {
-                searchContainer.classList.add('focused');
-            });
-            searchInput.addEventListener('blur', () => {
-                searchContainer.classList.remove('focused');
-            });
-            searchInput.addEventListener('input', (e) => {
-                const searchTerm = e.target.value.toLowerCase().trim();
-                renderGalleryWithSearch(currentGalleryFilter, searchTerm);
-            });
+            searchInput.addEventListener('input', (e) => renderGallery());
         });
-        function renderGalleryWithSearch(filter, searchTerm = '') {
-            const galleryGrid = document.getElementById('galleryGrid');
-            if (!galleryGrid) return;
-            updateFilterButtons(filter);
-            let filteredMedia = getCurrentFiles().filter(item => item.name.toLowerCase().endsWith('.pdf'));
-            if (searchTerm) {
-                filteredMedia = filteredMedia.filter(item =>
-                    item.name.toLowerCase().includes(searchTerm)
-                );
-            }
-            galleryGrid.innerHTML = '';
-            if(filteredMedia.length === 0) {
-                document.getElementById('no-gallery-items').classList.remove('hidden');
-            } else {
-                document.getElementById('no-gallery-items').classList.add('hidden');
-                filteredMedia.forEach(item => {
-                    const itemEl = document.createElement('div');
-                    itemEl.className = 'gallery-item group aspect-square';
-                    const nameWithoutExt = item.name.replace(/\.[^/.]+$/, "");
-                    const truncatedName = truncate(nameWithoutExt, 15);
-                    itemEl.classList.add('flex', 'flex-col', 'justify-center', 'items-center', 'text-center', 'p-4', 'bg-[#1C1C1E]');
-                    itemEl.innerHTML = `
-                        <i data-lucide="file-text" class="w-16 h-16 text-white/20 mb-4"></i>
-                        <div class="w-full">
-                            <p class="text-sm font-medium text-white">${truncatedName}</p>
-                            <p class="text-xs text-white/60 mt-1">${item.size}</p>
-                        </div>
-                    `;
-                    itemEl.innerHTML += `
-                        <div class="actions">
-                            <button class="action-btn" data-action="view" data-id="${item.id}" data-url="${item.url}" title="View"><i data-lucide="external-link" class="w-4 h-4 text-white"></i></button>
-                            <button class="action-btn" data-action="download" data-id="${item.id}" data-url="${item.url}" data-name="${item.name}" title="Download"><i data-lucide="download" class="w-4 h-4 text-white"></i></button>
-                            <button class="action-btn" data-action="copy" data-id="${item.id}" data-url="${item.url}" title="Copy URL"><i data-lucide="link" class="w-4 h-4 text-white"></i></button>
-                            <button class="action-btn delete" data-action="delete" data-id="${item.id}" data-name="${item.name}" title="Delete"><i data-lucide="trash" class="w-4 h-4 text-white"></i></button>
-                        </div>
-                    `;
-                    galleryGrid.appendChild(itemEl);
-                });
-                initializeLazyLoading();
-            }
-            lucide.createIcons();
-        }
-        function renderGallery(filter) {
-            const searchInput = document.getElementById('searchInput');
-            const searchTerm = searchInput ? searchInput.value.toLowerCase().trim() : '';
-            renderGalleryWithSearch(filter, searchTerm);
-        }
     </script>
 </body>
 </html>

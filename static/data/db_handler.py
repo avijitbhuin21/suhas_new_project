@@ -13,6 +13,7 @@ supabase: Client = create_client(url, key)
 
 from .html_templates import *
 import time
+import uuid
 
 # --------------------------------------------------------------------------------#
 #                           HOMEPAGE HELPER FUNCTIONS                            #
@@ -63,16 +64,20 @@ def get_page_data(page_name: str):
 
 def format_file_size(size_bytes):
     """Convert bytes to human readable format (B, KB, MB, GB, TB)"""
+    if size_bytes is None:
+        return "N/A"
     if size_bytes == 0:
         return "0 B"
-
     size_names = ["B", "KB", "MB", "GB", "TB"]
     i = 0
-    while size_bytes >= 1024 and i < len(size_names) - 1:
-        size_bytes /= 1024.0
-        i += 1
-
-    return f"{size_bytes:.1f} {size_names[i]}"
+    try:
+        size_bytes = float(size_bytes)
+        while size_bytes >= 1024 and i < len(size_names) - 1:
+            size_bytes /= 1024.0
+            i += 1
+        return f"{size_bytes:.1f} {size_names[i]}"
+    except (ValueError, TypeError):
+        return "N/A"
 
 
 # --------------------------------------------------------------------------------#
@@ -416,10 +421,33 @@ def upload_file_to_storage(file, file_path):
 
     except Exception as e:
         print(f"Error uploading to storage: {str(e)}")
+        # Check for specific duplicate file error from Supabase
+        if "exists" in str(e) or "duplicate" in str(e):
+             return {"status": "error", "message": "A file with this name already exists in storage."}
         return {"status": "error", "message": str(e)}
 
 
 def get_file_details_db(bucket_name):
+    if bucket_name == 'magazine-pdfs':
+        try:
+            response = supabase.table("magazine_details").select("id, title, pdf_url, thumbnail_url").order("created_at", desc=True).execute()
+            if response.data:
+                transformed_data = []
+                for row in response.data:
+                    transformed_data.append({
+                        "id": row.get("id"),
+                        "name": row.get("title"),
+                        "public_url": row.get("pdf_url"),
+                        "thumbnail_url": row.get("thumbnail_url"),
+                        "size": None
+                    })
+                return {"status": "success", "data": transformed_data}
+            else:
+                return {"status": "success", "data": []}
+        except Exception as e:
+            print(f"Error getting magazine details from DB: {str(e)}")
+            return {"status": "error", "message": str(e), "data": []}
+            
     try:
         # List all files in the specified bucket
         response = supabase.storage.from_(bucket_name).list()
@@ -432,37 +460,41 @@ def get_file_details_db(bucket_name):
             }
 
         file_details = []
-        public_url = supabase.storage.from_(bucket_name).get_public_url(
-            response[0]["name"]
-        )
-        for file in response:
-            # Get public URL for each file
-            temp = (
-                public_url.split("storage")[0]
-                + "storage/v1/object/public/"
-                + bucket_name
-                + "/"
-                + file["name"]
+        if response and len(response) > 0 and response[0].get("name") is not None:
+            public_url = supabase.storage.from_(bucket_name).get_public_url(
+                response[0]["name"]
             )
+            for file in response:
+                # Get public URL for each file
+                temp = (
+                    public_url.split("storage")[0]
+                    + "storage/v1/object/public/"
+                    + bucket_name
+                    + "/"
+                    + file["name"]
+                )
 
-            file_info = {
-                "name": file["name"],
-                "size": format_file_size(file["metadata"]["size"]),
-                "id": file["id"],
-                "public_url": temp,
-            }
-            file_details.append(file_info)
-
-        return {"status": "success", "data": file_details, "public_url": public_url}
+                file_info = {
+                    "name": file["name"],
+                    "size": format_file_size(file["metadata"]["size"]),
+                    "id": file["id"],
+                    "public_url": temp,
+                    "thumbnail_url": None
+                }
+                file_details.append(file_info)
+            return {"status": "success", "data": file_details, "public_url": public_url}
+        return {"status": "success", "data": [], "public_url": ""}
 
     except Exception as e:
+        # Cleanup storage if any file was uploaded before the error
         print(f"Error getting file details: {str(e)}")
         return {"status": "error", "message": str(e), "data": []}
 
 
 def delete_file_from_storage(file_name):
     try:
-        # Determine bucket based on file extension
+        # This function is kept for general purpose deletion (e.g., blog images)
+        # but is no longer used for deleting magazines. See delete_magazine_from_db.
         file_extension = file_name.lower().split(".")[-1]
 
         if file_extension in ["jpg", "jpeg", "png", "gif", "bmp", "webp", "svg"]:
@@ -477,7 +509,6 @@ def delete_file_from_storage(file_name):
                 "message": "Unsupported file type. Only images and PDFs are allowed.",
             }
 
-        # Delete file from Supabase storage
         response = supabase.storage.from_(bucket_name).remove([file_name])
 
         if not response:
@@ -517,10 +548,114 @@ def admin_login_db_check(email, password):
         }
     return {"success": False, "email": email}
 
+# --------------------------------------------------------------------------------#
+#                               USER AUTH FUNCTIONS                              #
+# --------------------------------------------------------------------------------#
+
+def user_register_db(username, email, password):
+    from .global_functions import sha256_hash
+    try:
+        # Check if user already exists
+        response = supabase.table("users").select("id").eq("email", email).execute()
+        if response.data:
+            return {"status": "error", "message": "User with this email already exists."}
+
+        # Insert new user
+        response = supabase.table("users").insert({
+            "username": username,
+            "email": email,
+            "password": sha256_hash(password)
+        }).execute()
+
+        if response.data:
+            return {"status": "success", "message": "User registered successfully.", "data": response.data[0]}
+        else:
+            return {"status": "error", "message": "Failed to register user."}
+    except Exception as e:
+        print(f"Error registering user: {e}")
+        return {"status": "error", "message": str(e)}
+
+def user_login_db_check(email, password):
+    from .global_functions import sha256_hash
+    try:
+        hashed_password = sha256_hash(password)
+        response = supabase.table("users").select("*").eq("email", email).eq("password", hashed_password).execute()
+        
+        if response.data:
+            user = response.data[0]
+            return {
+                "success": True,
+                "username": user["username"],
+                "email": user["email"],
+            }
+        return {"success": False, "message": "Invalid email or password."}
+    except Exception as e:
+        print(f"Error during user login check: {e}")
+        return {"success": False, "message": str(e)}
+
 
 # --------------------------------------------------------------------------------#
 #                            MAGAZINE PAGE FUNCTIONS                             #
 # --------------------------------------------------------------------------------#
+
+def create_magazine_db(title, pdf_file, thumbnail_file):
+    pdf_filename = None
+    thumbnail_filename = None
+    
+    try:
+        # 1. Upload PDF file
+        pdf_filename = pdf_file.filename
+        pdf_content = pdf_file.read()
+        supabase.storage.from_("magazine-pdfs").upload(
+            path=pdf_filename,
+            file=pdf_content,
+            file_options={"content-type": pdf_file.content_type, "upsert": "false"}
+        )
+        print(f"PDF file '{pdf_filename}' uploaded successfully.")
+        pdf_url = supabase.storage.from_("magazine-pdfs").get_public_url(pdf_filename)
+        print(f"PDF public URL: {pdf_url}")
+
+        # 2. Upload thumbnail file (if provided)
+        thumbnail_url = None
+        if thumbnail_file:
+            thumbnail_filename = thumbnail_file.filename
+            thumbnail_content = thumbnail_file.read()
+            supabase.storage.from_("magazine-thumbnails").upload(
+                path=thumbnail_filename,
+                file=thumbnail_content,
+                file_options={"content-type": thumbnail_file.content_type, "upsert": "false"}
+            )
+            thumbnail_url = supabase.storage.from_("magazine-thumbnails").get_public_url(thumbnail_filename)
+        print(f"Thumbnail file '{thumbnail_filename}' uploaded successfully." if thumbnail_file else "No thumbnail file provided.")
+
+        # 3. Insert record into the database
+        magazine_id = str(uuid.uuid4())
+        response = supabase.table("magazine_details").insert({
+            "id": magazine_id,
+            "title": title,
+            "pdf_url": pdf_url,
+            "thumbnail_url": thumbnail_url
+        }).execute()
+        print(f"response from database insert: {response}")
+        
+        if response.data:
+            return {"status": "success", "data": response.data[0]}
+        else:
+            # This case might be hit if the insert fails for reasons other than an exception
+            raise Exception("Failed to save magazine details to database.")
+
+    except Exception as e:
+        # Cleanup storage if any file was uploaded before the error
+        if "Duplicate" in str(e) or "duplicate" in str(e):
+             return {"status": "error", "message": "A file with this name already exists. Please rename your file."}
+
+        if pdf_filename:
+            supabase.storage.from_("magazine-pdfs").remove([pdf_filename])
+        if thumbnail_filename:
+            supabase.storage.from_("magazine-thumbnails").remove([thumbnail_filename])
+        
+        print(f"Error creating magazine: {e}")
+        return {"status": "error", "message": str(e)}
 
 
 def get_magazine_details_db(magazine_id):
@@ -531,3 +666,33 @@ def get_magazine_details_db(magazine_id):
     if response.data:
         return response.data[0]
     return None
+
+def delete_magazine_from_db(magazine_id):
+    try:
+        # 1. Get file URLs from the database record
+        record_response = supabase.table("magazine_details").select("pdf_url, thumbnail_url").eq("id", magazine_id).single().execute()
+        if not record_response.data:
+            return {"status": "error", "message": "Magazine not found."}
+
+        record = record_response.data
+        pdf_url = record.get("pdf_url")
+        thumbnail_url = record.get("thumbnail_url")
+        
+        # 2. Delete the database record first
+        delete_db_response = supabase.table("magazine_details").delete().eq("id", magazine_id).execute()
+        if not delete_db_response.data:
+            raise Exception("Failed to delete magazine record from database.")
+
+        # 3. Delete files from storage
+        if pdf_url:
+            pdf_filename = os.path.basename(pdf_url.split('?')[0])
+            supabase.storage.from_("magazine-pdfs").remove([pdf_filename])
+
+        if thumbnail_url:
+            thumbnail_filename = os.path.basename(thumbnail_url.split('?')[0])
+            supabase.storage.from_("magazine-thumbnails").remove([thumbnail_filename])
+
+        return {"status": "success", "message": "Magazine deleted successfully."}
+    except Exception as e:
+        print(f"Error deleting magazine: {str(e)}")
+        return {"status": "error", "message": str(e)}
