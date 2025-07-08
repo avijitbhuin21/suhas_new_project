@@ -15,7 +15,7 @@ from static.data.db_handler import *
 from static.data.blogs import *
 from static.data.global_functions import *
 
-from static.data.page_handlers.builder import get_homepage, get_category_page
+from static.data.page_handlers.builder import get_homepage, get_category_page, get_blog_page
 from static.data.page_handlers.general_elements.header import get_blogs_for_header
 
 from flask_ngrok import run_with_ngrok
@@ -23,8 +23,103 @@ from flask_ngrok import run_with_ngrok
 load_dotenv()
 
 app = Flask(__name__)
+CATEGORIES = [
+    "business",
+    "technology",
+    "gcc",
+    "semiconductor",
+    "sustainability",
+]
 
 # blogs_by_category=get_blogs_for_header(limit=3)
+
+@app.route("/<data>", methods=["GET"])
+def central_route(data):
+    print(f"Received request for central route with data: {data}")
+
+    # Handling Category Pages From Central Route
+    if data in CATEGORIES:
+        res = get_category_page(data)
+        if res == "error":
+            return render_template("not_found/404.html"), 404
+        else:
+            return res
+
+
+
+
+
+    # Handling Admin Pages From Central Route
+    if data == "admin_login":
+        return render_template("admin_pages/admin.html")
+    if data == "admin_blogs":
+        return render_template("admin_pages/blogs/admin_blogs.html")
+    
+
+
+
+
+
+    
+    if data == "get_blog_list":
+        search_keyword = request.args.get("search_keyword")
+        list_of_blogs, _ = get_blogs_list_db(
+            search_keyword=search_keyword, page=1, per_page=1000
+        )
+        return jsonify({"status": "success", "blogs": list_of_blogs})
+    
+    if data == "get_paginated_business_cards":
+        try:
+            page = int(request.args.get("page", 1))
+        except (ValueError, TypeError):
+            page = 1
+        if page < 1:
+            page = 1
+        data = get_paginated_business_cards_data(page=page)
+        return jsonify(data)
+    
+
+
+
+
+    # Handling Upload Pages From Central Route
+    if data == "manage_files":
+        return render_template("admin_pages/manage_files.html")
+    if data == "get_file_details":
+        data = request.args
+        print(f"Received data for get_file_details: {json.dumps(data, indent=2, ensure_ascii=False)}")
+        bucket_name = data.get("bucket_name", None)
+        if not bucket_name:
+            return jsonify({"status": "error", "message": "Bucket name is required"}), 400
+        file_details = get_file_details_db(bucket_name)
+        if file_details["status"] == "error":
+            return (
+                jsonify(
+                    {
+                        "status": "error",
+                        "message": file_details.get(
+                            "message", "Failed to retrieve file details"
+                        ),
+                    }
+                ),
+                500,
+            )
+        return jsonify({"status": "success", "data": file_details.get("data", [])}), 200
+
+
+
+
+
+
+    # Handling Magazine Pages From Central Route
+    if data == "magazine":
+        return render_template("magazine_page/magazine_page.html")
+
+
+
+
+    # When no matches found, return 404
+    return render_template("not_found/404.html"), 404
 
 
 # --------------------------------------------------------------------------------#
@@ -36,17 +131,8 @@ app = Flask(__name__)
 def index():
     return get_homepage()
 
-# --------------------------------------------------------------------------------#
-#                                 CATEGORY ROUTE                                  #
-# --------------------------------------------------------------------------------#
 
-@app.route("/category/<category_name>")
-def category_page(category_name):
-    res = get_category_page(category_name)
-    if res == "error":
-        return render_template("not_found/404.html"), 404
-    else:
-        return res
+
 
 # --------------------------------------------------------------------------------#
 #                              RENDERING ROUTES                                  #
@@ -110,10 +196,6 @@ def category_page(category_name):
 # --------------------------------------------------------------------------------#
 #                              ADMIN PAGE ROUTES                                 #
 # --------------------------------------------------------------------------------#
-@app.route("/admin_login")
-def admin_login():
-    return render_template("admin_pages/admin.html")
-
 
 @app.route("/admin_auth", methods=["POST"])
 def admin_auth():
@@ -132,11 +214,6 @@ def admin_auth():
 
 
 # ------------------------------ ADMIN PAGE BLOG ------------------------------#
-
-
-@app.route("/admin_blogs")
-def admin_blogs():
-    return render_template("admin_pages/blogs/admin_blogs.html")
 
 
 @app.route("/admin_blog_preview", methods=["POST"])
@@ -241,38 +318,6 @@ def display_blog(blog_id):
     return html_template
 
 
-@app.route("/get_blog_list")
-def get_blog_list():
-    search_keyword = request.args.get("search_keyword")
-    list_of_blogs, _ = get_blogs_list_db(
-        search_keyword=search_keyword, page=1, per_page=1000
-    )  # Assuming we get all for this admin search
-    return jsonify({"status": "success", "blogs": list_of_blogs})
-
-
-@app.route("/get_paginated_business_cards")
-def get_paginated_business_cards():
-    """
-    API endpoint to fetch paginated business blog cards.
-    Accepts a 'page' query parameter.
-    """
-    try:
-        # Get page number from query params, default to 1 if not present or invalid
-        page = int(request.args.get("page", 1))
-    except (ValueError, TypeError):
-        page = 1
-
-    # Ensure page is a positive integer
-    if page < 1:
-        page = 1
-
-    # Call the helper function from global_functions.py to get the data
-    data = get_paginated_business_cards_data(page=page)
-
-    # Return the data as a JSON response
-    return jsonify(data)
-
-
 @app.route("/delete_blog", methods=["POST"])
 def delete_blog():
     data = request.json
@@ -301,11 +346,6 @@ def delete_blog():
 # --------------------------------------------------------------------------------#
 #                             UPLOAD FILES ROUTE                                 #
 # --------------------------------------------------------------------------------#
-
-
-@app.route("/manage_files")
-def manage_files():
-    return render_template("admin_pages/manage_files.html")
 
 
 @app.route("/upload_file", methods=["POST"])
@@ -375,30 +415,6 @@ def upload_file():
         return jsonify({"status": "error", "message": f"Upload failed: {str(e)}"}), 500
 
 
-@app.route("/get_file_details", methods=["GET"])
-def get_file_details():
-    data = request.args
-    print(
-        f"Received data for get_file_details: {json.dumps(data, indent=2, ensure_ascii=False)}"
-    )
-
-    bucket_name = data.get("bucket_name", None)
-    if not bucket_name:
-        return jsonify({"status": "error", "message": "Bucket name is required"}), 400
-    file_details = get_file_details_db(bucket_name)
-    if file_details["status"] == "error":
-        return (
-            jsonify(
-                {
-                    "status": "error",
-                    "message": file_details.get(
-                        "message", "Failed to retrieve file details"
-                    ),
-                }
-            ),
-            500,
-        )
-    return jsonify({"status": "success", "data": file_details.get("data", [])}), 200
 
 
 @app.route("/delete_file", methods=["POST"])
@@ -439,11 +455,6 @@ def delete_file():
 # --------------------------------------------------------------------------------#
 #                            MAGAZINE PAGE FUNCTIONS                             #
 # --------------------------------------------------------------------------------#
-
-
-@app.route("/magazine_page")
-def magazine_page():
-    return render_template("magazine_page/magazine_page.html")
 
 
 @app.route("/magazine/<magazine_id>")
@@ -492,6 +503,9 @@ def magazine_page_flipbook_view(magazine_id=None):
 def trial():
     return render_template("trial.html")
 
+@app.route("/blog_trial/<blog_id>")
+def blog_trial(blog_id):
+    return get_blog_page(blog_id)
 
 @app.route("/dynamic_render_trial")
 def dynamic_render_trial():
