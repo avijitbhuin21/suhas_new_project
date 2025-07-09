@@ -346,11 +346,13 @@ def admin_save_blog():
 @app.route("/blog/<blog_id>")
 def display_blog(blog_id):
     blog_data = get_blog(blog_id=blog_id)
+    # print(f"Blog data for {blog_id}: {json.dumps(blog_data, indent=2, ensure_ascii=False)}")
     if not blog_data:
         return render_template("not_found/404.html"), 404
 
     # Check if blog is deleted and handle redirect
     if blog_data.get("status") == "deleted":
+        print(f"Blog {blog_id} is marked as deleted. Redirecting to {blog_data.get('redirect_url')}")
         redirect_url = blog_data.get("redirect_url")
         if redirect_url:
             # Redirect to the specified URL
@@ -614,10 +616,17 @@ def add_organization():
             data['logo'] = result['url']
         else:
             return jsonify({"error": "Failed to upload logo", "message": result.get("message")}), 400
-    new_org = add_organization_db(data)
-    if new_org:
-        return jsonify(new_org), 201
-    return jsonify({"error": "Failed to add organization"}), 400
+    
+    # Add organization to database
+    result = add_organization_db(data)
+    
+    if result.get("status") == "error":
+        # Check for duplicate organization error
+        if "already exists" in result.get("message", ""):
+            return jsonify({"error": result["message"]}), 409  # 409 Conflict
+        return jsonify({"error": result.get("message", "Failed to add organization")}), 400
+        
+    return jsonify(result.get("data")), 201
 
 @app.route("/api/organizations/<int:org_id>", methods=["PUT"])
 def update_organization(org_id):
@@ -636,8 +645,11 @@ def update_organization(org_id):
 
 @app.route("/api/organizations/<int:org_id>", methods=["DELETE"])
 def delete_organization(org_id):
-    delete_organization_db(org_id)
-    return jsonify({"message": "Organization deleted"})
+    try:
+        delete_organization_db(org_id)
+        return jsonify({"message": "Organization deleted successfully"}), 200
+    except Exception as e:
+        return jsonify({"error": "Failed to delete organization", "message": str(e)}), 500
 
 # Ads API
 @app.route("/api/ads", methods=["GET"])
@@ -810,7 +822,7 @@ if __name__ == "__main__":
 # re structure the admin panel. --> DONE
 # track only h2 nd h3 tags in the blog for TOC. -->
 
-# add the login functionality in main page. and every other page. -->
-# add the loading screen to the blogs. -->
+# add the login functionality in main page. and every other page. --> In Progress
+# add the loading screen to the blogs. --> DONE
 
-# add the ads manager and upload magazines to admin panel. -->
+# add the ads manager and upload magazines to admin panel. --> DONE

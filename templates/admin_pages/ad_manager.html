@@ -33,7 +33,7 @@
             to   { opacity: 1; transform: translateY(0); }
         }
         .anim-hidden-initial { opacity: 0; }
-        /* UPDATED: Content section animation to match navbar */
+        /* Content section animation */
         .content-section {
             display: none;
         }
@@ -54,13 +54,52 @@
             color: white;
             letter-spacing: -0.025em;
         }
+        
+        /* Form styles matching admin_blogs */
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        .form-input, .form-select {
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            color: white;
+            transition: all 0.2s ease;
+        }
+        .form-input:focus, .form-select:focus {
+            outline: none;
+            border-color: rgb(59, 130, 246);
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+        }
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        /* Dropdown styles matching admin_blogs */
+        .form-select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%20viewBox%3D%220%200%20292.4%20292.4%22%3E%3Cpath%20fill%3D%22%23ffffff%22%20d%3D%22M287%2C197.9L159.7%2C69.8c-3-3-7.9-3-10.9%2C0L5.4%2C197.9c-3%2C3-3%2C7.9%2C0%2C10.9l10.9%2C10.9c3%2C3%2C7.9%2C3%2C10.9%2C0l120.7-120.7c3-3%2C7.9-3%2C10.9%2C0l120.7%2C120.7c3%2C3%2C7.9%2C3%2C10.9%2C0l10.9-10.9C290%2C205.8%2C290%2C200.8%2C287%2C197.9z%22%2F%3E%3C%2Fsvg%3E');
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            background-size: 0.6em;
+            padding-right: 2.5rem;
+        }
+        
         .form-button {
             display: inline-flex;
             align-items: center;
             justify-content: center;
             padding: 0.75rem 1.25rem;
             border: none;
-            border-radius: 20px; /* UPDATED */
+            border-radius: 12px;
             background-color: rgb(59, 130, 246);
             color: white;
             font-size: 0.875rem;
@@ -70,7 +109,16 @@
         }
         .form-button:hover:not(:disabled) { background-color: rgb(37, 99, 235); }
         .form-button:disabled { background-color: rgba(59, 130, 246, 0.4); cursor: not-allowed; }
-        /* NEW: Glass container for toggles */
+        
+        .form-button-secondary {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .form-button-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Glass container */
         .glass-pill-container {
             display: inline-block;
             backdrop-filter: blur(35px);
@@ -80,7 +128,8 @@
             border-radius: 70px;
             padding: 6px;
         }
-        /* UPDATED: Toggle button styles with enhanced animations */
+        
+        /* Toggle button styles */
         .toggle-group button {
             padding: 0.5rem 1rem;
             border-radius: 20px;
@@ -124,20 +173,12 @@
             opacity: 0.3;
             transform: scale(1);
         }
-        /* Icon and text animations */
-        .toggle-group button i,
-        .toggle-group button span {
-            transition: transform 0.3s cubic-bezier(0.25, 0.4, 0.25, 1);
-            position: relative;
-            z-index: 1;
-        }
-        .toggle-group button.active i {
-            transform: rotate(360deg) scale(1.1);
-        }
+        
+        /* Dropzone styles */
         .dropzone {
             border: 2px dashed rgba(255, 255, 255, 0.2);
-            border-radius: 20px; /* UPDATED */
-            padding: 2.5rem;
+            border-radius: 12px;
+            padding: 2rem;
             text-align: center;
             cursor: pointer;
             transition: all 0.2s ease;
@@ -147,40 +188,34 @@
             border-color: rgb(59, 130, 246);
             background-color: rgba(59, 130, 246, 0.1);
         }
-        /* Dropzone content animations */
-        .dropzone i,
-        .dropzone p {
+        .dropzone i, .dropzone p {
             transition: opacity 0.2s ease-in-out;
         }
-        .file-queue-item {
+        
+        .file-input-display {
             display: flex;
             align-items: center;
-            padding: 0.75rem 1rem;
-            border-radius: 20px; /* UPDATED */
-            background-color: rgba(255, 255, 255, 0.05);
+            justify-content: space-between;
+            cursor: pointer;
         }
-        .gallery-item {
+        .file-input-placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .organization-tile {
             position: relative;
-            overflow: hidden;
-            border-radius: 20px; /* UPDATED */
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            overflow: hidden; /* Ensure content is clipped to border-radius */
+            display: flex;
+            flex-direction: column;
             transition: all 0.2s ease;
-            background-color: rgba(255, 255, 255, 0.03);
         }
-        .gallery-item:hover {
+        .organization-tile:hover {
             transform: translateY(-4px);
             box-shadow: 0 8px 20px rgba(0,0,0,0.2);
         }
-        .gallery-item .overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent 50%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        .gallery-item:hover .overlay {
-            opacity: 1;
-        }
-        .gallery-item .actions {
+        .organization-tile .actions {
             position: absolute;
             top: 0.75rem;
             right: 0.75rem;
@@ -189,56 +224,102 @@
             opacity: 0;
             transform: translateY(-10px);
             transition: all 0.3s ease;
-            z-index: 10; /* Added z-index to ensure buttons are on top */
-            pointer-events: auto; /* Ensure pointer events are enabled */
+            z-index: 10;
+            pointer-events: auto;
         }
-        .gallery-item:hover .actions {
+        .organization-tile:hover .actions {
             opacity: 1;
             transform: translateY(0);
         }
-        .gallery-item .actions button {
-            border-radius: 9999px; /* UPDATED to circle */
+        .organization-tile .actions button {
+            border-radius: 9999px;
             padding: 0.5rem;
             background-color: rgba(0,0,0,0.5);
             transition: background-color 0.2s;
-        }
-        .gallery-item .actions button:hover {
-             background-color: black; /* Grey hover for all buttons */
-        }
-        /* Search input container styles */
-        .search-input-container {
-            position: relative;
-        }
-        .search-input-container::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            width: 0;
-            height: 1px;
-            background-color: rgba(255, 255, 255, 0.6);
-            transform: translateX(-50%);
-            transition: width 0.3s ease-in-out;
-        }
-        .search-input-container:hover::after {
-            width: 100%;
-        }
-        .search-input-container.focused::after {
-            width: 100%;
-        }
-        /* Search input styles */
-        .search-input {
-            background-color: transparent;
             border: none;
+            cursor: pointer;
+        }
+        .organization-tile .actions button:hover {
+            background-color: black;
+        }
+        
+        /* Organization logo styles - 1:1 aspect ratio without cropping */
+        .organization-logo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Cover the area */
+            border-radius: 0; /* Remove border-radius here, apply to container */
+            border: none; /* Remove border here */
+            background-color: transparent;
+        }
+        
+        .ad-item {
+            position: relative;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            overflow: hidden; /* Ensure content is clipped to border-radius */
+            display: flex;
+            flex-direction: column;
+            transition: all 0.2s ease;
+        }
+        .ad-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+        .ad-item .actions {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            display: flex;
+            gap: 0.5rem;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 10;
+            pointer-events: auto;
+        }
+        .ad-item:hover .actions {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .ad-item .actions button {
+            border-radius: 9999px;
+            padding: 0.5rem;
+            background-color: rgba(0,0,0,0.5);
+            transition: background-color 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+        .ad-item .actions button:hover {
+            background-color: black;
+        }
+        
+        .pagination-controls {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+        }
+        .pagination-button {
+            background-color: rgba(255, 255, 255, 0.1);
             color: white;
-            transition: all 0.3s ease-in-out;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            border: none;
         }
-        .search-input:focus {
-            outline: none;
+        .pagination-button:hover:not(:disabled) {
+            background-color: rgba(255, 255, 255, 0.2);
         }
-        .search-input::placeholder {
-            color: rgba(255, 255, 255, 0.5);
+        .pagination-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
+        .pagination-button.active {
+            background-color: rgb(59, 130, 246);
+        }
+        
         /* Delete confirmation modal styles */
         .delete-modal {
             position: fixed;
@@ -268,6 +349,8 @@
             padding: 2rem;
             max-width: 600px;
             width: 90%;
+            max-height: 80vh; /* Make modal content scrollable */
+            overflow-y: auto; /* Enable vertical scrolling */
             text-align: center;
             transform: scale(0.9) translateY(20px);
             transition: all 0.3s cubic-bezier(0.25, 0.4, 0.25, 1);
@@ -324,144 +407,6 @@
         .delete-modal-btn-delete:hover {
             background: rgb(220, 38, 38);
         }
-        /* NEW: Form input styles */
-        .form-label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-size: 0.875rem;
-            font-weight: 500;
-            color: rgba(255, 255, 255, 0.8);
-        }
-        .form-input, .file-input-display, .form-select {
-            width: 100%;
-            background-color: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 0.75rem 1rem;
-            color: white;
-            transition: all 0.2s ease;
-            /* Ensure consistent styling with form-input from admin_blogs.html */
-            -webkit-appearance: none; /* Remove default dropdown arrow */
-            -moz-appearance: none;
-            appearance: none;
-            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%20viewBox%3D%220%200%20292.4%20292.4%22%3E%3Cpath%20fill%3D%22%23ffffff%22%20d%3D%22M287%2C197.9L159.7%2C69.8c-3-3-7.9-3-10.9%2C0L5.4%2C197.9c-3%2C3-3%2C7.9%2C0%2C10.9l10.9%2C10.9c3%2C3%2C7.9%2C3%2C10.9%2C0l120.7-120.7c3-3%2C7.9-3%2C10.9%2C0l120.7%2C120.7c3%2C3%2C7.9%2C3%2C10.9%2C0l10.9-10.9C290%2C205.8%2C290%2C200.8%2C287%2C197.9z%22%2F%3E%3C%2Fsvg%3E');
-            background-repeat: no-repeat;
-            background-position: right 0.75rem center;
-            background-size: 0.6em;
-            padding-right: 2.5rem; /* Make space for the custom arrow */
-        }
-        .form-input:focus, .file-input-display:focus-within, .form-select:focus {
-            outline: none;
-            border-color: rgb(59, 130, 246);
-            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
-        }
-        .file-input-display {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            cursor: pointer;
-        }
-        .file-input-placeholder {
-            color: rgba(255, 255, 255, 0.5);
-        }
-        .organization-tile {
-            position: relative;
-            background-color: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            padding: 1.5rem;
-            text-align: center;
-            transition: all 0.2s ease;
-        }
-        .organization-tile:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-        }
-        .organization-tile .actions {
-            position: absolute;
-            top: 0.75rem;
-            right: 0.75rem;
-            display: flex;
-            gap: 0.5rem;
-            opacity: 0;
-            transform: translateY(-10px);
-            transition: all 0.3s ease;
-            z-index: 10;
-            pointer-events: auto;
-        }
-        .organization-tile:hover .actions {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .organization-tile .actions button {
-            border-radius: 9999px;
-            padding: 0.5rem;
-            background-color: rgba(0,0,0,0.5);
-            transition: background-color 0.2s;
-        }
-        .organization-tile .actions button:hover {
-            background-color: black;
-        }
-        .ad-item {
-            position: relative;
-            background-color: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            padding: 1.5rem;
-            text-align: center;
-            transition: all 0.2s ease;
-        }
-        .ad-item:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-        }
-        .ad-item .actions {
-            position: absolute;
-            top: 0.75rem;
-            right: 0.75rem;
-            display: flex;
-            gap: 0.5rem;
-            opacity: 0;
-            transform: translateY(-10px);
-            transition: all 0.3s ease;
-            z-index: 10;
-            pointer-events: auto;
-        }
-        .ad-item:hover .actions {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .ad-item .actions button {
-            border-radius: 9999px;
-            padding: 0.5rem;
-            background-color: rgba(0,0,0,0.5);
-            transition: background-color 0.2s;
-        }
-        .ad-item .actions button:hover {
-            background-color: black;
-        }
-        .pagination-controls {
-            display: flex;
-            justify-content: center;
-            gap: 0.5rem;
-            margin-top: 2rem;
-        }
-        .pagination-button {
-            background-color: rgba(255, 255, 255, 0.1);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: background-color 0.2s ease;
-        }
-        .pagination-button:hover:not(:disabled) {
-            background-color: rgba(255, 255, 255, 0.2);
-        }
-        .pagination-button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-        .pagination-button.active {
-            background-color: rgb(59, 130, 246);
-        }
     </style>
 </head>
 <body>
@@ -481,12 +426,12 @@
                 <h2 class="section-title text-center">Manage Organizations</h2>
                 <div class="bg-black/20 border border-white/10 rounded-[20px] p-6 md:p-8" style="border-width: 0px;">
                     <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
-                        <div class="w-full sm:w-auto flex-grow">
+                        <div class="flex-grow-0">
                             <label for="organizationSearch" class="form-label sr-only">Search Organizations</label>
                             <input type="text" id="organizationSearch" class="form-input" placeholder="Search organizations...">
                         </div>
-                        <div class="w-full sm:w-auto">
-                            <button id="createNewOrganizationBtn" class="form-button w-full">
+                        <div class="flex-grow-0">
+                            <button id="createNewOrganizationBtn" class="form-button">
                                 <i data-lucide="plus" class="w-4 h-4 mr-2"></i>
                                 Create New Organization
                             </button>
@@ -513,15 +458,15 @@
                 <h2 class="section-title text-center">Manage Ads</h2>
                 <div class="bg-black/20 border border-white/10 rounded-[20px] p-6 md:p-8" style="border-width: 0px;">
                     <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
-                        <div class="w-full sm:w-auto flex-grow">
+                        <div class="flex-grow-0">
                             <label for="organizationFilter" class="form-label sr-only">Filter by Organization</label>
-                            <select id="organizationFilter" class="form-select">
-                                <option value="all">Filter by Organization (All)</option>
+                            <select id="organizationFilter" name="organization_id" class="form-select" style="background-color: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.2); color: white;">
+                                <option value="all" style="background-color: #1a1a1a; color: white;">Filter by Organization (All)</option>
                                 <!-- Organization options will be populated by JS -->
                             </select>
                         </div>
-                        <div class="w-full sm:w-auto">
-                            <button id="addNewAdBtn" class="form-button w-full">
+                        <div class="flex-grow-0">
+                            <button id="addNewAdBtn" class="form-button">
                                 <i data-lucide="plus" class="w-4 h-4 mr-2"></i>
                                 Add New Ad
                             </button>
@@ -547,27 +492,44 @@
     <!-- Create/Edit Organization Modal -->
     <div id="organizationModal" class="delete-modal">
         <div class="delete-modal-content">
-            <h3 class="delete-modal-title" id="organizationModalTitle">Create New Organization</h3>
-            <form id="organizationForm" class="space-y-4 mt-4">
+            <h3 class="delete-modal-title text-center" id="organizationModalTitle">Create New Organization</h3>
+            <form id="organizationForm" class="space-y-6 mt-6">
+                
+                <!-- Organization Name -->
                 <div>
-                    <label for="orgLogoUpload" class="form-label">Organization Logo</label>
-                    <div id="org-logo-dropzone" class="file-input-display">
-                        <span id="org-logo-filename" class="file-input-placeholder truncate pr-4">Click or drop image here</span>
-                        <i data-lucide="image" class="w-5 h-5 text-white/50"></i>
-                    </div>
-                    <input type="file" id="orgLogoUpload" name="org_logo" class="hidden" accept="image/*">
-                </div>
-                <div>
-                    <label for="orgName" class="form-label">Organization Name</label>
+                    <label for="orgName" class="form-label text-left flex items-center">
+                        <i data-lucide="building-2" class="w-4 h-4 mr-2"></i>
+                        Organization Name <span class="text-red-400 ml-1">*</span>
+                    </label>
                     <input type="text" id="orgName" name="org_name" class="form-input" placeholder="e.g., Tech Solutions Inc." required>
                 </div>
+                
+                <!-- Organization Percentage -->
                 <div>
-                    <label for="orgPercentage" class="form-label">Organization Percentage</label>
+                    <label for="orgPercentage" class="form-label text-left flex items-center">
+                        <i data-lucide="percent" class="w-4 h-4 mr-2"></i>
+                        Organization Percentage <span class="text-red-400 ml-1">*</span>
+                    </label>
                     <input type="number" id="orgPercentage" name="org_percentage" class="form-input" placeholder="e.g., 75" min="0" max="100" required>
                 </div>
-                <div class="delete-modal-actions">
-                    <button type="button" class="delete-modal-btn delete-modal-btn-cancel" id="organizationModalCancel">Cancel</button>
-                    <button type="submit" class="delete-modal-btn delete-modal-btn-delete" id="organizationModalSave">Save Organization</button>
+                
+                <!-- Organization Logo - Last position with drag/drop -->
+                <div>
+                    <label for="orgLogoUpload" class="form-label text-left flex items-center">
+                        <i data-lucide="image" class="w-4 h-4 mr-2"></i>
+                        Organization Logo
+                    </label>
+                    <div id="org-logo-dropzone" class="dropzone">
+                        <i data-lucide="upload-cloud" class="w-8 h-8 mx-auto mb-2 text-white/50"></i>
+                        <p id="org-logo-filename" class="file-input-placeholder">Click or drag image here</p>
+                        <p class="text-xs text-white/40 mt-1">Supports JPG, PNG, WEBP (Max 10MB)</p>
+                    </div>
+                    <input type="file" id="orgLogoUpload" name="org_logo" class="hidden" accept="image/jpeg,image/jpg,image/png,image/webp,image/gif,image/bmp,image/svg+xml">
+                </div>
+                
+                <div class="flex justify-end gap-3 pt-4">
+                    <button type="button" class="form-button form-button-secondary" id="organizationModalCancel">Cancel</button>
+                    <button type="submit" class="form-button" id="organizationModalSave">Save Organization</button>
                 </div>
             </form>
         </div>
@@ -576,44 +538,71 @@
     <!-- Create/Edit Ad Modal -->
     <div id="adModal" class="delete-modal">
         <div class="delete-modal-content">
-            <h3 class="delete-modal-title" id="adModalTitle">Add New Ad</h3>
-            <form id="adForm" class="space-y-4 mt-4">
+            <h3 class="delete-modal-title text-center" id="adModalTitle">Add New Ad</h3>
+            <form id="adForm" class="space-y-6 mt-6">
+                
+                <!-- Organization -->
                 <div>
-                    <label for="adOrganization" class="form-label">Organization</label>
-                    <select id="adOrganization" name="organization_id" class="form-select" required>
-                        <option value="">Select an Organization</option>
+                    <label for="adOrganization" class="form-label text-left flex items-center">
+                        <i data-lucide="building-2" class="w-4 h-4 mr-2"></i>
+                        Organization <span class="text-red-400 ml-1">*</span>
+                    </label>
+                    <select id="adOrganization" name="organization_id" class="form-select" required style="background-color: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.2); color: white;">
+                        <option value="" style="background-color: #1a1a1a; color: white;">Select an Organization</option>
                         <!-- Organization options will be populated by JS -->
                     </select>
                 </div>
+                
+                <!-- Ad Title -->
                 <div>
-                    <label for="adTitle" class="form-label">Ad Title</label>
+                    <label for="adTitle" class="form-label text-left flex items-center">
+                        <i data-lucide="type" class="w-4 h-4 mr-2"></i>
+                        Ad Title <span class="text-red-400 ml-1">*</span>
+                    </label>
                     <input type="text" id="adTitle" name="ad_title" class="form-input" placeholder="e.g., Summer Sale Campaign" required>
                 </div>
+                
+                <!-- Ad Description -->
                 <div>
-                    <label for="adDescription" class="form-label">Ad Description</label>
+                    <label for="adDescription" class="form-label text-left flex items-center">
+                        <i data-lucide="file-text" class="w-4 h-4 mr-2"></i>
+                        Ad Description
+                    </label>
                     <textarea id="adDescription" name="ad_description" class="form-input" rows="3" placeholder="Brief description of the ad content"></textarea>
                 </div>
+                
+                <!-- Ad Hyperlink -->
                 <div>
-                    <label for="adHyperlink" class="form-label">Ad Hyperlink</label>
+                    <label for="adHyperlink" class="form-label text-left flex items-center">
+                        <i data-lucide="link" class="w-4 h-4 mr-2"></i>
+                        Ad Hyperlink <span class="text-red-400 ml-1">*</span>
+                    </label>
                     <input type="url" id="adHyperlink" name="ad_hyperlink" class="form-input" placeholder="e.g., https://example.com/sale" required>
                 </div>
+                
+                <!-- Ad Image - Last position with drag/drop -->
                 <div>
-                    <label for="adImageUpload" class="form-label">Ad Image</label>
-                    <div id="ad-image-dropzone" class="file-input-display">
-                        <span id="ad-image-filename" class="file-input-placeholder truncate pr-4">Click or drop image here</span>
-                        <i data-lucide="image" class="w-5 h-5 text-white/50"></i>
+                    <label for="adImageUpload" class="form-label text-left flex items-center">
+                        <i data-lucide="image" class="w-4 h-4 mr-2"></i>
+                        Ad Image <span class="text-red-400 ml-1">*</span>
+                    </label>
+                    <div id="ad-image-dropzone" class="dropzone">
+                        <i data-lucide="upload-cloud" class="w-8 h-8 mx-auto mb-2 text-white/50"></i>
+                        <p id="ad-image-filename" class="file-input-placeholder">Click or drag image here</p>
+                        <p class="text-xs text-white/40 mt-1">Supports JPG, PNG, WEBP (Max 10MB)</p>
                     </div>
-                    <input type="file" id="adImageUpload" name="ad_image" class="hidden" accept="image/*">
+                    <input type="file" id="adImageUpload" name="ad_image" class="hidden" accept="image/jpeg,image/jpg,image/png,image/webp,image/gif,image/bmp,image/svg+xml" required>
                 </div>
-                <div class="delete-modal-actions">
-                    <button type="button" class="delete-modal-btn delete-modal-btn-cancel" id="adModalCancel">Cancel</button>
-                    <button type="submit" class="delete-modal-btn delete-modal-btn-delete" id="adModalSave">Save Ad</button>
+                
+                <div class="flex justify-end gap-3 pt-4">
+                    <button type="button" class="form-button form-button-secondary" id="adModalCancel">Cancel</button>
+                    <button type="submit" class="form-button" id="adModalSave">Save Ad</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- Delete Confirmation Modal (reused for both organizations and ads) -->
+    <!-- Delete Confirmation Modal -->
     <div id="deleteModal" class="delete-modal">
         <div class="delete-modal-content">
             <div class="delete-modal-icon">
@@ -637,6 +626,7 @@
     <script>
         let organizations = [];
         let ads = [];
+        let expandableTabs;
 
         const ORGS_PER_PAGE = 6;
         const ADS_PER_PAGE = 6;
@@ -725,7 +715,7 @@
         function showToast(message, type = 'success') {
             const toast = document.createElement('div');
             let bgColor = type === 'error' ? 'bg-red-600' : type === 'warning' ? 'bg-yellow-600' : 'bg-green-600';
-            toast.className = `fixed top-4 right-4 ${bgColor} text-white px-4 py-2 rounded-lg shadow-lg z-50 transition-all duration-300`;
+            toast.className = `fixed top-4 right-4 ${bgColor} text-white px-4 py-2 rounded-lg shadow-lg z-[1050] transition-all duration-300`;
             toast.textContent = message;
             document.body.appendChild(toast);
             setTimeout(() => {
@@ -739,8 +729,8 @@
         async function fetchOrganizations() {
             try {
                 const response = await fetch('/api/organizations');
+                if (!response.ok) throw new Error('Failed to fetch organizations');
                 organizations = await response.json();
-                renderOrganizations();
             } catch (error) {
                 console.error('Error fetching organizations:', error);
                 showToast('Failed to load organizations.', 'error');
@@ -772,14 +762,20 @@
                     const orgTile = document.createElement('div');
                     orgTile.className = 'organization-tile';
                     orgTile.innerHTML = `
-                        <div class="flex justify-center mb-4">
-                            <img src="${org.logo || 'https://via.placeholder.com/50'}" alt="${org.organization} Logo" class="w-20 h-20 rounded-full object-cover border border-white/10">
+                        <div class="relative w-full h-32 overflow-hidden rounded-t-lg">
+                            <img src="${org.logo || 'https://via.placeholder.com/128x96'}" alt="${org.organization} Logo" class="organization-logo">
+                            <div class="actions absolute top-2 right-2 flex gap-2 z-10">
+                                <button class="action-btn" data-action="view-ads" data-id="${org.id}" title="View Ads"><i data-lucide="megaphone" class="w-4 h-4 text-white"></i></button>
+                                <button class="action-btn" data-action="edit-org" data-id="${org.id}" title="Edit Organization"><i data-lucide="pencil" class="w-4 h-4 text-white"></i></button>
+                                <button class="action-btn" data-action="delete-org" data-id="${org.id}" data-name="${org.organization}" title="Delete Organization"><i data-lucide="trash" class="w-4 h-4 text-white"></i></button>
+                            </div>
                         </div>
-                        <h3 class="text-xl font-semibold text-white mb-2">${org.organization}</h3>
-                        <p class="text-white/70 text-sm">Share: ${org.percentage}%</p>
-                        <div class="actions">
-                            <button class="action-btn" data-action="edit-org" data-id="${org.id}" title="Edit Organization"><i data-lucide="pencil" class="w-4 h-4 text-white"></i></button>
-                            <button class="action-btn" data-action="delete-org" data-id="${org.id}" data-name="${org.organization}" title="Delete Organization"><i data-lucide="trash" class="w-4 h-4 text-white"></i></button>
+                        <div class="p-4 flex-grow flex flex-col justify-between" style="min-height: 100px;">
+                            <div>
+                                <h3 class="text-xl font-semibold text-white mb-1">${org.organization}</h3>
+                                <p class="text-white/70 text-sm mb-1">Share: ${org.percentage}%</p>
+                                <p class="text-white/70 text-sm mt-1">Ads: ${org.ad_count}</p>
+                            </div>
                         </div>
                     `;
                     organizationsGrid.appendChild(orgTile);
@@ -819,15 +815,13 @@
             const saveBtn = document.getElementById('organizationModalSave');
 
             form.reset();
-            orgLogoFilename.textContent = 'Click or drop image here';
+            orgLogoFilename.textContent = 'Click or drag image here';
             orgLogoFilename.classList.add('file-input-placeholder');
 
             if (org) {
                 title.textContent = 'Edit Organization';
                 orgName.value = org.organization;
                 orgPercentage.value = org.percentage;
-                // For logo, if editing, you might want to show current logo or filename
-                // For now, just reset the input
                 saveBtn.textContent = 'Save Changes';
                 form.dataset.editId = org.id;
             } else {
@@ -843,23 +837,54 @@
             document.getElementById('organizationModal').classList.remove('show');
         }
 
+        // Setup drag and drop for organization logo
+        function setupOrgLogoDragDrop() {
+            const dropzone = document.getElementById('org-logo-dropzone');
+            const fileInput = document.getElementById('orgLogoUpload');
+            const filenameSpan = document.getElementById('org-logo-filename');
+
+            dropzone.addEventListener('click', () => fileInput.click());
+
+            // Drag and drop functionality
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                dropzone.addEventListener(eventName, e => { e.preventDefault(); e.stopPropagation(); });
+            });
+
+            ['dragenter', 'dragover'].forEach(eventName => {
+                dropzone.addEventListener(eventName, () => dropzone.classList.add('dragover'));
+            });
+
+            ['dragleave', 'drop'].forEach(eventName => {
+                dropzone.addEventListener(eventName, () => dropzone.classList.remove('dragover'));
+            });
+
+            dropzone.addEventListener('drop', (e) => {
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    handleOrgLogoFile(files[0]);
+                }
+            });
+
+            fileInput.addEventListener('change', (e) => {
+                if (e.target.files.length > 0) {
+                    handleOrgLogoFile(e.target.files[0]);
+                }
+            });
+
+            function handleOrgLogoFile(file) {
+                if (file && file.type.startsWith('image/')) {
+                    filenameSpan.textContent = file.name;
+                    filenameSpan.classList.remove('file-input-placeholder');
+                } else {
+                    showToast('Please select a valid image file.', 'error');
+                }
+            }
+        }
+
         document.getElementById('createNewOrganizationBtn').addEventListener('click', () => openOrganizationModal());
         document.getElementById('organizationModalCancel').addEventListener('click', closeOrganizationModal);
         document.getElementById('organizationModal').addEventListener('click', (e) => {
             if (e.target === document.getElementById('organizationModal')) closeOrganizationModal();
-        });
-
-        document.getElementById('org-logo-dropzone').addEventListener('click', () => document.getElementById('orgLogoUpload').click());
-        document.getElementById('orgLogoUpload').addEventListener('change', (e) => {
-            const file = e.target.files[0];
-            const filenameSpan = document.getElementById('org-logo-filename');
-            if (file) {
-                filenameSpan.textContent = file.name;
-                filenameSpan.classList.remove('file-input-placeholder');
-            } else {
-                filenameSpan.textContent = 'Click or drop image here';
-                filenameSpan.classList.add('file-input-placeholder');
-            }
         });
 
         document.getElementById('organizationForm').addEventListener('submit', async (e) => {
@@ -889,8 +914,8 @@
                 }
 
                 showToast(`Organization ${orgId ? 'updated' : 'created'} successfully!`, 'success');
-                fetchOrganizations();
-                closeOrganizationModal();
+                // Refresh the page to reflect all changes
+                location.reload();
             } catch (error) {
                 console.error('Error saving organization:', error);
                 showToast(error.message, 'error');
@@ -903,24 +928,33 @@
 
             const action = actionBtn.dataset.action;
             const orgId = actionBtn.dataset.id;
-            const orgName = actionBtn.dataset.name;
             const org = organizations.find(o => o.id == orgId);
 
             if (!org) return;
 
+            if (action === 'view-ads') {
+                const adsTabIndex = expandableTabs.tabs.findIndex(tab => tab.title === 'Ads');
+                if (adsTabIndex !== -1) {
+                    currentAdFilterOrg = orgId;
+                    currentAdPage = 1;
+                    expandableTabs.handleSelect(adsTabIndex);
+                }
+                return;
+            }
+
             if (action === 'edit-org') {
                 openOrganizationModal(org);
             } else if (action === 'delete-org') {
-                showDeleteModal(`organization "${orgName}" and all associated ads`, async () => {
+                showDeleteModal(`organization "${org.organization}" and all associated ads`, async () => {
                     try {
                         const response = await fetch(`/api/organizations/${orgId}`, { method: 'DELETE' });
                         if (!response.ok) {
                             const errorData = await response.json();
                             throw new Error(errorData.message || 'Failed to delete organization');
                         }
-                        showToast(`Organization "${orgName}" deleted successfully!`, 'success');
-                        fetchOrganizations();
-                        fetchAds(); // Also refetch ads to update the UI
+                        showToast(`Organization "${org.organization}" deleted successfully!`, 'success');
+                        // Refresh the page to reflect all changes
+                        location.reload();
                     } catch (error) {
                         console.error('Error deleting organization:', error);
                         showToast(error.message, 'error');
@@ -930,7 +964,7 @@
         });
 
         document.getElementById('organizationSearch').addEventListener('input', () => {
-            currentOrgPage = 1; // Reset to first page on filter change
+            currentOrgPage = 1;
             renderOrganizations();
         });
 
@@ -938,8 +972,8 @@
         async function fetchAds() {
             try {
                 const response = await fetch('/api/ads');
+                if (!response.ok) throw new Error('Failed to fetch ads');
                 ads = await response.json();
-                renderAds();
             } catch (error) {
                 console.error('Error fetching ads:', error);
                 showToast('Failed to load ads.', 'error');
@@ -951,9 +985,12 @@
             const noAdsFound = document.getElementById('no-ads-found');
             adsList.innerHTML = '';
 
+            const orgToFilter = organizations.find(o => o.id == currentAdFilterOrg);
+            const orgNameToFilter = orgToFilter ? orgToFilter.organization : null;
+
             const filteredAds = currentAdFilterOrg === 'all'
                 ? ads
-                : ads.filter(ad => ad.organization_id == currentAdFilterOrg);
+                : ads.filter(ad => ad.organization === orgNameToFilter);
 
             const startIndex = (currentAdPage - 1) * ADS_PER_PAGE;
             const endIndex = startIndex + ADS_PER_PAGE;
@@ -968,18 +1005,22 @@
                 paginatedAds.forEach(ad => {
                     const adItem = document.createElement('div');
                     adItem.className = 'ad-item';
-                    const org = organizations.find(o => o.id == ad.organization_id);
+                    const org = organizations.find(o => o.organization == ad.organization);
                     const orgName = org ? org.organization : 'Unknown';
                     adItem.innerHTML = `
-                        <div class="flex justify-center mb-4">
-                            <img src="${ad.image || 'https://via.placeholder.com/100x75'}" alt="${ad.title} Thumbnail" class="w-20 h-20 object-cover rounded-lg aspect-square">
+                        <div class="relative w-full h-32 overflow-hidden rounded-t-lg">
+                            <img src="${ad.image || 'https://via.placeholder.com/100x75'}" alt="${ad.title} Thumbnail" class="w-full h-full object-cover">
+                            <div class="actions absolute top-2 right-2 flex gap-2 z-10">
+                                <button class="action-btn" data-action="edit-ad" data-id="${ad.id}" title="Edit Ad"><i data-lucide="pencil" class="w-4 h-4 text-white"></i></button>
+                                <button class="action-btn" data-action="delete-ad" data-id="${ad.id}" data-name="${ad.title}" title="Delete Ad"><i data-lucide="trash" class="w-4 h-4 text-white"></i></button>
+                            </div>
                         </div>
-                        <h3 class="text-xl font-semibold text-white mb-2">${ad.title}</h3>
-                        <p class="text-white/70 text-sm mb-2"> ${orgName}</p>
-                        <a href="${ad.url}" target="_blank" class="text-blue-400 hover:underline text-sm block truncate">${ad.url}</a>
-                        <div class="actions">
-                            <button class="action-btn" data-action="edit-ad" data-id="${ad.id}" title="Edit Ad"><i data-lucide="pencil" class="w-4 h-4 text-white"></i></button>
-                            <button class="action-btn" data-action="delete-ad" data-id="${ad.id}" data-name="${ad.title}" title="Delete Ad"><i data-lucide="trash" class="w-4 h-4 text-white"></i></button>
+                        <div class="p-4 flex-grow flex flex-col justify-between" style="min-height: 100px;">
+                            <div>
+                                <h3 class="text-xl font-semibold text-white mb-1">${ad.title}</h3>
+                                <p class="text-white/70 text-sm mb-1">${orgName}</p>
+                                <a href="${ad.url}" target="_blank" class="text-blue-400 hover:underline text-sm block truncate">${ad.url}</a>
+                            </div>
                         </div>
                     `;
                     adsList.appendChild(adItem);
@@ -1010,23 +1051,27 @@
 
         function populateOrganizationFilter() {
             const filter = document.getElementById('organizationFilter');
-            filter.innerHTML = '<option value="all">Filter by Organization (All)</option>';
+            filter.innerHTML = '<option value="all" style="background-color: #1a1a1a; color: white;">Filter by Organization (All)</option>';
             organizations.forEach(org => {
                 const option = document.createElement('option');
                 option.value = org.id;
                 option.textContent = org.organization;
+                option.style.backgroundColor = '#1a1a1a';
+                option.style.color = 'white';
                 filter.appendChild(option);
             });
-            filter.value = currentAdFilterOrg; // Set current filter
+            filter.value = currentAdFilterOrg;
         }
 
         function populateAdOrganizationDropdown() {
             const dropdown = document.getElementById('adOrganization');
-            dropdown.innerHTML = '<option value="">Select an Organization</option>';
+            dropdown.innerHTML = '<option value="" style="background-color: #1a1a1a; color: white;">Select an Organization</option>';
             organizations.forEach(org => {
                 const option = document.createElement('option');
                 option.value = org.id;
                 option.textContent = org.organization;
+                option.style.backgroundColor = '#1a1a1a';
+                option.style.color = 'white';
                 dropdown.appendChild(option);
             });
         }
@@ -1044,9 +1089,9 @@
             const saveBtn = document.getElementById('adModalSave');
 
             form.reset();
-            adImageFilename.textContent = 'Click or drop image here';
+            adImageFilename.textContent = 'Click or drag image here';
             adImageFilename.classList.add('file-input-placeholder');
-            populateAdOrganizationDropdown(); // Ensure dropdown is fresh
+            populateAdOrganizationDropdown();
 
             if (ad) {
                 title.textContent = 'Edit Ad';
@@ -1056,10 +1101,14 @@
                 adHyperlink.value = ad.url;
                 saveBtn.textContent = 'Save Changes';
                 form.dataset.editId = ad.id;
+                // Make image not required for edit
+                adImageUpload.removeAttribute('required');
             } else {
                 title.textContent = 'Add New Ad';
                 saveBtn.textContent = 'Add Ad';
                 delete form.dataset.editId;
+                // Make image required for new ad
+                adImageUpload.setAttribute('required', 'required');
             }
 
             modal.classList.add('show');
@@ -1069,23 +1118,54 @@
             document.getElementById('adModal').classList.remove('show');
         }
 
+        // Setup drag and drop for ad image
+        function setupAdImageDragDrop() {
+            const dropzone = document.getElementById('ad-image-dropzone');
+            const fileInput = document.getElementById('adImageUpload');
+            const filenameSpan = document.getElementById('ad-image-filename');
+
+            dropzone.addEventListener('click', () => fileInput.click());
+
+            // Drag and drop functionality
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                dropzone.addEventListener(eventName, e => { e.preventDefault(); e.stopPropagation(); });
+            });
+
+            ['dragenter', 'dragover'].forEach(eventName => {
+                dropzone.addEventListener(eventName, () => dropzone.classList.add('dragover'));
+            });
+
+            ['dragleave', 'drop'].forEach(eventName => {
+                dropzone.addEventListener(eventName, () => dropzone.classList.remove('dragover'));
+            });
+
+            dropzone.addEventListener('drop', (e) => {
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    handleAdImageFile(files[0]);
+                }
+            });
+
+            fileInput.addEventListener('change', (e) => {
+                if (e.target.files.length > 0) {
+                    handleAdImageFile(e.target.files[0]);
+                }
+            });
+
+            function handleAdImageFile(file) {
+                if (file && file.type.startsWith('image/')) {
+                    filenameSpan.textContent = file.name;
+                    filenameSpan.classList.remove('file-input-placeholder');
+                } else {
+                    showToast('Please select a valid image file.', 'error');
+                }
+            }
+        }
+
         document.getElementById('addNewAdBtn').addEventListener('click', () => openAdModal());
         document.getElementById('adModalCancel').addEventListener('click', closeAdModal);
         document.getElementById('adModal').addEventListener('click', (e) => {
             if (e.target === document.getElementById('adModal')) closeAdModal();
-        });
-
-        document.getElementById('ad-image-dropzone').addEventListener('click', () => document.getElementById('adImageUpload').click());
-        document.getElementById('adImageUpload').addEventListener('change', (e) => {
-            const file = e.target.files[0];
-            const filenameSpan = document.getElementById('ad-image-filename');
-            if (file) {
-                filenameSpan.textContent = file.name;
-                filenameSpan.classList.remove('file-input-placeholder');
-            } else {
-                filenameSpan.textContent = 'Click or drop image here';
-                filenameSpan.classList.add('file-input-placeholder');
-            }
         });
 
         document.getElementById('adForm').addEventListener('submit', async (e) => {
@@ -1093,7 +1173,9 @@
             const form = e.target;
             const adId = form.dataset.editId;
             const formData = new FormData();
-            formData.append('organization_id', document.getElementById('adOrganization').value);
+            const orgElement = document.getElementById('adOrganization');
+            formData.append('organization_id', orgElement.value);
+            formData.append('organization', orgElement.options[orgElement.selectedIndex].text);
             formData.append('title', document.getElementById('adTitle').value);
             formData.append('description', document.getElementById('adDescription').value);
             formData.append('url', document.getElementById('adHyperlink').value);
@@ -1118,9 +1200,8 @@
                 }
 
                 showToast(`Ad ${adId ? 'updated' : 'created'} successfully!`, 'success');
-                fetchAds();
-                fetchOrganizations(); // To update ad counts if you implement that
-                closeAdModal();
+                // Refresh the page to reflect all changes
+                location.reload();
             } catch (error) {
                 console.error('Error saving ad:', error);
                 showToast(error.message, 'error');
@@ -1149,7 +1230,8 @@
                             throw new Error(errorData.message || 'Failed to delete ad');
                         }
                         showToast(`Ad "${adName}" deleted successfully!`, 'success');
-                        fetchAds();
+                        // Refresh the page to reflect all changes
+                        location.reload();
                     } catch (error) {
                         console.error('Error deleting ad:', error);
                         showToast(error.message, 'error');
@@ -1160,7 +1242,7 @@
 
         document.getElementById('organizationFilter').addEventListener('change', (e) => {
             currentAdFilterOrg = e.target.value;
-            currentAdPage = 1; // Reset to first page on filter change
+            currentAdPage = 1;
             renderAds();
         });
 
@@ -1169,50 +1251,73 @@
         function showDeleteModal(itemName, onConfirm) {
             const modal = document.getElementById('deleteModal');
             const message = document.getElementById('deleteModalMessage');
-            const confirmBtn = document.getElementById('deleteModalConfirm');
-            const cancelBtn = document.getElementById('deleteModalCancel');
+            let confirmBtn = document.getElementById('deleteModalConfirm');
+            let cancelBtn = document.getElementById('deleteModalCancel');
+
+            // This is a trick to remove all previous event listeners from the buttons.
+            let newConfirmBtn = confirmBtn.cloneNode(true);
+            confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
+            confirmBtn = newConfirmBtn;
+
+            let newCancelBtn = cancelBtn.cloneNode(true);
+            cancelBtn.parentNode.replaceChild(newCancelBtn, cancelBtn);
+            cancelBtn = newCancelBtn;
 
             message.innerHTML = `Are you sure you want to delete <strong>${itemName}</strong>?<br>This action cannot be undone.`;
             modal.classList.add('show');
-            confirmDeleteCallback = onConfirm;
-
+            
             const handleConfirm = () => {
                 hideDeleteModal();
-                if (confirmDeleteCallback) confirmDeleteCallback();
-                confirmBtn.removeEventListener('click', handleConfirm);
-                cancelBtn.removeEventListener('click', handleCancel);
+                if (onConfirm) {
+                    onConfirm();
+                }
             };
+
             const handleCancel = () => {
                 hideDeleteModal();
-                confirmBtn.removeEventListener('click', handleConfirm);
-                cancelBtn.removeEventListener('click', handleCancel);
             };
 
             confirmBtn.addEventListener('click', handleConfirm);
             cancelBtn.addEventListener('click', handleCancel);
-            modal.addEventListener('click', (e) => { if (e.target === modal) handleCancel(); });
-            document.addEventListener('keydown', function onEscape(e) {
+
+            const handleBackdrop = (e) => {
+                if (e.target === modal) {
+                    handleCancel();
+                }
+            };
+            modal.addEventListener('click', handleBackdrop);
+
+            const onEscape = (e) => {
                 if (e.key === 'Escape') {
                     handleCancel();
+                    // Clean up listeners when modal is closed
+                    modal.removeEventListener('click', handleBackdrop);
                     document.removeEventListener('keydown', onEscape);
                 }
-            });
+            };
+            document.addEventListener('keydown', onEscape);
         }
 
         function hideDeleteModal() {
-            document.getElementById('deleteModal').classList.remove('show');
-            confirmDeleteCallback = null;
+            const modal = document.getElementById('deleteModal');
+            modal.classList.remove('show');
+            // No need to nullify callback here as it's passed directly
         }
 
         // --- Initial Load ---
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', async function() {
             lucide.createIcons();
+            
+            // Setup drag and drop
+            setupOrgLogoDragDrop();
+            setupAdImageDragDrop();
+            
             const navbarTabsData = [
                 { title: "Admin Panel Home", icon: "home" },
                 { title: "Organizations", icon: "building-2" },
                 { title: "Ads", icon: "megaphone" }
             ];
-            const expandableTabs = new ExpandableTabs(document.getElementById('navbarTabs'), {
+            expandableTabs = new ExpandableTabs(document.getElementById('navbarTabs'), {
                 tabs: navbarTabsData,
                 activeColor: 'text-blue-400',
                 onChange: (index) => {
@@ -1225,11 +1330,12 @@
                     }
                 }
             });
-            expandableTabs.handleSelect(1); // Default to Organizations tab
             
             // Initial data fetch
-            fetchOrganizations();
-            fetchAds();
+            await Promise.all([fetchOrganizations(), fetchAds()]);
+
+            // Set default tab after data is loaded
+            expandableTabs.handleSelect(1);
         });
     </script>
 </body>

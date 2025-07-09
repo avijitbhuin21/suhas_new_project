@@ -391,7 +391,8 @@ def delete_blog_from_db(blog_id, redirect_url=None):
     
     # Prepare update data
     update_data = {
-        "status": "deleted"
+        "status": "deleted",
+        "meta_tags": ""  # Clear meta tags when marking as deleted
     }
     
     # Add redirect URL if provided
@@ -734,33 +735,63 @@ def delete_magazine_from_db(magazine_id):
 # --------------------------------------------------------------------------------#
 
 def get_organizations_db():
-    response = supabase.table("organization").select("*").order("created_at", desc=True).execute()
-    return response.data if response.data else []
+    orgs_response = supabase.table("organization").select("*").order("created_at", desc=True).execute()
+    if not orgs_response.data:
+        return []
+
+    organizations = orgs_response.data
+    
+    # Get ad counts for each organization
+    for org in organizations:
+        # Use the organization name to count ads
+        count_response = supabase.table("ads").select("id", count="exact").eq("organization", org.get("organization")).execute()
+        org["ad_count"] = count_response.count if count_response.count else 0
+        
+    return organizations
 
 def add_organization_db(data):
-    response = supabase.table("organization").insert(data).execute()
-    return response.data[0] if response.data else None
+    try:
+        # Case-insensitive check for existing organization
+        existing_org_response = supabase.table("organization").select("id").ilike("organization", data['organization']).execute()
+        if existing_org_response.data:
+            return {"status": "error", "message": "An organization with this name already exists."}
+            
+        response = supabase.table("organization").insert(data).execute()
+        if response.data:
+            return {"status": "success", "data": response.data[0]}
+        return {"status": "error", "message": "Failed to add organization to database."}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
 
 def update_organization_db(org_id, data):
     response = supabase.table("organization").update(data).eq("id", org_id).execute()
     return response.data[0] if response.data else None
 
 def delete_organization_db(org_id):
-    # First, handle associated ads
-    ads_response = supabase.table("ads").select("id, image").eq("organization_id", org_id).execute()
-    if ads_response.data:
-        # Delete ad images from storage
-        for ad in ads_response.data:
-            if ad.get("image"):
-                delete_file_from_storage_by_url(ad.get("image"))
-        # Delete ads from the database
-        ad_ids = [ad['id'] for ad in ads_response.data]
-        supabase.table("ads").delete().in_("id", ad_ids).execute()
+    # First, get the organization record to find the name and logo URL
+    org_response = supabase.table("organization").select("organization, logo").eq("id", org_id).single().execute()
+    if not org_response.data:
+        # If organization doesn't exist, we can't proceed.
+        raise Exception("Organization not found")
+
+    organization_name = org_response.data.get("organization")
+    logo_url = org_response.data.get("logo")
+
+    # Handle associated ads using the organization name
+    if organization_name:
+        ads_response = supabase.table("ads").select("id, image").eq("organization", organization_name).execute()
+        if ads_response.data:
+            # Delete ad images from storage
+            for ad in ads_response.data:
+                if ad.get("image"):
+                    delete_file_from_storage_by_url(ad.get("image"))
+            # Delete ads from the database
+            ad_ids = [ad['id'] for ad in ads_response.data]
+            supabase.table("ads").delete().in_("id", ad_ids).execute()
 
     # Then, handle the organization's logo
-    org_response = supabase.table("organization").select("logo").eq("id", org_id).single().execute()
-    if org_response.data and org_response.data.get("logo"):
-        delete_file_from_storage_by_url(org_response.data.get("logo"))
+    if logo_url:
+        delete_file_from_storage_by_url(logo_url)
 
     # Finally, delete the organization record
     response = supabase.table("organization").delete().eq("id", org_id).execute()
