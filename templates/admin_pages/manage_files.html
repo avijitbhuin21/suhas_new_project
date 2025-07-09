@@ -349,8 +349,27 @@
         .file-input-display {
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: center;
             cursor: pointer;
+            border: 2px dashed rgba(255, 255, 255, 0.2);
+            transition: all 0.2s ease;
+            min-height: 170px;
+        }
+        .file-input-display:hover {
+            border-color: rgba(255, 255, 255, 0.4);
+            background-color: rgba(255, 255, 255, 0.08);
+        }
+        .file-input-display.dragover {
+            border-color: rgb(59, 130, 246);
+            background-color: rgba(59, 130, 246, 0.1);
+            transform: scale(1.02);
+        }
+        /* Responsive adjustments for drag and drop fields */
+        @media (max-width: 768px) {
+            .file-input-display {
+                padding: 1.25rem 1rem;
+                min-height: 50px;
+            }
         }
         .file-input-placeholder {
             color: rgba(255, 255, 255, 0.5);
@@ -380,24 +399,27 @@
                             <input type="text" id="magazineTitle" name="title" class="form-input" placeholder="eg. BOL Magazine - July issue etc." required>
                         </div>
 
-                        <!-- Magazine PDF -->
-                        <div>
-                            <label for="magazinePdf" class="form-label">Magazine PDF</label>
-                            <div id="pdf-dropzone" class="file-input-display">
-                                <span id="pdf-filename" class="file-input-placeholder truncate pr-4">Click or drop PDF here</span>
-                                <i data-lucide="file-text" class="w-5 h-5 text-white/50"></i>
+                        <!-- Magazine PDF and Thumbnail - Side by Side -->
+                        <div class="flex flex-col md:flex-row gap-4 md:gap-6">
+                            <!-- Magazine PDF -->
+                            <div class="flex-1">
+                                <label for="magazinePdf" class="form-label">Magazine PDF</label>
+                                <div id="pdf-dropzone" class="file-input-display">
+                                    <span id="pdf-filename" class="file-input-placeholder truncate pr-4">Click or drop PDF here</span>
+                                    <i data-lucide="file-text" class="w-5 h-5 text-white/50"></i>
+                                </div>
+                                <input type="file" id="magazinePdf" name="pdf_file" class="hidden" accept="application/pdf" required>
                             </div>
-                            <input type="file" id="magazinePdf" name="pdf_file" class="hidden" accept="application/pdf" required>
-                        </div>
-                        
-                        <!-- Magazine Thumbnail (Optional) -->
-                        <div>
-                            <label for="magazineThumbnail" class="form-label">Magazine Thumbnail (Optional)</label>
-                             <div id="thumbnail-dropzone" class="file-input-display">
-                                <span id="thumbnail-filename" class="file-input-placeholder truncate pr-4">Click or drop image here</span>
-                                <i data-lucide="image" class="w-5 h-5 text-white/50"></i>
+                            
+                            <!-- Magazine Thumbnail (Optional) -->
+                            <div class="flex-1">
+                                <label for="magazineThumbnail" class="form-label">Magazine Thumbnail (Optional)</label>
+                                <div id="thumbnail-dropzone" class="file-input-display">
+                                    <span id="thumbnail-filename" class="file-input-placeholder truncate pr-4">Click or drop image here</span>
+                                    <i data-lucide="image" class="w-5 h-5 text-white/50"></i>
+                                </div>
+                                <input type="file" id="magazineThumbnail" name="thumbnail_file" class="hidden" accept="image/jpeg, image/png, image/webp">
                             </div>
-                            <input type="file" id="magazineThumbnail" name="thumbnail_file" class="hidden" accept="image/jpeg, image/png, image/webp">
                         </div>
                         
                         <!-- Upload Button -->

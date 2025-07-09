@@ -84,6 +84,16 @@ def format_file_size(size_bytes):
 #                               BLOGS FUNCTIONS                                  #
 # --------------------------------------------------------------------------------#
 
+def get_blogs_by_category(category):
+    response = (
+        supabase.table("blogs")
+        .select("*")
+        .eq("category", category)
+        .neq("status", "deleted")
+        .order("created_at", desc=True)
+        .execute()
+    )
+    return response.data if response.data else []
 
 def get_blog(blog_id, render=False):
     response = supabase.table("blogs").select("*").eq("id", blog_id).execute()
