@@ -3233,6 +3233,7 @@
         
         // Global variable to track current editing blog
         let currentEditingBlog = null;
+        let isEditing = false;
         
         // Blog action functions
         async function editBlog(blogId) {
@@ -3244,6 +3245,7 @@
             
             const blog = allFetchedBlogs.find(b => b.id === blogId);
             if (blog) {
+                isEditing = true;
                 populateEditForm(blog);
                 switchToEditMode();
                 // Switch to Add Blogs tab to show the form
@@ -3251,6 +3253,7 @@
                 if (addBlogsTab) {
                     addBlogsTab.click();
                 }
+                isEditing = false;
             } else {
                 showModal('Error', 'Blog not found in the list. Please refresh.', 'error');
             }
@@ -3627,7 +3630,9 @@
                             window.location.href = '/admin_login';
                         } else if (navbarTabs[index].title === "Add Blogs") {
                             // Clear and refresh the form when Add Blogs is clicked
-                            switchToAddMode();
+                            if (!isEditing) {
+                                switchToAddMode();
+                            }
                             showContentSection(navbarTabs[index].title);
                         } else {
                             showContentSection(navbarTabs[index].title);

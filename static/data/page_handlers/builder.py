@@ -74,7 +74,7 @@ def get_category_page(category):
             total_body = "\n".join(results)
             end_time = time.time()
             print(f"Category page '{category}' generated in {end_time - start_time:.2f} seconds")
-            return CATEGORY_PAGE_TEMPLATE.replace("[[total_body]]", total_body)
+            return CATEGORY_PAGE_TEMPLATE.replace("[[total_body]]", total_body).replace("[[title]]", category.capitalize())
 
         except Exception as e:
             print(f"Error fetching data for category '{category}': {e}")
