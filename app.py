@@ -611,7 +611,7 @@ def dynamic_render_trial():
 
 @app.route("/news_page_dev")
 def news_page_dev():
-    return render_template("news_page_dev.html")
+    return render_template("blog_page/news_page_dev.html")
 
 
 # --------------------------------------------------------------------------------#

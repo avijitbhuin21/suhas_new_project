@@ -1,7 +1,7 @@
 def get_blog_hero_section(data: dict):
     return f"""
     <article>
-    <nav class="mb-4 text-left ml-[-12rem] md:ml-[-40rem] mt-4" aria-label="Breadcrumb">
+    <nav class="mb-4 text-left ml-[-12rem] md:ml-[-39.5rem] mt-4" aria-label="Breadcrumb">
         <div class="text-sm text-gray-600">
             <span class="font-jakarta font-medium flex items-center">
                 <a href="/technology">{data['blogCategory']}
@@ -13,7 +13,7 @@ def get_blog_hero_section(data: dict):
         </div>
     </nav>
 </article>
-<article class="mb-8 md:mb-12 relative max-w-[95%]">
+<article class="relative max-w-[95%]">
     <div class="relative w-full h-[300px] md:h-[478px]">
         <div class="absolute inset-0 bg-hero-gradient bg-cover bg-center"></div>
         <img src="{data['mainImageUrl']}" alt="{data['mainImageAlt']}"

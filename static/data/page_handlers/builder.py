@@ -94,7 +94,7 @@ def get_blog_page(blog_id):
             # Execute all functions in parallel using thread pool
             tasks = [
                 loop.run_in_executor(None, get_header),
-                loop.run_in_executor(None, get_blog_hero_section, blog_data),
+                loop.run_in_executor(None, get_blog_body, blog_data),
                 loop.run_in_executor(None, get_more_blogs_section, blog_data),
                 loop.run_in_executor(None, get_faq_section),
                 loop.run_in_executor(None, get_footer)
@@ -106,7 +106,7 @@ def get_blog_page(blog_id):
             total_body = "\n".join(results)
             end_time = time.time()
             print(f"Blog page '{blog_id}' generated in {end_time - start_time:.2f} seconds")
-            return EMPTY_HOMEPAGE_TEMPLATE.replace("[[total_body]]", total_body)
+            return EMPTY_BLOG_TEMPLATE.replace("[[total_body]]", total_body)
 
         except Exception as e:
             print(f"Error fetching data for blog '{blog_id}': {e}")
