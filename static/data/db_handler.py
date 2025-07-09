@@ -401,30 +401,32 @@ def delete_blog_from_db(blog_id, redirect_url=None):
 # --------------------------------------------------------------------------------#
 
 
-def upload_file_to_storage(file, file_path):
+def upload_file_to_storage(file, bucket_name):
     try:
-        # Generate a unique filename to avoid conflicts
-        timestamp = str(int(time.time()))
-
         # Read file content
         file_content = file.read()
+        
+        # Sanitize filename to be URL-friendly
+        file_name = f"{uuid.uuid4()}-{file.filename.replace(' ', '_')}"
 
         # Upload to Supabase storage
-        response = supabase.storage.from_(file_path).upload(
-            path=file.filename,
+        response = supabase.storage.from_(bucket_name).upload(
+            path=file_name,
             file=file_content,
-            file_options={"content-type": file.content_type},
+            file_options={"content-type": file.content_type, "upsert": "false"},
         )
-        if not response:
-            raise Exception(f"Error uploading file: {response.error.message}")
-        return {"status": "success", "filename": file.filename}
+
+        # Retrieve the public URL
+        public_url = supabase.storage.from_(bucket_name).get_public_url(file_name)
+        
+        return {"status": "success", "url": public_url}
 
     except Exception as e:
-        print(f"Error uploading to storage: {str(e)}")
-        # Check for specific duplicate file error from Supabase
-        if "exists" in str(e) or "duplicate" in str(e):
-             return {"status": "error", "message": "A file with this name already exists in storage."}
-        return {"status": "error", "message": str(e)}
+        error_message = str(e)
+        print(f"Error uploading to storage: {error_message}")
+        if "Duplicate" in error_message or "duplicate" in error_message:
+            return {"status": "error", "message": "A file with this name already exists. Please rename your file."}
+        return {"status": "error", "message": error_message}
 
 
 def get_file_details_db(bucket_name):
@@ -490,6 +492,25 @@ def get_file_details_db(bucket_name):
         print(f"Error getting file details: {str(e)}")
         return {"status": "error", "message": str(e), "data": []}
 
+
+def delete_file_from_storage_by_url(url):
+    if not url or 'storage/v1/object/public' not in url:
+        print(f"Invalid or empty URL provided for deletion: {url}")
+        return
+    try:
+        # Extract bucket name and file name from the URL
+        # e.g., https://<project>.supabase.co/storage/v1/object/public/bucket-name/file-name.png
+        url_path = url.split('storage/v1/object/public/')[1]
+        parts = url_path.split('/')
+        bucket_name = parts[0]
+        file_name = '/'.join(parts[1:]).split('?')[0] # Handle filenames with paths and remove query params
+        
+        print(f"Attempting to delete '{file_name}' from bucket '{bucket_name}'...")
+        response = supabase.storage.from_(bucket_name).remove([file_name])
+        print(f"Successfully deleted {file_name} from bucket {bucket_name}.")
+
+    except Exception as e:
+        print(f"Error deleting file from storage by URL '{url}': {e}")
 
 def delete_file_from_storage(file_name):
     try:
@@ -696,3 +717,63 @@ def delete_magazine_from_db(magazine_id):
     except Exception as e:
         print(f"Error deleting magazine: {str(e)}")
         return {"status": "error", "message": str(e)}
+
+
+# --------------------------------------------------------------------------------#
+#                            AD MANAGER FUNCTIONS                                #
+# --------------------------------------------------------------------------------#
+
+def get_organizations_db():
+    response = supabase.table("organization").select("*").order("created_at", desc=True).execute()
+    return response.data if response.data else []
+
+def add_organization_db(data):
+    response = supabase.table("organization").insert(data).execute()
+    return response.data[0] if response.data else None
+
+def update_organization_db(org_id, data):
+    response = supabase.table("organization").update(data).eq("id", org_id).execute()
+    return response.data[0] if response.data else None
+
+def delete_organization_db(org_id):
+    # First, handle associated ads
+    ads_response = supabase.table("ads").select("id, image").eq("organization_id", org_id).execute()
+    if ads_response.data:
+        # Delete ad images from storage
+        for ad in ads_response.data:
+            if ad.get("image"):
+                delete_file_from_storage_by_url(ad.get("image"))
+        # Delete ads from the database
+        ad_ids = [ad['id'] for ad in ads_response.data]
+        supabase.table("ads").delete().in_("id", ad_ids).execute()
+
+    # Then, handle the organization's logo
+    org_response = supabase.table("organization").select("logo").eq("id", org_id).single().execute()
+    if org_response.data and org_response.data.get("logo"):
+        delete_file_from_storage_by_url(org_response.data.get("logo"))
+
+    # Finally, delete the organization record
+    response = supabase.table("organization").delete().eq("id", org_id).execute()
+    return response.data
+
+def get_ads_db():
+    response = supabase.table("ads").select("*").order("created_at", desc=True).execute()
+    return response.data if response.data else []
+
+def add_ad_db(data):
+    response = supabase.table("ads").insert(data).execute()
+    return response.data[0] if response.data else None
+
+def update_ad_db(ad_id, data):
+    response = supabase.table("ads").update(data).eq("id", ad_id).execute()
+    return response.data[0] if response.data else None
+
+def delete_ad_db(ad_id):
+    # First, get the ad record to find the image URL
+    ad_response = supabase.table("ads").select("image").eq("id", ad_id).single().execute()
+    if ad_response.data and ad_response.data.get("image"):
+        delete_file_from_storage_by_url(ad_response.data.get("image"))
+        
+    # Then, delete the ad record from the database
+    response = supabase.table("ads").delete().eq("id", ad_id).execute()
+    return response.data

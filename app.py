@@ -590,6 +590,127 @@ def magazine_page_flipbook_view(magazine_id=None):
 
     return render_template("magazine_page/magazine_page_flipbook.html", header=header_content, footer=footer_content, pdf_url=data.get("pdf_url", ""), page_number=page_number)
 
+# --------------------------------------------------------------------------------#
+#                            AD MANAGER Functionalities                           #
+# --------------------------------------------------------------------------------#
+
+@app.route("/ad_manager", methods=["GET"])
+def ad_manager():
+    return render_template("admin_pages/ad_manager.html")
+
+# Organizations API
+@app.route("/api/organizations", methods=["GET"])
+def get_organizations():
+    organizations = get_organizations_db()
+    return jsonify(organizations)
+
+@app.route("/api/organizations", methods=["POST"])
+def add_organization():
+    data = request.form.to_dict()
+    logo_file = request.files.get('org_logo')
+    if logo_file:
+        result = upload_file_to_storage(logo_file, 'organization-resources')
+        if result['status'] == 'success':
+            data['logo'] = result['url']
+        else:
+            return jsonify({"error": "Failed to upload logo", "message": result.get("message")}), 400
+    new_org = add_organization_db(data)
+    if new_org:
+        return jsonify(new_org), 201
+    return jsonify({"error": "Failed to add organization"}), 400
+
+@app.route("/api/organizations/<int:org_id>", methods=["PUT"])
+def update_organization(org_id):
+    data = request.form.to_dict()
+    logo_file = request.files.get('org_logo')
+    if logo_file:
+        result = upload_file_to_storage(logo_file, 'organization-resources')
+        if result['status'] == 'success':
+            data['logo'] = result['url']
+        else:
+            return jsonify({"error": "Failed to upload logo", "message": result.get("message")}), 400
+    updated_org = update_organization_db(org_id, data)
+    if updated_org:
+        return jsonify(updated_org)
+    return jsonify({"error": "Failed to update organization"}), 400
+
+@app.route("/api/organizations/<int:org_id>", methods=["DELETE"])
+def delete_organization(org_id):
+    delete_organization_db(org_id)
+    return jsonify({"message": "Organization deleted"})
+
+# Ads API
+@app.route("/api/ads", methods=["GET"])
+def get_ads():
+    ads = get_ads_db()
+    return jsonify(ads)
+
+@app.route("/api/ads_post", methods=["POST"])
+def add_ad_post():
+    try:
+        data = request.form.to_dict()
+        org_id = int(data['organization_id'])
+        
+        # Fetch organization name
+        org_details_response = supabase.table("organization").select("organization").eq("id", org_id).single().execute()
+        
+        if org_details_response.data:
+            data['organization'] = org_details_response.data['organization']
+        else:
+            # Handle case where organization is not found
+            return jsonify({"error": f"Organization with ID {org_id} not found"}), 404
+        
+        # Remove organization_id as it's not a column in the 'ads' table
+        del data['organization_id']
+
+        image_file = request.files.get('ad_image')
+        if image_file:
+            result = upload_file_to_storage(image_file, 'ads-resources')
+            if result['status'] == 'success':
+                data['image'] = result['url']
+            else:
+                return jsonify({"error": "Failed to upload ad image", "message": result.get("message")}), 400
+        new_ad = add_ad_db(data)
+        if new_ad:
+            return jsonify(new_ad), 201
+        return jsonify({"error": "Failed to add ad"}), 400
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route("/api/ads/<int:ad_id>", methods=["PUT"])
+def update_ad(ad_id):
+    try:
+        data = request.form.to_dict()
+        if 'organization_id' in data:
+            org_id = int(data['organization_id'])
+            # Fetch organization name
+            org_details_response = supabase.table("organization").select("organization").eq("id", org_id).single().execute()
+            if org_details_response.data:
+                data['organization'] = org_details_response.data['organization']
+            else:
+                # Handle case where organization is not found
+                return jsonify({"error": f"Organization with ID {org_id} not found"}), 404
+            
+            del data['organization_id']
+
+        image_file = request.files.get('ad_image')
+        if image_file:
+            result = upload_file_to_storage(image_file, 'ads-resources')
+            if result['status'] == 'success':
+                data['image'] = result['url']
+            else:
+                return jsonify({"error": "Failed to upload ad image", "message": result.get("message")}), 400
+        updated_ad = update_ad_db(ad_id, data)
+        if updated_ad:
+            return jsonify(updated_ad)
+        return jsonify({"error": "Failed to update ad"}), 400
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route("/api/ads/<int:ad_id>", methods=["DELETE"])
+def delete_ad(ad_id):
+    delete_ad_db(ad_id)
+    return jsonify({"message": "Ad deleted"})
 
 # --------------------------------------------------------------------------------#
 #                                 TRIAL ROUTE                                    #
