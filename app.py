@@ -230,10 +230,11 @@ def user_auth():
 # @app.route("/advertise_with_us")
 # def advertise_with_us():
 #     return render_template(
-#         "advertise_with_us.html",
-#         blogs_by_category=get_blogs_for_header(limit=3),
-#         desktop_nav_links=f"""{generate_header_dropdowns_html(blogs_by_category)}""",
-#         mobile_nav_links=f"""{generate_mobile_accordion_html(blogs_by_category)}""",
+#         "missellanious/advertise_with_us.html",
+#         blogs_by_category=get_blogs_for_header(limit=3)
+#         # ,
+#         # desktop_nav_links=f"""{generate_header_dropdowns_html(blogs_by_category)}""",
+#         # mobile_nav_links=f"""{generate_mobile_accordion_html(blogs_by_category)}""",
 #     )
 
 
