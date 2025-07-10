@@ -39,7 +39,7 @@ def central_route(data):
 
     # Handling Category Pages From Central Route
     if data in CATEGORIES:
-        res = get_category_page(data)
+        res = get_category_page(category=data,page_data=None)
         if res == "error":
             return render_template("not_found/404.html"), 404
         else:
@@ -54,6 +54,8 @@ def central_route(data):
         return render_template("admin_pages/admin.html")
     if data == "admin_blogs":
         return render_template("admin_pages/blogs/admin_blogs.html")
+    if data == "page_updater":
+        return render_template("admin_pages/page_updater.html")
     
 
 
@@ -67,6 +69,13 @@ def central_route(data):
             search_keyword=search_keyword, page=1, per_page=1000
         )
         return jsonify({"status": "success", "blogs": list_of_blogs})
+    
+    if data == "get_main_pages":
+        search_keyword = request.args.get("search_keyword")
+        list_of_pages, _ = get_main_pages_db(
+            search_keyword=search_keyword, page=1, per_page=1000
+        )
+        return jsonify({"status": "success", "pages": list_of_pages})
     
     if data == "get_paginated_business_cards":
         try:
@@ -114,6 +123,10 @@ def central_route(data):
     # Handling Magazine Pages From Central Route
     if data == "magazine":
         return render_template("magazine_page/magazine_page.html")
+    if data == "advertise_with_us":
+        header_content = get_header()
+        footer_content = get_footer()
+        return render_template("missellanious/advertise_with_us.html", header=header_content, footer=footer_content)
 
 
 
@@ -129,7 +142,7 @@ def central_route(data):
 
 @app.route("/")
 def index():
-    return get_homepage()
+    return get_homepage(page_data=None)
 
 
 
@@ -163,7 +176,8 @@ def user_register():
     result = user_register_db(username, email, password)
     
     if result.get("status") == "success":
-        return jsonify(result), 201
+        user_data = result.get("data")
+        return jsonify({"status": "success", "message": "Registration successful", "user": {"username": user_data.get("username"), "email": user_data.get("email")}}), 201
     else:
         return jsonify(result), 400
 
@@ -216,10 +230,11 @@ def user_auth():
 # @app.route("/advertise_with_us")
 # def advertise_with_us():
 #     return render_template(
-#         "advertise_with_us.html",
-#         blogs_by_category=get_blogs_for_header(limit=3),
-#         desktop_nav_links=f"""{generate_header_dropdowns_html(blogs_by_category)}""",
-#         mobile_nav_links=f"""{generate_mobile_accordion_html(blogs_by_category)}""",
+#         "missellanious/advertise_with_us.html",
+#         blogs_by_category=get_blogs_for_header(limit=3)
+#         # ,
+#         # desktop_nav_links=f"""{generate_header_dropdowns_html(blogs_by_category)}""",
+#         # mobile_nav_links=f"""{generate_mobile_accordion_html(blogs_by_category)}""",
 #     )
 
 
@@ -394,7 +409,81 @@ def delete_blog():
             "status": "error",
             "message": result.get("message", "Failed to mark blog as deleted")
         }), 500
+ 
+ 
+# --------------------------------------------------------------------------------#
+#                           MAIN PAGES ROUTES                                    #
+# --------------------------------------------------------------------------------#
 
+@app.route("/update_main_page", methods=["POST"])
+def update_main_page():
+    data = request.json
+    page_id = data.get("page_id")
+    page_name = data.get("page_name")
+    page_data = data.get("page_data")
+
+    if not all([page_id, page_name, page_data]):
+        return jsonify({"status": "error", "message": "Missing required fields"}), 400
+
+    verification_status = admin_login_db_check(
+        email=data.get("enc_email", ""), password=data.get("enc_pwd", "")
+    )
+    if not verification_status["success"]:
+        return (
+            jsonify({"status": "error", "message": "Admin authentication failed"}),
+            403,
+        )
+
+    result = update_main_page_db(page_id, page_data)
+    if result["status"] == "success":
+        return jsonify({"status": "success", "message": "Page updated successfully"}), 200
+    else:
+        return jsonify({"status": "error", "message": result.get("message", "Failed to update page")}), 500
+
+@app.route("/delete_main_page", methods=["POST"])
+def delete_main_page():
+    data = request.json
+    page_id = data.get("page_id")
+
+    if not page_id:
+        return jsonify({"status": "error", "message": "Page ID is required"}), 400
+
+    verification_status = admin_login_db_check(
+        email=data.get("enc_email", ""), password=data.get("enc_pwd", "")
+    )
+    if not verification_status["success"]:
+        return (
+            jsonify({"status": "error", "message": "Admin authentication failed"}),
+            403,
+        )
+
+    result = delete_main_page_db(page_id)
+    if result["status"] == "success":
+        return jsonify({"status": "success", "message": "Page deleted successfully"}), 200
+    else:
+        return jsonify({"status": "error", "message": result.get("message", "Failed to delete page")}), 500
+
+@app.route("/preview_main_page", methods=["POST"])
+def preview_main_page():
+    data = request.json
+    # print(f"Received data for preview_main_page: {json.dumps(data, indent=2, ensure_ascii=False)}")
+    page_data = data.get("page_data")
+    page_id = data.get("page_id") # Not strictly needed for rendering, but good for context
+
+    if not page_data:
+        return jsonify({"status": "error", "message": "No page data provided for preview"}), 400
+    
+    if data.get("page_name") == "homepage":
+        print("Rendering homepage preview")
+        # If the page is the homepage, we can use the get_homepage function directly
+        preview_html = get_homepage(page_data=page_data)
+    else:
+        # For other pages, we can use the get_main_page_html function
+        preview_html = get_category_page(category=data.get("page_name"), page_data=page_data)
+
+
+    
+    return jsonify({"status": "success", "html": preview_html}), 200
 
 # --------------------------------------------------------------------------------#
 #                             UPLOAD FILES ROUTE                                 #
@@ -820,7 +909,7 @@ if __name__ == "__main__":
 # add multiple search for each author, title, keyword, category and subcategory. --> DONE
 
 # re structure the admin panel. --> DONE
-# track only h2 nd h3 tags in the blog for TOC. -->
+# track only h2 nd h3 tags in the blog for TOC. --> 
 
 # add the login functionality in main page. and every other page. --> In Progress
 # add the loading screen to the blogs. --> DONE

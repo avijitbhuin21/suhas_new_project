@@ -418,54 +418,96 @@
     {{ footer | safe }}
 
     <script>
-        document.getElementById('login-form').addEventListener('submit', async function(e) {
-            e.preventDefault();
-
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            const errorElement = document.getElementById('error-message');
-            const loginBtn = document.getElementById('login-btn');
-            const loginBtnText = document.getElementById('login-btn-text');
-            const loginBtnSpinner = document.getElementById('login-btn-spinner');
-
-            // Show loading state
-            loginBtnText.classList.add('hidden');
-            loginBtnSpinner.classList.remove('hidden');
-            loginBtn.disabled = true;
-            errorElement.classList.add('hidden');
-
-            try {
-                const response = await fetch('/user_auth', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ email, password })
-                });
-
-                const data = await response.json();
-
-                if (response.ok) {
-                    // Handle successful login
-                    console.log('Login successful:', data);
-                    // Redirect to homepage or dashboard
-                    window.location.href = '/';
-                } else {
-                    // Handle error
-                    errorElement.textContent = data.message || 'An unknown error occurred.';
-                    errorElement.classList.remove('hidden');
-                }
-            } catch (error) {
-                console.error('Login error:', error);
-                errorElement.textContent = 'A network error occurred. Please try again.';
-                errorElement.classList.remove('hidden');
-            } finally {
-                // Reset button state
-                loginBtnText.classList.remove('hidden');
-                loginBtnSpinner.classList.add('hidden');
-                loginBtn.disabled = false;
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (user && user.username) {
+                updateHeader(user.username);
             }
+
+            document.getElementById('login-form').addEventListener('submit', async function(e) {
+                e.preventDefault();
+
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                const errorElement = document.getElementById('error-message');
+                const loginBtn = document.getElementById('login-btn');
+                const loginBtnText = document.getElementById('login-btn-text');
+                const loginBtnSpinner = document.getElementById('login-btn-spinner');
+
+                // Show loading state
+                loginBtnText.classList.add('hidden');
+                loginBtnSpinner.classList.remove('hidden');
+                loginBtn.disabled = true;
+                errorElement.classList.add('hidden');
+
+                try {
+                    const response = await fetch('/user_auth', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ email, password })
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok && data.user) {
+                        // Handle successful login
+                        console.log('Login successful:', data);
+                        // Cache user data
+                        localStorage.setItem('user', JSON.stringify(data.user));
+                        // Redirect to homepage or dashboard
+                        window.location.href = '/';
+                    } else {
+                        // Handle error
+                        errorElement.textContent = data.message || 'An unknown error occurred.';
+                        errorElement.classList.remove('hidden');
+                    }
+                } catch (error) {
+                    console.error('Login error:', error);
+                    errorElement.textContent = 'A network error occurred. Please try again.';
+                    errorElement.classList.remove('hidden');
+                } finally {
+                    // Reset button state
+                    loginBtnText.classList.remove('hidden');
+                    loginBtnSpinner.classList.add('hidden');
+                    loginBtn.disabled = false;
+                }
+            });
         });
+    </script>
+    <script>
+        function updateHeader(username) {
+            const desktopAuthSection = document.getElementById('user-auth-section');
+            const mobileAuthSection = document.getElementById('mobile-user-auth-section');
+
+            const loggedInHTML = `
+                <span class="text-white font-bold text-[10px] text-center flex-shrink-0">Welcome, ${username}</span>
+                <a href="#" id="logout-btn" class="bg-[#CDA7FF] rounded-[2px] px-2.5 py-0.5 text-[#0D0D0D] font-bold text-[10px] text-center flex-shrink-0">Logout</a>
+            `;
+
+            const mobileLoggedInHTML = `
+                <div class="text-white text-center py-2">Welcome, ${username}</div>
+                <a href="#" id="mobile-logout-btn" class="login-btn block w-full text-center bg-red-500 rounded-full px-4 py-2.5 text-white font-medium text-sm">
+                    <span class="relative z-10 flex items-center justify-center gap-2"><span>Logout</span></span>
+                </a>
+            `;
+
+            if(desktopAuthSection) desktopAuthSection.innerHTML = loggedInHTML;
+            if(mobileAuthSection) mobileAuthSection.innerHTML = mobileLoggedInHTML;
+
+            const logoutBtn = document.getElementById('logout-btn');
+            if(logoutBtn) logoutBtn.addEventListener('click', logout);
+            
+            const mobileLogoutBtn = document.getElementById('mobile-logout-btn');
+            if(mobileLogoutBtn) mobileLogoutBtn.addEventListener('click', logout);
+        }
+
+        function logout(e) {
+            e.preventDefault();
+            localStorage.removeItem('user');
+            window.location.reload();
+        }
     </script>
 </body>
 </html>
