@@ -15,7 +15,7 @@ def get_blog_hero_section(data: dict):
 </article>
 <article class="relative max-w-[95%]">
     <div class="relative w-full h-[300px] md:h-[478px]">
-        <div class="absolute inset-0 bg-hero-gradient bg-cover bg-center"></div>
+        <div class="absolute inset-0 bg-cover bg-center"></div>
         <img src="{data['mainImageUrl']}" alt="{data['mainImageAlt']}"
             class="w-full h-full object-cover mix-blend-multiply" />
     </div>

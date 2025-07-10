@@ -125,10 +125,46 @@ def get_blog_page(blog_id):
             total_body = "\n".join(results)
             end_time = time.time()
             print(f"Blog page '{blog_id}' generated in {end_time - start_time:.2f} seconds")
-            return EMPTY_BLOG_TEMPLATE.replace("[[total_body]]", total_body)
+            return {
+                "status": "success",
+                "html": EMPTY_BLOG_TEMPLATE.replace("[[total_body]]", total_body)
+            }
 
         except Exception as e:
             print(f"Error fetching data for blog '{blog_id}': {e}")
+            return {
+                "status": "error"
+            }
+    
+    return asyncio.run(get_blog_page_async())
+
+
+def get_blog_preview(blog_data):
+    async def get_blog_page_async():
+        try:
+            start_time = time.time()
+            loop = asyncio.get_event_loop()
+            
+            # Execute all functions in parallel using thread pool
+            tasks = [
+                loop.run_in_executor(None, get_header),
+                loop.run_in_executor(None, get_blog_body, blog_data),
+                loop.run_in_executor(None, get_more_blogs_section, blog_data),
+                loop.run_in_executor(None, get_faq_section),
+                loop.run_in_executor(None, get_footer)
+            ]
+            
+            # Execute all tasks in parallel
+            results = await asyncio.gather(*tasks)
+            
+            total_body = "\n".join(results)
+            end_time = time.time()
+            return {
+                "status": "success",
+                "html": EMPTY_BLOG_TEMPLATE.replace("[[total_body]]", total_body)
+            }
+
+        except Exception as e:
             return {
                 "status": "error"
             }
