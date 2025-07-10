@@ -27,7 +27,7 @@ def get_homepage():
             loop.run_in_executor(None, get_split_section, homepage_data["split_section"]),
             loop.run_in_executor(None, get_fuel_your_ambitions_html),
             loop.run_in_executor(None, get_1_by_2_by_6_html, homepage_data["one_by_two_by_six_section"]),
-            loop.run_in_executor(None, get_1_by_2_by_6_html, homepage_data["one_by_two_by_six_section_2"]),
+            # loop.run_in_executor(None, get_1_by_2_by_6_html, homepage_data["one_by_two_by_six_section_2"]),
             loop.run_in_executor(None, get_ninety_percent_of_business_owners_html),
             loop.run_in_executor(None, get_footer)
         ]
@@ -87,6 +87,25 @@ def get_blog_page(blog_id):
         start_time = time.time()
         try:
             data = get_blog(blog_id)
+            if not data:
+                print(f"Blog with ID '{blog_id}' not found.")
+                return {
+                    "status": "not_found"
+                }
+            # Check if blog is deleted and handle redirect
+            if data.get("status") == "deleted":
+                redirect_url = blog_data.get("redirect_url")
+                if redirect_url:
+                    return {
+                        "status": "redirect",
+                        "redirect_url": redirect_url
+                    }
+                else:
+                    return {
+                        "status": "error"
+                    }
+        
+
             blog_data = data.get("json_data", {})
 
             loop = asyncio.get_event_loop()
@@ -110,6 +129,8 @@ def get_blog_page(blog_id):
 
         except Exception as e:
             print(f"Error fetching data for blog '{blog_id}': {e}")
-            return "error"
+            return {
+                "status": "error"
+            }
     
     return asyncio.run(get_blog_page_async())

@@ -7,7 +7,7 @@ HEADER_TEMPLATE = """<header class="w-full bg-black relative">
             <a href="/"><img src="/static/images/header_logo.png" alt="Brands Out Loud Logo" class="w-20 h-20 flex-shrink-0"></a>
             <nav class="flex flex-col items-stretch w-[700px] h-[93px] py-[14px] px-[18px] gap-[10px] relative">
                 <div class="flex flex-row justify-end items-center w-full gap-[60px] px-[30px]">
-                    <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Magazine </a>
+                    <a href="/magazine" class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Magazine </a>
                     <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Newsletters </a>
                     <a href="/register" class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Register </a>
                     <a href="/login" class="bg-[#CDA7FF] rounded-[2px] px-2.5 py-0.5 text-[#0D0D0D] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Login </a>

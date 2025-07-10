@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, redirect
 from static.data.page_handler import *
 
 from pyngrok import ngrok
@@ -185,68 +185,6 @@ def user_auth():
         return jsonify({"status": "error", "message": result.get("message", "Invalid credentials")}), 401
 
 
-# --------------------------------------------------------------------------------#
-#                              RENDERING ROUTES                                  #
-# --------------------------------------------------------------------------------#
-
-
-
-# @app.route("/news_waiting_page")
-# def news_waiting_page():
-#     return render_template(
-#         "news_waiting_page.html",
-#         blogs_by_category=get_blogs_for_header(limit=3),
-#         desktop_nav_links=f"""{generate_header_dropdowns_html(blogs_by_category)}""",
-#         mobile_nav_links=f"""{generate_mobile_accordion_html(blogs_by_category)}""",
-#     )
-
-
-# @app.route("/news_page")
-# def news_page():
-#     return render_template(
-#         "news_page.html",
-#         blogs_by_category=get_blogs_for_header(limit=3),
-#         desktop_nav_links=f"""{generate_header_dropdowns_html(blogs_by_category)}""",
-#         mobile_nav_links=f"""{generate_mobile_accordion_html(blogs_by_category)}""",
-#     )
-
-
-
-
-# @app.route("/advertise_with_us")
-# def advertise_with_us():
-#     return render_template(
-#         "advertise_with_us.html",
-#         blogs_by_category=get_blogs_for_header(limit=3),
-#         desktop_nav_links=f"""{generate_header_dropdowns_html(blogs_by_category)}""",
-#         mobile_nav_links=f"""{generate_mobile_accordion_html(blogs_by_category)}""",
-#     )
-
-
-# @app.route("/career_page")
-# def career_page():
-#     return render_template(
-#         "career_page.html",
-#         blogs_by_category=get_blogs_for_header(limit=3),
-#         desktop_nav_links=f"""{generate_header_dropdowns_html(blogs_by_category)}""",
-#         mobile_nav_links=f"""{generate_mobile_accordion_html(blogs_by_category)}""",
-#     )
-
-
-# @app.route("/JD")
-# def JD():
-#     return render_template(
-#         "JD.html",
-#         blogs_by_category=get_blogs_for_header(limit=3),
-#         desktop_nav_links=f"""{generate_header_dropdowns_html(blogs_by_category)}""",
-#         mobile_nav_links=f"""{generate_mobile_accordion_html(blogs_by_category)}""",
-#     )
-
-
-
-# --------------------------------------------------------------------------------#
-#                              ADMIN PAGE ROUTES                                 #
-# --------------------------------------------------------------------------------#
 
 @app.route("/admin_auth", methods=["POST"])
 def admin_auth():
@@ -345,10 +283,19 @@ def admin_save_blog():
 
 @app.route("/blog/<blog_id>")
 def display_blog(blog_id):
-    blog_data = get_blog(blog_id=blog_id)
-    # print(f"Blog data for {blog_id}: {json.dumps(blog_data, indent=2, ensure_ascii=False)}")
-    if not blog_data:
+    blog_data = get_blog_page(blog_id)
+    if blog_data.get('status') == "not_found":
         return render_template("not_found/404.html"), 404
+    if blog_data.get('status') == "error":
+        return render_template("not_found/404.html"), 500
+    if blog_data.get('status') == "redirect":
+        redirect_url = blog_data.get("redirect_url")
+        if redirect_url:
+            # Redirect to the specified URL
+            return redirect(redirect_url, code=301)
+        else:
+            # Show 403 page if no redirect URL is provided
+            return render_template("not_found/404.html"), 403
 
     # Check if blog is deleted and handle redirect
     if blog_data.get("status") == "deleted":
@@ -359,16 +306,9 @@ def display_blog(blog_id):
             from flask import redirect
             return redirect(redirect_url, code=301)
         else:
-            # Show 403 page if no redirect URL is provided
             return render_template("not_found/404.html"), 403
 
-    json_data = blog_data.get("json_data", {})
-    html_template = get_blog_html(demo_json_data=json_data)
-
-    if not html_template:
-        return render_template("not_found/404.html"), 404
-
-    return html_template
+    return blog_data
 
 
 @app.route("/delete_blog", methods=["POST"])
