@@ -9,14 +9,15 @@ def get_top_stories_category(articles: dict):
         article_title = article.get("title", "")
         article_excerpt = article.get("excerpt", "")
 
+        article_url = article.get("url", "#")
         articles_html += f"""
-                <article class="flex flex-col">
-                    <div class="w-full h-[250px] bg-cover bg-center mb-[15px] rounded-md"
-                        style="background-image: url('{article_image}')"></div>
-                    <div class="font-jakarta text-[10px] leading-[1.1] text-bol-black/60 mb-[6px]">{article_author} - {article_date}</div>
-                    <h3 class="font-jakarta font-normal text-lg leading-[136.9%] text-bol-black mb-[10px]">{article_title}</h3>
-                    <p class="font-jakarta text-xs leading-[123.9%] text-bol-black/70">{article_excerpt}</p>
-                </article>"""
+            <a href="{article_url}" class="flex flex-col group">
+                <div class="w-full h-[250px] bg-cover bg-center mb-[15px] rounded-md"
+                style="background-image: url('{article_image}')"></div>
+                <div class="font-jakarta text-[10px] leading-[1.1] text-bol-black/60 mb-[6px]">{article_author} - {article_date}</div>
+                <h3 class="font-jakarta font-normal text-lg leading-[136.9%] text-bol-black mb-[10px]">{article_title}</h3>
+                <p class="font-jakarta text-xs leading-[123.9%] text-bol-black/70">{article_excerpt}</p>
+            </a>"""
 
     TOP_STORIES_TEMPLATE = f"""<section class="relative w-full h-auto flex flex-col" style="max-width: 95%;">
 

@@ -575,3 +575,20 @@ def update_homepage(
         f.write(content)
     
     return "Homepage updated successfully!"
+
+def generate_html_from_json(json_data, indent_level=0):
+    html_output = []
+    indent_space = "&nbsp;" * 4 * indent_level
+
+    if isinstance(json_data, dict):
+        for key, value in json_data.items():
+            html_output.append(f"{indent_space}<div><strong>{key}:</strong></div>")
+            html_output.append(generate_html_from_json(value, indent_level + 1))
+    elif isinstance(json_data, list):
+        for item in json_data:
+            html_output.append(f"{indent_space}<div>-</div>")
+            html_output.append(generate_html_from_json(item, indent_level + 1))
+    else:
+        html_output.append(f"{indent_space}<p>{json_data}</p>")
+
+    return "\n".join(html_output)

@@ -61,6 +61,37 @@ def get_page_data(page_name: str):
     )
     return response.data[0] if response.data else None
 
+def get_main_pages_db(search_keyword, page=1, per_page=100, include_deleted=False):
+    print(
+        f"Searching main pages with keyword: {search_keyword}, page: {page}, per_page: {per_page}"
+    )
+
+    offset = (page - 1) * per_page
+
+    query = supabase.table("main_pages").select("*", count="exact")
+    
+    # Exclude pages with status 'DELETED'
+    query = query.or_(f'page_data->>status.is.null,page_data->>status.neq.DELETED')
+
+    if not search_keyword or search_keyword.strip() == "":
+        response = (
+            query.order("updated_at", desc=True)
+            .range(offset, offset + per_page - 1)
+            .execute()
+        )
+    else:
+        search_term = f'%{search_keyword.lower()}%'
+        response = (
+            query.ilike("page_name", search_term)
+            .order("updated_at", desc=True)
+            .range(offset, offset + per_page - 1)
+            .execute()
+        )
+
+    if response.data:
+        return response.data, response.count
+    return [], 0
+
 
 def format_file_size(size_bytes):
     """Convert bytes to human readable format (B, KB, MB, GB, TB)"""
@@ -279,6 +310,46 @@ def update_blogs_to_db(blog_data):
     blog_id = blog_data.get("blog_id")
     if not blog_id:
         return {"status": "error", "message": "Blog ID is required for update."}
+
+def update_main_page_db(page_id, page_data):
+    try:
+        response = supabase.table("main_pages").update({
+            "page_data": page_data,
+            "updated_at": "now()" # Supabase function to set current timestamp
+        }).eq("page_id", page_id).execute()
+        
+        if response.data:
+            return {"status": "success", "data": response.data[0]}
+        else:
+            return {"status": "error", "message": "Page not found or could not be updated."}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
+
+def delete_main_page_db(page_id):
+    try:
+        # First, get the current page_data
+        page_response = supabase.table("main_pages").select("page_data").eq("page_id", page_id).single().execute()
+        
+        if not page_response.data:
+            return {"status": "error", "message": "Page not found."}
+
+        page_data = page_response.data.get("page_data", {})
+        
+        # Update the status to 'DELETED'
+        page_data['status'] = 'DELETED'
+        
+        # Update the record in the database
+        response = supabase.table("main_pages").update({
+            "page_data": page_data,
+            "updated_at": "now()"
+        }).eq("page_id", page_id).execute()
+
+        if response.data:
+            return {"status": "success", "message": "Page status set to DELETED."}
+        else:
+            return {"status": "error", "message": "Page not found or could not be updated."}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
 
     # Prepare update data similar to save_blogs_to_db
     modified_data = {}

@@ -8,11 +8,14 @@ from ..db_handler import get_page_data
 import asyncio
 import time
 
-def get_homepage():
+def get_homepage(page_data):
     async def get_homepage_async():
         start_time = time.time()
-        data = get_page_data("homepage")
-        homepage_data = data.get("page_data", {})
+        if page_data:
+            homepage_data = page_data
+        else:
+            data = get_page_data("homepage")
+            homepage_data = data.get("page_data", {})
 
         loop = asyncio.get_event_loop()
         
@@ -45,12 +48,15 @@ def get_homepage():
     return asyncio.run(get_homepage_async())
 
 
-def get_category_page(category):
+def get_category_page(category, page_data):
     async def get_category_page_async():
         start_time = time.time()
         try:
-            data = get_page_data(category)
-            category_data = data.get("page_data", {})
+            if page_data:
+                category_data = page_data
+            else:
+                data = get_page_data(category)
+                category_data = data.get("page_data", {})
 
             loop = asyncio.get_event_loop()
             

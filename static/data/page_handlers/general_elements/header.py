@@ -9,8 +9,8 @@ HEADER_TEMPLATE = """<header class="w-full bg-black relative">
                 <div class="flex flex-row justify-end items-center w-full gap-[60px] px-[30px]">
                     <a href="/magazine" class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Magazine </a>
                     <a href="#" class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Newsletters </a>
-                    <a href="/register" class="text-white font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Register </a>
-                    <a href="/login" class="bg-[#CDA7FF] rounded-[2px] px-2.5 py-0.5 text-[#0D0D0D] font-bold text-[10px] text-center flex-shrink-0 flex items-center gap-1">Login </a>
+                    <a href="/register" class="text-white font-bold text-[10px] text-center flex-shrink-0">Register</a>
+                    <a href="/login" class="bg-[#CDA7FF] rounded-[2px] px-2.5 py-0.5 text-[#0D0D0D] font-bold text-[10px] text-center flex-shrink-0">Login</a>
                 </div>
                 <div class="w-full h-[1px] bg-gradient-to-r from-black to-[#9747FF]"></div>
                 <div class="flex flex-row justify-end items-center w-full gap-[60px] px-2">
@@ -38,10 +38,10 @@ HEADER_TEMPLATE = """<header class="w-full bg-black relative">
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden lg:hidden absolute top-[68px] left-0 w-full bg-[#121212] z-50 shadow-lg border-t border-[#2a2a2a] overflow-y-auto max-h-[calc(100vh-68px)]">
             <div class="pb-4">
-                <div class="px-4 py-3">
+                <div id="mobile-user-auth-section" class="px-4 py-3">
+                    <!-- This will be replaced by JS -->
                     <a href="/login" class="login-btn block w-full text-center bg-gradient-to-r from-[#9747FF] to-[#CDA7FF] rounded-full px-4 py-2.5 text-white font-medium text-sm shadow-lg hover:-translate-y-0.5 transition-all duration-300 relative overflow-hidden">
                         <span class="relative z-10 flex items-center justify-center gap-2"> <i class="ph ph-sign-in text-lg"></i> <span>Login</span> </span>
-                        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full animate-[shine_2s_infinite]"></div>
                     </a>
                 </div>
                 <a class="mobile-menu-item"><div class="flex items-center"><i class="ph ph-book-open text-white text-lg"></i><span class="item-title">Magazine</span></div></a>
@@ -178,4 +178,26 @@ def get_header():
     desktop_nav_links = desktop_menu_header_elements(blogs_by_category)
     mobile_nav_links = mobile_menu_header_elements(blogs_by_category)
     
-    return HEADER_TEMPLATE.replace("[[desktop_nav_links]]", desktop_nav_links).replace("[[mobile_nav_links]]", mobile_nav_links)
+    header_html = HEADER_TEMPLATE.replace("[[desktop_nav_links]]", desktop_nav_links).replace("[[mobile_nav_links]]", mobile_nav_links)
+
+    auto_collapse_script = '''
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+
+        if (mobileMenu && mobileMenuButton) {
+            window.addEventListener('scroll', function () {
+                if (!mobileMenu.classList.contains('hidden')) {
+                    const menuRect = mobileMenu.getBoundingClientRect();
+                    if (menuRect.bottom < 0) {
+                        mobileMenu.classList.add('hidden');
+                        mobileMenuButton.classList.remove('hamburger-active');
+                    }
+                }
+            });
+        }
+    });
+</script>
+'''
+    return header_html + auto_collapse_script
