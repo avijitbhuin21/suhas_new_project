@@ -7,6 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
+            zoom:0.9;
             margin: 0;
             background-color: #030303;
             color: white;
@@ -380,7 +381,7 @@
             componentRoot.appendChild(shapesContainer);
             
             const contentOuterContainer = document.createElement('div');
-            contentOuterContainer.className = "relative z-10 container mx-auto px-4 md:px-6 pt-32 md:pt-40";
+            contentOuterContainer.className = "relative z-10 container mx-auto px-4 md:px-6 pt-32 md:pt-40 max-w-[100rem]";
             
             const contentInnerContainer = document.createElement('div');
             contentInnerContainer.className = "max-w-none mx-auto text-center";
