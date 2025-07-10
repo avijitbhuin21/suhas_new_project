@@ -15,12 +15,12 @@ def get_blog_hero_section(data: dict):
 </article>
 <article class="relative max-w-[95%]">
     <div class="relative w-full h-[300px] md:h-[478px]">
-        <div class="absolute inset-0 bg-hero-gradient bg-cover bg-center"></div>
+        <div class="absolute inset-0 bg-cover bg-center"></div>
         <img src="{data['mainImageUrl']}" alt="{data['mainImageAlt']}"
             class="w-full h-full object-cover mix-blend-multiply" />
     </div>
     <div
-        class="relative bg-white md:w-full w-[420px] md:ml-[3.3rem] ml-[-1.5rem] max-w-[1175px] h-auto mx-auto -mt-[40px] sm:-mt-[60px] md:-mt-[76px] p-4 sm:p-6 md:p-8 z-10">
+        class="relative bg-white md:w-full w-[420px] md:ml-[3.3rem] ml-[0.6rem] max-w-[1175px] h-auto mx-auto -mt-[40px] sm:-mt-[60px] md:-mt-[76px] p-4 sm:p-6 md:p-8 z-10 ">
         <h1
             class="font-jakarta font-medium text-[28px] sm:text-[34px] md:text-[42px] lg:text-[50px] leading-[1.2] md:leading-[1.25] capitalize text-black mb-3 md:mb-4 text-center hero-text">
             {data['blogTitle']}

@@ -4,7 +4,7 @@ from .blog_body import get_blog_body
 
 
 EMPTY_BLOG_TEMPLATE = """<!DOCTYPE html>
-<html lang="en">
+<html lang="en" class= "scroll-smooth w-[29rem] md:w-[100%]">
 
 <head>
     <meta charset="UTF-8" />
@@ -47,18 +47,77 @@ EMPTY_BLOG_TEMPLATE = """<!DOCTYPE html>
         };
     </script>
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const mobileMenuButton = document.getElementById("mobile-menu-button");
-            const mobileMenu = document.getElementById("mobile-menu");
-            mobileMenuButton.addEventListener("click", function () {
-                mobileMenu.classList.toggle("hidden");
-                mobileMenuButton.classList.toggle("hamburger-active");
-                if (!mobileMenu.classList.contains("hidden")) {
-                    mobileMenu.classList.add("slide-down");
+        document.addEventListener('DOMContentLoaded', function () {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            mobileMenuButton.addEventListener('click', function () {
+                mobileMenu.classList.toggle('hidden');
+                mobileMenuButton.classList.toggle('hamburger-active');
+
+                if (!mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('slide-down');
                 } else {
-                    mobileMenu.classList.remove("slide-down");
+                    mobileMenu.classList.remove('slide-down');
                 }
             });
+
+            // Blog item click handlers
+            document.addEventListener('click', function (e) {
+                if (e.target.closest('.dropdown-item:not(.know-more-item)')) {
+                    const item = e.target.closest('.dropdown-item');
+                    const category = item.getAttribute('data-category');
+                    const blogId = item.getAttribute('data-id');
+
+                    console.log('Clicked blog:', { category, blogId });
+                    // Replace with actual navigation
+                    // window.location.href = `/blog/${category}/${blogId}`;
+                }
+            });
+
+            // Know More click handlers
+            document.addEventListener('click', function (e) {
+                if (e.target.closest('.know-more-item')) {
+                    const item = e.target.closest('.dropdown-container');
+                    const category = item.getAttribute('data-category');
+
+                    console.log('Know More clicked for:', category);
+                    // Replace with actual navigation
+                    // window.location.href = `/category/${category}`;
+                }
+            });
+
+            // --- Mobile Accordion Menu Logic ---
+            const mobileMenuContainer = document.getElementById('mobile-menu');
+            if (mobileMenuContainer) {
+                mobileMenuContainer.addEventListener('click', function (e) {
+                    const toggle = e.target.closest('.accordion-toggle');
+                    if (!toggle) return;
+
+                    e.preventDefault();
+                    const content = toggle.nextElementSibling;
+                    const isCurrentlyOpen = toggle.getAttribute('aria-expanded') === 'true';
+
+                    // Close all other accordions before opening a new one
+                    mobileMenuContainer.querySelectorAll('.accordion-toggle').forEach(otherToggle => {
+                        if (otherToggle !== toggle) {
+                            otherToggle.setAttribute('aria-expanded', 'false');
+                            const otherContent = otherToggle.nextElementSibling;
+                            if (otherContent) otherContent.style.maxHeight = '0px';
+                        }
+                    });
+
+                    // Toggle the clicked accordion
+                    if (isCurrentlyOpen) {
+                        toggle.setAttribute('aria-expanded', 'false');
+                        content.style.maxHeight = '0px';
+                    } else {
+                        toggle.setAttribute('aria-expanded', 'true');
+                        content.style.maxHeight = content.scrollHeight + 'px';
+                    }
+                });
+            }
+
         });
     </script>
     <style>
@@ -103,7 +162,11 @@ EMPTY_BLOG_TEMPLATE = """<!DOCTYPE html>
         body {
             -ms-overflow-style: none;
             scrollbar-width: none;
-            zoom: 1.145;
+        }
+        @media screen and (min-width: 1024px) {
+            body {
+                zoom: 1.145;
+            }
         }
 
         @keyframes slideDown {

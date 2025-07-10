@@ -15,7 +15,7 @@ from static.data.db_handler import *
 from static.data.blogs import *
 from static.data.global_functions import *
 
-from static.data.page_handlers.builder import get_homepage, get_category_page, get_blog_page
+from static.data.page_handlers.builder import *
 from static.data.page_handlers.general_elements.header import get_header, get_blogs_for_header
 from static.data.page_handlers.general_elements.footer import get_footer
 from flask_ngrok import run_with_ngrok
@@ -285,15 +285,34 @@ def admin_auth():
 @app.route("/admin_blog_preview", methods=["POST"])
 def admin_blog_preview():
     data = request.json
-    blogs_by_category = get_blogs_for_header(limit=3)
-    html_output = get_blog_html(demo_json_data=data)
-    return jsonify(
-        {
-            "status": "success",
-            "message": "Blog preview generated successfully",
-            "data": html_output,
-        }
-    )
+    blog_data = get_blog_preview( blog_data=data)
+    if blog_data.get('status') == "not_found":
+        return render_template("not_found/404.html"), 404
+    if blog_data.get('status') == "error":
+        return render_template("not_found/404.html"), 500
+    if blog_data.get('status') == "redirect":
+        redirect_url = blog_data.get("redirect_url")
+        if redirect_url:
+            # Redirect to the specified URL
+            return redirect(redirect_url, code=301)
+        else:
+            # Show 403 page if no redirect URL is provided
+            return render_template("not_found/404.html"), 403
+
+    # Check if blog is deleted and handle redirect
+    if blog_data.get("status") == "deleted":
+        redirect_url = blog_data.get("redirect_url")
+        if redirect_url:
+            # Redirect to the specified URL
+            from flask import redirect
+            return redirect(redirect_url, code=301)
+        else:
+            return render_template("not_found/404.html"), 403
+
+    return {
+        "status": "success",
+        "data": blog_data['html']
+    }
 
 
 @app.route("/admin_save_blog", methods=["POST"])
@@ -385,7 +404,7 @@ def display_blog(blog_id):
         else:
             return render_template("not_found/404.html"), 403
 
-    return blog_data
+    return blog_data['html']
 
 
 @app.route("/delete_blog", methods=["POST"])

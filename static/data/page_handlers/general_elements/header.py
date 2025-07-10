@@ -154,7 +154,7 @@ def mobile_menu_header_elements(blogs_by_category):
                     <i class="ph {icon_class} text-white text-lg"></i>
                     <span class="item-title">{category.capitalize()}</span>
                 </div>
-                <i class="ph ph-caret-down accordion-icon text-lg text-gray-400"></i>
+                <i class="ph ph-caret-down accordion-icon text-lg text-gray-400" style="margin-left: auto;"></i>
             </a>
             <div class="accordion-content">
                 <div class="p-3 space-y-2">

@@ -10,7 +10,7 @@ def get_editor_picks(articles: dict):
         article_excerpt = article.get("excerpt", "")
 
         articles_html += f"""
-                <a href="{article.get('url', '#')}" class="flex flex-col md:flex-row gap-4 hover:opacity-80 transition-opacity">
+            <a href="{article.get('url', '#')}" class="flex flex-col md:flex-row gap-4 hover:opacity-80 transition-opacity">
                 <div class="w-full md:w-1/2 h-[200px] md:h-auto">
                     <img src="{article_image}" alt="{article_title}"
                     class="rounded-md w-full h-full object-cover">
